@@ -1,4 +1,4 @@
-postscript-in-jvm
+Компиляция программ на PostScript в JVM
 =================
 
-Компиляция программ на PostScript в JVM
+
