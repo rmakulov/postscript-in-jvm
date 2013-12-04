@@ -21,24 +21,31 @@ public class PSTable implements Cloneable {
         this.table = table;
     }
 
-    public void add(PSObject psObject){
+    public int add(PSObject psObject){
         table.add(psObject);
+        return table.size()-1;
+    }
+
+    public int getIndex(PSObject psObject){
+        for (int i=0;i<table.size();i++){
+            if(table.get(i).equals(psObject)) return i;
+        }
+        return -1;
     }
 
     public boolean contains(PSObject psObject){
         return table.contains(psObject);
     }
 
- /*   public PSTable clone(){
-        return new PSTable((ArrayList<PSObject>) table.clone());
-    }*/
+    public PSObject get(int index){
+        return table.get(index);
+    }
 
     public String toString(){
         return table.toString();
     }
 
     public PSTable clone(){
-       // PSObject[] psObjects = (PSObject[])stack.toArray();
         PSTable psTable = new PSTable();
         for(PSObject o: table){
             psTable.add(o.clone());

@@ -89,18 +89,17 @@ public class RuntimeTest {
     }
 
     @Test
-    /* TODO: doesn't work correctly clone of snapshots, implement abstract factory pattern
+    /*
      * Check if after save and change array element, "restore" repair original value in source array
      */
     public void saveRestore3(){
         PSArray psArray = PSArray.initArray(5);
-        table.add(psArray);
+        int arrIndex = table.add(psArray);
         PSArray origin = psArray.clone();
-        table.add(psArray);
         save();
         psArray.setValue(1, PSInteger.initInteger());
         restore();
-        //Assert.assertArrayEquals(origin.getArray(), psArray.getArray());
+        Assert.assertArrayEquals(origin.getArray(),((PSArray) table.get(arrIndex)).getArray());
     }
 
 }
