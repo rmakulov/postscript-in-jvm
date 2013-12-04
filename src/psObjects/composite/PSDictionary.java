@@ -1,15 +1,12 @@
 package psObjects.composite;
 
 import psObjects.PSObject;
+import runtime.avl.AvlTree;
 
-/**
- * Created with IntelliJ IDEA.
- * User: 1
- * Date: 03.12.13
- * Time: 21:46
- * To change this template use File | Settings | File Templates.
- */
+
 public class PSDictionary extends CompositeObject {
+    private AvlTree tree = new AvlTree();
+
     @Override
     public PSObject clone() {
         return this;

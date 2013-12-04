@@ -5,13 +5,7 @@ import psObjects.PSObject;
 import java.util.Iterator;
 import java.util.Stack;
 
-/**
- * Created with IntelliJ IDEA.
- * User: 1
- * Date: 03.12.13
- * Time: 22:14
- * To change this template use File | Settings | File Templates.
- */
+
 public class PSStack implements Iterable<PSObject>, Cloneable{
     private Stack<PSObject> stack = new Stack<PSObject>();
 

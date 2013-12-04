@@ -4,13 +4,6 @@ import psObjects.PSObject;
 
 import java.util.Arrays;
 
-/**
- * Created with IntelliJ IDEA.
- * User: 1
- * Date: 03.12.13
- * Time: 21:46
- * To change this template use File | Settings | File Templates.
- */
 public class PSArray extends CompositeObject implements Cloneable {
     private PSObject[] array;
 

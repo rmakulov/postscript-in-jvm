@@ -4,13 +4,6 @@ import psObjects.PSObject;
 import runtime.PSStack;
 import runtime.PSTable;
 
-/**
- * Created with IntelliJ IDEA.
- * User: 1
- * Date: 03.12.13
- * Time: 21:47
- * To change this template use File | Settings | File Templates.
- */
 public class Snapshot extends CompositeObject {
     private PSTable table = new PSTable();
     private PSStack operandStack = new PSStack();

@@ -4,13 +4,7 @@ import psObjects.PSObject;
 
 import java.util.ArrayList;
 
-/**
- * Created with IntelliJ IDEA.
- * User: 1
- * Date: 03.12.13
- * Time: 22:14
- * To change this template use File | Settings | File Templates.
- */
+
 public class PSTable implements Cloneable {
     private ArrayList<PSObject> table = new ArrayList<PSObject>();
 

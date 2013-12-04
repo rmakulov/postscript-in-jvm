@@ -1,12 +1,14 @@
 package psObjects;
 
-/**
- * Created with IntelliJ IDEA.
- * User: 1
- * Date: 03.12.13
- * Time: 21:44
- * To change this template use File | Settings | File Templates.
- */
-public abstract class PSObject implements Cloneable{
+
+public abstract class PSObject implements Cloneable, Comparable<PSObject>{
     public abstract PSObject clone();
+
+    public int compareTo(PSObject key) {
+        return this.hashCode()-key.hashCode();
+    }
+
+    public boolean isNull(){
+        return this instanceof PSNull;
+    }
 }
