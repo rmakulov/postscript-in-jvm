@@ -26,15 +26,12 @@ public class RuntimeTest {
     * getting snapshot from top of operandStack
     */
     private boolean restore() {
-        PSObject psObject= operandStack.pop();
-        if(!(psObject instanceof Snapshot)) return false;
+        PSObject psObject = operandStack.pop();
+        if (!(psObject instanceof Snapshot)) return false;
         Snapshot snapshot = (Snapshot) psObject;
         PSStack savedOperandStack = snapshot.getOperandStack();
         for (PSObject current : operandStack) {
             //if operand stack contains reference to composite object which was created after saving, we can't restore
-            boolean check = current instanceof CompositeObject;
-            check = table.contains(current);
-            check = !savedOperandStack.contains(current);
             if (current instanceof CompositeObject && table.contains(current) && !savedOperandStack.contains(current)) {
                 return false;
             }
@@ -74,32 +71,32 @@ public class RuntimeTest {
 
     @Test
     /*
-     * Check if after get subarray and change it element, "restore" repair original value in source array
-     */
-    public void saveRestore4(){
-        PSArray psArray =PSArray.initArray(5);
-        table.add(psArray);
-        PSArray origin = psArray.clone();
-        PSArray subArray = psArray.getInterval(1,3);
-        table.add(subArray);
-        save();
-        subArray.setValue(1,PSInteger.initInteger());
-        restore();
-        Assert.assertArrayEquals(origin.getArray(),psArray.getArray());
-    }
-
-    @Test
-    /*
      * Check if after save and change array element, "restore" repair original value in source array
      */
-    public void saveRestore3(){
+    public void saveRestore3() {
         PSArray psArray = PSArray.initArray(5);
         int arrIndex = table.add(psArray);
         PSArray origin = psArray.clone();
         save();
         psArray.setValue(1, PSInteger.initInteger());
         restore();
-        Assert.assertArrayEquals(origin.getArray(),((PSArray) table.get(arrIndex)).getArray());
+        Assert.assertArrayEquals(origin.getArray(), ((PSArray) table.get(arrIndex)).getArray());
+    }
+
+    @Test
+    /*
+     * Check if after get subarray and change it element, "restore" repair original value in source array
+     */
+    public void saveRestore4() {
+        PSArray psArray = PSArray.initArray(5);
+        int arrIndex = table.add(psArray);
+        PSArray origin = psArray.clone();
+        PSArray subArray = psArray.getInterval(1, 3);
+        table.add(subArray);
+        save();
+        subArray.setValue(1, PSInteger.initInteger());
+        restore();
+        Assert.assertArrayEquals(origin.getArray(), ((PSArray) table.get(arrIndex)).getArray());
     }
 
 }
