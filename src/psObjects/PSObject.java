@@ -1,8 +1,7 @@
 package psObjects;
 
 
-public abstract class PSObject implements Cloneable, Comparable<PSObject>{
-    public abstract PSObject clone();
+public abstract class PSObject implements Comparable<PSObject>{
 
     public int compareTo(PSObject key) {
         return this.hashCode()-key.hashCode();

@@ -1,32 +1,27 @@
 package psObjects.composite;
 
-import psObjects.PSObject;
-
 import java.util.Random;
 
 
 public class PSString extends CompositeObject {
     private String s = null;
-    private static final String characters= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    // Generate random string and add it into local VM
+
     public PSString() {
 
-        }
+    }
 
+    // Generate random string and add it into local VM
     public static PSString initString() {
-           byte[] temp = new byte[10];
-           Random generator = new java.util.Random();
-           /*generator.nextBytes(temp);
-           String s = new String(temp, 0);
-           return new PSString(s);*/
-        return new PSString(generateString(generator,characters,10));
-       }
+        byte[] temp = new byte[10];
+        Random generator = new java.util.Random();
+        return new PSString(generateString(generator, characters, 10));
+    }
 
-    public static String generateString(Random rng, String characters, int length)    {
+    public static String generateString(Random rng, String characters, int length) {
         char[] text = new char[length];
-        for (int i = 0; i < length; i++)
-        {
+        for (int i = 0; i < length; i++) {
             text[i] = characters.charAt(rng.nextInt(characters.length()));
         }
         return new String(text);
@@ -58,10 +53,5 @@ public class PSString extends CompositeObject {
         return "PSString{" +
                 "s='" + s + '\'' +
                 "} " + super.toString();
-    }
-
-    @Override
-    public PSObject clone() {
-        return new PSString(new String(s));
     }
 }

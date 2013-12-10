@@ -1,6 +1,5 @@
 package psObjects.composite;
 
-import psObjects.PSObject;
 import runtime.PSStack;
 import runtime.PSTable;
 
@@ -19,10 +18,5 @@ public class Snapshot extends CompositeObject {
 
     public PSStack getOperandStack() {
         return operandStack;
-    }
-
-    @Override
-    public PSObject clone() {
-        return this;
     }
 }

@@ -1,7 +1,5 @@
 package psObjects.simple;
 
-import psObjects.PSObject;
-
 import java.util.Random;
 
 public class PSInteger extends SimpleObject {
@@ -38,12 +36,6 @@ public class PSInteger extends SimpleObject {
     @Override
     public int hashCode() {
         return this.value;
-    }
-
-
-    @Override
-    public PSObject clone() {
-        return new PSInteger(value);
     }
 
     public static PSInteger initInteger() {

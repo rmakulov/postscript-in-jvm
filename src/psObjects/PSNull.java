@@ -9,9 +9,4 @@ public class PSNull extends PSObject {
 
     private PSNull() {
     }
-
-    @Override
-    public PSObject clone() {
-        return null;
-    }
 }

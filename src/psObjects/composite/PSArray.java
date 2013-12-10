@@ -38,8 +38,12 @@ public class PSArray extends CompositeObject implements Cloneable {
         return new PSArray(res);
     }
 
-    public void setValue(int index, PSObject psObject) {
+    public PSArray setValue(int index, PSObject psObject) {
         array[index] = psObject;
+        PSObject[] newArray = new PSObject[array.length];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        newArray[index] = psObject;
+        return new PSArray(newArray);
     }
 
     @Override
@@ -59,13 +63,4 @@ public class PSArray extends CompositeObject implements Cloneable {
         return Arrays.hashCode(array);
     }
 
-    @Override
-    public PSArray clone() {
-        int length = array.length;
-        PSObject[] arr = new PSObject[length];
-        for (int i = 0; i < length; i++) {
-            arr[i] = array[i].clone();
-        }
-        return new PSArray(arr);
-    }
 }
