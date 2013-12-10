@@ -2,7 +2,9 @@ package runtime;
 
 import org.junit.Assert;
 import org.junit.Test;
+import psObjects.PSObject;
 import psObjects.composite.PSArray;
+import psObjects.composite.PSDictionary;
 import psObjects.composite.PSString;
 import psObjects.simple.PSInteger;
 
@@ -67,5 +69,18 @@ public class Tests {
         runtime.setValueArrayAtIndex(subArrIndex, 1, PSInteger.initInteger());
         runtime.restore();
         Assert.assertArrayEquals(psArray.getArray(), ((PSArray) runtime.getPSObjectFromLocalVM(arrIndex)).getArray());
+    }
+
+    @Test
+    /*
+     *
+     */
+    public void saveRestore5(){
+        PSDictionary dict = PSDictionary.initDict(5);
+        PSObject key = new PSString("Login");
+        PSObject value = new PSString("Password");
+        dict = dict.put(key,value);
+        PSObject expected = dict.get(key);
+        Assert.assertEquals(expected,value);
     }
 }

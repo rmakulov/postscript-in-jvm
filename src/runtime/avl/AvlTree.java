@@ -13,6 +13,14 @@ public class AvlTree {
 
     protected AvlNode root; // the root node
 
+    public AvlTree(AvlNode root) {
+        this.root = root;
+    }
+
+    public AvlTree() {
+
+    }
+
 /***************************** Core Functions ************************************/
 
     /**
@@ -21,11 +29,32 @@ public class AvlTree {
      * @param key   The key of the new node.
      * @param value The value of the new node.
      */
-    public void insert(PSObject key, PSObject value) {
+    public AvlTree insert(PSObject key, PSObject value) {
+        if (root == null) {
+            return new AvlTree(new AvlNode(key, value));
+        }
         // create new node
+        AvlNode newRoot = new AvlNode(root);
+        copyNode(newRoot, root);
         AvlNode node = new AvlNode(key, value);
         // start recursive procedure for inserting the node
-        insertAVL(this.root, node);
+        insertAVL(newRoot, node);
+        return new AvlTree(newRoot);
+    }
+
+    private void copyNode(AvlNode newNode, AvlNode node) {
+
+        AvlNode left = node.left;
+        AvlNode right = node.right;
+
+        if (left != null) {
+            newNode.left = new AvlNode(left);
+            copyNode(newNode.left, left);
+        }
+        if (right != null) {
+            newNode.right = new AvlNode(right);
+            copyNode(newNode.right, right);
+        }
     }
 
     /**
@@ -107,16 +136,21 @@ public class AvlTree {
     /**
      * Removes a node from the tree, if it is existent.
      */
-    public void remove(PSObject key) {
+    public AvlTree remove(PSObject key) {
         // First we must find the node, after this we can delete it.
         removeAVL(this.root, key);
+        AvlNode newRoot = new AvlNode(root);
+        copyNode(newRoot, root);
+        // start recursive procedure for inserting the node
+        removeAVL(newRoot, key);
+        return new AvlTree(newRoot);
     }
 
     /**
      * Finds a node and calls a method to remove the node.
      *
      * @param node The node to start the search.
-     * @param key  The KEY of node to remove.
+     * @param key  The KEY of node to undef.
      */
     public void removeAVL(AvlNode node, PSObject key) {
         if (node == null) {
@@ -147,9 +181,9 @@ public class AvlTree {
     public PSObject getValueAVL(AvlNode node, PSObject key) {
         if (node != null) {
             if (node.key.compareTo(key) > 0) {
-                getValueAVL(node.left, key);
+                return getValueAVL(node.left, key);
             } else if (node.key.compareTo(key) < 0) {
-                getValueAVL(node.right, key);
+                return getValueAVL(node.right, key);
             } else if (node.key.compareTo(key) == 0) {
                 // we found the node in the tree.. now lets go on!
                 return node.value;

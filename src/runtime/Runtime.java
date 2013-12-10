@@ -3,11 +3,16 @@ package runtime;
 import psObjects.PSObject;
 import psObjects.composite.CompositeObject;
 import psObjects.composite.PSArray;
+import psObjects.composite.PSDictionary;
 import psObjects.composite.Snapshot;
+import runtime.stack.DictionaryStack;
+import runtime.stack.OperandStack;
+import runtime.stack.PSStack;
 
 public class Runtime {
     PSTable table = new PSTable();
-    PSStack operandStack = new PSStack();
+    OperandStack operandStack = new OperandStack();
+    DictionaryStack dictionaryStack = new DictionaryStack();
 
     /*
      * save snapshot to operandStack
@@ -58,6 +63,7 @@ public class Runtime {
         return table.get(index);
     }
 
+
     public int setValueArrayAtIndex(int arrIndex, int valueIndex, PSObject value) {
         PSObject psObject = getPSObjectFromLocalVM(arrIndex);
         if (psObject instanceof PSArray) {
@@ -80,8 +86,50 @@ public class Runtime {
         return -1;
     }
 
+    //dict key value put – Associate key with value in dict
+    public PSDictionary putValueAtDictionaryKey(PSDictionary dict, PSObject key, PSObject value) {
+        PSDictionary newDict = dict.put(key, value);
+        replaceDictionaryInStack(dict, newDict);
+        return newDict;
+    }
+
+    //dict key undef – Remove key and its value from dict
+    public PSDictionary undefValueAtDictionaryKey(PSDictionary dict, PSObject key) {
+        PSDictionary newDict = dict.undef(key);
+        replaceDictionaryInStack(dict, newDict);
+        return newDict;
+
+    }
+
+    private void replaceDictionaryInStack(PSDictionary dict, PSDictionary newDict) {
+        DictionaryStack tempDictStack = new DictionaryStack();
+        while (true) {
+            PSDictionary curDict = dictionaryStack.peek();
+            if (curDict == null) break;
+            if (dict == curDict) {
+                dictionaryStack.removeTop();
+                dictionaryStack.push(newDict);
+                break;
+            } else {
+                tempDictStack.push(curDict);
+                dictionaryStack.removeTop();
+            }
+        }
+        while (true) {
+            PSDictionary curDict = tempDictStack.peek();
+            if (curDict == null) break;
+            dictionaryStack.push(curDict);
+            tempDictStack.removeTop();
+        }
+    }
+
+    //    dict key get any Return value associated with key in dict
+    public PSObject getValueAtDictionary(PSDictionary dict, PSObject key){
+        return dict.get(key);
+    }
+
     public boolean exchangeTopOfOperandStack() {
-        PSStack stack = operandStack.exch();
+        OperandStack stack = operandStack.exch();
         if (stack == null) return false;
         operandStack = stack;
         return true;

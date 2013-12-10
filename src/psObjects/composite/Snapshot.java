@@ -1,6 +1,6 @@
 package psObjects.composite;
 
-import runtime.PSStack;
+import runtime.stack.PSStack;
 import runtime.PSTable;
 
 public class Snapshot extends CompositeObject {

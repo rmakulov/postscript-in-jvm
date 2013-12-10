@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class PSTable implements Cloneable {
+public class PSTable {
     private ArrayList<PSObject> table = new ArrayList<PSObject>();
 
     public PSTable() {
