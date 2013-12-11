@@ -73,14 +73,33 @@ public class Tests {
 
     @Test
     /*
-     *
+     *   checks put and get to dictionary
      */
     public void saveRestore5(){
         PSDictionary dict = PSDictionary.initDict(5);
         PSObject key = new PSString("Login");
         PSObject value = new PSString("Password");
         dict = dict.put(key,value);
-        PSObject expected = dict.get(key);
+        PSObject expected = runtime.getValueAtDictionary(dict,key);
         Assert.assertEquals(expected,value);
     }
+
+    @Test
+    /*
+     * copy one dict to another and check one pair of key, value
+     */
+    public void saveRestore6(){
+        PSDictionary dict = PSDictionary.initDict(5);
+        PSDictionary dict2 = PSDictionary.initDict(3);
+        PSObject key = new PSString("Login");
+        PSObject value = new PSString("Password");
+        dict = dict.put(key,value);
+        //runtime.pushToDictionaryStack(dict);
+        //runtime.pushToDictionaryStack(dict2);
+        dict = dict.copy(dict2);
+        PSObject expected = runtime.getValueAtDictionary(dict,key);
+        Assert.assertEquals(expected,value);
+    }
+
+
 }

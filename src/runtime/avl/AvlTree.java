@@ -12,16 +12,30 @@ import static psObjects.PSNull.NULL;
 public class AvlTree {
 
     protected AvlNode root; // the root node
+    private int count = 0;
 
     public AvlTree(AvlNode root) {
+        if (root == null) return;
         this.root = root;
+        count = 1;
     }
 
     public AvlTree() {
 
     }
 
-/***************************** Core Functions ************************************/
+    private void incCount() {
+        count++;
+    }
+
+    private void decCount() {
+        count--;
+    }
+
+    public AvlNode getRoot() {
+        return root;
+    }
+    /***************************** Core Functions ************************************/
 
     /**
      * Add a new element with key "k" into the tree.
@@ -50,11 +64,42 @@ public class AvlTree {
         if (left != null) {
             newNode.left = new AvlNode(left);
             copyNode(newNode.left, left);
+            incCount();
         }
         if (right != null) {
             newNode.right = new AvlNode(right);
             copyNode(newNode.right, right);
+            incCount();
         }
+    }
+
+    public static AvlTree copyTreeToAnother(AvlTree treeDst, AvlTree treeSrc) {
+        AvlTree treeRes = new AvlTree();
+        copyTreeToAnotherAVL(treeRes, treeDst.getRoot());
+        copyTreeToAnotherAVL(treeRes, treeSrc.getRoot());
+        return treeRes;
+    }
+
+    public static void copyTreeToAnotherAVL(AvlTree newTree, AvlNode node) {
+        if (node == null) return;
+        AvlNode newNode = new AvlNode(node);
+        AvlNode newRoot = newTree.getRoot();
+        if (newRoot == null) {
+            newTree.setRoot(newNode);
+        } else {
+            newTree.insertAVL(newRoot, newNode);
+        }
+
+        AvlNode left = node.left;
+        AvlNode right = node.right;
+
+        if (left != null) {
+            copyTreeToAnotherAVL(newTree, left);
+        }
+        if (right != null) {
+            copyTreeToAnotherAVL(newTree, right);
+        }
+
     }
 
     /**
@@ -74,7 +119,7 @@ public class AvlTree {
                 if (p.left == null) {
                     p.left = q;
                     q.parent = p;
-
+                    incCount();
                     // Node is inserted now, continue checking the balance
                     recursiveBalance(p);
                 } else {
@@ -85,6 +130,7 @@ public class AvlTree {
                 if (p.right == null) {
                     p.right = q;
                     q.parent = p;
+                    incCount();
 
                     // Node is inserted now, continue checking the balance
                     recursiveBalance(p);
@@ -92,7 +138,8 @@ public class AvlTree {
                     insertAVL(p.right, q);
                 }
             } else {
-                // do nothing: This node already exists
+                // This node already exists
+                p.value = q.value;
             }
         }
     }
@@ -138,7 +185,6 @@ public class AvlTree {
      */
     public AvlTree remove(PSObject key) {
         // First we must find the node, after this we can delete it.
-        removeAVL(this.root, key);
         AvlNode newRoot = new AvlNode(root);
         copyNode(newRoot, root);
         // start recursive procedure for inserting the node
@@ -199,6 +245,7 @@ public class AvlTree {
      * @param q The node to be removed.
      */
     public void removeFoundNode(AvlNode q) {
+        decCount();
         AvlNode r;
         // at least one child of q, q will be removed directly
         if (q.left == null || q.right == null) {
@@ -441,6 +488,12 @@ public class AvlTree {
         inorder(n.left, io);
         io.add(n);
         inorder(n.right, io);
+    }
+
+    public void setRoot(AvlNode root) {
+        this.root = root;
+        root.parent = null;
+        incCount();
     }
 }
 

@@ -49,6 +49,14 @@ public class Runtime {
         operandStack = operandStack.push(psObject);
     }
 
+    public void pushToDictionaryStack(PSDictionary dict){
+        dictionaryStack = dictionaryStack.push(dict);
+    }
+
+    public PSObject peekFromDictionaryStack() {
+        return dictionaryStack.peek();
+    }
+
     public PSObject popFromOperandStack() {
         PSObject object = operandStack.peek();
         operandStack = operandStack.removeTop();
@@ -127,6 +135,8 @@ public class Runtime {
     public PSObject getValueAtDictionary(PSDictionary dict, PSObject key){
         return dict.get(key);
     }
+
+
 
     public boolean exchangeTopOfOperandStack() {
         OperandStack stack = operandStack.exch();

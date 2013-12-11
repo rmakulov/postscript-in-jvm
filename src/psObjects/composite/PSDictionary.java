@@ -42,6 +42,8 @@ public class PSDictionary extends CompositeObject {
         return new PSDictionary(newTree);
     }
 
+    //public PSDictionary copy
+
     public static PSDictionary initDict(int length) {
         ArrayList<PSObject> list =new ArrayList<PSObject>();
         for (int i = 0; i < length; i++) {
@@ -51,5 +53,14 @@ public class PSDictionary extends CompositeObject {
             list.add(value);
         }
         return new PSDictionary(list);
+    }
+
+    public PSDictionary copy(PSDictionary dictDst) {
+        AvlTree newTree = AvlTree.copyTreeToAnother(dictDst.getTree(),tree);
+        return new PSDictionary(newTree);
+    }
+
+    public AvlTree getTree() {
+        return tree;
     }
 }

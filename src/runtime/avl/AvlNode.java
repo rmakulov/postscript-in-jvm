@@ -20,9 +20,9 @@ public class AvlNode {
     }
 
     public AvlNode(AvlNode node) {
-        left = node.left;
-        right = node.right;
-        parent =node.parent;
+//        left = node.left;
+//        right = node.right;
+//        parent =node.parent;
         key = node.key;
         value = node.value;
         balance = node.balance;
