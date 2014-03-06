@@ -2,7 +2,7 @@ package psObjects.simple;
 
 import java.util.Random;
 
-public class PSInteger extends SimpleObject {
+public class PSInteger extends PSNumber {
     private int value = 0;
 
     // Generate random int and add it into local VM
@@ -33,14 +33,27 @@ public class PSInteger extends SimpleObject {
         return true;
     }
 
+
+    /*
     @Override
     public int hashCode() {
         return this.value;
     }
+*/
 
     public static PSInteger initInteger() {
         Random rand = new Random();
         int      value = rand.nextInt();
         return new PSInteger(value);
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public double getRealValue() {
+        return (double) value;
+    }
+
 }

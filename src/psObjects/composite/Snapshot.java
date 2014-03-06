@@ -1,7 +1,7 @@
 package psObjects.composite;
 
-import runtime.stack.PSStack;
 import runtime.PSTable;
+import runtime.stack.PSStack;
 
 public class Snapshot extends CompositeObject {
     private PSTable table = new PSTable();

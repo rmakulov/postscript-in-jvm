@@ -1,18 +1,17 @@
 package runtime.avl;
 
-import psObjects.PSObject;
+import psObjects.reference.Reference;
 
 
-public class AvlNode {
+public class AvlNode implements Comparable<AvlNode> {
     public AvlNode left;
     public AvlNode right;
-    public AvlNode parent;
-    public PSObject key;
-    public PSObject value;
+    public Reference key;
+    public Reference value;
     public int balance;
 
-    public AvlNode(PSObject key, PSObject value) {
-        left = right = parent = null;
+    public AvlNode(Reference key, Reference value) {
+        left = right = null;
         balance = 0;
         this.key = key;
         this.value = value;
@@ -20,16 +19,27 @@ public class AvlNode {
     }
 
     public AvlNode(AvlNode node) {
-//        left = node.left;
-//        right = node.right;
-//        parent =node.parent;
         key = node.key;
         value = node.value;
         balance = node.balance;
     }
 
-    public String toString() {
-        return "" + key;
+    @Override
+    public int compareTo(AvlNode node) {
+        return key.compareTo(node.key);
     }
 
+
+   /* public String toString() {
+        return "" + runtime.Runtime.getInstance().getPSObjectByReference(key);
+    }*/
+
+    public int getCount() {
+        return 1 + (left != null ? left.getCount() : 0) + (right != null ? right.getCount() : 0);
+    }
+
+    @Override
+    public String toString() {
+        return "AvlNode{vertices:"+ getCount()+"}"+super.toString();
+    }
 }

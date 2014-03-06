@@ -1,14 +1,14 @@
 package runtime.stack;
 
-import psObjects.PSObject;
+import psObjects.reference.Reference;
 
 import java.util.Stack;
 
-public class OperandStack extends PSStack<PSObject> {
+public class  OperandStack extends PSStack<Reference> {
     public OperandStack() {
     }
 
-    public OperandStack(Stack<PSObject> stack) {
+    public OperandStack(Stack<Reference> stack) {
         super(stack);
     }
 
@@ -18,8 +18,8 @@ public class OperandStack extends PSStack<PSObject> {
     }
 
     @Override
-    public OperandStack push(PSObject psObject) {
-        return new OperandStack(super.pushAndGetStack(psObject));
+    public OperandStack push(Reference psObjectRef) {
+        return new OperandStack(super.pushAndGetStack(psObjectRef));
     }
 
     @Override

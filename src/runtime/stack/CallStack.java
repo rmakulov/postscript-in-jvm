@@ -2,6 +2,7 @@ package runtime.stack;
 
 
 import psObjects.PSObject;
+import psObjects.reference.Reference;
 
 import java.util.Stack;
 
@@ -19,8 +20,8 @@ public class CallStack extends PSStack {
      }
  
      @Override
-     public CallStack push(PSObject psObject) {
-         return new CallStack(super.pushAndGetStack(psObject));
+     public CallStack push(Reference ref) {
+         return new CallStack(super.pushAndGetStack(ref));
      }
  
      @Override

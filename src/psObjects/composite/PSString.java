@@ -3,7 +3,7 @@ package psObjects.composite;
 import java.util.Random;
 
 
-public class PSString extends CompositeObject {
+public class PSString extends CompositeObject implements Comparable<PSString> {
     private String s = null;
     private static final String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -43,15 +43,20 @@ public class PSString extends CompositeObject {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        return s.hashCode();
-    }
 
     @Override
     public String toString() {
         return "PSString{" +
                 "s='" + s + '\'' +
                 "} " + super.toString();
+    }
+
+    public String getString() {
+        return s;
+    }
+
+    @Override
+    public int compareTo(PSString str) {
+        return s.compareTo(str.getString());
     }
 }

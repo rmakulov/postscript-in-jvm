@@ -1,6 +1,7 @@
 package runtime.stack;
 
 import psObjects.PSObject;
+import psObjects.reference.Reference;
 
 import java.util.Stack;
 
@@ -21,8 +22,8 @@ public class GraphicStack extends PSStack {
      }
  
      @Override
-     public GraphicStack push(PSObject psObject) {
-         return new GraphicStack(super.pushAndGetStack(psObject));
+     public GraphicStack push(Reference ref) {
+         return new GraphicStack(super.pushAndGetStack(ref));
      }
  
      @Override

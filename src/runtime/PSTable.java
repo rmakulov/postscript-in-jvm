@@ -1,6 +1,7 @@
 package runtime;
 
 import psObjects.PSObject;
+import psObjects.reference.Reference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,8 +44,8 @@ public class PSTable {
         return -1;
     }
 
-    public boolean contains(PSObject psObject) {
-        return table.contains(psObject);
+    public boolean contains(Reference ref) {
+        return table.contains(ref.getPSObject());
     }
 
     public PSObject get(int index) {
@@ -57,5 +58,9 @@ public class PSTable {
 
     public int size() {
         return table.size();
+    }
+
+    public void clear() {
+        table.clear();
     }
 }

@@ -1,12 +1,12 @@
 package runtime.stack;
 
-import psObjects.PSObject;
+import psObjects.reference.Reference;
 
 import java.util.Iterator;
 import java.util.Stack;
 
 
-public class PSStack<T extends PSObject> implements Iterable<T> {
+public class PSStack<T extends Reference> implements Iterable<T> {
     private Stack<T> stack = new Stack<T>();
 
     public PSStack() {
@@ -82,5 +82,9 @@ public class PSStack<T extends PSObject> implements Iterable<T> {
 
     public T peek() {
         return stack.peek();
+    }
+
+    public void clear() {
+        stack.clear();
     }
 }
