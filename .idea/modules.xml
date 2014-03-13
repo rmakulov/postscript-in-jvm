@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/postscript-in-jvm.iml" filepath="$PROJECT_DIR$/postscript-in-jvm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/parser/parser.iml" filepath="$PROJECT_DIR$/parser/parser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/runtime/runtime.iml" filepath="$PROJECT_DIR$/runtime/runtime.iml" />
     </modules>
   </component>
 </project>
