@@ -1,15 +1,16 @@
 package runtime.stack;
 
-import psObjects.reference.Reference;
+import psObjects.PSObject;
+import psObjects.Type;
 
 import java.util.Stack;
 
 
-public class DictionaryStack extends PSStack<Reference> {
+public class DictionaryStack extends PSStack<PSObject> {
     public DictionaryStack() {
     }
 
-    public DictionaryStack(Stack<Reference> stack) {
+    public DictionaryStack(Stack<PSObject> stack) {
         super(stack);
     }
 
@@ -19,8 +20,8 @@ public class DictionaryStack extends PSStack<Reference> {
     }
 
     @Override
-    public DictionaryStack push(Reference psDictionaryRef) {
-        if(psDictionaryRef.isDictionaryRef()){
+    public DictionaryStack push(PSObject psDictionaryRef) {
+        if(psDictionaryRef.getType()!= Type.DICTIONARY){
             //todo throw exception: this is not a dictionary reference
             return this;
         }

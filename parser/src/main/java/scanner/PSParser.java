@@ -1,7 +1,8 @@
 package scanner;
 
-import psObjects.reference.Reference;
-import psObjects.simple.PSInteger;
+import psObjects.PSObject;
+import psObjects.values.simple.numbers.PSInteger;
+import psObjects.values.simple.operators.arithmetic.AddOp;
 import runtime.Runtime;
 
 import java.io.FileInputStream;
@@ -24,20 +25,21 @@ public class PSParser {
         Yylex scanner = new Yylex(new InputStreamReader(new FileInputStream("test.ps")));
         Yytoken yytoken;
 
-        while((yytoken = scanner.yylex())!=null) {
+        while ((yytoken = scanner.yylex()) != null) {
             String text = yytoken.m_text;
             System.out.print(text + " ");
-            switch (yytoken.m_index){
+            switch (yytoken.m_index) {
                 case 42:
-                    runtime.pushToOperandStack(runtime.createReference(new PSInteger(Integer.parseInt(text))));
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text))));
                     break;
                 case 43:
-                    if(text.equals("add")){
-                       Reference r1 = runtime.popFromOperandStack();
-                       Reference r2 = runtime.popFromOperandStack();
-                        PSInteger i1 = (PSInteger) r1.getPSObject();
-                        PSInteger i2 = (PSInteger) r2.getPSObject();
-                       runtime.pushToOperandStack(runtime.createReference(PSInteger.add(i1,i2)));
+                    if (text.equals("add")) {
+                   /*     PSObject r1 = runtime.popFromOperandStack();
+                        PSObject r2 = runtime.popFromOperandStack();
+                        PSInteger i1 = (PSInteger) r1.getValue();
+                        PSInteger i2 = (PSInteger) r2.getValue();*/
+                        (new AddOp()).execute();
+                        //runtime.pushToOperandStack(runtime.createReference(PSInteger.add(i1, i2)));
                     }
 
                 default:

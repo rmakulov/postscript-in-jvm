@@ -3,12 +3,10 @@ package runtime;
 import org.junit.Assert;
 import org.junit.Test;
 import psObjects.PSObject;
-import psObjects.composite.PSArray;
-import psObjects.composite.PSDictionary;
-import psObjects.composite.PSString;
-import psObjects.reference.LocalRef;
-import psObjects.reference.Reference;
-import psObjects.simple.PSInteger;
+import psObjects.values.composite.PSArray;
+import psObjects.values.composite.PSString;
+import psObjects.values.reference.LocalRef;
+import psObjects.values.simple.numbers.PSInteger;
 
 
 public class Tests {
@@ -19,13 +17,12 @@ public class Tests {
      * Check if table repair after save only without any problem
      */
     public void saveRestoreTest1() {
-        runtime.clearAll();
-        PSInteger numb1 = PSInteger.initInteger();
-        runtime.addToLocalVM(numb1);
+        PSObject.initInteger();
         runtime.save();
-        PSInteger numb2 = PSInteger.initInteger();
-        runtime.addToLocalVM(numb2);
+        PSObject.initInteger();
+
         Assert.assertTrue(runtime.restore());
+        System.out.println("1");
     }
 
     @Test
@@ -34,14 +31,12 @@ public class Tests {
      * after save when we have common object in operand stack and table(localVM)
      */
     public void saveRestoreTest2() {
-        runtime.clearAll();
-        runtime.pushToOperandStack(runtime.createReference(PSInteger.initInteger()));
+        runtime.pushToOperandStack(PSObject.initInteger());
         runtime.save();
-        PSString str = PSString.initString();
-        runtime.pushToOperandStack(runtime.createReference(str));
-        runtime.addToLocalVM(str);
+        runtime.pushToOperandStack(PSObject.initString());
         runtime.exchangeTopOfOperandStack();
         Assert.assertFalse(runtime.restore());
+        System.out.println("2");
     }
 
     @Test
@@ -49,15 +44,16 @@ public class Tests {
      * Check if after save and change array element, "restore" repair original value in source array
      */
     public void saveRestore3() {
-        runtime.clearAll();
-        PSArray psArray = PSArray.initArray(5);
-        LocalRef arrLocalRef = runtime.createLocalRef(psArray);
-        //PSArray origin = psArray.clone();
+        PSObject arrObj = PSObject.initArray(5);
+        runtime.pushToOperandStack(arrObj);
         runtime.save();
-        //psArray.setValue(1, PSInteger.initInteger());
-        runtime.setValueArrayAtIndex(arrLocalRef, 1, PSInteger.initInteger());
+        arrObj=runtime.setValueArrayAtIndex(arrObj, 1, PSObject.initInteger());
         runtime.restore();
-        Assert.assertArrayEquals(psArray.getArray(), ((PSArray) runtime.getPSObjectByLocalRef(arrLocalRef)).getArray());
+        PSObject arrObj2 = runtime.popFromOperandStack();
+        PSObject[] newArr = ((PSArray) arrObj.getValue()).getArray();
+        PSObject[] oldArr =((PSArray) arrObj2.getValue()).getArray();
+        Assert.assertArrayEquals(newArr, oldArr);
+        System.out.println("3");
     }
 
     @Test
@@ -65,42 +61,37 @@ public class Tests {
      * Check if after get subarray and change it element, "restore" repair original value in source array
      */
     public void saveRestore4() {
-        runtime.clearAll();
-        PSArray psArray = PSArray.initArray(5);
-        LocalRef arrLocalRef = runtime.createLocalRef(psArray);
-        LocalRef subArrLocalRef = runtime.getArrayInterval(arrLocalRef, 1, 3);
+        PSObject arrObj = PSObject.initArray(5);
+        LocalRef ref = (LocalRef) arrObj.getDirectValue();
+        PSObject subArrObj = runtime.getArrayInterval(arrObj, 1, 3);
         runtime.save();
-        runtime.setValueArrayAtIndex(subArrLocalRef, 1, PSInteger.initInteger());
+        runtime.setValueArrayAtIndex(subArrObj, 1, PSObject.initInteger());
         runtime.restore();
-        Assert.assertArrayEquals(psArray.getArray(), ((PSArray) runtime.getPSObjectByLocalRef(arrLocalRef)).getArray());
+        PSObject[] newArr = ((PSArray) arrObj.getValue()).getArray();
+        Assert.assertArrayEquals(newArr, ((PSArray) runtime.getValueByLocalRef(ref)).getArray());
+        System.out.println("4");
     }
 
     @Test
     /*
      *   checks put and get to dictionary
      */
-    public void saveRestore5() {
+    public void putGetIntoDictionaryTest5() {
 
         int c = 0;
         for (int i = 0; i < 1000; i++) {
             try {
-                runtime.clearAll();
-                Reference dictRef = PSDictionary.initDictRef(15);
-                PSDictionary dict = (PSDictionary) dictRef.getPSObject();
-
-                PSObject key = new PSString("Login");
-                PSObject value = new PSString("Password");
-                Reference valueRef = runtime.createReference(value);
-                Reference keyRef = runtime.createReference(key);
-
-                dict = dict.put(keyRef, valueRef);
-                dictRef.setPSObject(dict);
-                Reference expected = runtime.getValueAtDictionary(dictRef, keyRef);
-                Assert.assertEquals(expected.getPSObject(), value);
+                PSObject dict = PSObject.initDict(15);
+                PSObject key = new PSObject(new PSString("Login"));
+                PSObject value = new PSObject(new PSString("Password"));
+                runtime.putValueAtDictionaryKey(dict, key, value);
+                PSObject expected = runtime.getValueAtDictionary(dict, key);
+                Assert.assertEquals(expected, value);
                 c++;
-            } catch (Throwable e) {}
+            } catch (Throwable e) {
+            }
         }
-        System.out.println("true " + c + " of " + 1000);
+        System.out.println("5: true " + c + " of " + 1000);
     }
 
     @Test
@@ -112,34 +103,23 @@ public class Tests {
         for (int i = 0; i < 1000; i++) {
             try {
                 runtime.clearAll();
-                Reference dictRef1 = PSDictionary.initDictRef(8);
-                PSDictionary dict1 = (PSDictionary) dictRef1.getPSObject();
-                Reference dictRef2 = PSDictionary.initDictRef(12);
-                PSDictionary dict2 = (PSDictionary) dictRef2.getPSObject();
-
-                PSObject key = new PSString("Login");
-                PSObject value = new PSString("Password");
-                PSObject newValue = new PSInteger(123);
-                Reference valueRef = runtime.createReference(value);
-                Reference newValueRef = runtime.createReference(newValue);
-                Reference keyRef = runtime.createReference(key);
-
-                dict1 = dict1.put(keyRef, valueRef);
-                dict2 = dict1.copy(dict2);
-                dict2.put(keyRef, newValueRef);
-                dictRef1.setPSObject(dict1);
-                dictRef1.setPSObject(dict2);
-
-                Reference expected = runtime.getValueAtDictionary(dictRef1, keyRef);
-
-                Assert.assertNotEquals(expected.getPSObject(), newValue);
+                PSObject dict1 = PSObject.initDict(8);
+                PSObject dict2 = PSObject.initDict(12);
+                PSObject key = new PSObject(new PSString("Login"));
+                PSObject value = new PSObject(new PSString("Password"));
+                PSObject newValue = new PSObject(new PSInteger(123));
+                dict1 = runtime.putValueAtDictionaryKey(dict1, key, value);
+                dict2 = runtime.copy(dict1, dict2);
+                dict2 = runtime.putValueAtDictionaryKey(dict2, key, newValue);
+                PSObject expected = runtime.getValueAtDictionary(dict1, key);
+                Assert.assertNotEquals(expected, newValue);
                 c++;
-            } catch (Throwable e) {}
+            } catch (Throwable e) {
+            }
         }
-        System.out.println("true " + c + " of " + 1000);
+        System.out.println("6: true " + c + " of " + 1000);
 
     }
-
 
 
 }

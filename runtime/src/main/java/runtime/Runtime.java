@@ -1,23 +1,30 @@
 package runtime;
 
+import psObjects.Attribute;
 import psObjects.PSObject;
-import psObjects.composite.PSArray;
-import psObjects.composite.PSDictionary;
-import psObjects.composite.Snapshot;
-import psObjects.reference.GlobalRef;
-import psObjects.reference.LocalRef;
-import psObjects.reference.Reference;
+import psObjects.Type;
+import psObjects.values.Value;
+import psObjects.values.composite.CompositeValue;
+import psObjects.values.composite.PSArray;
+import psObjects.values.composite.PSDictionary;
+import psObjects.values.composite.Snapshot;
+import psObjects.values.reference.GlobalRef;
+import psObjects.values.reference.LocalRef;
+import psObjects.values.reference.Reference;
+import psObjects.values.simple.PSNull;
 import runtime.stack.DictionaryStack;
 import runtime.stack.OperandStack;
 import runtime.stack.PSStack;
 
-//import psObjects.composite.PSDictionary;
+import static psObjects.Type.*;
+
+//import psObjects.values.composite.PSDictionary;
 
 public class Runtime {
     private static Runtime ourInstance = new Runtime();
 
 
-    private PSTable table = new PSTable();
+    private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
     private boolean isGlobal = false;
@@ -34,57 +41,55 @@ public class Runtime {
     * save snapshot to operandStack
     */
     public void save() {
-        Snapshot snapshot = new Snapshot(table, operandStack);
-        operandStack = operandStack.push(createReference(snapshot));
+        Snapshot snapshot = new Snapshot(localVM, operandStack);
+        operandStack = operandStack.push(new PSObject(snapshot));
     }
 
     /*
     * getting snapshot from top of operandStack
     */
     public boolean restore() {
-        Reference ref = popFromOperandStack();
-        if (!(ref.isSnapshotRef())) return false;
-        Snapshot snapshot = (Snapshot) ref.getPSObject();
+        PSObject object = popFromOperandStack();
+        if (object.getType() != SAVE) return false;
+        Snapshot snapshot = (Snapshot) object.getValue();
         PSStack savedOperandStack = snapshot.getOperandStack();
-        for (Reference current : operandStack) {
+        for (PSObject current : operandStack) {
+            Value curValue = current.getValue();
             //if operand stack contains reference to composite object which was created after saving, we can't restore
-            if (current.isCompositeRef() && table.contains(current) && !savedOperandStack.contains(current)) {
+            if (localVM.contains(curValue) && !savedOperandStack.contains(current)) {
                 return false;
             }
         }
-        table = snapshot.getTable();
+        localVM = snapshot.getTable();
+        operandStack = snapshot.getOperandStack();
         return true;
     }
 
-    public int addToLocalVM(PSObject psObject) {
-        table = table.add(psObject);
-        return table.size() - 1;
+    public int addToLocalVM(CompositeValue value) {
+        localVM = localVM.add(value);
+        return localVM.size() - 1;
     }
 
-    public void pushToOperandStack(Reference psObjectRef) {
-        operandStack = operandStack.push(psObjectRef);
+    public void pushToOperandStack(PSObject psObject) {
+        operandStack = operandStack.push(psObject);
     }
 
-    public Reference popFromOperandStack() {
-        Reference objectRef = operandStack.peek();
+    public PSObject popFromOperandStack() {
+        PSObject object = operandStack.peek();
         operandStack = operandStack.removeTop();
-        return objectRef;
+        return object;
     }
 
-    public Reference peekFromOperandStack() {
+    public PSObject peekFromOperandStack() {
         return operandStack.peek();
     }
 
-/*    public void pushToDictionaryStack(PSDictionary dict) {
-        Reference ref = putPSObjectToLocalMemory(dict);
-        dictionaryStack = dictionaryStack.push(ref);
-    }*/
 
-    public void pushToDictionaryStack(Reference dictRef) {
-        dictionaryStack = dictionaryStack.push(dictRef);
+    public void pushToDictionaryStack(PSObject dict) {
+        dictionaryStack = dictionaryStack.push(dict);
     }
 
-    public Reference peekFromDictionaryStack() {
+    public PSObject peekFromDictionaryStack() {
         return dictionaryStack.peek();
     }
 
@@ -93,74 +98,70 @@ public class Runtime {
     }
 
 
-/*    public PSObject getPSObjectFromLocalVM(int index) {
-        return table.get(index);
+/*    public Value getPSObjectFromLocalVM(int index) {
+        return localVM.get(index);
     }*/
 
     /*
     * Find array in Local VM by LocalRef and change value by index = valueIndex
      */
-    public LocalRef createLocalRef(PSObject psObject) {
-        return new LocalRef(addToLocalVM(psObject));
+    public LocalRef createLocalRef(CompositeValue value) {
+        return new LocalRef(addToLocalVM(value));
     }
 
-    public LocalRef setValueArrayAtIndex(LocalRef localRefArray, int valueIndex, PSObject value) {
-        PSObject psObject = getPSObjectByLocalRef(localRefArray);
-        if (psObject instanceof PSArray) {
-            PSArray array = (PSArray) psObject;
-            LocalRef newArrLocalRef = createLocalRef(array.setValue(valueIndex, value));
-            return newArrLocalRef;
+    public PSObject setValueArrayAtIndex(PSObject arrayObject, int valueIndex, PSObject value) {
+        if (arrayObject.getType() != ARRAY) {
+            //todo throw type exception
+            return null;
         }
-        //todo throw type exception
-        return null;
+        PSArray psArray = (PSArray) arrayObject.getValue();
+        PSArray newValue = psArray.setValue(valueIndex, value);
+        return arrayObject.setValue(newValue);
     }
 
     /*
    * Find array in Local VM by LocalRef and get interval by startIndex and length
     */
-    public LocalRef getArrayInterval(LocalRef localRefArray, int startIndex, int length) {
-        PSObject psObject = getPSObjectByLocalRef(localRefArray);
-        if (psObject instanceof PSArray) {
-            PSArray array = (PSArray) psObject;
-            LocalRef subArrLocalRef = createLocalRef(array.getInterval(startIndex, length));
-            return subArrLocalRef;
+    public PSObject getArrayInterval(PSObject arrayObject, int startIndex, int length) {
+        if (arrayObject.getType() != ARRAY) {
+            //todo throw type exception
+            return null;
         }
-        //todo throw type exception
-        return null;
+        PSArray psArray = (PSArray) arrayObject.getValue();
+        Type type = arrayObject.getType();
+        Attribute attr = arrayObject.getAttribute();
+        return new PSObject(psArray.getInterval(startIndex, length), type, attr);
     }
 
     //dict key value put – Associate key with value in dict
-    public Reference putValueAtDictionaryKey(Reference dictRef, Reference key, Reference value) {
-        if (!dictRef.isDictionaryRef()) {
-            return dictRef;
+    public PSObject putValueAtDictionaryKey(PSObject dictObject, PSObject key, PSObject value) {
+        if (dictObject.getType() != DICTIONARY) {
+            return dictObject;
         }
-        PSDictionary dict = (PSDictionary) dictRef.getPSObject();
+        PSDictionary dict = (PSDictionary) dictObject.getValue();
         PSDictionary newDict = dict.put(key, value);
-        dictRef.setPSObject(newDict);
-        return dictRef;
+        dictObject.setValue(newDict);
+        return dictObject;
     }
 
     //dict key undef – Remove key and its value from dict
-    public Reference undefValueAtDictionaryKey(Reference dictRef, Reference keyRef) {
+    public PSObject undefValueAtDictionaryKey(PSObject dictObject, PSObject key) {
         //todo check
-        if (!dictRef.isDictionaryRef()) {
-            return dictRef;
-        }
-        PSDictionary dict = (PSDictionary) dictRef.getPSObject();
-        PSDictionary newDict = dict.undef(keyRef);
-        dictRef.setPSObject(newDict);
-        return dictRef;
+        if (dictObject.getType() != Type.DICTIONARY) return dictObject;
+        PSDictionary dict = (PSDictionary) dictObject.getValue();
+        PSDictionary newDict = dict.undef(key);
+        dictObject.setValue(newDict);
+        return dictObject;
 
     }
-    
-    public Reference copy(Reference srcDictRef, Reference dstDictRef){
+
+    public PSObject copy(PSObject srcDictRef, PSObject dstDictRef) {
         //todo check
-        if(!srcDictRef.isDictionaryRef()) return dstDictRef;
-        PSDictionary srcDict = (PSDictionary) srcDictRef.getPSObject();
-        PSDictionary dstDict = (PSDictionary) dstDictRef.getPSObject();
+        if (srcDictRef.getType() != Type.DICTIONARY) return dstDictRef;
+        PSDictionary srcDict = (PSDictionary) srcDictRef.getValue();
+        PSDictionary dstDict = (PSDictionary) dstDictRef.getValue();
         PSDictionary resDict = dstDict.copy(srcDict);
-        Reference resDictRef = createReference(resDict);
-        return resDictRef;
+        return new PSObject(resDict);
     }
 
 /*    private void replaceDictionaryInStack(PSDictionary dict, PSDictionary newDict) {
@@ -186,8 +187,8 @@ public class Runtime {
     }*/
 
     //    dict key get any Return value associated with key in dict
-    public Reference getValueAtDictionary(Reference dictRef, Reference key) {
-        return ((PSDictionary) dictRef.getPSObject()).get(key);
+    public PSObject getValueAtDictionary(PSObject dictObject, PSObject key) {
+        return ((PSDictionary) dictObject.getValue()).get(key);
     }
 
 
@@ -199,31 +200,39 @@ public class Runtime {
     }
 
     //clear operandStack;
-    public void clear(){
+    public void clear() {
         operandStack.clear();
     }
 
-    public void clearAll(){
+    public void clearAll() {
         operandStack.clear();
-        table.clear();
-    }
-    
-    public PSObject getPSObjectByLocalRef(LocalRef ref) {
-        return table.get(ref.getTableIndex());
+        localVM.clear();
     }
 
-/*    public LocalRef putPSObjectToLocalVM(PSObject object) {
-        table.add(object);
-        return new LocalRef(table.size() - 1);
+    public CompositeValue getValueByLocalRef(LocalRef ref) {
+        return localVM.get(ref.getTableIndex());
+    }
+
+/*    public LocalRef putPSObjectToLocalVM(Value object) {
+        localVM.add(object);
+        return new LocalRef(localVM.size() - 1);
     }*/
 
     public void setGlobal(boolean isGlobal) {
         this.isGlobal = isGlobal;
     }
 
-    public Reference createReference(PSObject object) {
+    public Reference createReference(CompositeValue object) {
         if (isGlobal) return new GlobalRef(object);
         else return createLocalRef(object);
     }
 
+    public PSObject findValue(PSObject key) {
+        PSObject found;
+        for (PSObject dictObj : dictionaryStack) {
+            found = getValueAtDictionary(dictObj, key);
+            if (found != null) return found;
+        }
+        return new PSObject(PSNull.NULL);
+    }
 }

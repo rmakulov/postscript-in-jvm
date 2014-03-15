@@ -2,7 +2,7 @@ package runtime.avl;
 
 //import References.Reference;
 
-import psObjects.reference.Reference;
+import psObjects.PSObject;
 
 //import static References.PSNull.NULL;
 
@@ -98,7 +98,7 @@ public class AvlTree {
      * @param key   The key of the new node.
      * @param value The value of the new node.
      */
-    public AvlTree insert(Reference key, Reference value) {
+    public AvlTree insert(PSObject key, PSObject value) {
         if (root == null) {
             return new AvlTree(new AvlNode(key, value));
         }
@@ -203,7 +203,7 @@ public class AvlTree {
     /**
      * Removes a node from the tree, if it is existent.
      */
-    public AvlTree remove(Reference key) {
+    public AvlTree remove(PSObject key) {
         // First we must find the node, after this we can delete it.
         AvlNode newRoot = valueCopyNode(root);
         // start recursive procedure for inserting the node
@@ -216,7 +216,7 @@ public class AvlTree {
      * @param node The node to start the search.
      * @param key  The KEY of node to undef.
      */
-    private AvlNode removeAVL(AvlNode node, Reference key) {
+    private AvlNode removeAVL(AvlNode node, PSObject key) {
         if (node == null) {
             // the value does not exist in this tree, so nothing needs to be done
             return null;
@@ -234,7 +234,7 @@ public class AvlTree {
         return balance(node);
     }
 
-    public Reference getValue(Reference key) {
+    public PSObject getValue(PSObject key) {
         return getValueAVL(this.root, key);
     }
 
@@ -244,7 +244,7 @@ public class AvlTree {
      * @param node The node to start the search.
      * @param key  The KEY of node to find and get value.
      */
-    private Reference getValueAVL(AvlNode node, Reference key) {
+    private PSObject getValueAVL(AvlNode node, PSObject key) {
         if (node != null) {
             if (node.key.compareTo(key) > 0) {
                 return getValueAVL(node.left, key);
