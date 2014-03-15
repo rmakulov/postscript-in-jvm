@@ -113,6 +113,10 @@ public class PSObject implements Comparable<PSObject> {
 
     }
 
+    public boolean isNumber(){
+        return type == Type.INTEGER || type == Type.REAL;
+    }
+
     public Type getType() {
         return type;
     }

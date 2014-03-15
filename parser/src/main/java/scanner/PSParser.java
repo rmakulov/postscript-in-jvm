@@ -2,7 +2,7 @@ package scanner;
 
 import psObjects.PSObject;
 import psObjects.values.simple.numbers.PSInteger;
-import operators.arithmetic.AddOp;
+import operators.arithmetic.binary.AddOp;
 import runtime.Runtime;
 
 import java.io.FileInputStream;

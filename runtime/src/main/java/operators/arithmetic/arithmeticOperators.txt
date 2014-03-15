@@ -18,5 +18,6 @@ exponent
 ln
 log
 rand
-srand
-rrand
+srand   //todo I haven't understood
+rrand   //todo I haven't understood
+Others are done;

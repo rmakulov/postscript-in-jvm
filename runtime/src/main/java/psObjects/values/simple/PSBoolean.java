@@ -37,11 +37,11 @@ public class PSBoolean extends SimpleValue {
      */
 
     public Integer compareTo(Value o) {
-        return o instanceof PSBoolean?
-            flag == ((PSBoolean)o).getFlag()?
-                    0:
-                    (flag ? 1 : -1):
-            super.compareTo(o);
+        return o instanceof PSBoolean ?
+                flag == ((PSBoolean) o).getFlag() ?
+                        0 :
+                        (flag ? 1 : -1) :
+                super.compareTo(o);
     }
 
     public int compareGrade() {
@@ -63,5 +63,14 @@ public class PSBoolean extends SimpleValue {
     @Override
     public int hashCode() {
         return (flag ? 1 : 0);
+    }
+
+    public static PSBoolean get(boolean b) {
+        if (b) return TRUE;
+        return FALSE;
+    }
+
+    public PSBoolean not() {
+        return flag ? FALSE : TRUE;
     }
 }

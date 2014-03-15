@@ -1,9 +1,10 @@
 package psObjects.values.simple;
 
 import psObjects.Type;
+import runtime.Runtime;
 
 public abstract class Operator extends SimpleValue {
-
+    protected runtime.Runtime runtime = Runtime.getInstance();
     public abstract void execute();
 
     @Override
