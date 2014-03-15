@@ -54,7 +54,6 @@ public class LocalRef extends Reference {
     }
 
     public CompositeValue getValue() {
-        //todo in runtime
         return runtime.Runtime.getInstance().getValueByLocalRef(this);
     }
 
