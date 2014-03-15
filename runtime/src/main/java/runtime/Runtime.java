@@ -228,6 +228,7 @@ public class Runtime {
     }
 
     public PSObject findValue(PSObject key) {
+        //todo order of value search
         PSObject found;
         for (PSObject dictObj : dictionaryStack) {
             found = getValueAtDictionary(dictObj, key);
