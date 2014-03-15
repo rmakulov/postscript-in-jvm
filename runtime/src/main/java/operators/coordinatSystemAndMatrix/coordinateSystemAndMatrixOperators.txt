@@ -1,0 +1,15 @@
+matrix
+initmatrix
+identmatrix
+defaultmatrix
+currentmatrix
+setmatrix
+translate
+scale
+rotate
+concat
+concatmatrix
+dtransform
+itransform
+idtransform
+invertmatrix

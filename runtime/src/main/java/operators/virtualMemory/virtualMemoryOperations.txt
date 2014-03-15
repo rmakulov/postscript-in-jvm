@@ -1,0 +1,10 @@
+save
+restore
+setglobal
+currentglobal
+gcheck
+startjob
+defineuserobject
+execuserobject
+undefineuserobject
+UserObjects

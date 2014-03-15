@@ -1,0 +1,12 @@
+bind
+null
+version
+realtime
+usertime
+languagelevel
+product
+revisio
+serialnumber
+executive
+echo
+prompt
