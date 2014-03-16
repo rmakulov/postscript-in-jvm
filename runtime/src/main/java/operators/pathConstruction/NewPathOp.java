@@ -1,0 +1,21 @@
+package operators.pathConstruction;
+
+import operators.AbstractGraphicOperator;
+import psObjects.values.simple.PSName;
+import runtime.graphics.paths.PSPath;
+
+/**
+ * Created by user on 15.03.14.
+ */
+public class NewPathOp extends AbstractGraphicOperator {
+
+    @Override
+    public void execute() {
+        gState.currentPath = new PSPath() ;
+    }
+
+    @Override
+    public PSName getDefaultKeyName() {
+        return new PSName("newpath");
+    }
+}

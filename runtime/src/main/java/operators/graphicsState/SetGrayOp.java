@@ -1,0 +1,32 @@
+package operators.graphicsState;
+
+import operators.AbstractGraphicOperator;
+import psObjects.PSObject;
+import psObjects.values.simple.PSName;
+import psObjects.values.simple.numbers.PSNumber;
+
+import java.awt.*;
+
+/**
+ * Created by user on 15.03.14.
+ */
+public class SetGrayOp extends AbstractGraphicOperator{
+    @Override
+    public void execute() { //num setgray setgray --
+        PSObject oNum = runtime.popFromOperandStack() ;
+        if(oNum == null || !(oNum.isNumber()) ){
+            runtime.pushToOperandStack(oNum);
+            return ;
+        }
+        double grayScale = ((PSNumber) oNum.getValue() ).getRealValue() ;
+        if(grayScale >= 0 && grayScale <= 1){
+            int col = (int) (255 * grayScale) ;
+            gState.color = new Color(col,col,col, 255) ;
+        }
+    }
+
+    @Override
+    public PSName getDefaultKeyName() {
+        return new PSName("setgrayop");
+    }
+}

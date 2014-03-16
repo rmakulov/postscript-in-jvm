@@ -1,0 +1,26 @@
+package operators.GlythAndFont;
+
+import operators.AbstractGraphicOperator;
+import psObjects.PSObject;
+import psObjects.Type;
+import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSName;
+
+/**
+ * Created by user on 16.03.14.
+ */
+public class StringWidthOp extends Operator {
+    @Override
+    public void execute() { // stinrg stringwidth w_x w_y
+        PSObject oStr = runtime.popFromOperandStack() ;
+        if(oStr == null || !(oStr.getType() == Type.STRING)){
+            runtime.pushToOperandStack(oStr);
+            return ;
+        }
+    }
+
+    @Override
+    public PSName getDefaultKeyName() {
+        return new PSName("stringwidth");
+    }
+}

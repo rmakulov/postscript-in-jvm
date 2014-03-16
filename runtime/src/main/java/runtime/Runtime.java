@@ -46,6 +46,15 @@ public class Runtime {
     public void save() {
         Snapshot snapshot = new Snapshot(localVM, operandStack);
         operandStack = operandStack.push(new PSObject(snapshot));
+        gsave(false);
+
+    }
+
+    public void gsave(boolean b) {
+        GSave gsave = new GSave(b) ;
+        gsave.getSnapshot();
+        pushToGraphicStack(gsave);
+
     }
 
     /*
@@ -65,6 +74,8 @@ public class Runtime {
         }
         localVM = snapshot.getTable();
         operandStack = snapshot.getOperandStack();
+        GSave gsave = popFromGraphicStack() ;
+        gsave.setSnapshot();
         return true;
     }
 
