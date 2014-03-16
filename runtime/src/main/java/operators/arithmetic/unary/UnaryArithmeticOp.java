@@ -51,7 +51,7 @@ public class UnaryArithmeticOp {
                 dRes = Math.sqrt(r);
                 break;
             case TruncateOp.getSymbolicChar:
-                dRes = Math.sqrt(r);
+                dRes = (int) r;
                 break;
             default:
                 runtime.pushToOperandStack(o);

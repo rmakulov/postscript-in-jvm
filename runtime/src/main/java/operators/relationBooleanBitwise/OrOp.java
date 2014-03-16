@@ -13,13 +13,9 @@ import psObjects.values.simple.numbers.PSInteger;
 public class OrOp extends Operator {
     @Override
     public void execute() {
+        if (runtime.getOperandStackSize() < 2) return;
         PSObject o2 = runtime.popFromOperandStack();
-        if (o2 == null) return;
         PSObject o1 = runtime.popFromOperandStack();
-        if (o1 == null) {
-            runtime.pushToOperandStack(o2);
-            return;
-        }
         if (o2.getType() == Type.BOOLEAN && o1.getType() == Type.BOOLEAN) {
             PSBoolean b1 = (PSBoolean) o1.getValue();
             PSBoolean b2 = (PSBoolean) o2.getValue();

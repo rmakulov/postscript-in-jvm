@@ -5,7 +5,6 @@ import psObjects.values.Value;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
-import runtime.Runtime;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -13,14 +12,9 @@ import runtime.Runtime;
 public class EqOp extends Operator {
     @Override
     public void execute() {
-        runtime.Runtime runtime = Runtime.getInstance();
+        if (runtime.getOperandStackSize() < 2) return;
         PSObject o2 = runtime.popFromOperandStack();
-        if (o2 == null) return;
         PSObject o1 = runtime.popFromOperandStack();
-        if (o1 == null) {
-            runtime.pushToOperandStack(o2);
-            return;
-        }
         Value v1 = o1.getValue();
         Value v2 = o2.getValue();
         runtime.pushToOperandStack(new PSObject(PSBoolean.get(v1.equals(v2))));

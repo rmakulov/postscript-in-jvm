@@ -9,7 +9,7 @@ import psObjects.values.simple.PSName;
 public class TruncateOp extends Operator{
     @Override
     public void execute() {
-         //todo
+        UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 
     @Override

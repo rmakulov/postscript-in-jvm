@@ -5,6 +5,7 @@ import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
+import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSName;
@@ -44,6 +45,16 @@ public class PSObject implements Comparable<PSObject> {
         type = value.determineType();
         if (isComposite()) attribute = new Attribute();
     }
+
+    public PSObject(Value value, Attribute.TreatAs treatAs){
+        if (value instanceof CompositeValue) {
+            value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
+        }
+        this.value = value;
+        type = value.determineType();
+        if (isComposite()) attribute = new Attribute(treatAs);
+    }
+
 
     public boolean isComposite() {
         switch (type) {
@@ -132,9 +143,8 @@ public class PSObject implements Comparable<PSObject> {
     }
 
     //convert to literal
-    public PSObject cvl() {
+    public PSObject cvlit() {
         if (attribute.access == Attribute.Access.EXECUTE_ONLY) {
-            //todo throw exeption
             return null;
         }
         Attribute newAttr = new Attribute(attribute.access, Attribute.TreatAs.LITERAL);
@@ -144,7 +154,6 @@ public class PSObject implements Comparable<PSObject> {
     // check executable attribute
     public boolean xcheck() {
         if (!isGeneralComposite()) {
-            //todo throw exeption
             return false;
         }
         return attribute.treatAs == Attribute.TreatAs.EXECUTABLE;
@@ -154,10 +163,13 @@ public class PSObject implements Comparable<PSObject> {
     // check read attribute
     public boolean rcheck() {
         if (!isGeneralComposite()) {
-            //todo throw exeption
             return false;
         }
         return attribute.access == Attribute.Access.READ_ONLY;
+    }
+
+    public boolean gcheck() {
+        return !isComposite() || value instanceof GlobalRef;
     }
 
 
@@ -169,7 +181,6 @@ public class PSObject implements Comparable<PSObject> {
 
     public PSObject noaccess() {
         if (!isGeneralComposite()) {
-            //todo throw exeption
             return null;
         }
         Attribute newAttr = new Attribute(Attribute.Access.NONE, attribute.treatAs);
@@ -178,7 +189,6 @@ public class PSObject implements Comparable<PSObject> {
 
     public PSObject executeonly() {
         if (!isExecutableType() && xcheck()) {
-            //todo throw exeption
             return null;
         }
         Attribute newAttr = new Attribute(Attribute.Access.EXECUTE_ONLY, attribute.treatAs);
@@ -187,7 +197,6 @@ public class PSObject implements Comparable<PSObject> {
 
     public PSObject readOnly() {
         if (!isGeneralComposite()) {
-            //todo throw exeption
             return null;
         }
         Attribute newAttr = new Attribute(Attribute.Access.READ_ONLY, attribute.treatAs);
@@ -255,7 +264,6 @@ public class PSObject implements Comparable<PSObject> {
     //convert PSString to PSName
     public PSObject cvn() {
         if (type != Type.STRING) {
-            //todo throw exception
             return null;
         }
         String str = ((PSString) value.getValue()).getString();

@@ -222,6 +222,10 @@ public class Runtime {
         this.isGlobal = isGlobal;
     }
 
+    public boolean currentGlobal() {
+        return isGlobal;
+    }
+
     public Reference createReference(CompositeValue object) {
         if (isGlobal) return new GlobalRef(object);
         else return createLocalRef(object);
@@ -235,5 +239,13 @@ public class Runtime {
             if (found != null) return found;
         }
         return new PSObject(PSNull.NULL);
+    }
+
+    public int getOperandStackSize() {
+        return operandStack.size();
+    }
+
+    public int getDictionaryStackSize() {
+        return dictionaryStack.size();
     }
 }

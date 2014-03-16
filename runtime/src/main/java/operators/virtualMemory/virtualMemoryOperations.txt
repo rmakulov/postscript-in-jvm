@@ -1,10 +1,10 @@
-save
-restore
-setglobal
-currentglobal
-gcheck
-startjob
-defineuserobject
-execuserobject
-undefineuserobject
-UserObjects
+save              +
+restore           +
+setglobal         +
+currentglobal     +
+gcheck            +
+startjob          -
+defineuserobject  -
+execuserobject    -
+undefineuserobject-
+UserObjects       -

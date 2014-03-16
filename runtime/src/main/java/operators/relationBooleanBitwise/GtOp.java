@@ -14,6 +14,7 @@ import psObjects.values.simple.numbers.PSNumber;
 public class GtOp extends Operator {
     @Override
     public void execute() {
+        if (runtime.getOperandStackSize() < 2) return;
         PSObject o2 = runtime.popFromOperandStack();
         if (o2 == null) return;
         PSObject o1 = runtime.popFromOperandStack();

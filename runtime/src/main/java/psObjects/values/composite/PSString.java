@@ -67,4 +67,8 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
     public Type determineType() {
         return Type.STRING;
     }
+
+    public PSString setSubstring(String substr) {
+        return new PSString(substr + s.substring(substr.length()));
+    }
 }

@@ -13,6 +13,7 @@ import runtime.Runtime;
 public class NeOp extends Operator {
     @Override
     public void execute() {
+        if (runtime.getOperandStackSize() < 2) return;
         Runtime runtime = Runtime.getInstance();
         PSObject o2 = runtime.popFromOperandStack();
         if (o2 == null) return;

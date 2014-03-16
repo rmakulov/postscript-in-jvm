@@ -1,13 +1,13 @@
-eq
-ne
-ge
-gt
-le
-lt
-and
-not
-or
-xor
-true
-false
-shift
+eq      +
+ne      +
+ge      +
+gt      +
+le      +
+lt      +
+and     +
+not     +
+or      +
+xor     +
+true    +
+false   +
+bitshift-

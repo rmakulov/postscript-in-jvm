@@ -10,13 +10,9 @@ import runtime.Runtime;
 public class BinaryArithmeticOp {
     public static void doOperation(char op) {
         runtime.Runtime runtime = Runtime.getInstance();
+        if (runtime.getOperandStackSize() < 2) return;
         PSObject o2 = runtime.popFromOperandStack();
-        if (o2 == null) return;
         PSObject o1 = runtime.popFromOperandStack();
-        if (o1 == null) {
-            runtime.pushToOperandStack(o2);
-            return;
-        }
         if (!o2.isNumber() || !o1.isNumber()) {
             runtime.pushToOperandStack(o1);
             runtime.pushToOperandStack(o2);
