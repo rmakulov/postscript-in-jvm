@@ -4,11 +4,11 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
-public class NoAccessOp extends Operator {
+public class NoaccessOp extends Operator {
 
-    public static final NoAccessOp instance = new NoAccessOp();
+    public static final NoaccessOp instance = new NoaccessOp();
 
-    protected NoAccessOp() {
+    protected NoaccessOp() {
         super();
     }
 
