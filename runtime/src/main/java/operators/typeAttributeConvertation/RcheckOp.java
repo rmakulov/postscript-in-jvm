@@ -5,10 +5,15 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
+
 public class RcheckOp extends Operator {
+
+    public static final RcheckOp instance = new RcheckOp();
+
+    protected RcheckOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

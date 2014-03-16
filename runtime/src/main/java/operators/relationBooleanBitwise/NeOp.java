@@ -11,6 +11,13 @@ import runtime.Runtime;
  * Created by Дмитрий on 16.03.14.
  */
 public class NeOp extends Operator {
+
+    public static final NeOp instance = new NeOp();
+
+    protected NeOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;

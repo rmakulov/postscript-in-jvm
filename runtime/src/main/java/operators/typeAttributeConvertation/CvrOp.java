@@ -7,10 +7,14 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSReal;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
 public class CvrOp extends Operator {
+
+    public static final CvrOp instance = new CvrOp();
+
+    protected CvrOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

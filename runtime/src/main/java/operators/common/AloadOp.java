@@ -8,6 +8,12 @@ import psObjects.values.simple.PSName;
 
 public class AloadOp extends Operator {
 
+    public static final AloadOp instance = new AloadOp();
+
+    protected AloadOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject psObject = runtime.popFromOperandStack();

@@ -10,6 +10,13 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 
 public class GetIntervalOp extends Operator {
+
+    public static final GetIntervalOp instance = new GetIntervalOp();
+
+    protected GetIntervalOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject count = runtime.popFromOperandStack();

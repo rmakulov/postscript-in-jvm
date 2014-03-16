@@ -7,9 +7,16 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 16.03.14.
  */
 public class RestoreOp extends Operator {
+
+    public static final RestoreOp instance = new RestoreOp();
+
+    protected RestoreOp() {
+        super();
+    }
+
     @Override
     public void execute() {
-         runtime.restore();
+        runtime.restore();
     }
 
     @Override

@@ -10,6 +10,13 @@ import psObjects.values.simple.numbers.PSInteger;
  * Created by Дмитрий on 16.03.14.
  */
 public class BitshiftOp extends Operator {
+
+    public static final BitshiftOp instance = new BitshiftOp();
+
+    protected BitshiftOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;
@@ -25,7 +32,7 @@ public class BitshiftOp extends Operator {
         if (shift > 0) {
             res = num << shift;
         } else {
-            res =num >>(-shift);
+            res = num >> (-shift);
         }
         runtime.pushToOperandStack(new PSObject(new PSInteger(res)));
     }

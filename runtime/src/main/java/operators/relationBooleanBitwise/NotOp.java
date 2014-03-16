@@ -11,6 +11,13 @@ import psObjects.values.simple.numbers.PSInteger;
  * Created by Дмитрий on 16.03.14.
  */
 public class NotOp extends Operator {
+
+    public static final NotOp instance = new NotOp();
+
+    protected NotOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

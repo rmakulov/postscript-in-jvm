@@ -12,6 +12,13 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by Дмитрий on 16.03.14.
  */
 public class LeOp extends Operator {
+
+    public static final LeOp instance = new LeOp();
+
+    protected LeOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;

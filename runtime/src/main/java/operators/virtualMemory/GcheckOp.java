@@ -9,6 +9,13 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 16.03.14.
  */
 public class GcheckOp extends Operator {
+
+    public static final GcheckOp instance = new GcheckOp();
+
+    protected GcheckOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

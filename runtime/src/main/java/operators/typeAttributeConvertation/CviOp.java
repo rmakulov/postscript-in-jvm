@@ -12,6 +12,13 @@ import psObjects.values.simple.numbers.PSReal;
  * Created by Дмитрий on 16.03.14.
  */
 public class CviOp extends Operator {
+
+    public static final CviOp instance = new CviOp();
+
+    protected CviOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

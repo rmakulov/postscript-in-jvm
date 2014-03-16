@@ -2,7 +2,6 @@ package operators.common;
 
 import psObjects.PSObject;
 import psObjects.Type;
-import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
 import psObjects.values.composite.PSDictionary;
@@ -11,18 +10,25 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 
 public class PutOp extends Operator {
+
+    public static final PutOp instance = new PutOp();
+
+    protected PutOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject value = runtime.popFromOperandStack();
         if (value == null)
             return;
         PSObject key = runtime.popFromOperandStack();
-        if (key == null){
+        if (key == null) {
             runtime.pushToOperandStack(value);
             return;
         }
         PSObject src = runtime.popFromOperandStack();
-        if (src == null){
+        if (src == null) {
             runtime.pushToOperandStack(key);
             runtime.pushToOperandStack(value);
             return;
@@ -37,8 +43,7 @@ public class PutOp extends Operator {
                 if (key.getType() == Type.INTEGER) {
                     int index = ((PSInteger) key.getValue()).getIntValue();
                     result = ((PSArray) src.getValue()).setValue(index, value);
-                }
-                else {
+                } else {
                     runtime.pushToOperandStack(src);
                     runtime.pushToOperandStack(key);
                     runtime.pushToOperandStack(value);

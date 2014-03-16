@@ -10,6 +10,13 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 16.03.14.
  */
 public class EqOp extends Operator {
+
+    public static final EqOp instance = new EqOp();
+
+    protected EqOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;

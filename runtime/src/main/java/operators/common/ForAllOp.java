@@ -11,6 +11,13 @@ import psObjects.values.simple.PSName;
 import runtime.avl.AvlTree;
 
 public class ForAllOp extends Operator {
+
+    public static final ForAllOp instance = new ForAllOp();
+
+    protected ForAllOp() {
+        super();
+    }
+
     @Override
     public void execute() {
 
@@ -19,30 +26,30 @@ public class ForAllOp extends Operator {
             return;
 
         PSObject elems = runtime.popFromOperandStack();
-        if (elems == null || !proc.isProc()){
+        if (elems == null || !proc.isProc()) {
             runtime.pushToOperandStack(proc);
             return;
         }
-        switch (elems.getType()){
+        switch (elems.getType()) {
             case ARRAY:
             case PACKEDARRAY:
-                PSObject[] array = ((PSArray)elems.getValue()).getArray();
-                for (PSObject psObject : array)   {
+                PSObject[] array = ((PSArray) elems.getValue()).getArray();
+                for (PSObject psObject : array) {
                     runtime.pushToOperandStack(psObject);
                     ExecOp.instance.execute();
                 }
                 break;
             case DICTIONARY:
-                AvlTree tree = ((PSDictionary)elems.getValue()).getTree();
-                for (Pair<PSObject,PSObject> pair : tree){
+                AvlTree tree = ((PSDictionary) elems.getValue()).getTree();
+                for (Pair<PSObject, PSObject> pair : tree) {
                     runtime.pushToOperandStack(pair.getKey());
                     runtime.pushToOperandStack(pair.getValue());
                     ExecOp.instance.execute();
                 }
                 break;
             case STRING:
-                String s = ((PSString)elems.getValue()).getString();
-                for (int i=0; i<s.length(); i++){
+                String s = ((PSString) elems.getValue()).getString();
+                for (int i = 0; i < s.length(); i++) {
                     runtime.pushToOperandStack(new PSObject(new PSString(s.charAt(i) + "")));
                     ExecOp.instance.execute();
                 }

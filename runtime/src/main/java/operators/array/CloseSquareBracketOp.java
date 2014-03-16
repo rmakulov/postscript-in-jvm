@@ -10,8 +10,15 @@ import java.util.ArrayList;
 
 public class CloseSquareBracketOp extends Operator {
 
+    public static final CloseSquareBracketOp instance = new CloseSquareBracketOp();
+
+    protected CloseSquareBracketOp() {
+        super();
+    }
+
     @Override
     public void execute() {
+
         PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
         while (!PSMark.OPEN_SQUARE_BRACKET.equals(psObject)) {

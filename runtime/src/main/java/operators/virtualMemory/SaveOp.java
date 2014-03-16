@@ -7,9 +7,16 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 16.03.14.
  */
 public class SaveOp extends Operator {
+
+    public static final SaveOp instance = new SaveOp();
+
+    protected SaveOp() {
+        super();
+    }
+
     @Override
     public void execute() {
-           runtime.save();
+        runtime.save();
     }
 
     @Override

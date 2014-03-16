@@ -8,10 +8,14 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
 public class CvrsOp extends Operator {
+
+    public static final CvrsOp instance = new CvrsOp();
+
+    protected CvrsOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 3) return;

@@ -10,6 +10,13 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 
 public class PutIntervalOp extends Operator {
+
+    public static final PutIntervalOp instance = new PutIntervalOp();
+
+    protected PutIntervalOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject src = runtime.popFromOperandStack();

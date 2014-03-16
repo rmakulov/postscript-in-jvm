@@ -5,10 +5,14 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
 public class WcheckOp extends Operator {
+
+    public static final WcheckOp instance = new WcheckOp();
+
+    protected WcheckOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

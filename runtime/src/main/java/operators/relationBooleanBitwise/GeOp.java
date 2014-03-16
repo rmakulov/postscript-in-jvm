@@ -12,6 +12,13 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by Дмитрий on 16.03.14.
  */
 public class GeOp extends Operator {
+
+    public static final GeOp instance = new GeOp();
+
+    protected GeOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;

@@ -10,6 +10,13 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 
 public class GetOp extends Operator {
+
+    public static final GetOp instance = new GetOp();
+
+    protected GetOp() {
+        super();
+    }
+
     // todo delete from runtime get operator
     @Override
     public void execute() {
@@ -17,7 +24,7 @@ public class GetOp extends Operator {
         if (key == null)
             return;
         PSObject src = runtime.popFromOperandStack();
-        if (src == null){
+        if (src == null) {
             runtime.pushToOperandStack(key);
             return;
         }
@@ -31,8 +38,7 @@ public class GetOp extends Operator {
                 if (key.getType() == Type.INTEGER) {
                     int index = ((PSInteger) key.getValue()).getIntValue();
                     result = ((PSArray) src.getValue()).get(index);
-                }
-                else {
+                } else {
                     runtime.pushToOperandStack(src);
                     runtime.pushToOperandStack(key);
                     return;

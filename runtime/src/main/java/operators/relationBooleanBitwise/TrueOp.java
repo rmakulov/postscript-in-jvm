@@ -9,6 +9,13 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 16.03.14.
  */
 public class TrueOp extends Operator {
+
+    public static final TrueOp instance = new TrueOp();
+
+    protected TrueOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         runtime.pushToOperandStack(new PSObject(PSBoolean.TRUE));

@@ -5,10 +5,14 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
 public class XcheckOp extends Operator {
+
+    public static final XcheckOp instance = new XcheckOp();
+
+    protected XcheckOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

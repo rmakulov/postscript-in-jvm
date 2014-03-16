@@ -11,6 +11,13 @@ import psObjects.values.simple.numbers.PSInteger;
  * Created by Дмитрий on 16.03.14.
  */
 public class AndOp extends Operator {
+
+    public static final AndOp instance = new AndOp();
+
+    protected AndOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;

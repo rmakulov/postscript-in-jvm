@@ -12,6 +12,13 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by Дмитрий on 16.03.14.
  */
 public class LtOp extends Operator {
+
+    public static final LtOp instance = new LtOp();
+
+    protected LtOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;

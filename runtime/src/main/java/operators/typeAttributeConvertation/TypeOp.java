@@ -4,10 +4,14 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
 public class TypeOp extends Operator {
+
+    public static final TypeOp instance = new TypeOp();
+
+    protected TypeOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();

@@ -9,10 +9,14 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
 public class CvsOp extends Operator {
+
+    public static final CvsOp instance = new CvsOp();
+
+    protected CvsOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;
