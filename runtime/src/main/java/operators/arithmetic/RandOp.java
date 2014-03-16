@@ -12,6 +12,11 @@ import java.util.Random;
  * Created by Дмитрий on 15.03.14.
  */
 public class RandOp extends Operator {
+    public static final RandOp instance = new RandOp();
+
+    protected RandOp() {
+        super();
+    }
     @Override
     public void execute() {
         runtime.Runtime runtime = Runtime.getInstance();

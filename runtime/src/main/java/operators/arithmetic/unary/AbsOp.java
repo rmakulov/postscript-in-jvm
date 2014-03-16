@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class AbsOp extends Operator  {
+    public static final AbsOp instance = new AbsOp();
+
+    protected AbsOp() {
+        super();
+    }
     @Override
     public void execute() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
