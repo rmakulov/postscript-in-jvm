@@ -1,11 +1,12 @@
 package psObjects.values.simple;
 
+import psObjects.Attribute;
 import psObjects.Type;
-import runtime.*;
 import runtime.Runtime;
 
 public abstract class Operator extends SimpleValue {
-
+    protected final Attribute.TreatAs LITERAL = Attribute.TreatAs.LITERAL;
+    protected final Attribute.TreatAs EXECUTABLE = Attribute.TreatAs.EXECUTABLE;
     protected runtime.Runtime runtime = Runtime.getInstance();
 
     public abstract void execute();
