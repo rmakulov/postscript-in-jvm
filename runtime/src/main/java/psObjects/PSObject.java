@@ -20,6 +20,10 @@ public class PSObject implements Comparable<PSObject> {
         return value.getValue();
     }
 
+    public Attribute.TreatAs treatAs(){
+        return attribute.treatAs;
+    }
+
     public Value getDirectValue() {
         return value;
     }
