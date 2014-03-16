@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class TruncateOp extends Operator{
+    public static final TruncateOp instance = new TruncateOp();
+
+    protected TruncateOp() {
+        super();
+    }
     @Override
     public void execute() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);

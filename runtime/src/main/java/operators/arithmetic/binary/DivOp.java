@@ -1,6 +1,5 @@
 package operators.arithmetic.binary;
 
-import operators.arithmetic.binary.BinaryArithmeticOp;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
@@ -8,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class DivOp extends Operator {
+    public static final DivOp instance = new DivOp();
+
+    protected DivOp() {
+        super();
+    }
     @Override
     public void execute() {
         BinaryArithmeticOp.doOperation('/');

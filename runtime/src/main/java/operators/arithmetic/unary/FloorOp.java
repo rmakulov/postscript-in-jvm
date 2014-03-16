@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class FloorOp extends Operator {
+    public static final FloorOp instance = new FloorOp();
+
+    protected FloorOp() {
+        super();
+    }
     @Override
     public void execute() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
