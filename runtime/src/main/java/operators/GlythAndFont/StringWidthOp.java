@@ -10,6 +10,12 @@ import psObjects.values.simple.PSName;
  * Created by user on 16.03.14.
  */
 public class StringWidthOp extends Operator {
+    public static final StringWidthOp instance = new StringWidthOp();
+
+    protected StringWidthOp() {
+        super();
+    }
+
     @Override
     public void execute() { // stinrg stringwidth w_x w_y
         PSObject oStr = runtime.popFromOperandStack() ;

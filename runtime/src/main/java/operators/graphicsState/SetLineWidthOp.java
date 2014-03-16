@@ -8,7 +8,12 @@ import psObjects.values.simple.numbers.PSNumber;
 /**
  * Created by user on 15.03.14.
  */
-public class SetLineWidth extends AbstractGraphicOperator{
+public class SetLineWidthOp extends AbstractGraphicOperator{
+    public static final SetLineWidthOp instance = new SetLineWidthOp();
+
+    protected SetLineWidthOp() {
+        super();
+    }
 
     @Override
     public void execute() {// num setlinewidth -

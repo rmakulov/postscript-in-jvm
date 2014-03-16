@@ -10,6 +10,12 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by user on 15.03.14.
  */
 public class RotateOp extends AbstractGraphicOperator{
+    public static final RotateOp instance = new RotateOp();
+
+    protected RotateOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject oAngle = runtime.popFromOperandStack() ;

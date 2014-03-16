@@ -9,6 +9,11 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by user on 16.03.14.
  */
 public class SetMiterLimitOp extends AbstractGraphicOperator {
+    public static final SetMiterLimitOp instance = new SetMiterLimitOp();
+
+    protected SetMiterLimitOp() {
+        super();
+    }
 
     @Override
     public void execute() {

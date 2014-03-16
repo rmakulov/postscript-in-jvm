@@ -9,7 +9,11 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by user on 15.03.14.
  */
 public class ScaleOp extends AbstractGraphicOperator {
+    public static final ScaleOp instance = new ScaleOp();
 
+    protected ScaleOp() {
+        super();
+    }
     @Override
     public void execute() {// s_x s_y scale --
         PSObject oSY = runtime.popFromOperandStack() ;

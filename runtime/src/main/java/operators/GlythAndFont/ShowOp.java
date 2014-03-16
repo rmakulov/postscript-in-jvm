@@ -10,6 +10,12 @@ import psObjects.values.simple.PSName;
  * Created by user on 16.03.14.
  */
 public class ShowOp extends AbstractGraphicOperator {
+    public static final ShowOp instance = new ShowOp();
+
+    protected ShowOp() {
+        super();
+    }
+
     @Override
     public void execute() { // string show --
         PSObject oStr = runtime.popFromOperandStack() ;

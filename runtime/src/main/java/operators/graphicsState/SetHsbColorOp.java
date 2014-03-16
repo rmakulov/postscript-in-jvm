@@ -10,7 +10,13 @@ import java.awt.*;
 /**
  * Created by user on 15.03.14.
  */
-public class SetHsbOp extends AbstractGraphicOperator {
+public class SetHsbColorOp extends AbstractGraphicOperator {
+    public static final SetHsbColorOp instance = new SetHsbColorOp();
+
+    protected SetHsbColorOp() {
+        super();
+    }
+
     @Override
     public void execute() { // hue saturation brightness sethsbcolor --
         PSObject oBright = runtime.popFromOperandStack() ;

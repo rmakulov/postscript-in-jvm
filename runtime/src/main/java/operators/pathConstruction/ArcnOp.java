@@ -10,6 +10,12 @@ import runtime.graphics.point.PSPoint;
  * Created by user on 15.03.14.
  */
 public class ArcnOp extends AbstractGraphicOperator {
+    public static final ArcnOp instance = new ArcnOp();
+
+    protected ArcnOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject oAngle2 = runtime.popFromOperandStack();

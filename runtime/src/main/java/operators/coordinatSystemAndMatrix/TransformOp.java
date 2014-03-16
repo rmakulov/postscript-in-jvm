@@ -15,7 +15,11 @@ import runtime.graphics.point.PSPoint;
  * Created by user on 16.03.14.
  */
 public class TransformOp extends AbstractGraphicOperator {
+    public static final TransformOp instance = new TransformOp();
 
+    protected TransformOp() {
+        super();
+    }
     @Override
     public void execute() { // x y
         PSObject first = runtime.popFromOperandStack() ;

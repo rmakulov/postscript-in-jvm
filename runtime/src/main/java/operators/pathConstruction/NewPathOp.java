@@ -8,7 +8,11 @@ import runtime.graphics.paths.PSPath;
  * Created by user on 15.03.14.
  */
 public class NewPathOp extends AbstractGraphicOperator {
+    public static final NewPathOp instance = new NewPathOp();
 
+    protected NewPathOp() {
+        super();
+    }
     @Override
     public void execute() {
         gState.currentPath = new PSPath() ;

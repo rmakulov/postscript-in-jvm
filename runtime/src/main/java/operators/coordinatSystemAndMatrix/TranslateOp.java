@@ -9,6 +9,12 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by user on 15.03.14.
  */
 public class TranslateOp extends AbstractGraphicOperator {
+    public static final TranslateOp instance = new TranslateOp();
+
+    protected TranslateOp() {
+        super();
+    }
+
     @Override
     public void execute() {//t_x t_y translate --
         PSObject oTY = runtime.popFromOperandStack() ;

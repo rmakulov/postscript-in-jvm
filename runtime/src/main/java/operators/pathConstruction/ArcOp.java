@@ -11,6 +11,12 @@ import runtime.graphics.point.PSPoint;
  * Created by user on 15.03.14.
  */
 public class ArcOp extends AbstractGraphicOperator {
+    public static final ArcOp instance = new ArcOp();
+
+    protected ArcOp() {
+        super();
+    }
+
     @Override
     public void execute() {//x y r angle1 angle2 arc ---
         PSObject oAngle2 = runtime.popFromOperandStack();
