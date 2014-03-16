@@ -2,17 +2,18 @@ package runtime.stack;
 
 import psObjects.PSObject;
 import psObjects.values.Value;
+import runtime.graphics.save.GSave;
 
 import java.util.Stack;
 
 /**
  * Created by 1 on 10.12.13.
  */
-public class GraphicStack extends PSStack {
+public class GraphicStack extends PSStack<GSave> {
     public GraphicStack() {
     }
 
-    public GraphicStack(Stack<Value> stack) {
+    public GraphicStack(Stack<GSave> stack) {
          super(stack);
      }
  
@@ -22,8 +23,8 @@ public class GraphicStack extends PSStack {
      }
  
      //@Override
-     public GraphicStack push(PSObject ref) {
-         return new GraphicStack(super.pushAndGetStack(ref));
+     public GraphicStack push(GSave gsave) {
+         return new GraphicStack(super.pushAndGetStack(gsave));
      }
  
      @Override
