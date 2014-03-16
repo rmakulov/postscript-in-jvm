@@ -10,7 +10,6 @@ import runtime.Runtime;
 public class AddOp extends Operator {
     @Override
     public void execute() {
-        Runtime runtime = Runtime.getInstance();
         PSObject o1 = runtime.popFromOperandStack();
         PSObject o2 = runtime.popFromOperandStack();
         if (o1 != null && o2 != null) {

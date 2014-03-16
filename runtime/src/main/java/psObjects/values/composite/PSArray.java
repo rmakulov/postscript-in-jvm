@@ -15,6 +15,10 @@ public class PSArray extends CompositeValue implements Cloneable {
         array = new PSObject[length];
     }
 
+    public PSObject get(int index){
+        return array[index];
+    }
+
     public static PSArray initArray(int length) {
         PSArray psArray = new PSArray(length);
         for (int i = 0; i < length; i++) {
@@ -49,6 +53,17 @@ public class PSArray extends CompositeValue implements Cloneable {
 
     private void setDirectValue(int index, PSObject value) {
         array[index] = value;
+    }
+
+    public PSArray putInterval(int start, PSArray psArray){
+        PSObject[] newArray = new PSObject[array.length];
+        System.arraycopy(array, 0, newArray, 0, array.length);
+        PSObject[] arrayFrom = psArray.getArray();
+        if (newArray.length - start < arrayFrom.length)
+            return null;
+        for (int i=0; i<arrayFrom.length; i++)
+            newArray[i+start] = arrayFrom[i];
+        return new PSArray(newArray);
     }
 
 

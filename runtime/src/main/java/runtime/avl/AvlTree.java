@@ -2,14 +2,17 @@ package runtime.avl;
 
 //import References.Reference;
 
+import javafx.util.Pair;
 import psObjects.PSObject;
 
-//import static References.PSNull.NULL;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Stack;
 
 /**
  * This class is the complete and tested implementation of an AVL-tree.
  */
-public class AvlTree {
+public class AvlTree implements Iterable<Pair<PSObject,PSObject>> {
 
     protected AvlNode root; // the root node
 
@@ -20,6 +23,10 @@ public class AvlTree {
 
     public AvlTree() {
 
+    }
+
+    public Iterator<Pair<PSObject,PSObject>> iterator(){
+        return new DepthFirstIterator();
     }
 
 
@@ -371,6 +378,38 @@ public class AvlTree {
         return root != null ? root.getCount() : 0;
     }
 
+    private class DepthFirstIterator implements Iterator<Pair<PSObject,PSObject>> {
+
+        private Stack<AvlNode> fringe = new Stack<AvlNode> ( );
+
+        public DepthFirstIterator ( ) {
+            if (root != null) {
+                fringe.push (root);
+            }
+        }
+
+        public boolean hasNext ( ) {
+            return !fringe.empty ( );
+        }
+
+        public Pair<PSObject,PSObject> next ( ) {
+            if (!hasNext ( )) {
+                throw new NoSuchElementException("tree ran out of elements");
+            }
+            AvlNode node = fringe.pop ( );
+            if (node.right != null) {
+                fringe.push (node.right);
+            }
+            if (node.left != null) {
+                fringe.push (node.left);
+            }
+            return new Pair<PSObject,PSObject>(node.key,node.value);
+        }
+
+        public void remove () {
+            throw new UnsupportedOperationException ();
+        }
+    }
 
 }
 

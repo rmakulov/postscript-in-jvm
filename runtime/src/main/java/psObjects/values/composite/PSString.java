@@ -15,6 +15,14 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
 
     }
 
+    public PSString getInterval(int start, int length){
+        return new PSString(s.substring(start, start + length - 1));
+    }
+
+    public PSString get(int index){
+        return new PSString(s.charAt(index) + "");
+    }
+
     // Generate random string and add it into local VM
     public static PSString initString() {
         byte[] temp = new byte[10];
@@ -66,5 +74,9 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
     @Override
     public Type determineType() {
         return Type.STRING;
+    }
+
+    public int length(){
+        return s.length();
     }
 }

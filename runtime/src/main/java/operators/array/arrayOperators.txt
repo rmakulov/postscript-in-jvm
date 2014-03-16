@@ -1,12 +1,13 @@
-array
-[
-]
-length
-get
-put
-getinterval
-putinterval
-astore
-aload
-copy
++ array
++ [
++ ]
+commons + length
+commons + get
+commons + put     // todo for string
+commons + getinterval
+commons + putinterval  //todo for string
+commons + aload
 forall
+
+astore
+copy

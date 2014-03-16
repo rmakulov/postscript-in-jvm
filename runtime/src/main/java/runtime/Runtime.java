@@ -76,6 +76,8 @@ public class Runtime {
 
     public PSObject popFromOperandStack() {
         PSObject object = operandStack.peek();
+        if (object == null)
+            return object;
         operandStack = operandStack.removeTop();
         return object;
     }

@@ -79,6 +79,8 @@ public class PSStack<T> implements Iterable<T> {
 
 
     public T peek() {
+        if (stack.empty())
+            return null;
         return stack.peek();
     }
 

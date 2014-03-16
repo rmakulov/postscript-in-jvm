@@ -258,4 +258,8 @@ public class PSObject implements Comparable<PSObject> {
         if (str.length() > 127) str = str.substring(0, 127);
         return new PSObject(new PSName(str));
     }
+
+    public boolean isProc() {
+        return type == Type.ARRAY && xcheck();
+    }
 }

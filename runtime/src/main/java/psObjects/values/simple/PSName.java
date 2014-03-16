@@ -48,4 +48,8 @@ public class PSName extends SimpleValue {
     public int compareGrade() {
         return 0;
     }
+
+    public int length(){
+        return strValue.length();
+    }
 }

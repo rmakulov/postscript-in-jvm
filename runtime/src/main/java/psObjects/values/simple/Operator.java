@@ -1,10 +1,17 @@
 package psObjects.values.simple;
 
 import psObjects.Type;
+import runtime.*;
+import runtime.Runtime;
 
 public abstract class Operator extends SimpleValue {
 
+    protected runtime.Runtime runtime = Runtime.getInstance();
+
     public abstract void execute();
+
+    protected Operator() {
+    }
 
     @Override
     public Type determineType() {
