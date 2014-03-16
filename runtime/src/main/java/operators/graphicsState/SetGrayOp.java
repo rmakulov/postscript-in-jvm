@@ -11,6 +11,11 @@ import java.awt.*;
  * Created by user on 15.03.14.
  */
 public class SetGrayOp extends AbstractGraphicOperator{
+    public static final SetGrayOp instance = new SetGrayOp();
+
+    protected SetGrayOp() {
+        super();
+    }
     @Override
     public void execute() { //num setgray setgray --
         PSObject oNum = runtime.popFromOperandStack() ;

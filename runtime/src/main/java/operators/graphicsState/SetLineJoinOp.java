@@ -11,6 +11,11 @@ import psObjects.values.simple.numbers.PSNumber;
  * Created by user on 16.03.14.
  */
 public class SetLineJoinOp extends AbstractGraphicOperator {
+    public static final SetLineJoinOp instance = new SetLineJoinOp();
+
+    protected SetLineJoinOp() {
+        super();
+    }
     @Override
     public void execute() {// int setlinejoin Set shape of corners for stroke (0 = miter, 1 = round, 2 = bevel)
         PSObject oNum = runtime.popFromOperandStack() ;

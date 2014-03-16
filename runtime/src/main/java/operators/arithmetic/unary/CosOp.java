@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class CosOp extends Operator {
+    public static final CosOp instance = new CosOp();
+
+    protected CosOp() {
+        super();
+    }
     @Override
     public void execute() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);

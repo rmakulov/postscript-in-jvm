@@ -1,10 +1,14 @@
 package operators.arithmetic.binary;
 
-import operators.arithmetic.binary.BinaryArithmeticOp;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
 public class SubOp extends Operator {
+    public static final SubOp instance = new SubOp();
+
+    protected SubOp() {
+        super();
+    }
     @Override
     public void execute() {
       BinaryArithmeticOp.doOperation('-');

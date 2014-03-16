@@ -10,6 +10,11 @@ import runtime.graphics.point.PSPoint;
  * Created by user on 15.03.14.
  */
 public class RLineToOp extends AbstractGraphicOperator {
+    public static final RLineToOp instance = new RLineToOp();
+
+    protected RLineToOp() {
+        super();
+    }
     @Override
     public void execute() { // x y rlineto ---
         PSObject o1 = runtime.popFromOperandStack();

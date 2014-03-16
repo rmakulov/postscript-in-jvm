@@ -8,6 +8,12 @@ import runtime.graphics.save.GSave;
  * Created by user on 16.03.14.
  */
 public class GSaveOp extends AbstractGraphicOperator {
+    public static final GSaveOp instance = new GSaveOp();
+
+    protected GSaveOp() {
+        super();
+    }
+
     @Override
     public void execute() { // -- gsave --
         runtime.gsave(true);

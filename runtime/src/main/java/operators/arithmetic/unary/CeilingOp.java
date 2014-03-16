@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class CeilingOp extends Operator {
+    public static final CeilingOp instance = new CeilingOp();
+
+    protected CeilingOp() {
+        super();
+    }
     @Override
     public void execute() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);

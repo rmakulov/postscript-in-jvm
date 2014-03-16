@@ -10,6 +10,11 @@ import runtime.graphics.point.PSPoint;
  * Created by user on 16.03.14.
  */
 public class PathBBoxOp extends AbstractGraphicOperator {
+    public static final PathBBoxOp instance = new PathBBoxOp();
+
+    protected PathBBoxOp() {
+        super();
+    }
     @Override
     public void execute() { // -- pathbbox llx lly urx ury
         PSPoint[] bBox = gState.currentPath.getBBox() ;

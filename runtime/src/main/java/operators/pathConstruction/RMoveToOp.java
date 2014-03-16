@@ -10,6 +10,11 @@ import runtime.graphics.point.PSPoint;
  * Created by user on 15.03.14.
  */
 public class RMoveToOp extends AbstractGraphicOperator {
+    public static final RMoveToOp instance = new RMoveToOp();
+
+    protected RMoveToOp() {
+        super();
+    }
     @Override
     public void execute() {
         PSObject o1 = runtime.popFromOperandStack();

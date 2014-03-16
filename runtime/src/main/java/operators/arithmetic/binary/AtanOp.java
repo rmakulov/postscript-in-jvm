@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class AtanOp extends Operator {
+    public static final AtanOp instance = new AtanOp();
+
+    protected AtanOp() {
+        super();
+    }
     @Override
     public void execute() {
         BinaryArithmeticOp.doOperation('t');

@@ -11,6 +11,12 @@ import java.awt.*;
  * Created by user on 15.03.14.
  */
 public class SetRgbColorOp extends AbstractGraphicOperator {
+    public static final SetRgbColorOp instance = new SetRgbColorOp();
+
+    protected SetRgbColorOp() {
+        super();
+    }
+
     @Override
     public void execute() {// red green blue setrgbcolor -
         PSObject oBlue  = runtime.popFromOperandStack() ;

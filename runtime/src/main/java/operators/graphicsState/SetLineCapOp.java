@@ -9,6 +9,11 @@ import psObjects.values.simple.numbers.PSInteger;
  * Created by user on 16.03.14.
  */
 public class SetLineCapOp extends AbstractGraphicOperator {
+    public static final SetLineCapOp instance = new SetLineCapOp();
+
+    protected SetLineCapOp() {
+        super();
+    }
     @Override
     public void execute() {
         PSObject oLC = runtime.popFromOperandStack() ;

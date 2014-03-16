@@ -7,6 +7,11 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 15.03.14.
  */
 public class IdivOp extends Operator {
+    public static final IdivOp instance = new IdivOp();
+
+    protected IdivOp() {
+        super();
+    }
     @Override
     public void execute() {
        BinaryIntArithmeticOp.doOperation('/');
