@@ -4,10 +4,14 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
-/**
- * Created by Дмитрий on 16.03.14.
- */
-public class NoaccessOp extends Operator {
+public class NoAccessOp extends Operator {
+
+    public static final NoAccessOp instance = new NoAccessOp();
+
+    protected NoAccessOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         PSObject o = runtime.popFromOperandStack();
