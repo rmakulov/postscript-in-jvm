@@ -6,8 +6,9 @@ import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.Snapshot;
+import psObjects.values.composite.dictionaries.DefaultDicts;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
@@ -20,7 +21,6 @@ import runtime.stack.PSStack;
 
 import static psObjects.Type.*;
 
-//import psObjects.values.composite.PSDictionary;
 
 public class Runtime {
     private static Runtime ourInstance = new Runtime();
@@ -29,7 +29,7 @@ public class Runtime {
     private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
-    private GraphicStack graphicStack = new GraphicStack() ;
+    private GraphicStack graphicStack = new GraphicStack();
     private boolean isGlobal = false;
 
 
@@ -51,7 +51,7 @@ public class Runtime {
     }
 
     public void gsave(boolean b) {
-        GSave gsave = new GSave(b) ;
+        GSave gsave = new GSave(b);
         gsave.getSnapshot();
         pushToGraphicStack(gsave);
 
@@ -74,7 +74,7 @@ public class Runtime {
         }
         localVM = snapshot.getTable();
         operandStack = snapshot.getOperandStack();
-        GSave gsave = popFromGraphicStack() ;
+        GSave gsave = popFromGraphicStack();
         gsave.setSnapshot();
         return true;
     }
@@ -97,17 +97,17 @@ public class Runtime {
     }
 
     public void pushToGraphicStack(GSave gsave) {
-        graphicStack = graphicStack.push(gsave) ;
+        graphicStack = graphicStack.push(gsave);
     }
 
-    public GSave popFromGraphicStack(){
-        GSave gsave = graphicStack.peek() ;
-        graphicStack = graphicStack.removeTop() ;
-        return gsave ;
+    public GSave popFromGraphicStack() {
+        GSave gsave = graphicStack.peek();
+        graphicStack = graphicStack.removeTop();
+        return gsave;
     }
 
     public GSave peekFromGraphicStack() {
-        return graphicStack.peek() ;
+        return graphicStack.peek();
     }
 
     public PSObject peekFromOperandStack() {
@@ -123,8 +123,12 @@ public class Runtime {
         return dictionaryStack.peek();
     }
 
-    public void removeFromDictionaryStack() {
-        dictionaryStack = dictionaryStack.removeTop();
+    public boolean removeFromDictionaryStack() {
+        if (dictionaryStack.size() > 3) {
+            dictionaryStack = dictionaryStack.removeTop();
+            return true;
+        }
+        return false;
     }
 
 
@@ -277,5 +281,11 @@ public class Runtime {
 
     public int getDictionaryStackSize() {
         return dictionaryStack.size();
+    }
+
+    public void initDefaultDictionaries() {
+        dictionaryStack.push(new PSObject(DefaultDicts.getSystemDict()));
+        dictionaryStack.push(new PSObject(DefaultDicts.getGlobalDict()));
+        dictionaryStack.push(new PSObject(DefaultDicts.getUserDict()));
     }
 }

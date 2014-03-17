@@ -1,14 +1,14 @@
 package operators.common;
 
-import javafx.util.Pair;
 import operators.control.ExecOp;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import runtime.avl.AvlTree;
+import runtime.avl.Pair;
 
 public class ForAllOp extends Operator {
 
@@ -40,6 +40,7 @@ public class ForAllOp extends Operator {
                 }
                 break;
             case DICTIONARY:
+
                 AvlTree tree = ((PSDictionary) elems.getValue()).getTree();
                 for (Pair<PSObject, PSObject> pair : tree) {
                     runtime.pushToOperandStack(pair.getKey());

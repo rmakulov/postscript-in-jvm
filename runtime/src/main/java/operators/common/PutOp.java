@@ -4,7 +4,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.PSDictionary;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;

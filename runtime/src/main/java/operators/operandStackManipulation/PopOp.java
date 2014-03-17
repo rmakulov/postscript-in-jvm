@@ -7,9 +7,15 @@ import psObjects.values.simple.PSName;
  * Created by Дмитрий on 16.03.14.
  */
 public class PopOp extends Operator {
+    public static final PopOp instance = new PopOp();
+
+    protected PopOp() {
+        super();
+    }
+
     @Override
     public void execute() {
-         runtime.popFromOperandStack();
+        runtime.popFromOperandStack();
     }
 
     @Override

@@ -2,7 +2,7 @@ package operators.common;
 
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.PSDictionary;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;

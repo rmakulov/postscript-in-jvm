@@ -3,7 +3,7 @@ package psObjects;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.PSDictionary;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.composite.PSString;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
@@ -20,7 +20,7 @@ public class PSObject implements Comparable<PSObject> {
         return value.getValue();
     }
 
-    public Attribute.TreatAs treatAs(){
+    public Attribute.TreatAs treatAs() {
         return attribute.treatAs;
     }
 
@@ -50,7 +50,7 @@ public class PSObject implements Comparable<PSObject> {
         if (isComposite()) attribute = new Attribute();
     }
 
-    public PSObject(Value value, Attribute.TreatAs treatAs){
+    public PSObject(Value value, Attribute.TreatAs treatAs) {
         if (value instanceof CompositeValue) {
             value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
         }
@@ -128,7 +128,7 @@ public class PSObject implements Comparable<PSObject> {
 
     }
 
-    public boolean isNumber(){
+    public boolean isNumber() {
         return type == Type.INTEGER || type == Type.REAL;
     }
 
