@@ -6,6 +6,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import psObjects.values.simple.numbers.PSReal;
 import runtime.Runtime;
 
 import java.io.File;
@@ -41,6 +42,20 @@ public class Interpreter {
             switch (yytoken.m_index) {
                 case 42:
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text))));
+                    break;
+                case 11:
+                    //hex
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text, 16))));
+                    break;
+                case 22:
+                    //radix
+                    String[] args = text.split("#");
+                    int radix = Integer.parseInt(args[0]);
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(args[1], radix))));
+                    break;
+                case 23:
+                    //real
+                    runtime.pushToOperandStack(new PSObject(new PSReal(Double.parseDouble(text))));
                     break;
                 case 43:
                     // name without "/". it is executable by default
@@ -93,7 +108,7 @@ public class Interpreter {
 
 
     public static void main(String[] args) throws IOException {
-        Interpreter.instance.run(new File("chess.ps"));
+        Interpreter.instance.run(new File("test.ps"));
 //        System.out.print("Done");
 //        Yylex scanner = new Yylex(new InputStreamReader(new FileInputStream("test.ps")));
 //        Yytoken yytoken;
