@@ -81,8 +81,9 @@ public class PSPath {
 
 
     public void draw(Graphics g){
+
         for(SequentialPath path : sPath ){
-            for(PathSection ps : path ){
+            for(PathSection ps : path.getPaths() ){
                 ps.draw(g) ;
             }
         }

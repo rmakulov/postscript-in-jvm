@@ -6,6 +6,8 @@ package runtime.graphics.paths;
 
 import runtime.graphics.point.PSPoint;
 
+import java.awt.*;
+
 public class Arc extends PathSection {
     private PSPoint center;
     private double  radius;
@@ -173,6 +175,11 @@ public class Arc extends PathSection {
     @Override
     public PathSection clone() {
         return new Arc(new PSPoint(center.getX(), center.getY()), radius, angleFirst, angleSecond, clockwise);
+    }
+
+    @Override
+    public PathSection draw(Graphics g) {
+        return null;
     }
 
     @Override

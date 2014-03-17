@@ -2,6 +2,8 @@ package runtime.graphics.paths;
 
 import runtime.graphics.point.PSPoint ;
 
+import java.awt.*;
+
 /**
  * Created by user on 14.03.14.
  */
@@ -26,6 +28,11 @@ public class LineSegment extends PathSection {
         PSPoint end = getEnd() ;
         return new LineSegment(new PSPoint(beg.getX(),beg.getY()),
                                new PSPoint(end.getX(),end.getY()) );
+    }
+
+    @Override
+    public PathSection draw(Graphics g) {
+        return null;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class SequentialPath {
         paths.add(ps) ;
     }
 
-    public ArrayList<PathSection> returnPaths (){
+    public ArrayList<PathSection> getPaths (){
         return paths ;
     }
 
