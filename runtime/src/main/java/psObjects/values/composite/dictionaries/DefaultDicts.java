@@ -10,6 +10,9 @@ import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
 import operators.common.*;
 import operators.control.ExecOp;
+import operators.control.IfElseOp;
+import operators.control.IfOp;
+import operators.control.RepeatOp;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.BeginOp;
 import operators.dictionary.ClearDictStackOp;
@@ -208,6 +211,9 @@ public class DefaultDicts {
 
     private static void addControlOperators() {
         addOperator(ExecOp.instance);
+        addOperator(IfOp.instance);
+        addOperator(IfElseOp.instance);
+        addOperator(RepeatOp.instance);
     }
 
     private static void addCommonOperators() {

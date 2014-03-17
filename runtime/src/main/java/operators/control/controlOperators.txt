@@ -1,8 +1,8 @@
-exec
-if
-ifelse
+exec            +
+if              +
+ifelse          +
 for
-repeat
+repeat          +
 loop
 exit
 stop

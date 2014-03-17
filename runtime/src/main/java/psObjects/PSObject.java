@@ -3,8 +3,8 @@ package psObjects;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.composite.PSString;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
@@ -29,7 +29,13 @@ public class PSObject implements Comparable<PSObject> {
     }
 
     public PSObject(Value value, Type type, Attribute attribute) {
-        if (value.determineType() != type) {
+        if ((value.determineType() == Type.ARRAY && type == Type.PACKEDARRAY)) {
+            value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
+            this.value = value;
+            this.type = type;
+            this.attribute = new Attribute(Attribute.Access.READ_ONLY, attribute.treatAs);
+            return;
+        } else if (value.determineType() != type) {
             //todo throw exception
             return;
         }
@@ -231,7 +237,12 @@ public class PSObject implements Comparable<PSObject> {
             return null;
         }
         Reference ref = (Reference) value;
-        type = newValue.determineType();
+        Type valueType = newValue.determineType();
+        if (type == Type.PACKEDARRAY && valueType == Type.ARRAY) {
+            // type doesn't change
+        } else {
+            type = valueType;
+        }
         ref.setCompositeValue(newValue);
         return this;
     }

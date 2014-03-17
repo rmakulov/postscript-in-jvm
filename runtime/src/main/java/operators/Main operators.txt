@@ -2,9 +2,9 @@
     add
     aload
 	arc
-begin
-clear
-cleardictstack
+    begin
+    clear
+    cleardictstack
 	clippath
 	closepath
 	cvi
@@ -12,7 +12,6 @@ def
 	div
 end
 	eq
-eq
 	exch
 	false
 fill
@@ -23,15 +22,15 @@ for
 	grestore
 	gsave
 	gt
-if
-ifelse
+    if
+    ifelse
 	itransform
 	le
 	length
-lineto
-lt
+    lineto
+    lt
 	mod
-moveto
+    moveto
 	mul
 	ne
 	neg
@@ -39,7 +38,7 @@ moveto
 	pathbox
 	pop
 	rand
-repeat
+    repeat
 	restore
 	rmoveto
 	rotate
