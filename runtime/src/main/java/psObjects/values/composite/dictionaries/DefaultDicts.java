@@ -11,6 +11,8 @@ import operators.array.OpenSquareBracketOp;
 import operators.common.*;
 import operators.control.ExecOp;
 import operators.coordinatSystemAndMatrix.*;
+import operators.dictionary.BeginOp;
+import operators.dictionary.ClearDictStackOp;
 import operators.graphicsState.*;
 import operators.operandStackManipulation.*;
 import operators.painting.FillOp;
@@ -40,6 +42,7 @@ public class DefaultDicts {
             addCommonOperators();
             addControlOperators();
             addCoordinateSystemAndMatrix();
+            addDictionaryOperators();
             addGlythAndFontOperators();
             addGraphicsStateOperators();
             addOperandStackOperationOperators();
@@ -104,6 +107,11 @@ public class DefaultDicts {
         //without operands
         addOperator(RandOp.instance);
         addOperator(RrandOp.instance);  //todo operator is not ready
+    }
+
+    private static void addDictionaryOperators() {
+        addOperator(BeginOp.instance);
+        addOperator(ClearDictStackOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {

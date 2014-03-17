@@ -233,9 +233,16 @@ public class Runtime {
         return true;
     }
 
-    //clear operandStack;
-    public void clear() {
+    //clearOperandStack operandStack;
+    public void clearOperandStack() {
         operandStack.clear();
+    }
+
+    public void clearDictionaryStack() {
+        while (removeFromDictionaryStack()) {
+            //removing done in condition automatically
+        }
+        ;
     }
 
     public void clearAll() {

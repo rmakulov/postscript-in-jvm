@@ -15,11 +15,11 @@ public class ClearOp extends Operator {
 
     @Override
     public void execute() {
-        runtime.clear();
+        runtime.clearOperandStack();
     }
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("clear");
+        return new PSName("clearOperandStack");
     }
 }
