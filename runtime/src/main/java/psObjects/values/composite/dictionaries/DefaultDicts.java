@@ -115,6 +115,7 @@ public class DefaultDicts {
 
     private static void addDictionaryOperators() {
         addOperator(BeginOp.instance);
+        addOperator(EndOp.instance);
         addOperator(ClearDictStackOp.instance);
         addOperator(DefOp.instance);
         addOperator(OpenChevronOp.instance);

@@ -68,8 +68,8 @@ public class Interpreter {
                     break;
                 case 46:
                     // strings
-                    //String s = text.replaceAll("[\\]([\\n\\r]|\\r\\n)","");
-                    runtime.pushToOperandStack(new PSObject(new PSString(text), LITERAL));
+                    String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
+                    runtime.pushToOperandStack(new PSObject(new PSString(s), LITERAL));
                     break;
                 case 5:
                     // array

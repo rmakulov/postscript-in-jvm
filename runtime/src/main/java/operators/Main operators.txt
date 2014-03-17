@@ -8,9 +8,9 @@
 	clippath
 	closepath
 	cvi
-def
+    def
 	div
-end
+    end
 	eq
 	exch
 	false
@@ -39,7 +39,7 @@ moveto
 	pop
 pstack
 	rand
-repeat
+    repeat
 	restore
 	rmoveto
 	rotate
