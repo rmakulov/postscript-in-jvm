@@ -8,7 +8,7 @@ import runtime.graphics.paths.* ;
 import java.awt.*;
 
 /**
- * Created by user on 14.03.14.
+ * Created by use 1r on 14.03.14.
  */
 public class GraphicsState {
     private static GraphicsState instance = new GraphicsState();
@@ -38,23 +38,6 @@ public class GraphicsState {
     }
     private void psShowPage(){
         //.setvisible(true)
-    }
-
-    private void psArct(double uX1, double uY1, double uX2, double uY2){
-        if(currentPoint != null){
-            double pX1 = psUnitToPixel(uX1), pY1 = psUnitToPixel(uY1) ;
-            double pX2 = psUnitToPixel(uX2), pY2 = psUnitToPixel(uY2) ;
-        }
-    }
-
-
-    private PSPoint psTransform(double x, double y, TransformMatrix tM){
-        PSPoint newPoint = tM.transform(x,y) ;
-        return newPoint ;
-    }
-    private PSPoint psTransform(double x, double y){
-        PSPoint newPoint = cTM.transform(x,y) ;
-        return newPoint ;
     }
 
     private void psShow(String s){

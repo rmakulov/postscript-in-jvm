@@ -48,6 +48,57 @@ public class Arc extends PathSection {
         angleSecond = angle;
     }
 
+    double lowerLeftX(double angle1, double angle2, PSPoint beg, PSPoint end){
+        double k = 180., llx;
+        while (k < angle1) {
+            k += 360;
+        }
+        if (k > angle2) {
+            llx = Math.min(beg.getX(), end.getX());
+        } else {
+            llx = center.getX() - radius;
+        }
+        return llx ;
+    }
+
+    double lowerLeftY(double angle1, double angle2,PSPoint beg,PSPoint end){
+        double k = 270., lly;
+        while (k < angle1) {
+            k += 360;
+        }
+        if (k > angle2) {
+            lly = Math.min(beg.getY(), end.getY());
+        } else {
+            lly = center.getY() - radius;
+        }
+        return lly ;
+    }
+
+    double upperRightX(double angle1,double angle2,PSPoint beg,PSPoint end){
+        double k = 0., urx ;
+        while (k < angle1) {
+            k += 360;
+        }
+        if (k > angle2) {
+            urx = Math.max(beg.getX(), end.getX());
+        } else {
+            urx = center.getX() + radius;
+        }
+        return urx ;
+    }
+
+    double upperRightY(double angle1,double  angle2,PSPoint beg,PSPoint end) {
+        double k = 90, ury ;
+        while (k < angle1) {
+            k += 360;
+        }
+        if (k > angle2) {
+            ury = Math.max(beg.getY(), end.getY());
+        } else {
+            ury = center.getY() + radius;
+        }
+        return ury ;
+    }
 
     public PSPoint[] getBBox() {
         double angle1 = angleFirst, angle2 = angleSecond;
@@ -74,51 +125,11 @@ public class Arc extends PathSection {
             angle1 += 360;
             angle2 += 360;
         }
-        double llx, lly, urx, ury ;
-        // ---- minimum y counting---------------------//
-        double k = 270.;
-        while (k < angle1) {
-            k += 360;
-        }
-        if (k > angle2) {
-            lly = Math.min(beg.getY(), end.getY());
-        } else {
-            lly = center.getY() - radius;
-        }
-        // ---- minimum y counting---------------------//
-        //------maximum y counting---------------------//
-        k = 90.;
-        while (k < angle1) {
-            k += 360;
-        }
-        if (k > angle2) {
-            ury = Math.max(beg.getY(), end.getY());
-        } else {
-            ury = center.getY() + radius;
-        }
-        // ---- maximum y counting---------------------//
-        //------minimum x counting---------------------//
-        k = 180.;
-        while (k < angle1) {
-            k += 360;
-        }
-        if (k > angle2) {
-            llx = Math.min(beg.getX(), end.getX());
-        } else {
-            llx = center.getX() - radius;
-        }
-        // ---- minimum x counting---------------------//
-        //------maximum x counting---------------------//
-        k = 0.;
-        while (k < angle1) {
-            k += 360;
-        }
-        if (k > angle2) {
-            urx = Math.max(beg.getX(), end.getX());
-        } else {
-            urx = center.getX() + radius;
-        }
-        // ---- maximum x counting---------------------//
+        double llx = lowerLeftX(angle1,  angle2, beg, end) ;
+        double lly = lowerLeftY(angle1,  angle2, beg, end) ;
+        double urx = upperRightX(angle1, angle2, beg, end) ;
+        double ury = upperRightY(angle1, angle2, beg, end) ;
+
         PSPoint[] box = new PSPoint[2];
         box[0] = new PSPoint(llx, lly);
         box[1] = new PSPoint(urx, ury);
@@ -132,6 +143,7 @@ public class Arc extends PathSection {
 
     @Override
     public int rayIntersect(PSPoint p) {
+
         return 0;
     }
 

@@ -10,6 +10,9 @@ import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
 import operators.common.*;
 import operators.control.ExecOp;
+import operators.control.IfElseOp;
+import operators.control.IfOp;
+import operators.control.RepeatOp;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.BeginOp;
 import operators.dictionary.ClearDictStackOp;
@@ -30,13 +33,14 @@ import java.util.ArrayList;
  * Created by Дмитрий on 17.03.14.
  */
 public class DefaultDicts {
-    private static PSDictionary systemDict = null;
-    private static PSDictionary userDict = null;
-    private static PSDictionary globalDict = null;
-    private static ArrayList<PSObject> entries = new ArrayList<PSObject>();
+    private static PSDictionary systemDict = null ;
+    private static PSDictionary userDict = null ;
+    private static PSDictionary globalDict = null ;
+    private static ArrayList<PSObject> entries = new ArrayList<PSObject>() ;
 
 
     public static PSDictionary getSystemDict() {
+
         if (systemDict == null) {
             addArithmeticOperators();
             addCommonOperators();
@@ -183,6 +187,7 @@ public class DefaultDicts {
 
     private static void addGraphicsStateOperators() {
         addOperator(GRestoreOp.instance);
+        addOperator(GRestoreAllOp.instance) ;
         addOperator(GSaveOp.instance);
         addOperator(SetGrayOp.instance);
         addOperator(SetHsbColorOp.instance);
@@ -191,6 +196,7 @@ public class DefaultDicts {
         addOperator(SetLineWidthOp.instance);
         addOperator(SetMiterLimitOp.instance);
         addOperator(SetRgbColorOp.instance);
+
     }
 
     private static void addGlythAndFontOperators() {
@@ -208,6 +214,9 @@ public class DefaultDicts {
 
     private static void addControlOperators() {
         addOperator(ExecOp.instance);
+        addOperator(IfOp.instance);
+        addOperator(IfElseOp.instance);
+        addOperator(RepeatOp.instance);
     }
 
     private static void addCommonOperators() {
