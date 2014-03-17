@@ -3,8 +3,8 @@ package psObjects;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
-import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.composite.PSString;
+import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
@@ -276,6 +276,6 @@ public class PSObject implements Comparable<PSObject> {
     }
 
     public boolean isProc() {
-        return type == Type.ARRAY && xcheck();
+        return (type == Type.ARRAY) || (type == Type.PACKEDARRAY) && xcheck();
     }
 }

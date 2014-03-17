@@ -41,19 +41,18 @@ public class PutIntervalOp extends Operator {
         if (dst.getType() == Type.ARRAY && (src.getType() == Type.ARRAY || src.getType() == Type.PACKEDARRAY)) {
             PSArray dstArray = (PSArray) dst.getValue();
             PSArray srcArray = (PSArray) src.getValue();
-            result = dstArray.putInterval(start, srcArray);
+            dst.setValue(dstArray.putInterval(start, srcArray));
         } else if (dst.getType() == Type.STRING && src.getType() == Type.STRING) {
             PSString dstString = (PSString) dst.getValue();
             PSString srcString = (PSString) src.getValue();
-            result = new PSString(dstString.getString().concat(srcString.getString()));
+            //todo right
+            dst.setValue((dstString).setSubstring(start, srcString.getString()));
         } else {
             runtime.pushToOperandStack(dst);
             runtime.pushToOperandStack(index);
             runtime.pushToOperandStack(src);
             return;
         }
-
-        runtime.pushToOperandStack(new PSObject(result));
     }
 
     @Override

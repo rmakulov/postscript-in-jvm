@@ -2,9 +2,9 @@
     add
     aload
 	arc
-begin
-clear
-cleardictstack
+    begin
+    clear
+    cleardictstack
 	clippath
 	closepath
 	cvi
@@ -12,24 +12,23 @@ def
 	div
 end
 	eq
-eq
 	exch
 	false
 fill
 findfont
-for
+    for
 	forall
 	ge
 	grestore
 	gsave
 	gt
-if
-ifelse
+    if
+    ifelse
 	itransform
 	le
 	length
 lineto
-lt
+    lt
 	mod
 moveto
 	mul
@@ -38,6 +37,7 @@ moveto
 	newpath
 	pathbox
 	pop
+pstack
 	rand
 repeat
 	restore

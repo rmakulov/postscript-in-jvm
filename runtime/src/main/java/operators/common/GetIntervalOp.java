@@ -51,7 +51,7 @@ public class GetIntervalOp extends Operator {
                     return;
                 }
             }
-            runtime.pushToOperandStack(new PSObject(result));
+            runtime.pushToOperandStack(new PSObject(result, src.getType(), src.getAttribute()));
         }
     }
 
