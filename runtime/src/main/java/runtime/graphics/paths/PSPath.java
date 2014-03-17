@@ -44,13 +44,6 @@ public class PSPath {
         //todo
     }
 
-    public SequentialPath getLastSPath(){
-        if(sPath.size() == 0){
-            return null;
-        }
-        return sPath.get(sPath.size() - 1) ;
-    }
-
     public void addSequentialPath(SequentialPath path){
         sPath.add(path) ;
     }
