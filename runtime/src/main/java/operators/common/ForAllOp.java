@@ -30,6 +30,7 @@ public class ForAllOp extends Operator {
             runtime.pushToOperandStack(proc);
             return;
         }
+
         switch (elems.getType()) {
             case ARRAY:
             case PACKEDARRAY:

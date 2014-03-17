@@ -16,7 +16,7 @@ end
 	false
 fill
 findfont
-for
+    for
 	forall
 	ge
 	grestore
@@ -27,18 +27,19 @@ for
 	itransform
 	le
 	length
-    lineto
+lineto
     lt
 	mod
-    moveto
+moveto
 	mul
 	ne
 	neg
 	newpath
 	pathbox
 	pop
+pstack
 	rand
-    repeat
+repeat
 	restore
 	rmoveto
 	rotate

@@ -45,7 +45,7 @@ public class CvrsOp extends Operator {
             returnPSObjectOnStack(o1, o2, o3);
             return;
         }
-        o3.setValue(psString.setSubstring(newString));
+        o3.setValue(psString.setSubstring(0, newString));
         runtime.pushToOperandStack(new PSObject(new PSString(newString)));
     }
 

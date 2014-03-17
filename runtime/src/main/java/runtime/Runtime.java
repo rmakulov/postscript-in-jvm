@@ -1,5 +1,7 @@
 package runtime;
 
+import operators.graphicsState.GRestoreAllOp;
+import operators.graphicsState.GRestoreOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
@@ -29,7 +31,7 @@ public class Runtime {
     private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
-    private GraphicStack graphicStack = new GraphicStack();
+    private GraphicStack graphicStack = new GraphicStack() ;
     private boolean isGlobal = false;
 
 
@@ -52,7 +54,7 @@ public class Runtime {
     }
 
     public void gsave(boolean b) {
-        GSave gsave = new GSave(b);
+        GSave gsave = new GSave(b) ;
         gsave.getSnapshot();
         pushToGraphicStack(gsave);
 
@@ -75,8 +77,7 @@ public class Runtime {
         }
         localVM = snapshot.getTable();
         operandStack = snapshot.getOperandStack();
-        GSave gsave = popFromGraphicStack();
-        gsave.setSnapshot();
+        GRestoreAllOp.instance.execute();
         return true;
     }
 
@@ -99,17 +100,17 @@ public class Runtime {
     }
 
     public void pushToGraphicStack(GSave gsave) {
-        graphicStack = graphicStack.push(gsave);
+        graphicStack = graphicStack.push(gsave) ;
     }
 
-    public GSave popFromGraphicStack() {
-        GSave gsave = graphicStack.peek();
-        graphicStack = graphicStack.removeTop();
-        return gsave;
+    public GSave popFromGraphicStack(){
+        GSave gsave = graphicStack.peek() ;
+        graphicStack = graphicStack.removeTop() ;
+        return gsave ;
     }
 
     public GSave peekFromGraphicStack() {
-        return graphicStack.peek();
+        return graphicStack.peek() ;
     }
 
     public PSObject peekFromOperandStack() {
@@ -282,5 +283,9 @@ public class Runtime {
 
     public PSObject currentDict() {
         return dictionaryStack.peek();
+    }
+
+    public int getGraphicStackSize() {
+        return graphicStack.size() ;
     }
 }

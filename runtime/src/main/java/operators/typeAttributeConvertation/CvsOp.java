@@ -49,7 +49,7 @@ public class CvsOp extends Operator {
             runtime.pushToOperandStack(o2);
             return;
         }
-        o2.setValue(psString.setSubstring(newString));
+        o2.setValue(psString.setSubstring(0, newString));
         runtime.pushToOperandStack(new PSObject(new PSString(newString)));
     }
 

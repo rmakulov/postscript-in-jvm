@@ -15,11 +15,11 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
 
     }
 
-    public PSString getInterval(int start, int length){
+    public PSString getInterval(int start, int length) {
         return new PSString(s.substring(start, start + length - 1));
     }
 
-    public PSString get(int index){
+    public PSString get(int index) {
         return new PSString(s.charAt(index) + "");
     }
 
@@ -76,11 +76,11 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
         return Type.STRING;
     }
 
-    public int length(){
+    public int length() {
         return s.length();
     }
 
-    public PSString setSubstring(String substr) {
-        return new PSString(substr + s.substring(substr.length()));
+    public PSString setSubstring(int start, String substr) {
+        return new PSString(s.substring(0, start - 1) + substr + s.substring(start + substr.length()));
     }
 }
