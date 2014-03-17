@@ -37,6 +37,7 @@ public class Runtime {
     }
 
     public static Runtime getInstance() {
+        //if (!ourInstance.isInitedDicts) ourInstance.initDefaultDictionaries();
         return ourInstance;
     }
 
@@ -85,6 +86,7 @@ public class Runtime {
     }
 
     public void pushToOperandStack(PSObject psObject) {
+        System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
         operandStack = operandStack.push(psObject);
     }
 
@@ -198,27 +200,6 @@ public class Runtime {
         return new PSObject(resDict);
     }
 
-/*    private void replaceDictionaryInStack(PSDictionary dict, PSDictionary newDict) {
-        DictionaryStack tempDictStack = new DictionaryStack();
-        while (true) {
-            PSDictionary curDict = dictionaryStack.peek();
-            if (curDict == null) break;
-            if (dict == curDict) {
-                dictionaryStack.removeTop();
-                dictionaryStack.push(newDict);
-                break;
-            } else {
-                tempDictStack.push(curDict);
-                dictionaryStack.removeTop();
-            }
-        }
-        while (true) {
-            PSDictionary curDict = tempDictStack.peek();
-            if (curDict == null) break;
-            dictionaryStack.push(curDict);
-            tempDictStack.removeTop();
-        }
-    }*/
 
     //    dict key get any Return value associated with key in dict
     public PSObject getValueAtDictionary(PSObject dictObject, PSObject key) {
@@ -291,8 +272,15 @@ public class Runtime {
     }
 
     public void initDefaultDictionaries() {
-        dictionaryStack.push(new PSObject(DefaultDicts.getSystemDict()));
-        dictionaryStack.push(new PSObject(DefaultDicts.getGlobalDict()));
-        dictionaryStack.push(new PSObject(DefaultDicts.getUserDict()));
+        PSObject dict = new PSObject(DefaultDicts.getSystemDict(),
+                Type.DICTIONARY,
+                new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
+        pushToDictionaryStack(dict);
+        pushToDictionaryStack(new PSObject(DefaultDicts.getGlobalDict()));
+        pushToDictionaryStack(new PSObject(DefaultDicts.getUserDict()));
+    }
+
+    public PSObject currentDict() {
+        return dictionaryStack.peek();
     }
 }

@@ -1,10 +1,12 @@
 package operators.control;
 
 import operators.array.OpenSquareBracketOp;
+import operators.operandStackManipulation.MarkOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 
 public class ExecOp extends Operator {
@@ -44,7 +46,20 @@ public class ExecOp extends Operator {
                 runtime.pushToOperandStack(psObject);
                 break;
             case MARK:
-                OpenSquareBracketOp.instance.execute();
+                PSMark mark = (PSMark) psObject.getValue();
+                if (mark.equals(PSMark.OPEN_SQUARE_BRACKET)) {
+                    OpenSquareBracketOp.instance.execute();
+                } else if (mark.equals(PSMark.CLOSE_SQUARE_BRACKET)) {
+                    MarkOp.instance.execute();
+                } else if (mark.equals(PSMark.OPEN_CHEVRON_BRACKET)) {
+                    //todo
+                } else if (mark.equals(PSMark.CLOSE_CHEVRON_BRACKET)) {
+                    //todo
+                } else if (mark.equals(PSMark.OPEN_CURLY_BRACE)) {
+                    //todo
+                } else if (mark.equals(PSMark.CLOSE_CURLY_BRACE)) {
+                    //todo
+                }
                 break;
             case OPERATOR:
                 Operator operator = (Operator) psObject.getValue();
@@ -55,8 +70,8 @@ public class ExecOp extends Operator {
                 if (psObject.treatAs() == LITERAL) {
                     runtime.pushToOperandStack(psObject);
                 } else {
-                    PSObject[] execArray = ((PSArray)psObject.getValue()).getArray();
-                    for (PSObject o : execArray){
+                    PSObject[] execArray = ((PSArray) psObject.getValue()).getArray();
+                    for (PSObject o : execArray) {
                         runtime.pushToOperandStack(o);
                         execute();
                     }

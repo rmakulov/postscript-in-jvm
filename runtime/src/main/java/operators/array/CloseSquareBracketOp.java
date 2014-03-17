@@ -18,7 +18,12 @@ public class CloseSquareBracketOp extends Operator {
 
     @Override
     public void execute() {
-
+        if (runtime.getOperandStackSize() < 2) return;
+        PSObject closeBracket = runtime.popFromOperandStack();
+        if (!closeBracket.getValue().equals(PSMark.CLOSE_SQUARE_BRACKET)) {
+            runtime.pushToOperandStack(closeBracket);
+            return;
+        }
         PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
         while (!PSMark.OPEN_SQUARE_BRACKET.equals(psObject)) {

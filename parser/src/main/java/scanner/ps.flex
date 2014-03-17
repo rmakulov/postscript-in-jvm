@@ -1,40 +1,70 @@
 package scanner;
-/* this is the scanner example from the JLex website
-   (with small modifications to make it more readable) */
 
 %%
+
+%{
+  private int string_depth = 0;
+  private int proc_depth = 0;
+  private String curString = "";
+
+
+public int getProcDepth(){
+ return proc_depth;
+}
+%}
 
 %line
 %char
 %state COMMENT
+%state YYSTRING
 %full
 
 %debug
 
 ALPHA=[A-Za-z]
 DIGIT=[0-9]
+HEX_NUMBER = [0-9A-Fa-f]*
+INT_CHAR = \\{DIGIT}{DIGIT}{DIGIT}
+SPECIAL_CHAR_SEQUENCE = {INT_CHAR} | \\[()tfbrn\\]
+SPECIAL_CHARS = [()\\\[\]\>\<\%]
+NOTNEWLINE_SEQUENCE = \\([\n\r]|\r\n)
 NONNEWLINE_WHITE_SPACE_CHAR=[\ \t\b\012]
 NEWLINE=\r|\n|\r\n
-WHITE_SPACE_CHAR=[\n\r\ \t\b\012]
-STRING_TEXT=(\\\"|[^\n\r\"]|\\{WHITE_SPACE_CHAR}+\\)*
-COMMENT_TEXT= ({STRING_TEXT} | \")*
+WHITE_SPACE_CHAR=[\n\r\ \t\b\f]
+STRING_TEXT=([^()] | NONNEWLINE_SEQUENCE| WHITE_SPACE_CHAR)*
+COMMENT_TEXT= ([^\n\r])*
 Ident = {ALPHA}({ALPHA}|{DIGIT}|_)*
-NAME = [^\(\)\\\[\]\>\<\ \%]+
+NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
+
 
 %%
 
 <YYINITIAL> {
-
-  "," { return (new Yytoken(0,yytext(),yyline,yychar,yychar+1)); }
-  ":" { return (new Yytoken(1,yytext(),yyline,yychar,yychar+1)); }
-  ";" { return (new Yytoken(2,yytext(),yyline,yychar,yychar+1)); }
-  "(" { return (new Yytoken(3,yytext(),yyline,yychar,yychar+1)); }
-  ")" { return (new Yytoken(4,yytext(),yyline,yychar,yychar+1)); }
   "[" { return (new Yytoken(5,yytext(),yyline,yychar,yychar+1)); }
   "]" { return (new Yytoken(6,yytext(),yyline,yychar,yychar+1)); }
-  "{" { return (new Yytoken(7,yytext(),yyline,yychar,yychar+1)); }
-  "}" { return (new Yytoken(8,yytext(),yyline,yychar,yychar+1)); }
-  "." { return (new Yytoken(9,yytext(),yyline,yychar,yychar+1)); }
+
+  "{" {   proc_depth++;
+            return (new Yytoken(7,yytext(),yyline,yychar,yychar+1));
+            }
+
+  "}"  { if (--proc_depth < 0) {
+            System.out.println("Error");
+            System.exit(-1);
+         }
+         return new Yytoken(8,yytext(),yyline,yychar,yychar+1);
+       }
+
+  "<<" { return (new Yytoken(9,yytext(),yyline,yychar,yychar+1)); }
+  ">>" { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }
+
+  "<" {HEX_NUMBER} ">" { return (new Yytoken(11,yytext(),yyline,yychar+1,yychar+yylength()-1)); }
+
+  //85ASCII Base-85 Strings
+  "<~" {STRING_TEXT} "~>" { return (new Yytoken(12,yytext(),yyline,yychar+2,yychar+yylength()-2)); }
+
+  //radix numbers
+  {DIGIT}+ "#" {DIGIT}+ { return (new Yytoken(22,yytext(),yyline,yychar,yychar+yylength()));}
+
   "+" { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }
   "-" { return (new Yytoken(11,yytext(),yyline,yychar,yychar+1)); }
   "*" { return (new Yytoken(12,yytext(),yyline,yychar,yychar+1)); }
@@ -46,30 +76,26 @@ NAME = [^\(\)\\\[\]\>\<\ \%]+
   ">=" { return (new Yytoken(19,yytext(),yyline,yychar,yychar+2)); }
   "&"  { return (new Yytoken(20,yytext(),yyline,yychar,yychar+1)); }
   "|"  { return (new Yytoken(21,yytext(),yyline,yychar,yychar+1)); }
-  ":=" { return (new Yytoken(22,yytext(),yyline,yychar,yychar+2)); }
+
 
   {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
   "%" { yybegin(COMMENT); }
 
-  \"{STRING_TEXT}\" {
-    String str =  yytext().substring(1,yylength()-1);
-    return (new Yytoken(40,str,yyline,yychar,yychar+yylength()));
+  "(" {
+    curString =  "";
+    string_depth = 1;
+    yybegin(YYSTRING);
   }
   
-  \"{STRING_TEXT} {
-    String str =  yytext().substring(1,yytext().length());
-    Utility.error(Utility.E_UNCLOSEDSTR);
-    return (new Yytoken(41,str,yyline,yychar,yychar + str.length()));
-  } 
 
   {DIGIT}+ { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }  
 
   {NAME} { return (new Yytoken(43,yytext(),yyline,yychar,yychar+yylength())); }
 
   \/{NAME} {
-          String str =  yytext().substring(1,yylength());
-          return (new Yytoken(44,str,yyline,yychar,yychar+yylength()));
+           String text =yytext().substring(1);
+          return (new Yytoken(44,text,yyline,yychar+1,yychar+yylength()));
     }
 }
 
@@ -77,7 +103,26 @@ NAME = [^\(\)\\\[\]\>\<\ \%]+
 <COMMENT> {
   "%" {  }
   "\n" { yybegin(YYINITIAL); }
-  {COMMENT_TEXT} { }
+  {COMMENT_TEXT} {return (new Yytoken(45,yytext(),yyline,yychar,yychar+yylength())); }
+}
+
+
+<YYSTRING> {
+  "(" {  string_depth++;
+       curString = curString + "(";
+    }
+  ")" { if (--string_depth == 0) {
+            yybegin(YYINITIAL);
+            return (new Yytoken(46,curString,yyline,0,curString.length()));
+            } else {
+            curString = curString+ ")";
+         }
+       }
+  {STRING_TEXT} {String text = yytext();
+                //todo
+                //curString = curString + text.substring(yychar,yychar+yylength());
+                curString = curString + text.substring(0,text.length());
+                }
 }
 
 {NEWLINE} { }

@@ -4,18 +4,20 @@ import psObjects.Type;
 
 
 public class PSMark extends SimpleValue {
-    private char markChar;
-    public static PSMark OPEN_SQUARE_BRACKET = new PSMark('[');
-    public static PSMark CLOSE_SQUARE_BRACKET = new PSMark('[');
-    public static PSMark OPEN_CURLY_BRACE = new PSMark('{');
-    public static PSMark CLOSE_CURLY_BRACE = new PSMark('}');
+    private String markRecord;
+    public static PSMark OPEN_SQUARE_BRACKET = new PSMark("[");
+    public static PSMark CLOSE_SQUARE_BRACKET = new PSMark("[");
+    public static PSMark OPEN_CURLY_BRACE = new PSMark("{");
+    public static PSMark CLOSE_CURLY_BRACE = new PSMark("}");
+    public static PSMark OPEN_CHEVRON_BRACKET = new PSMark("<<");
+    public static PSMark CLOSE_CHEVRON_BRACKET = new PSMark(">>");
 
-    private PSMark(char markChar) {
-        this.markChar = markChar;
+    private PSMark(String markRecord) {
+        this.markRecord = markRecord;
     }
 
-    public char getMarkChar() {
-        return markChar;
+    public String getMarkRecord() {
+        return markRecord;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class PSMark extends SimpleValue {
     @Override
     public String toString() {
         return "PSMark{" +
-                "markChar=" + markChar +
+                "markRecord=" + markRecord +
                 "} " + super.toString();
     }
 
@@ -37,7 +39,7 @@ public class PSMark extends SimpleValue {
 
         PSMark psMark = (PSMark) o;
 
-        if (markChar != psMark.markChar) return false;
+        if (markRecord != psMark.markRecord) return false;
 
         return true;
     }

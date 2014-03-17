@@ -53,7 +53,7 @@ public class PSObject implements Comparable<PSObject> {
         }
         this.value = value;
         type = value.determineType();
-        if (isComposite()) attribute = new Attribute();
+        if (isComposite() || type == Type.NAME) attribute = new Attribute();
     }
 
     public PSObject(Value value, Attribute.TreatAs treatAs) {
@@ -232,7 +232,7 @@ public class PSObject implements Comparable<PSObject> {
 
     //do not return new object. Method just changes it
     public PSObject setValue(CompositeValue newValue) {
-        if (!isComposite() || rcheck()) {
+        if (!isComposite() || !wcheck()) {
             //todo throw exception
             return null;
         }
@@ -288,5 +288,17 @@ public class PSObject implements Comparable<PSObject> {
 
     public boolean isProc() {
         return type == Type.ARRAY && xcheck();
+    }
+
+
+    public boolean isDictKey() {
+        switch (type) {
+            case NULL:
+            case MARK:
+            case OPERATOR:
+                return false;
+            default:
+                return true;
+        }
     }
 }

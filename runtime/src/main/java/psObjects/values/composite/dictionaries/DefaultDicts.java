@@ -14,8 +14,7 @@ import operators.control.IfElseOp;
 import operators.control.IfOp;
 import operators.control.RepeatOp;
 import operators.coordinatSystemAndMatrix.*;
-import operators.dictionary.BeginOp;
-import operators.dictionary.ClearDictStackOp;
+import operators.dictionary.*;
 import operators.graphicsState.*;
 import operators.operandStackManipulation.*;
 import operators.painting.FillOp;
@@ -115,6 +114,9 @@ public class DefaultDicts {
     private static void addDictionaryOperators() {
         addOperator(BeginOp.instance);
         addOperator(ClearDictStackOp.instance);
+        addOperator(DefOp.instance);
+        addOperator(OpenChevronOp.instance);
+        addOperator(CloseChevronOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {

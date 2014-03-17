@@ -14,19 +14,20 @@ public class SetLineCapOp extends AbstractGraphicOperator {
     protected SetLineCapOp() {
         super();
     }
+
     @Override
     public void execute() {
-        PSObject oLC = runtime.popFromOperandStack() ;
-        if(oLC == null || ! oLC.isNumber()){
+        PSObject oLC = runtime.popFromOperandStack();
+        if (oLC == null || !oLC.isNumber()) {
             runtime.pushToOperandStack(oLC);
-            return ;
+            return;
         }
-        int nLC = ((PSInteger) oLC.getValue()).getIntValue() ;
-        gState.lineCap= nLC ;
+        int nLC = ((PSInteger) oLC.getValue()).getIntValue();
+        gState.lineCap = nLC;
     }
 
     @Override
     public PSName getDefaultKeyName() {
-        return null;
+        return new PSName("setlinecap");
     }
 }
