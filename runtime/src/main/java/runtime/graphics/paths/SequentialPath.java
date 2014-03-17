@@ -22,6 +22,9 @@ public class SequentialPath {
         paths.add(ps) ;
     }
 
+    public ArrayList<PathSection> returnPaths (){
+        return paths ;
+    }
 
     public PSPoint getBegining(){
         if(paths.size() == 0){
@@ -72,16 +75,12 @@ public class SequentialPath {
         return newPath ;
     }
 
+
+
     public int intersect(PSPoint point){
         int ans = 0 ;
         for(PathSection ps : paths){
-            if(ps.getClass() == LineSegment.class ){
-                //ans += (LineSegment)ps;
-
-            }
-            else if(ps.getClass() == Arc.class){
-
-            }
+            ans += ps.rayIntersect(point) ;
         }
         return ans ;
     }

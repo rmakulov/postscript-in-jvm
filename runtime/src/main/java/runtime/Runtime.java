@@ -21,10 +21,12 @@ import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
 import runtime.stack.PSStack;
 
+import javax.swing.*;
+
 import static psObjects.Type.*;
 
 
-public class Runtime {
+public class Runtime{
     private static Runtime ourInstance = new Runtime();
 
 
@@ -36,6 +38,7 @@ public class Runtime {
 
 
     private Runtime() {
+        super() ;
     }
 
     public static Runtime getInstance() {

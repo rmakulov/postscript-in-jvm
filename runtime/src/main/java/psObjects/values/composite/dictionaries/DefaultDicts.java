@@ -1,6 +1,7 @@
 package psObjects.values.composite.dictionaries;
 
 import operators.GlythAndFont.ShowOp;
+import operators.GlythAndFont.ShowPageOp;
 import operators.GlythAndFont.StringWidthOp;
 import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
@@ -203,6 +204,7 @@ public class DefaultDicts {
 
     private static void addGlythAndFontOperators() {
         addOperator(ShowOp.instance);
+        addOperator(ShowPageOp.instance) ;
         addOperator(StringWidthOp.instance);
     }
 

@@ -3,6 +3,7 @@ package runtime.graphics.paths;
 /**
  * Created by user on 15.03.14.
  */
+import java.awt.*;
 import java.util.ArrayList ;
 
 import runtime.graphics.point.PSPoint ;
@@ -78,6 +79,15 @@ public class PSPath {
         }
     }
 
+
+    public void draw(Graphics g){
+        for(SequentialPath path : sPath ){
+            for(PathSection ps : path ){
+                ps.draw(g) ;
+            }
+        }
+    }
+
     public PSPath clone(){
         PSPath newPath = new PSPath() ;
         for( SequentialPath spath : sPath ){
@@ -85,12 +95,13 @@ public class PSPath {
         }
         return newPath ;
     }
+
      public boolean isInside(PSPoint point){
         int count = 0 ;
         for(SequentialPath sp : sPath){
             count += sp.intersect(point);
         }
-        return false ;
+        return count != 0 ; //nonzero-winding-number-rule
     }
 
 }

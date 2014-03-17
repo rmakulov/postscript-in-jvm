@@ -8,9 +8,9 @@ import runtime.graphics.point.PSPoint;
 
 public class Arc extends PathSection {
     private PSPoint center;
-    private double radius;
-    private double angleFirst;
-    private double angleSecond;
+    private double  radius;
+    private double  angleFirst;
+    private double  angleSecond;
     private boolean clockwise;
 
     public Arc() {
@@ -136,6 +136,40 @@ public class Arc extends PathSection {
         return box;
     }
 
+    public boolean isOnArc(double angle){
+        double angle1 = angleFirst ;
+        double angle2 = angleSecond ;
+        if(Math.abs(angle1 - angle2) > 360){
+            return true ;
+        }
+        if(clockwise){
+            Arc newArc = (Arc) clone() ;
+            newArc.setClockwise(false) ;
+            newArc.setAngleFirst(angle2) ;
+            newArc.setAngleSecond(angle1 + 360) ;
+            return newArc.isOnArc( angle ) ;
+        }
+        while(angle < angle1 ){ // maybe it will be too long
+            angle += 360 ;
+        }
+        return angle < angle2 ;
+    }
+
+    public boolean isInCircle(PSPoint p){
+        double difx =  (p.getX() - center.getX()), dify = (p.getY() - center.getY());
+        return difx*difx + dify*dify <= radius * radius ;
+    }
+
+    public boolean isGoingThroughInterior(PSPoint start, PSPoint end){
+        double t = 0.5 ;
+        PSPoint p = PSPoint.pointByParameter(start, end, t) ;
+        while(!isInCircle(p) && t >= 1./33554432){
+            t /= 2. ;
+            p = PSPoint.pointByParameter(start, end, t) ;
+        }
+        return isInCircle(p);
+    }
+
     @Override
     public PathSection clone() {
         return new Arc(new PSPoint(center.getX(), center.getY()), radius, angleFirst, angleSecond, clockwise);
@@ -143,11 +177,42 @@ public class Arc extends PathSection {
 
     @Override
     public int rayIntersect(PSPoint p) {
-
+        double[] line = PSPoint.lineEquation( p, new PSPoint(p.getX() + 1, p.getY() + 1) ) ;
+        double dist = center.distanceToLine(line) ;
+        if(dist < radius){
+            double [] circle = new double[]{center.getX(), center.getY(), radius } ;
+            PSPoint[] iPoints = PSPoint.intersectCircleLine( circle, line ) ;
+            double angle0 = Math.atan2(iPoints[0].getY() - center.getY(), iPoints[0].getX() - center.getX()) ;
+            double angle1 = Math.atan2(iPoints[1].getY() - center.getY(), iPoints[1].getX() - center.getX() ) ;
+            angle0 = radianToDegree(angle0) ;
+            angle1 = radianToDegree(angle1) ;
+            if(isOnArc(angle0) && isOnArc(angle1)){
+                return 0 ;
+            }
+            if(isOnArc(angle0)){
+                if( isGoingThroughInterior(p, iPoints[0]) ){
+                    return clockwise ? 1 : -1 ;
+                }
+                else{
+                    return clockwise ? -1 : 1 ;
+                }
+            }
+            else if(isOnArc(angle1)){
+                if( isGoingThroughInterior(p,iPoints[1]) ){
+                    return clockwise ? 1 : -1 ;
+                }
+                else{
+                    return clockwise ? -1 : 1 ;
+                }
+            }
+        }
         return 0;
     }
 
     public static double degreeToRadian(double degrees) {
-        return degrees * Math.PI / 180;
+        return degrees * Math.PI / 180 ;
+    }
+     public static double radianToDegree(double radians) {
+        return radians * 180 / Math.PI ;
     }
 }

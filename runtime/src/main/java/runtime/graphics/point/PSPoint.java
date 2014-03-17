@@ -60,6 +60,29 @@ public class PSPoint {
         return new PSPoint(x,y) ;
     }
 
+    public static double[] squareEquation(double a, double b, double c){
+        double d = b*b - 4*a*c ;
+        return new double[] { (-b+Math.sqrt(d)/(2*a)), (-b - Math.sqrt(d))/(2*a)  } ;
+    }
+
+    public static PSPoint[] intersectCircleLine(double[] circle, double[] line) {
+        PSPoint[] iPoints = new PSPoint[2];
+        double x1 = circle[0], y1 = circle[0], r = circle[2] ;  // (x-x1)^2 + (y-y1)^2 = r^2
+        double a  = line[0], b = line[1], c = line[2] ;         // Ax + By + C = 0
+        double F = -2*c*a/(b*b) + 2*y1*a/b ;          // y = (c-a*x)/b
+        double newC = c*c/(b*b) - 2*y1*c/b + y1*y1 ; //(y-y1)^2 = a^2*x^2 + F*x + newC
+        double[] x = squareEquation(1 + a*a, F-2*x1, newC-r*r ) ;
+        double[] y = new double[]{(c-a*x[0])/b, c-a*x[1]/b } ;
+        iPoints[0] = new PSPoint(x[0], y[0]) ;
+        iPoints[1] = new PSPoint(x[1], y[1]) ;
+        return iPoints ;
+    }
+
+    public static PSPoint pointByParameter(PSPoint start, PSPoint end, double t){ // 0 <= t <= 1
+        return new PSPoint(start.getX()*t + (1-t)*end.getX(),
+                           start.getY()*t + (1-t)*end.getY() ) ;
+    }
+
     public boolean isOnSection(PSPoint sBegin, PSPoint sEnd){
         PSPoint vector = getVector(sBegin, sEnd) ; //vectorx, vectory
         double t ;

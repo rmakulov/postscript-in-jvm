@@ -36,16 +36,13 @@ public class LineSegment extends PathSection {
         double[] line2 = PSPoint.lineEquation(p, new PSPoint(p.getX()+1, p.getY()+1)) ;
         PSPoint pIntersect = PSPoint.lineIntersect(line1, line2) ;
         if(pIntersect.isOnSection(lineBegin, lineEnd)){
-            double angle = Math.atan2(pIntersect.getY() - p.getY(), pIntersect.getX() - p.getX())
-                         - Math.atan2(lineEnd.getY() - pIntersect.getY(), lineEnd.getX() - pIntersect.getX() ) ;
-            if(angle >= 0 && angle <= Math.PI){
+            double angle = Math.atan2(lineEnd.getY() - pIntersect.getY(), lineEnd.getX() - pIntersect.getX() )
+                         - Math.atan2(pIntersect.getY() - p.getY(), pIntersect.getX() - p.getX());
+            if((angle >= 0 && angle <= Math.PI) || (angle >= -2*Math.PI && angle <= Math.PI) ){//=> from left to right
                 return 1 ;
-            }else{//todo this formula
+            }else{// Pi.. 2Pi union 0 ..-Pi    => from right tp left
                 return -1 ;
             }
-             //Math.atan2()
-            //if(from loft to right) return 1
-            // else return - 1
         }
         return 0;
     }
