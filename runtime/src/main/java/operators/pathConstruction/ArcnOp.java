@@ -18,14 +18,14 @@ public class ArcnOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {
+        if (runtime.getOperandStackSize() < 5) return;
         PSObject oAngle2 = runtime.popFromOperandStack();
         PSObject oAngle1 = runtime.popFromOperandStack();
         PSObject oR = runtime.popFromOperandStack();
         PSObject oY = runtime.popFromOperandStack();
         PSObject oX = runtime.popFromOperandStack();
 
-        if ((oAngle2 == null || oAngle1 == null || oR == null || oY == null || oX == null) ||
-                !(oAngle2.isNumber() && oAngle1.isNumber() && oR.isNumber() && oY.isNumber() && oX.isNumber())) {
+        if (!(oAngle2.isNumber() && oAngle1.isNumber() && oR.isNumber() && oY.isNumber() && oX.isNumber())) {
             runtime.pushToOperandStack(oX);
             runtime.pushToOperandStack(oY);
             runtime.pushToOperandStack(oR);
@@ -39,6 +39,7 @@ public class ArcnOp extends AbstractGraphicOperator {
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
+        //todo add xR, yR, xAngle(sets ellipse rotation)
         PSPoint begining = new PSPoint(nX, nY);
         gState.currentPath.addArc(gState.currentPoint, begining, nR, nAngle1, nAngle2, true);
         double centerX = begining.getX();

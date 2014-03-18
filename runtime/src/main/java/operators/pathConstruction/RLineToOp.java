@@ -27,9 +27,10 @@ public class RLineToOp extends AbstractGraphicOperator {
         }
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
-        double newX = gState.currentPoint.getX() + nX.getRealValue();
-        double newY = gState.currentPoint.getY() + nY.getRealValue();
-        PSPoint newPoint = new PSPoint(newX, newY);
+        PSPoint p = gState.cTM.iTransform(nX.getRealValue(), nY.getRealValue());
+        double curX = gState.currentPoint.getX();
+        double curY = gState.currentPoint.getY();
+        PSPoint newPoint = new PSPoint(p.getX() + curX, p.getY() + curY);
         gState.currentPath.addLineSegment(gState.currentPoint, newPoint);
         gState.currentPoint = newPoint;
     }

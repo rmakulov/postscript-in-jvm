@@ -2,7 +2,7 @@ package operators.GlythAndFont;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
-import runtime.graphics.frame.PSFrame;
+import runtime.graphics.frame.PSDrawer;
 
 /**
  * Created by user on 17.03.14.
@@ -17,8 +17,7 @@ public class ShowPageOp extends AbstractGraphicOperator{
 
     @Override
     public void execute() {
-       PSFrame frame = PSFrame.instance ;
-       frame.repaint();
+        PSDrawer.getInstance().showPage();
     }
 
     @Override
