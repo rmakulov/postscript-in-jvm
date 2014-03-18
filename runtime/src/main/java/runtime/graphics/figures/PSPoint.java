@@ -1,4 +1,4 @@
-package runtime.graphics.point;
+package runtime.graphics.figures;
 
 /**
  * Created by user on 14.03.14.
@@ -44,8 +44,7 @@ public class PSPoint {
     }
 
     public static PSPoint getVector(PSPoint begin, PSPoint end){
-        PSPoint ans = new PSPoint(end.getX() - begin.getX(), end.getY() - begin.getY()) ;
-        return ans ;
+        return new PSPoint(end.getX() - begin.getX(), end.getY() - begin.getY());
     }
 
     public double distanceToLine(double[] line){
@@ -62,7 +61,7 @@ public class PSPoint {
 
     public static double[] squareEquation(double a, double b, double c){
         double d = b*b - 4*a*c ;
-        return new double[] { (-b+Math.sqrt(d)/(2*a)), (-b - Math.sqrt(d))/(2*a)  } ;
+        return new double[]{(-b + Math.sqrt(d)) / (2 * a), (-b - Math.sqrt(d)) / (2 * a)};
     }
 
     public static PSPoint[] intersectCircleLine(double[] circle, double[] line) {

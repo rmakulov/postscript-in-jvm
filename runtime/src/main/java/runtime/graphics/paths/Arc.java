@@ -4,7 +4,7 @@ package runtime.graphics.paths;
  * Created by user on 14.03.14.
  */
 
-import runtime.graphics.point.PSPoint;
+import runtime.graphics.figures.PSPoint;
 
 import java.awt.*;
 

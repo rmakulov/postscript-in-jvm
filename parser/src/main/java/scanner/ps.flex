@@ -63,7 +63,7 @@ NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
   "<<" { return (new Yytoken(9,yytext(),yyline,yychar,yychar+1)); }
   ">>" { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }
 
-  {DIGIT}+ { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }
+  [+-]?{DIGIT}+ { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }
 
   "<" {HEX_NUMBER} ">" {String text = yytext().substring(1,yytext().length()-2);
 return (new Yytoken(11,text,yyline,yychar,yychar+yylength())); }
@@ -75,19 +75,6 @@ return (new Yytoken(11,text,yyline,yychar,yychar+yylength())); }
   {DIGIT}+ "#" {DIGIT}+ { return (new Yytoken(22,yytext(),yyline,yychar,yychar+yylength()));}
 
   {REAL_NUMBER} { return(new Yytoken(23,yytext(),yyline,yychar,yychar+yylength()));}
-
-  "+" { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }
-  "-" { return (new Yytoken(11,yytext(),yyline,yychar,yychar+1)); }
-  "*" { return (new Yytoken(12,yytext(),yyline,yychar,yychar+1)); }
-  "=" { return (new Yytoken(14,yytext(),yyline,yychar,yychar+1)); }
-  "<>" { return (new Yytoken(15,yytext(),yyline,yychar,yychar+2)); }
-  "<"  { return (new Yytoken(16,yytext(),yyline,yychar,yychar+1)); }
-  "<=" { return (new Yytoken(17,yytext(),yyline,yychar,yychar+2)); }
-  ">"  { return (new Yytoken(18,yytext(),yyline,yychar,yychar+1)); }
-  ">=" { return (new Yytoken(19,yytext(),yyline,yychar,yychar+2)); }
-  "&"  { return (new Yytoken(20,yytext(),yyline,yychar,yychar+1)); }
-  "|"  { return (new Yytoken(21,yytext(),yyline,yychar,yychar+1)); }
-
 
   {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
