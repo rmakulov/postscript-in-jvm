@@ -1,11 +1,9 @@
 package runtime.graphics;
 
+import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
-import runtime.graphics.point.PSPoint;
-import runtime.graphics.paths.* ;
+import runtime.graphics.paths.PSPath;
 
-
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -26,7 +24,7 @@ public class GraphicsState {
 
     private GraphicsState(){
         currentPath = new PSPath() ;
-        //clippingPath = new PSPath() ; null
+        //clippingPath = new PSPath() ; //todo page size rectangle
         lineWidth = psUnitToPixel(1.0) ;
         color = Color.BLACK ;
         cTM = new TransformMatrix();
@@ -37,21 +35,10 @@ public class GraphicsState {
     public static GraphicsState getInstance(){
         return instance ;
     }
-    private void psShowPage(){
-        //.setvisible(true)
-    }
 
-    private void psShow(String s){
-        //Java output to frame
-    }
 
 
 //---------------------Fonts
-    private PSPoint psStringWidth(String s){
-        PSPoint width = new PSPoint() ;
-        //todo
-        return width ;
-    }
     private static double psUnitToPixel(double psUnits){
         return psUnits / 72 * 96 ;
         //96 - это число пикселей в дюйме

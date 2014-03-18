@@ -24,6 +24,12 @@ public int getProcDepth(){
 ALPHA=[A-Za-z]
 DIGIT=[0-9]
 HEX_NUMBER = [0-9A-Fa-f]*
+REAL_NUMBER = ({FLit1}|{FLit2}|{FLit3}) {Exponent}?
+FLit1    = [0-9]+ \. [0-9]*
+FLit2    = \. [0-9]+
+FLit3    = [0-9]+
+Exponent = [eE] [+-]? [0-9]+
+
 INT_CHAR = \\{DIGIT}{DIGIT}{DIGIT}
 SPECIAL_CHAR_SEQUENCE = {INT_CHAR} | \\[()tfbrn\\]
 SPECIAL_CHARS = [()\\\[\]\>\<\%]
@@ -57,7 +63,10 @@ NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
   "<<" { return (new Yytoken(9,yytext(),yyline,yychar,yychar+1)); }
   ">>" { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }
 
-  "<" {HEX_NUMBER} ">" { return (new Yytoken(11,yytext(),yyline,yychar+1,yychar+yylength()-1)); }
+  [+-]?{DIGIT}+ { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }
+
+  "<" {HEX_NUMBER} ">" {String text = yytext().substring(1,yytext().length()-2);
+return (new Yytoken(11,text,yyline,yychar,yychar+yylength())); }
 
   //85ASCII Base-85 Strings
   "<~" {STRING_TEXT} "~>" { return (new Yytoken(12,yytext(),yyline,yychar+2,yychar+yylength()-2)); }
@@ -65,18 +74,7 @@ NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
   //radix numbers
   {DIGIT}+ "#" {DIGIT}+ { return (new Yytoken(22,yytext(),yyline,yychar,yychar+yylength()));}
 
-  "+" { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }
-  "-" { return (new Yytoken(11,yytext(),yyline,yychar,yychar+1)); }
-  "*" { return (new Yytoken(12,yytext(),yyline,yychar,yychar+1)); }
-  "=" { return (new Yytoken(14,yytext(),yyline,yychar,yychar+1)); }
-  "<>" { return (new Yytoken(15,yytext(),yyline,yychar,yychar+2)); }
-  "<"  { return (new Yytoken(16,yytext(),yyline,yychar,yychar+1)); }
-  "<=" { return (new Yytoken(17,yytext(),yyline,yychar,yychar+2)); }
-  ">"  { return (new Yytoken(18,yytext(),yyline,yychar,yychar+1)); }
-  ">=" { return (new Yytoken(19,yytext(),yyline,yychar,yychar+2)); }
-  "&"  { return (new Yytoken(20,yytext(),yyline,yychar,yychar+1)); }
-  "|"  { return (new Yytoken(21,yytext(),yyline,yychar,yychar+1)); }
-
+  {REAL_NUMBER} { return(new Yytoken(23,yytext(),yyline,yychar,yychar+yylength()));}
 
   {NONNEWLINE_WHITE_SPACE_CHAR}+ { }
 
@@ -89,7 +87,7 @@ NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
   }
   
 
-  {DIGIT}+ { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }  
+
 
   {NAME} { return (new Yytoken(43,yytext(),yyline,yychar,yychar+yylength())); }
 

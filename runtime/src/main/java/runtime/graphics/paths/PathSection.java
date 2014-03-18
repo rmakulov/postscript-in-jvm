@@ -15,7 +15,7 @@ public abstract class PathSection implements Cloneable {
 
     public abstract PathSection clone();
 
-    public abstract void draw(Graphics g) ;
+    public abstract PathSection draw(Graphics g) ;
 
     public abstract int rayIntersect(PSPoint p) ;
 

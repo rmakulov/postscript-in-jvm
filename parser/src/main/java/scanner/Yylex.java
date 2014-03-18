@@ -42,14 +42,14 @@ class Yylex {
      * Translates characters to character classes
      */
     private static final char[] ZZ_CMAP = {
-            0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 6, 0, 9, 7, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 11, 11, 9, 0, 12, 10, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            8, 0, 0, 18, 0, 5, 23, 0, 25, 4, 21, 19, 0, 20, 0, 10,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 15, 22, 16, 0,
-            0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 3, 12, 0, 0,
-            0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 24, 14, 17, 0,
+            11, 0, 0, 21, 0, 8, 25, 0, 27, 7, 23, 22, 0, 5, 3, 13,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 18, 24, 19, 0,
+            0, 2, 2, 2, 2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 6, 15, 0, 0,
+            0, 2, 2, 2, 2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 26, 17, 20, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -66,15 +66,15 @@ class Yylex {
     private static final int[] ZZ_ACTION = zzUnpackAction();
 
     private static final String ZZ_ACTION_PACKED_0 =
-            "\1\0\1\1\1\2\1\3\1\4\1\5\1\6\2\7" +
-                    "\1\5\1\10\1\11\1\12\1\13\1\14\1\15\1\16" +
-                    "\1\17\1\20\1\21\1\22\1\23\1\24\1\1\1\7" +
-                    "\1\25\1\2\1\26\1\27\1\3\1\7\1\30\1\0" +
-                    "\1\31\1\32\1\0\1\33\1\16\1\34\1\35\1\0" +
-                    "\1\36";
+            "\1\0\1\1\1\2\1\3\1\4\1\3\1\5\1\6" +
+                    "\1\7\2\10\1\6\1\11\1\12\1\13\1\14\1\15" +
+                    "\1\16\1\17\1\20\1\21\1\22\1\23\1\24\1\1" +
+                    "\1\10\1\25\1\2\1\26\1\27\1\30\2\3\1\4" +
+                    "\1\10\1\31\1\0\1\32\1\33\1\0\1\34\1\17" +
+                    "\1\35\1\30\1\3\1\36\1\0\1\37";
 
     private static int[] zzUnpackAction() {
-        int[] result = new int[42];
+        int[] result = new int[48];
         int offset = 0;
         offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
         return result;
@@ -99,15 +99,15 @@ class Yylex {
     private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
 
     private static final String ZZ_ROWMAP_PACKED_0 =
-            "\0\0\0\32\0\64\0\116\0\150\0\202\0\202\0\234" +
-                    "\0\266\0\320\0\202\0\202\0\116\0\116\0\352\0\u0104" +
-                    "\0\116\0\116\0\116\0\116\0\116\0\116\0\202\0\u011e" +
-                    "\0\u011e\0\202\0\u0138\0\202\0\202\0\u0152\0\202\0\320" +
-                    "\0\u016c\0\202\0\202\0\u0186\0\202\0\202\0\202\0\u0152" +
-                    "\0\u01a0\0\u0186";
+            "\0\0\0\34\0\70\0\124\0\160\0\214\0\250\0\304" +
+                    "\0\304\0\340\0\374\0\u0118\0\304\0\304\0\124\0\124" +
+                    "\0\u0134\0\u0150\0\250\0\124\0\124\0\124\0\124\0\304" +
+                    "\0\u016c\0\u016c\0\304\0\u0188\0\304\0\304\0\u01a4\0\u01c0" +
+                    "\0\u01dc\0\250\0\304\0\u0118\0\u01f8\0\304\0\304\0\u0214" +
+                    "\0\304\0\304\0\304\0\u0230\0\u0230\0\u01dc\0\u024c\0\u0214";
 
     private static int[] zzUnpackRowMap() {
-        int[] result = new int[42];
+        int[] result = new int[48];
         int offset = 0;
         offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
         return result;
@@ -130,23 +130,29 @@ class Yylex {
     private static final int[] ZZ_TRANS = zzUnpackTrans();
 
     private static final String ZZ_TRANS_PACKED_0 =
-            "\1\4\1\5\1\4\2\6\1\7\1\10\1\11\1\10" +
-                    "\1\0\1\12\1\13\1\14\1\15\1\16\1\17\1\20" +
-                    "\2\4\1\21\1\22\1\23\1\24\1\25\1\26\1\27" +
-                    "\5\30\1\31\1\32\1\11\22\30\4\33\1\34\24\33" +
-                    "\1\35\3\4\12\0\2\4\2\0\10\4\1\0\1\4" +
-                    "\1\5\1\4\12\0\2\4\2\0\1\4\1\36\6\4" +
-                    "\41\0\1\10\1\0\1\10\27\0\1\37\23\0\3\40" +
-                    "\12\0\2\40\2\0\10\40\2\0\2\41\14\0\1\42" +
-                    "\1\43\1\44\4\0\1\45\23\0\1\46\5\0\1\47" +
-                    "\3\0\6\30\2\0\22\30\4\33\1\0\24\33\1\0" +
-                    "\1\4\1\50\1\4\12\0\2\4\2\0\10\4\2\0" +
-                    "\2\41\15\0\1\43\11\0\4\44\1\0\14\44\1\51" +
-                    "\7\44\1\0\4\44\1\0\13\44\1\52\1\51\7\44" +
-                    "\1\0";
+            "\1\4\1\5\1\4\1\6\1\4\1\7\2\10\1\11" +
+                    "\1\12\1\13\1\12\1\0\1\14\1\15\1\16\1\17" +
+                    "\1\20\1\21\1\22\2\4\1\23\1\24\1\25\1\26" +
+                    "\1\27\1\30\10\31\1\32\1\33\1\13\21\31\7\34" +
+                    "\1\35\23\34\1\36\6\4\12\0\2\4\2\0\7\4" +
+                    "\1\0\1\4\1\5\1\4\1\37\1\40\1\4\12\0" +
+                    "\2\4\2\0\1\4\1\41\5\4\1\0\1\4\1\37" +
+                    "\4\4\12\0\2\4\2\0\7\4\1\0\1\4\1\42" +
+                    "\4\4\12\0\2\4\2\0\7\4\46\0\1\12\1\0" +
+                    "\1\12\31\0\1\43\22\0\6\44\12\0\2\44\2\0" +
+                    "\7\44\2\0\2\45\1\0\1\45\15\0\1\46\1\47" +
+                    "\1\50\3\0\1\51\26\0\1\52\4\0\1\53\3\0" +
+                    "\11\31\2\0\21\31\7\34\1\0\23\34\1\0\1\4" +
+                    "\1\37\2\4\1\40\1\4\12\0\2\4\2\0\7\4" +
+                    "\1\0\1\4\1\54\3\4\1\55\12\0\2\4\2\0" +
+                    "\2\4\1\55\4\4\1\0\1\4\1\56\4\4\12\0" +
+                    "\2\4\2\0\7\4\2\0\2\45\1\0\1\45\16\0" +
+                    "\1\47\10\0\7\50\1\0\14\50\1\57\6\50\1\0" +
+                    "\1\4\1\54\4\4\12\0\2\4\2\0\7\4\1\0" +
+                    "\7\50\1\0\13\50\1\60\1\57\6\50\1\0";
 
     private static int[] zzUnpackTrans() {
-        int[] result = new int[442];
+        int[] result = new int[616];
         int offset = 0;
         offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
         return result;
@@ -184,12 +190,12 @@ class Yylex {
     private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
     private static final String ZZ_ATTRIBUTE_PACKED_0 =
-            "\1\0\4\1\2\11\3\1\2\11\12\1\1\11\2\1" +
-                    "\1\11\1\1\2\11\1\1\1\11\1\1\1\0\2\11" +
-                    "\1\0\3\11\1\1\1\0\1\1";
+            "\1\0\6\1\2\11\3\1\2\11\11\1\1\11\2\1" +
+                    "\1\11\1\1\2\11\4\1\1\11\1\1\1\0\2\11" +
+                    "\1\0\3\11\3\1\1\0\1\1";
 
     private static int[] zzUnpackAttribute() {
-        int[] result = new int[42];
+        int[] result = new int[48];
         int offset = 0;
         offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
         return result;
@@ -628,91 +634,99 @@ class Yylex {
             switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
                 case 1:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [106] { return (new Yytoken(45,yytext(),yyline,yychar,yychar+yylength())); }");
+                    System.out.println("action [117] { return (new Yytoken(45,yytext(),yyline,yychar,yychar+yylength())); }");
                 {
                     return (new Yytoken(45, yytext(), yyline, yychar, yychar + yylength()));
                 }
-                case 31:
+                case 32:
                     break;
                 case 2:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [121] { String text = yytext();" + ZZ_NL + "                //todo" + ZZ_NL + "                //curString = curString + text.substring(yychar,yychar+yylength());" + ZZ_NL + "                curString = curString + text.substring(0,text.length()); }");
+                    System.out.println("action [132] { String text = yytext();" + ZZ_NL + "                //todo" + ZZ_NL + "                //curString = curString + text.substring(yychar,yychar+yylength());" + ZZ_NL + "                curString = curString + text.substring(0,text.length()); }");
                 {
                     String text = yytext();
                     //todo
                     //curString = curString + text.substring(yychar,yychar+yylength());
                     curString = curString + text.substring(0, text.length());
                 }
-                case 32:
+                case 33:
                     break;
                 case 3:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [94] { return (new Yytoken(43,yytext(),yyline,yychar,yychar+yylength())); }");
+                    System.out.println("action [105] { return (new Yytoken(43,yytext(),yyline,yychar,yychar+yylength())); }");
                 {
                     return (new Yytoken(43, yytext(), yyline, yychar, yychar + yylength()));
                 }
-                case 33:
+                case 34:
                     break;
                 case 4:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [92] { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }");
+                    System.out.println("action [66] { return (new Yytoken(42,yytext(),yyline,yychar,yychar+yylength())); }");
                 {
                     return (new Yytoken(42, yytext(), yyline, yychar, yychar + yylength()));
                 }
-                case 34:
+                case 35:
                     break;
                 case 5:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [130] { System.out.println(\"Illegal character: <\" + yytext() + \">\");" + ZZ_NL + "\tUtility.error(Utility.E_UNMATCHED); }");
+                    System.out.println("action [80] { return (new Yytoken(11,yytext(),yyline,yychar,yychar+1)); }");
+                {
+                    return (new Yytoken(11, yytext(), yyline, yychar, yychar + 1));
+                }
+                case 36:
+                    break;
+                case 6:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [141] { System.out.println(\"Illegal character: <\" + yytext() + \">\");" + ZZ_NL + "\tUtility.error(Utility.E_UNMATCHED); }");
                 {
                     System.out.println("Illegal character: <" + yytext() + ">");
                     Utility.error(Utility.E_UNMATCHED);
                 }
-                case 35:
-                    break;
-                case 6:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [83] { yybegin(COMMENT); }");
-                {
-                    yybegin(COMMENT);
-                }
-                case 36:
+                case 37:
                     break;
                 case 7:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [81] {  }");
+                    System.out.println("action [94] { yybegin(COMMENT); }");
                 {
-                }
-                case 37:
-                    break;
-                case 8:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [43] { return (new Yytoken(5,yytext(),yyline,yychar,yychar+1)); }");
-                {
-                    return (new Yytoken(5, yytext(), yyline, yychar, yychar + 1));
+                    yybegin(COMMENT);
                 }
                 case 38:
                     break;
-                case 9:
+                case 8:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [44] { return (new Yytoken(6,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [92] {  }");
                 {
-                    return (new Yytoken(6, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 39:
                     break;
+                case 9:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [49] { return (new Yytoken(5,yytext(),yyline,yychar,yychar+1)); }");
+                {
+                    return (new Yytoken(5, yytext(), yyline, yychar, yychar + 1));
+                }
+                case 40:
+                    break;
                 case 10:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [46] { proc_depth++;" + ZZ_NL + "            return (new Yytoken(7,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [50] { return (new Yytoken(6,yytext(),yyline,yychar,yychar+1)); }");
+                {
+                    return (new Yytoken(6, yytext(), yyline, yychar, yychar + 1));
+                }
+                case 41:
+                    break;
+                case 11:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [52] { proc_depth++;" + ZZ_NL + "            return (new Yytoken(7,yytext(),yyline,yychar,yychar+1)); }");
                 {
                     proc_depth++;
                     return (new Yytoken(7, yytext(), yyline, yychar, yychar + 1));
                 }
-                case 40:
+                case 42:
                     break;
-                case 11:
+                case 12:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [50] { if (--proc_depth < 0) {" + ZZ_NL + "            System.out.println(\"Error\");" + ZZ_NL + "            System.exit(-1);" + ZZ_NL + "         }" + ZZ_NL + "         return new Yytoken(8,yytext(),yyline,yychar,yychar+1); }");
+                    System.out.println("action [56] { if (--proc_depth < 0) {" + ZZ_NL + "            System.out.println(\"Error\");" + ZZ_NL + "            System.exit(-1);" + ZZ_NL + "         }" + ZZ_NL + "         return new Yytoken(8,yytext(),yyline,yychar,yychar+1); }");
                 {
                     if (--proc_depth < 0) {
                         System.out.println("Error");
@@ -720,93 +734,85 @@ class Yylex {
                     }
                     return new Yytoken(8, yytext(), yyline, yychar, yychar + 1);
                 }
-                case 41:
-                    break;
-                case 12:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [73] { return (new Yytoken(16,yytext(),yyline,yychar,yychar+1)); }");
-                {
-                    return (new Yytoken(16, yytext(), yyline, yychar, yychar + 1));
-                }
-                case 42:
+                case 43:
                     break;
                 case 13:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [75] { return (new Yytoken(18,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [84] { return (new Yytoken(16,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(18, yytext(), yyline, yychar, yychar + 1));
-                }
-                case 43:
-                    break;
-                case 14:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [68] { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }");
-                {
-                    return (new Yytoken(10, yytext(), yyline, yychar, yychar + 1));
+                    return (new Yytoken(16, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 44:
                     break;
-                case 15:
+                case 14:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [69] { return (new Yytoken(11,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [86] { return (new Yytoken(18,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(11, yytext(), yyline, yychar, yychar + 1));
+                    return (new Yytoken(18, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 45:
                     break;
-                case 16:
+                case 15:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [70] { return (new Yytoken(12,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [79] { return (new Yytoken(10,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(12, yytext(), yyline, yychar, yychar + 1));
+                    return (new Yytoken(10, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 46:
                     break;
-                case 17:
+                case 16:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [71] { return (new Yytoken(14,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [81] { return (new Yytoken(12,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(14, yytext(), yyline, yychar, yychar + 1));
+                    return (new Yytoken(12, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 47:
                     break;
-                case 18:
+                case 17:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [77] { return (new Yytoken(20,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [82] { return (new Yytoken(14,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(20, yytext(), yyline, yychar, yychar + 1));
+                    return (new Yytoken(14, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 48:
                     break;
-                case 19:
+                case 18:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [78] { return (new Yytoken(21,yytext(),yyline,yychar,yychar+1)); }");
+                    System.out.println("action [88] { return (new Yytoken(20,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(21, yytext(), yyline, yychar, yychar + 1));
+                    return (new Yytoken(20, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 49:
                     break;
+                case 19:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [89] { return (new Yytoken(21,yytext(),yyline,yychar,yychar+1)); }");
+                {
+                    return (new Yytoken(21, yytext(), yyline, yychar, yychar + 1));
+                }
+                case 50:
+                    break;
                 case 20:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [85] { curString =  \"\";" + ZZ_NL + "    string_depth = 1;" + ZZ_NL + "    yybegin(YYSTRING); }");
+                    System.out.println("action [96] { curString =  \"\";" + ZZ_NL + "    string_depth = 1;" + ZZ_NL + "    yybegin(YYSTRING); }");
                 {
                     curString = "";
                     string_depth = 1;
                     yybegin(YYSTRING);
                 }
-                case 50:
+                case 51:
                     break;
                 case 21:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [105] { yybegin(YYINITIAL); }");
+                    System.out.println("action [116] { yybegin(YYINITIAL); }");
                 {
                     yybegin(YYINITIAL);
                 }
-                case 51:
+                case 52:
                     break;
                 case 22:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [114] { if (--string_depth == 0) {" + ZZ_NL + "            yybegin(YYINITIAL);" + ZZ_NL + "            return (new Yytoken(46,curString,yyline,0,curString.length()));" + ZZ_NL + "            } else {" + ZZ_NL + "            curString = curString+ \")\";" + ZZ_NL + "         } }");
+                    System.out.println("action [125] { if (--string_depth == 0) {" + ZZ_NL + "            yybegin(YYINITIAL);" + ZZ_NL + "            return (new Yytoken(46,curString,yyline,0,curString.length()));" + ZZ_NL + "            } else {" + ZZ_NL + "            curString = curString+ \")\";" + ZZ_NL + "         } }");
                 {
                     if (--string_depth == 0) {
                         yybegin(YYINITIAL);
@@ -815,73 +821,82 @@ class Yylex {
                         curString = curString + ")";
                     }
                 }
-                case 52:
+                case 53:
                     break;
                 case 23:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [111] { string_depth++;" + ZZ_NL + "       curString = curString + \"(\"; }");
+                    System.out.println("action [122] { string_depth++;" + ZZ_NL + "       curString = curString + \"(\"; }");
                 {
                     string_depth++;
                     curString = curString + "(";
                 }
-                case 53:
+                case 54:
                     break;
                 case 24:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [96] { String text =yytext().substring(1);" + ZZ_NL + "          return (new Yytoken(44,text,yyline,yychar+1,yychar+yylength())); }");
+                    System.out.println("action [77] { return(new Yytoken(23,yytext(),yyline,yychar,yychar+yylength())); }");
+                {
+                    return (new Yytoken(23, yytext(), yyline, yychar, yychar + yylength()));
+                }
+                case 55:
+                    break;
+                case 25:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [107] { String text =yytext().substring(1);" + ZZ_NL + "          return (new Yytoken(44,text,yyline,yychar+1,yychar+yylength())); }");
                 {
                     String text = yytext().substring(1);
                     return (new Yytoken(44, text, yyline, yychar + 1, yychar + yylength()));
                 }
-                case 54:
-                    break;
-                case 25:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [57] { return (new Yytoken(9,yytext(),yyline,yychar,yychar+1)); }");
-                {
-                    return (new Yytoken(9, yytext(), yyline, yychar, yychar + 1));
-                }
-                case 55:
+                case 56:
                     break;
                 case 26:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [60] { return (new Yytoken(11,yytext(),yyline,yychar+1,yychar+yylength()-1)); }");
+                    System.out.println("action [63] { return (new Yytoken(9,yytext(),yyline,yychar,yychar+1)); }");
                 {
-                    return (new Yytoken(11, yytext(), yyline, yychar + 1, yychar + yylength() - 1));
-                }
-                case 56:
-                    break;
-                case 27:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [74] { return (new Yytoken(17,yytext(),yyline,yychar,yychar+2)); }");
-                {
-                    return (new Yytoken(17, yytext(), yyline, yychar, yychar + 2));
+                    return (new Yytoken(9, yytext(), yyline, yychar, yychar + 1));
                 }
                 case 57:
                     break;
-                case 28:
+                case 27:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [76] { return (new Yytoken(19,yytext(),yyline,yychar,yychar+2)); }");
+                    System.out.println("action [68] { String text = yytext().substring(1,yytext().length()-2);" + ZZ_NL + "return (new Yytoken(11,text,yyline,yychar,yychar+yylength())); }");
                 {
-                    return (new Yytoken(19, yytext(), yyline, yychar, yychar + 2));
+                    String text = yytext().substring(1, yytext().length() - 2);
+                    return (new Yytoken(11, text, yyline, yychar, yychar + yylength()));
                 }
                 case 58:
                     break;
-                case 29:
+                case 28:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [66] { return (new Yytoken(22,yytext(),yyline,yychar,yychar+yylength())); }");
+                    System.out.println("action [85] { return (new Yytoken(17,yytext(),yyline,yychar,yychar+2)); }");
                 {
-                    return (new Yytoken(22, yytext(), yyline, yychar, yychar + yylength()));
+                    return (new Yytoken(17, yytext(), yyline, yychar, yychar + 2));
                 }
                 case 59:
                     break;
+                case 29:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [87] { return (new Yytoken(19,yytext(),yyline,yychar,yychar+2)); }");
+                {
+                    return (new Yytoken(19, yytext(), yyline, yychar, yychar + 2));
+                }
+                case 60:
+                    break;
                 case 30:
                     System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [63] { return (new Yytoken(12,yytext(),yyline,yychar+2,yychar+yylength()-2)); }");
+                    System.out.println("action [75] { return (new Yytoken(22,yytext(),yyline,yychar,yychar+yylength())); }");
+                {
+                    return (new Yytoken(22, yytext(), yyline, yychar, yychar + yylength()));
+                }
+                case 61:
+                    break;
+                case 31:
+                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+                    System.out.println("action [72] { return (new Yytoken(12,yytext(),yyline,yychar+2,yychar+yylength()-2)); }");
                 {
                     return (new Yytoken(12, yytext(), yyline, yychar + 2, yychar + yylength() - 2));
                 }
-                case 60:
+                case 62:
                     break;
                 default:
                     if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {

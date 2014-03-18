@@ -44,6 +44,7 @@ public class GetIntervalOp extends Operator {
                     break;
                 case STRING:
                     result = ((PSString) src.getValue()).getInterval(start, length);
+                    break;
                 default: {
                     runtime.pushToOperandStack(src);
                     runtime.pushToOperandStack(index);
