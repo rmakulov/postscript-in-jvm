@@ -2,7 +2,7 @@ package runtime.graphics.paths;
 
 import java.awt.*;
 
-import runtime.graphics.point.PSPoint;
+import runtime.graphics.figures.PSPoint;
 
 /**
  * Created by user on 14.03.14.
@@ -15,7 +15,7 @@ public abstract class PathSection implements Cloneable {
 
     public abstract PathSection clone();
 
-    public abstract PathSection draw(Graphics g) ;
+    //public abstract PathSection draw(Graphics g) ;
 
     public abstract int rayIntersect(PSPoint p) ;
 

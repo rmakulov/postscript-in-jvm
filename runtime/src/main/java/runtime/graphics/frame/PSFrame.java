@@ -20,12 +20,9 @@ public class PSFrame extends JFrame {
 
     public void paint(Graphics g){
         GraphicsState gState = GraphicsState.getInstance();
-        gState.currentPath.draw(g) ;
+        //gState.currentPath.draw(g) ;
     }
 
-    public void showpage(){
-        this.setVisible(true) ;
-    }
 
     public static void main(String[] args){
         Dimension screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();

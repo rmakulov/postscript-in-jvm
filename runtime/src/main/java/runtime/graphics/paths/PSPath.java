@@ -83,14 +83,14 @@ public class PSPath {
     }
 
 
-    public void draw(Graphics g) {
+/*    public void draw(Graphics g) {
 
         for (SequentialPath path : sPath) {
             for (PathSection ps : path.getPaths()) {
                 ps.draw(g);
             }
         }
-    }
+    }*/
 
     public PSPath clone() {
         PSPath newPath = new PSPath();

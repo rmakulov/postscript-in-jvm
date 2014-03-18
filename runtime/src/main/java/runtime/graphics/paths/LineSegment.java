@@ -30,14 +30,14 @@ public class LineSegment extends PathSection {
         return new LineSegment(new PSPoint(beg.getX(), beg.getY()),
                 new PSPoint(end.getX(), end.getY()));
     }
-
+/*
     @Override
     public void draw(Graphics g) {
         int x = (int) getBegin().getX(), y = (int) getBegin().getY()  ;
         int width = (int)(getBegin().getX() - getEnd().getX()) ;
         int height = (int)(getBegin().getY() - getEnd().getY()) ;
         g.drawLine(x, y,width, height) ;
-    }
+    }*/
 
     @Override
     public int rayIntersect(PSPoint p) { // return +1 if left-> right, else -1 else 0
