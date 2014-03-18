@@ -8,8 +8,6 @@ import runtime.graphics.paths.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -83,7 +81,8 @@ public class PSDrawer {
     private double[] getJavaTransformMatrix() {
         double scale = GraphicsState.psUnitToPixel(1);
         //return new double[]{scale * 1., 0., 0., scale * (-1.), 0, GraphicsState.psUnitToPixel(frame.psHeight) - 1};
-        return new double[]{scale * 1., 0., 0., scale * (-1.), 0, frame.getHeight() - 1};
+        //return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
+        return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
     }
 
     private abstract class PathSectionDrawer {
@@ -118,9 +117,10 @@ public class PSDrawer {
         public void draw() {
             PSPoint psBegin = segment.getBegin();
             PSPoint psEnd = segment.getEnd();
-            PSPoint jBegin = javaMatrix.iTransform(psBegin.getX(), psBegin.getY());
-            PSPoint jEnd = javaMatrix.iTransform(psEnd.getX(), psEnd.getY());
-            g.draw(new Line2D.Double((int) jBegin.getX(), (int) jBegin.getY(), (int) jEnd.getX(), (int) jEnd.getY()));
+            //PSPoint jBegin = javaMatrix.iTransform(psBegin.getX(), psBegin.getY());
+            //PSPoint jEnd = javaMatrix.iTransform(psEnd.getX(), psEnd.getY());
+            //g.draw(new Line2D.Double((int) jBegin.getX(), (int) jBegin.getY(), (int) jEnd.getX(), (int) jEnd.getY()));
+            g.draw(new Line2D.Double((int) psBegin.getX(), (int) psBegin.getY(), (int) psEnd.getX(), (int) psEnd.getY()));
             /*g.scale(2, 1);
             g.translate(200,200);
             g.rotate(Math.PI / 4);
@@ -141,49 +141,55 @@ public class PSDrawer {
         public void draw() {
             PSPoint relCenter = arc.getCenter();
             int r = (int) arc.getRadius();
-            TransformMatrix transformMatrix = arc.getTransformMatrix();
-            transformMatrix.multMatrix(javaMatrix.getMatrix());
-            AffineTransform affineTransform = transformMatrix.getInverseMatrix().getAffineTransform();
-            //g.drawArc((int)(relCenter.getX()- r),(int)(relCenter.getY()- r), 2*r, 2*r,(int)arc.getAngleFirst(),(int)arc.getAngle());
-            g.transform(affineTransform);
+            TransformMatrix transformMatrix = arc.getTransformMatrix().getInverseMatrix();
+            AffineTransform affineTransform = transformMatrix.getAffineTransform();
+            AffineTransform saveAT = g.getTransform();
+            g.setTransform(affineTransform);
             int x = (int) (relCenter.getX() - r);
             int y = (int) (relCenter.getY() - r);
             int width = 2 * r;
             int height = 2 * r;
             g.drawArc(x, y, width, height, (int) arc.getAngleFirst(), (int) arc.getAngle());
-            g.transform(new AffineTransform(transformMatrix.getMatrix()));
+            g.setTransform(saveAT);
         }
     }
 
     public class PSFrame extends JFrame {
-        private JLabel label = new JLabel("asd");
-        public int psHeight = 631;
-        public int psWidth = 445;
+        //private JLabel label = new JLabel("asd");
+        //public int psHeight = 631;
+        public int psHeight = 800;
+        //public int psWidth = 445;
+        public int psWidth = 600;
 
         private PSFrame() {
             super();
             //setSize((int) GraphicsState.psUnitToPixel(psWidth),(int) GraphicsState.psUnitToPixel(psHeight));
             setSize(psWidth, psHeight);
             setLocation(0, 0);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //setResizable(false);
             //getContentPane().setLayout(new BorderLayout());
-            getContentPane().add(label);
-            label.setVisible(true);
-            addMouseMotionListener(new MouseAdapter() {
+            //getContentPane().add(label);
+            //label.setVisible(true);
+            /*addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     //label.setText("x:" + e.getX() + ",y: " + e.getY());
                     //repaint();
                 }
-            });
+            });*/
         }
 
         @Override
         public void paint(Graphics g) {
-            //label.getL
             Graphics2D g2 = (Graphics2D) g;
+            AffineTransform saveAT = g2.getTransform();
+            g2.transform(new AffineTransform(getJavaTransformMatrix()));
             drawCurrentPath(state.currentPath, g2);
             drawClippingPath(state.clippingPath, g2);
             //label.paint(g);
+            g2.setTransform(saveAT);
+
         }
 
     }
