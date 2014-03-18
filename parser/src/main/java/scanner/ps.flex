@@ -41,6 +41,7 @@ STRING_TEXT=([^()] | NONNEWLINE_SEQUENCE| WHITE_SPACE_CHAR)*
 COMMENT_TEXT= ([^\n\r])*
 Ident = {ALPHA}({ALPHA}|{DIGIT}|_)*
 NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
+COMMENT_END = [\n\r]*
 
 
 %%
@@ -100,7 +101,7 @@ return (new Yytoken(11,text,yyline,yychar,yychar+yylength())); }
 
 <COMMENT> {
   "%" {  }
-  "\n" { yybegin(YYINITIAL); }
+  {COMMENT_END} { yybegin(YYINITIAL); }
   {COMMENT_TEXT} {return (new Yytoken(45,yytext(),yyline,yychar,yychar+yylength())); }
 }
 
