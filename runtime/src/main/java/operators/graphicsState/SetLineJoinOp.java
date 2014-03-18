@@ -5,7 +5,6 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
-import psObjects.values.simple.numbers.PSNumber;
 
 /**
  * Created by user on 16.03.14.
@@ -16,18 +15,19 @@ public class SetLineJoinOp extends AbstractGraphicOperator {
     protected SetLineJoinOp() {
         super();
     }
+
     @Override
-    public void execute() {// int setlinejoin Set shape of corners for stroke (0 = miter, 1 = round, 2 = bevel)
-        PSObject oNum = runtime.popFromOperandStack() ;
-        if(oNum == null || oNum.getType()!= Type.INTEGER){
+    public void execute() {// int setlinejoin Set shape of corners for setPaintingStateOfLastSequentialPath (0 = miter, 1 = round, 2 = bevel)
+        PSObject oNum = runtime.popFromOperandStack();
+        if (oNum == null || oNum.getType() != Type.INTEGER) {
             runtime.pushToOperandStack(oNum);
-            return ;
+            return;
         }
         int num = ((PSInteger) oNum.getValue()).getIntValue();
-        if(num < 0 || num > 2){
-            return ;
+        if (num < 0 || num > 2) {
+            return;
         }
-        gState.lineJoin = num ;
+        gState.lineJoin = num;
     }
 
     @Override

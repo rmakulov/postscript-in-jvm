@@ -17,6 +17,12 @@ public class TransformMatrix {
         matrix = arr;
     }
 
+    public TransformMatrix(TransformMatrix tm) {
+        for (int i = 0; i < 6; i++) {
+            matrix[i] = tm.getMatrix()[i];
+        }
+    }
+
     public TransformMatrix getInverseMatrix() {
         double a = matrix[0], b = matrix[1], c = matrix[2], d = matrix[3], tx = matrix[4], ty = matrix[5];
         double det = a * d - b * c;
@@ -78,4 +84,7 @@ public class TransformMatrix {
         return iMatrix.transform(x, y);
     }
 
+    public double[] getMatrix() {
+        return matrix;
+    }
 }

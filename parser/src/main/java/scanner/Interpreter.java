@@ -108,7 +108,9 @@ public class Interpreter {
 
 
     public static void main(String[] args) throws IOException {
-        Interpreter.instance.run(new File("test.ps"));
+        //Interpreter.instance.run(new File("test.ps"));
+        Interpreter.instance.run(new File("simpleGraphicsTest.ps"));
+
 //        System.out.print("Done");
 //        Yylex scanner = new Yylex(new InputStreamReader(new FileInputStream("test.ps")));
 //        Yytoken yytoken;

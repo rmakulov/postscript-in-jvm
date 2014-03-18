@@ -177,10 +177,11 @@ public class Arc extends PathSection {
         return new Arc(new PSPoint(center.getX(), center.getY()), radius, angleFirst, angleSecond, clockwise);
     }
 
-    @Override
-    public PathSection draw(Graphics g) {
-        return null;
-    }
+/*    @Override
+    public void draw(Graphics g) {
+         //todo
+         //g.drawArc(g) ;
+    }*/
 
     @Override
     public int rayIntersect(PSPoint p) {

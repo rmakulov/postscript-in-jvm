@@ -6,29 +6,28 @@ package runtime.graphics.paths;
 
 import runtime.graphics.figures.PSPoint;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class PSPath {
-    private ArrayList<SequentialPath> sPath;
+    private ArrayList<SequentialPath> sequentialPaths;
 
     public PSPath() {
-        sPath = new ArrayList<SequentialPath>();
+        sequentialPaths = new ArrayList<SequentialPath>();
     }
 
     public SequentialPath getLastSP() {
-        if (sPath.size() == 0) {
+        if (sequentialPaths.size() == 0) {
             return null;
         }
-        return sPath.get(sPath.size() - 1);
+        return sequentialPaths.get(sequentialPaths.size() - 1);
     }
 
     public PSPoint[] getBBox() {
-        if (sPath == null) {
+        if (sequentialPaths == null) {
             return null;
         }
         PSPoint[] box = null;
-        for (SequentialPath sP : sPath) {
+        for (SequentialPath sP : sequentialPaths) {
             PSPoint[] newBox = sP.getBBox();
             if (box == null) {
                 box = newBox;
@@ -42,28 +41,28 @@ public class PSPath {
         return box;
     }
 
-    public void stroke() {
-        //todo
+    public void setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState paintingState) {
+        sequentialPaths.get(sequentialPaths.size() - 1).setPaintingState(paintingState);
     }
 
     public void addSequentialPath(SequentialPath path) {
-        sPath.add(path);
+        sequentialPaths.add(path);
     }
 
+    //absolute coordinates in postscript
     public void addLineSegment(PSPoint begining, PSPoint end) {
-        if (sPath.size() == 0 || PSPoint.distance(getLastSP().getEnd(), begining) > 0.0001) {
+        if (sequentialPaths.size() == 0 || PSPoint.distance(getLastSP().getEnd(), begining) > 0.0001) {
             SequentialPath newSPath = new SequentialPath(new LineSegment(begining, end));
-            sPath.add(newSPath);
+            sequentialPaths.add(newSPath);
             return;
         }
         getLastSP().addPathSection(new LineSegment(begining, end));
-        ;
     }
 
     public void addArc(PSPoint currentPoint, PSPoint center, double radius, double angle1, double angle2, boolean clockwise) {
         Arc arc = new Arc(center, radius, angle1, angle2, clockwise);
         if (currentPoint == null) {
-            if (sPath.size() == 0 || PSPoint.distance(sPath.get(sPath.size() - 1).getEnd(), arc.getBegin()) > 0.001) {//distance - maybe it's undue
+            if (sequentialPaths.size() == 0 || PSPoint.distance(sequentialPaths.get(sequentialPaths.size() - 1).getEnd(), arc.getBegin()) > 0.001) {//distance - maybe it's undue
                 SequentialPath newSPath = new SequentialPath(arc);              //because if Path != null then currentPoint != null
                 return;
             }
@@ -77,24 +76,24 @@ public class PSPath {
     }
 
     public void closePath() {
-        for (SequentialPath spath : sPath) {
+        for (SequentialPath spath : sequentialPaths) {
             spath.close();
         }
     }
 
 
-    public void draw(Graphics g) {
+/*    public void draw(Graphics g) {
 
-        for (SequentialPath path : sPath) {
-            for (PathSection ps : path.getPaths()) {
+        for (SequentialPath path : sequentialPaths) {
+            for (PathSection ps : path.getPathSections()) {
                 ps.draw(g);
             }
         }
-    }
+    }*/
 
     public PSPath clone() {
         PSPath newPath = new PSPath();
-        for (SequentialPath spath : sPath) {
+        for (SequentialPath spath : sequentialPaths) {
             newPath.addSequentialPath(spath.clone());
         }
         return newPath;
@@ -102,10 +101,13 @@ public class PSPath {
 
     public boolean isInside(PSPoint point) {
         int count = 0;
-        for (SequentialPath sp : sPath) {
+        for (SequentialPath sp : sequentialPaths) {
             count += sp.intersect(point);
         }
         return count != 0; //nonzero-winding-number-rule
     }
 
+    public ArrayList<SequentialPath> getSequentialPaths() {
+        return sequentialPaths;
+    }
 }

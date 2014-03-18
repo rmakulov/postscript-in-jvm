@@ -9,44 +9,66 @@ import java.util.ArrayList;
  * Created by user on 14.03.14.
  */
 public class SequentialPath {
-    private ArrayList<PathSection> paths = new ArrayList<PathSection>();
+    public enum PaintingState {
+        FILL, NONE, STROKE
+    }
+
+    private ArrayList<PathSection> pathSections = new ArrayList<PathSection>();
+    private PaintingState paintingState = PaintingState.NONE;
 
     public SequentialPath() {
 
     }
 
     public SequentialPath(PathSection firstPath) {
-        paths.add(firstPath);
+        pathSections.add(firstPath);
+    }
+
+    public SequentialPath(PaintingState paintingState, ArrayList<PathSection> pathSections) {
+        this.paintingState = paintingState;
+        this.pathSections = pathSections;
     }
 
     public void addPathSection(PathSection ps) {
-        paths.add(ps);
+        pathSections.add(ps);
     }
 
-    public ArrayList<PathSection> getPaths() {
-        return paths;
+    public void setPaintingState(PaintingState paintingState) {
+        this.paintingState = paintingState;
+    }
+
+    public boolean isFilled() {
+        return paintingState == PaintingState.FILL;
+    }
+
+    public PaintingState getPaintingState() {
+        return paintingState;
+    }
+
+    public ArrayList<PathSection> getPathSections() {
+        return pathSections;
     }
 
     public PSPoint getBegining() {
-        if (paths.size() == 0) {
+        if (pathSections.size() == 0) {
             return null;
         }
-        return paths.get(0).getBegin();
+        return pathSections.get(0).getBegin();
     }
 
     public PSPoint getEnd() {
-        if (paths.size() == 0) {
+        if (pathSections.size() == 0) {
             return null;
         }
-        return paths.get(paths.size() - 1).getEnd();
+        return pathSections.get(pathSections.size() - 1).getEnd();
     }
 
     public PSPoint[] getBBox() {
-        if (paths == null) {
+        if (pathSections == null) {
             return null;
         }
         PSPoint[] box = null;
-        for (PathSection pSection : paths) {
+        for (PathSection pSection : pathSections) {
             PSPoint[] newBox = pSection.getBBox();
             if (box == null) {
                 box = newBox;
@@ -61,16 +83,16 @@ public class SequentialPath {
     }
 
     public void close() {
-        PSPoint pBegin = paths.get(0).getBegin();
-        PSPoint pEnd = paths.get(paths.size() - 1).getEnd();
+        PSPoint pBegin = pathSections.get(0).getBegin();
+        PSPoint pEnd = pathSections.get(pathSections.size() - 1).getEnd();
         if (Point.distance(pBegin.getX(), pBegin.getY(), pEnd.getX(), pEnd.getY()) > 0.00001) {
-            paths.add(new LineSegment(pBegin, pEnd));
+            pathSections.add(new LineSegment(pBegin, pEnd));
         }
     }
 
     public SequentialPath clone() {
         SequentialPath newPath = new SequentialPath();
-        for (PathSection ps : paths) {
+        for (PathSection ps : pathSections) {
             addPathSection(ps.clone());
         }
         return newPath;
@@ -79,7 +101,7 @@ public class SequentialPath {
 
     public int intersect(PSPoint point) {
         int ans = 0;
-        for (PathSection ps : paths) {
+        for (PathSection ps : pathSections) {
             ans += ps.rayIntersect(point);
         }
         return ans;

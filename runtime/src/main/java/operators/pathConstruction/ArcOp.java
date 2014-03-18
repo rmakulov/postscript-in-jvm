@@ -18,6 +18,7 @@ public class ArcOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {//x y r angle1 angle2 arc ---
+        //todo
         PSObject oAngle2 = runtime.popFromOperandStack();
         PSObject oAngle1 = runtime.popFromOperandStack();
         PSObject oR = runtime.popFromOperandStack();
