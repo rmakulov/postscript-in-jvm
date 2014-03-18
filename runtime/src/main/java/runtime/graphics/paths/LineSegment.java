@@ -31,8 +31,11 @@ public class LineSegment extends PathSection {
     }
 
     @Override
-    public PathSection draw(Graphics g) {
-        return null;
+    public void draw(Graphics g) {
+        int x = (int) getBegin().getX(), y = (int) getBegin().getY()  ;
+        int width = (int)(getBegin().getX() - getEnd().getX()) ;
+        int height = (int)(getBegin().getY() - getEnd().getY()) ;
+        g.drawLine(x, y,width, height) ;
     }
 
     @Override

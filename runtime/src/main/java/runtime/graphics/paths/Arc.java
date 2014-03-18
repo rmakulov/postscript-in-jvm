@@ -178,8 +178,9 @@ public class Arc extends PathSection {
     }
 
     @Override
-    public PathSection draw(Graphics g) {
-        return null;
+    public void draw(Graphics g) {
+         //todo
+         //g.drawArc(g) ;
     }
 
     @Override
