@@ -7,7 +7,7 @@ commons + put     // todo for string
 commons + getinterval
 commons + putinterval  //todo for string
 commons + aload
-forall
++ forall
 
 astore
 copy
