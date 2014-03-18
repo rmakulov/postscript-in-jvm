@@ -5,6 +5,7 @@ package runtime.graphics.paths;
  */
 
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.matrix.TransformMatrix;
 
 import java.util.ArrayList;
 
@@ -51,16 +52,16 @@ public class PSPath {
 
     //absolute coordinates in postscript
     public void addLineSegment(PSPoint begining, PSPoint end) {
-        if (sequentialPaths.size() == 0 || PSPoint.distance(getLastSP().getEnd(), begining) > 0.0001) {
+        if (sequentialPaths.size() == 0) {
             SequentialPath newSPath = new SequentialPath(new LineSegment(begining, end));
             sequentialPaths.add(newSPath);
-            return;
+        } else {
+            getLastSP().addPathSection(new LineSegment(begining, end));
         }
-        getLastSP().addPathSection(new LineSegment(begining, end));
     }
 
-    public void addArc(PSPoint currentPoint, PSPoint center, double radius, double angle1, double angle2, boolean clockwise) {
-        Arc arc = new Arc(center, radius, angle1, angle2, clockwise);
+/*    public void addArc(PSPoint currentPoint, PSPoint center, double radius, double angle1, double angle2, boolean clockwise, TransformMatrix transformMatrix) {
+        Arc arc = new Arc(center, radius, angle1, angle2, clockwise, transformMatrix);
         if (currentPoint == null) {
             if (sequentialPaths.size() == 0 || PSPoint.distance(sequentialPaths.get(sequentialPaths.size() - 1).getEnd(), arc.getBegin()) > 0.001) {//distance - maybe it's undue
                 SequentialPath newSPath = new SequentialPath(arc);              //because if Path != null then currentPoint != null
@@ -73,6 +74,26 @@ public class PSPath {
             getLastSP().addPathSection(arc);
             ;
         }
+    }*/
+
+    public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint relCenter, double relRadius, double relAngle1, double RelAngle2, boolean clockwise, TransformMatrix transformMatrix) {
+        Arc arc = new Arc(absBegin, absEnd, relCenter, relRadius, relAngle1, RelAngle2, clockwise, transformMatrix);
+        PSPoint curPoint = getLastSP().getEnd();
+        if (sequentialPaths.size() == 0) {
+            if (curPoint == null) {
+                SequentialPath newSPath = new SequentialPath(arc);
+                sequentialPaths.add(newSPath);
+            } else {
+                SequentialPath newSPath = new SequentialPath(new LineSegment(curPoint, absBegin));
+                newSPath.addPathSection(arc);
+                sequentialPaths.add(newSPath);
+            }
+        } else if (PSPoint.distance(curPoint, absBegin) > 0.0001) {
+            getLastSP().addPathSection(new LineSegment(curPoint, absBegin));
+            getLastSP().addPathSection(arc);
+        } else {
+            getLastSP().addPathSection(arc);
+        }
     }
 
     public void closePath() {
@@ -81,15 +102,6 @@ public class PSPath {
         }
     }
 
-
-/*    public void draw(Graphics g) {
-
-        for (SequentialPath path : sequentialPaths) {
-            for (PathSection ps : path.getPathSections()) {
-                ps.draw(g);
-            }
-        }
-    }*/
 
     public PSPath clone() {
         PSPath newPath = new PSPath();

@@ -41,9 +41,9 @@ public class ArcnOp extends AbstractGraphicOperator {
 
         //todo add xR, yR, xAngle(sets ellipse rotation)
         PSPoint begining = new PSPoint(nX, nY);
-        gState.currentPath.addArc(gState.currentPoint, begining, nR, nAngle1, nAngle2, true);
-        double centerX = begining.getX();
-        double centerY = begining.getY();
+        //gState.currentPath.addArc(gState.currentPoint, begining, nR, nAngle1, nAngle2, true, gState.cTM.clone());
+        //double centerX = begining.getX();
+        //double centerY = begining.getY();
         gState.currentPoint = gState.currentPath.getLastSP().getEnd();
     }
 

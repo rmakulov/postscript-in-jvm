@@ -14,18 +14,20 @@ public class ScaleOp extends AbstractGraphicOperator {
     protected ScaleOp() {
         super();
     }
+
     @Override
     public void execute() {// s_x s_y scale --
-        PSObject oSY = runtime.popFromOperandStack() ;
-        PSObject oSX = runtime.popFromOperandStack() ;
-        if(oSY == null || oSX == null || !(oSY.isNumber() && oSX.isNumber() )){
-            runtime.pushToOperandStack(oSX) ;
-            runtime.pushToOperandStack(oSY) ;
-            return ;
+        if (runtime.getOperandStackSize() < 2) return;
+        PSObject oSY = runtime.popFromOperandStack();
+        PSObject oSX = runtime.popFromOperandStack();
+        if (!(oSY.isNumber() && oSX.isNumber())) {
+            runtime.pushToOperandStack(oSX);
+            runtime.pushToOperandStack(oSY);
+            return;
         }
-        double sY = ((PSNumber)(runtime.popFromOperandStack().getValue())).getRealValue() ;
-        double sX = ((PSNumber)(runtime.popFromOperandStack().getValue())).getRealValue() ;
-        gState.cTM.scale(sX, sY) ;
+        double sY = ((PSNumber) (oSY.getValue())).getRealValue();
+        double sX = ((PSNumber) (oSX.getValue())).getRealValue();
+        gState.cTM.scale(sX, sY);
     }
 
     @Override

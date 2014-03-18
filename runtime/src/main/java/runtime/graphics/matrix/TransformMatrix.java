@@ -6,11 +6,18 @@ package runtime.graphics.matrix;
 
 import runtime.graphics.figures.PSPoint;
 
-public class TransformMatrix {
+import java.awt.geom.AffineTransform;
+
+public class TransformMatrix implements Cloneable {
     private double[] matrix;
 
     public TransformMatrix() {// [a b c d t_x t_y ]
         matrix = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0};//or -631
+    }
+
+    @Override
+    public TransformMatrix clone() {
+        return new TransformMatrix(new double[]{matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5], matrix[6]});
     }
 
     public TransformMatrix(double[] arr) {
@@ -86,5 +93,9 @@ public class TransformMatrix {
 
     public double[] getMatrix() {
         return matrix;
+    }
+
+    public AffineTransform getAffineTransform() {
+        return new AffineTransform(new double[]{matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]});
     }
 }

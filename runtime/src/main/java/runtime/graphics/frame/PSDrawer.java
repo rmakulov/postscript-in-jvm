@@ -8,6 +8,9 @@ import runtime.graphics.paths.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -78,7 +81,9 @@ public class PSDrawer {
 
     //translate on h in y and mirror scale
     private double[] getJavaTransformMatrix() {
-        return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
+        double scale = GraphicsState.psUnitToPixel(1);
+        //return new double[]{scale * 1., 0., 0., scale * (-1.), 0, GraphicsState.psUnitToPixel(frame.psHeight) - 1};
+        return new double[]{scale * 1., 0., 0., scale * (-1.), 0, frame.getHeight() - 1};
     }
 
     private abstract class PathSectionDrawer {
@@ -116,6 +121,10 @@ public class PSDrawer {
             PSPoint jBegin = javaMatrix.iTransform(psBegin.getX(), psBegin.getY());
             PSPoint jEnd = javaMatrix.iTransform(psEnd.getX(), psEnd.getY());
             g.draw(new Line2D.Double((int) jBegin.getX(), (int) jBegin.getY(), (int) jEnd.getX(), (int) jEnd.getY()));
+            /*g.scale(2, 1);
+            g.translate(200,200);
+            g.rotate(Math.PI / 4);
+            g.drawString("gi",30, 30);*/
             frame.repaint();
         }
     }
@@ -130,22 +139,52 @@ public class PSDrawer {
 
         @Override
         public void draw() {
-
+            PSPoint relCenter = arc.getCenter();
+            int r = (int) arc.getRadius();
+            TransformMatrix transformMatrix = arc.getTransformMatrix();
+            transformMatrix.multMatrix(javaMatrix.getMatrix());
+            AffineTransform affineTransform = transformMatrix.getInverseMatrix().getAffineTransform();
+            //g.drawArc((int)(relCenter.getX()- r),(int)(relCenter.getY()- r), 2*r, 2*r,(int)arc.getAngleFirst(),(int)arc.getAngle());
+            g.transform(affineTransform);
+            int x = (int) (relCenter.getX() - r);
+            int y = (int) (relCenter.getY() - r);
+            int width = 2 * r;
+            int height = 2 * r;
+            g.drawArc(x, y, width, height, (int) arc.getAngleFirst(), (int) arc.getAngle());
+            g.transform(new AffineTransform(transformMatrix.getMatrix()));
         }
     }
 
     public class PSFrame extends JFrame {
+        private JLabel label = new JLabel("asd");
+        public int psHeight = 631;
+        public int psWidth = 445;
+
         private PSFrame() {
             super();
-            setSize(445, 631);
+            //setSize((int) GraphicsState.psUnitToPixel(psWidth),(int) GraphicsState.psUnitToPixel(psHeight));
+            setSize(psWidth, psHeight);
             setLocation(0, 0);
+            //getContentPane().setLayout(new BorderLayout());
+            getContentPane().add(label);
+            label.setVisible(true);
+            addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    //label.setText("x:" + e.getX() + ",y: " + e.getY());
+                    //repaint();
+                }
+            });
         }
 
         @Override
         public void paint(Graphics g) {
+            //label.getL
             Graphics2D g2 = (Graphics2D) g;
             drawCurrentPath(state.currentPath, g2);
             drawClippingPath(state.clippingPath, g2);
+            //label.paint(g);
         }
+
     }
 }

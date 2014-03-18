@@ -5,20 +5,18 @@ package runtime.graphics.paths;
  */
 
 import runtime.graphics.figures.PSPoint;
-
-import java.awt.*;
+import runtime.graphics.matrix.TransformMatrix;
 
 public class Arc extends PathSection {
     private PSPoint center;
-    private double  radius;
-    private double  angleFirst;
-    private double  angleSecond;
+    private double radius;
+    private double angleFirst;
+    private double angleSecond;
     private boolean clockwise;
+    private TransformMatrix transformMatrix;
 
-    public Arc() {
-    }
 
-    public Arc(PSPoint point, double r, double angle1, double angle2, boolean clwise) {//angle1 & angle2 in degrees
+/*    public Arc(PSPoint point, double r, double angle1, double angle2, boolean clwise, TransformMatrix transformMatrix) {//angle1 & angle2 in degrees
         super(point.getX(), point.getY(), r, angle1, angle2);
         center = point;
         radius = r;
@@ -28,6 +26,19 @@ public class Arc extends PathSection {
         angleFirst = angle1; //degreeToRadian(angle1) ;
         angleSecond = angle2; //degreeToRadian(angle2) ;
         clockwise = clwise;
+        this.transformMatrix = transformMatrix;
+    }*/
+
+    public Arc(PSPoint absBegin, PSPoint absEnd,
+               PSPoint relCenter, double relRadius, double relAngle1, double relAngle2, boolean clockwise,
+               TransformMatrix transformMatrix) {
+        super(absBegin, absEnd);
+        center = relCenter;
+        radius = relRadius;
+        angleFirst = relAngle1;
+        angleSecond = relAngle2;
+        this.clockwise = clockwise;
+        this.transformMatrix = transformMatrix;
     }
 
     public void setClockwise(boolean clwise) {
@@ -42,6 +53,10 @@ public class Arc extends PathSection {
         angleFirst = angle;
     }
 
+    public double getAngle() {
+        return (angleSecond - angleFirst) * (clockwise ? -1 : 1);
+    }
+
     public double getAngleSecond() {
         return angleSecond;
     }
@@ -50,7 +65,7 @@ public class Arc extends PathSection {
         angleSecond = angle;
     }
 
-    double lowerLeftX(double angle1, double angle2, PSPoint beg, PSPoint end){
+    double lowerLeftX(double angle1, double angle2, PSPoint beg, PSPoint end) {
         double k = 180., llx;
         while (k < angle1) {
             k += 360;
@@ -60,10 +75,10 @@ public class Arc extends PathSection {
         } else {
             llx = center.getX() - radius;
         }
-        return llx ;
+        return llx;
     }
 
-    double lowerLeftY(double angle1, double angle2,PSPoint beg,PSPoint end){
+    double lowerLeftY(double angle1, double angle2, PSPoint beg, PSPoint end) {
         double k = 270., lly;
         while (k < angle1) {
             k += 360;
@@ -73,11 +88,11 @@ public class Arc extends PathSection {
         } else {
             lly = center.getY() - radius;
         }
-        return lly ;
+        return lly;
     }
 
-    double upperRightX(double angle1,double angle2,PSPoint beg,PSPoint end){
-        double k = 0., urx ;
+    double upperRightX(double angle1, double angle2, PSPoint beg, PSPoint end) {
+        double k = 0., urx;
         while (k < angle1) {
             k += 360;
         }
@@ -86,11 +101,11 @@ public class Arc extends PathSection {
         } else {
             urx = center.getX() + radius;
         }
-        return urx ;
+        return urx;
     }
 
-    double upperRightY(double angle1,double  angle2,PSPoint beg,PSPoint end) {
-        double k = 90, ury ;
+    double upperRightY(double angle1, double angle2, PSPoint beg, PSPoint end) {
+        double k = 90, ury;
         while (k < angle1) {
             k += 360;
         }
@@ -99,7 +114,7 @@ public class Arc extends PathSection {
         } else {
             ury = center.getY() + radius;
         }
-        return ury ;
+        return ury;
     }
 
     public PSPoint[] getBBox() {
@@ -127,10 +142,10 @@ public class Arc extends PathSection {
             angle1 += 360;
             angle2 += 360;
         }
-        double llx = lowerLeftX(angle1,  angle2, beg, end) ;
-        double lly = lowerLeftY(angle1,  angle2, beg, end) ;
-        double urx = upperRightX(angle1, angle2, beg, end) ;
-        double ury = upperRightY(angle1, angle2, beg, end) ;
+        double llx = lowerLeftX(angle1, angle2, beg, end);
+        double lly = lowerLeftY(angle1, angle2, beg, end);
+        double urx = upperRightX(angle1, angle2, beg, end);
+        double ury = upperRightY(angle1, angle2, beg, end);
 
         PSPoint[] box = new PSPoint[2];
         box[0] = new PSPoint(llx, lly);
@@ -138,43 +153,45 @@ public class Arc extends PathSection {
         return box;
     }
 
-    public boolean isOnArc(double angle){
-        double angle1 = angleFirst ;
-        double angle2 = angleSecond ;
-        if(Math.abs(angle1 - angle2) > 360){
-            return true ;
+    public boolean isOnArc(double angle) {
+        double angle1 = angleFirst;
+        double angle2 = angleSecond;
+        if (Math.abs(angle1 - angle2) > 360) {
+            return true;
         }
-        if(clockwise){
-            Arc newArc = (Arc) clone() ;
-            newArc.setClockwise(false) ;
-            newArc.setAngleFirst(angle2) ;
-            newArc.setAngleSecond(angle1 + 360) ;
-            return newArc.isOnArc( angle ) ;
+        if (clockwise) {
+            Arc newArc = (Arc) clone();
+            newArc.setClockwise(false);
+            newArc.setAngleFirst(angle2);
+            newArc.setAngleSecond(angle1 + 360);
+            return newArc.isOnArc(angle);
         }
-        while(angle < angle1 ){ // maybe it will be too long
-            angle += 360 ;
+        while (angle < angle1) { // maybe it will be too long
+            angle += 360;
         }
-        return angle < angle2 ;
+        return angle < angle2;
     }
 
-    public boolean isInCircle(PSPoint p){
-        double difx =  (p.getX() - center.getX()), dify = (p.getY() - center.getY());
-        return difx*difx + dify*dify <= radius * radius ;
+    public boolean isInCircle(PSPoint p) {
+        //todo change all methods
+        PSPoint relP = transformMatrix.transform(p.getX(), p.getY());
+        double difx = (relP.getX() - center.getX()), dify = (relP.getY() - center.getY());
+        return difx * difx + dify * dify <= radius * radius;
     }
 
-    public boolean isGoingThroughInterior(PSPoint start, PSPoint end){
-        double t = 0.5 ;
-        PSPoint p = PSPoint.pointByParameter(start, end, t) ;
-        while(!isInCircle(p) && t >= 1./33554432){
-            t /= 2. ;
-            p = PSPoint.pointByParameter(start, end, t) ;
+    public boolean isGoingThroughInterior(PSPoint start, PSPoint end) {
+        double t = 0.5;
+        PSPoint p = PSPoint.pointByParameter(start, end, t);
+        while (!isInCircle(p) && t >= 1. / 33554432) {
+            t /= 2.;
+            p = PSPoint.pointByParameter(start, end, t);
         }
         return isInCircle(p);
     }
 
     @Override
     public PathSection clone() {
-        return new Arc(new PSPoint(center.getX(), center.getY()), radius, angleFirst, angleSecond, clockwise);
+        return new Arc(begin, end, new PSPoint(center.getX(), center.getY()), radius, angleFirst, angleSecond, clockwise, transformMatrix.clone());
     }
 
 /*    @Override
@@ -185,32 +202,29 @@ public class Arc extends PathSection {
 
     @Override
     public int rayIntersect(PSPoint p) {
-        double[] line = PSPoint.lineEquation( p, new PSPoint(p.getX() + 1, p.getY() + 1) ) ;
-        double dist = center.distanceToLine(line) ;
-        if(dist < radius){
-            double [] circle = new double[]{center.getX(), center.getY(), radius } ;
-            PSPoint[] iPoints = PSPoint.intersectCircleLine( circle, line ) ;
-            double angle0 = Math.atan2(iPoints[0].getY() - center.getY(), iPoints[0].getX() - center.getX()) ;
-            double angle1 = Math.atan2(iPoints[1].getY() - center.getY(), iPoints[1].getX() - center.getX() ) ;
-            angle0 = radianToDegree(angle0) ;
-            angle1 = radianToDegree(angle1) ;
-            if(isOnArc(angle0) && isOnArc(angle1)){
-                return 0 ;
+        double[] line = PSPoint.lineEquation(p, new PSPoint(p.getX() + 1, p.getY() + 1));
+        double dist = center.distanceToLine(line);
+        if (dist < radius) {
+            double[] circle = new double[]{center.getX(), center.getY(), radius};
+            PSPoint[] iPoints = PSPoint.intersectCircleLine(circle, line);
+            double angle0 = Math.atan2(iPoints[0].getY() - center.getY(), iPoints[0].getX() - center.getX());
+            double angle1 = Math.atan2(iPoints[1].getY() - center.getY(), iPoints[1].getX() - center.getX());
+            angle0 = radianToDegree(angle0);
+            angle1 = radianToDegree(angle1);
+            if (isOnArc(angle0) && isOnArc(angle1)) {
+                return 0;
             }
-            if(isOnArc(angle0)){
-                if( isGoingThroughInterior(p, iPoints[0]) ){
-                    return clockwise ? 1 : -1 ;
+            if (isOnArc(angle0)) {
+                if (isGoingThroughInterior(p, iPoints[0])) {
+                    return clockwise ? 1 : -1;
+                } else {
+                    return clockwise ? -1 : 1;
                 }
-                else{
-                    return clockwise ? -1 : 1 ;
-                }
-            }
-            else if(isOnArc(angle1)){
-                if( isGoingThroughInterior(p,iPoints[1]) ){
-                    return clockwise ? 1 : -1 ;
-                }
-                else{
-                    return clockwise ? -1 : 1 ;
+            } else if (isOnArc(angle1)) {
+                if (isGoingThroughInterior(p, iPoints[1])) {
+                    return clockwise ? 1 : -1;
+                } else {
+                    return clockwise ? -1 : 1;
                 }
             }
         }
@@ -218,9 +232,26 @@ public class Arc extends PathSection {
     }
 
     public static double degreeToRadian(double degrees) {
-        return degrees * Math.PI / 180 ;
+        return degrees * Math.PI / 180;
     }
-     public static double radianToDegree(double radians) {
-        return radians * 180 / Math.PI ;
+
+    public static double radianToDegree(double radians) {
+        return radians * 180 / Math.PI;
+    }
+
+    public TransformMatrix getTransformMatrix() {
+        return transformMatrix;
+    }
+
+    public PSPoint getCenter() {
+        return center;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public boolean isClockwise() {
+        return clockwise;
     }
 }

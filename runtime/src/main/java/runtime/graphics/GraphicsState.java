@@ -41,12 +41,12 @@ public class GraphicsState {
 
 
     //---------------------Fonts
-    private static double psUnitToPixel(double psUnits) {
+    public static double psUnitToPixel(double psUnits) {
         return psUnits / 72 * 96;
         //96 - это число пикселей в дюйме
     }
 
-    private static double pixelToPSUnit(double pixels) {
+    public static double pixelToPSUnit(double pixels) {
         return pixels / 96 * 72;
     }
 
