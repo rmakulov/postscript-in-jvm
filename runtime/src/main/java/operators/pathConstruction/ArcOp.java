@@ -45,8 +45,8 @@ public class ArcOp extends AbstractGraphicOperator {
         double xEnd = nX + nR * Math.cos(nAngle2 * Math.PI / 180);
         double yEnd = nY + nR * Math.sin(nAngle2 * Math.PI / 180);
 
-        PSPoint absBegin = gState.cTM.iTransform(xBegin, yBegin);
-        PSPoint absEnd = gState.cTM.iTransform(xEnd, yEnd);
+        PSPoint absBegin = gState.cTM.transform(xBegin, yBegin);
+        PSPoint absEnd = gState.cTM.transform(xEnd, yEnd);
 
         PSPoint begining = new PSPoint(nX, nY);
         gState.currentPath.addArc(absBegin, absEnd, begining, nR, nAngle1, nAngle2, false, gState.cTM);

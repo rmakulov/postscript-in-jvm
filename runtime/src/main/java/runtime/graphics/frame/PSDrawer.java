@@ -141,7 +141,7 @@ public class PSDrawer {
         public void draw() {
             PSPoint relCenter = arc.getCenter();
             int r = (int) arc.getRadius();
-            TransformMatrix transformMatrix = arc.getTransformMatrix().getInverseMatrix();
+            TransformMatrix transformMatrix = arc.getTransformMatrix();
             AffineTransform affineTransform = transformMatrix.getAffineTransform();
             AffineTransform saveAT = g.getTransform();
             g.transform(affineTransform);
