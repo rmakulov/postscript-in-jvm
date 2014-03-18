@@ -27,10 +27,10 @@ findfont
 	itransform
 	le
 	length
-lineto
+    lineto
     lt
 	mod
-moveto
+    moveto
 	mul
 	ne
 	neg
@@ -58,6 +58,7 @@ setfont
 show
 showpage
 srand
+    stack
 stringwidth
 stroke
 	sub

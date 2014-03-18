@@ -16,6 +16,7 @@ import operators.control.IfOp;
 import operators.control.RepeatOp;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.*;
+import operators.file.StackOp;
 import operators.graphicsState.*;
 import operators.operandStackManipulation.*;
 import operators.painting.FillOp;
@@ -55,6 +56,8 @@ public class DefaultDicts {
             addRelationBooleanOperators();
             addTypeAttributeOperators();
             addVirtualMemoryOperators();
+            addArrayOperators();
+            addFileOperators();
             systemDict = new PSDictionary(entries);
         }
         return systemDict;
@@ -237,5 +240,9 @@ public class DefaultDicts {
     private static void addArrayOperators() {
         addOperator(CloseSquareBracketOp.instance);
         addOperator(OpenSquareBracketOp.instance);
+    }
+
+    private static void addFileOperators() {
+        addOperator(StackOp.instance);
     }
 }
