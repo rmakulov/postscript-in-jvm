@@ -144,7 +144,7 @@ public class PSDrawer {
             TransformMatrix transformMatrix = arc.getTransformMatrix().getInverseMatrix();
             AffineTransform affineTransform = transformMatrix.getAffineTransform();
             AffineTransform saveAT = g.getTransform();
-            g.setTransform(affineTransform);
+            g.transform(affineTransform);
             int x = (int) (relCenter.getX() - r);
             int y = (int) (relCenter.getY() - r);
             int width = 2 * r;
@@ -184,10 +184,9 @@ public class PSDrawer {
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             AffineTransform saveAT = g2.getTransform();
-            g2.transform(new AffineTransform(getJavaTransformMatrix()));
+            g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
             drawCurrentPath(state.currentPath, g2);
             drawClippingPath(state.clippingPath, g2);
-            //label.paint(g);
             g2.setTransform(saveAT);
 
         }
