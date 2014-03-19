@@ -66,7 +66,7 @@ public class PSDrawer {
         sequentialPath.close();
         BoundingBox box = sequentialPath.getBBox();
         for (int x = (int) box.leftX; x <= box.rightX; x++) {
-            for (int y = (int) box.downY; y < box.upperY; y++) {
+            for (int y = (int) box.lowerY; y < box.upperY; y++) {
                 if (sequentialPath.intersect(x, y) == 0) {
                     setGraphicsSettings(g, sequentialPath.getGraphicsSettings());
                     g.draw(new Ellipse2D.Double(x, y, 1, 1));
