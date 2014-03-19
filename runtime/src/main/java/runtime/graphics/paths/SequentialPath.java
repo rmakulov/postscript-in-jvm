@@ -34,7 +34,6 @@ public class SequentialPath {
 
     public SequentialPath(PathSection firstPath) {
         addPathSection(firstPath);
-        boundingBox = firstPath.getBBox() ;
     }
 
 /*    public SequentialPath(PaintingState paintingState, ArrayList<PathSection> pathSections) {
@@ -47,7 +46,7 @@ public class SequentialPath {
         if (pathSections.isEmpty()) {
             boundingBox = ps.getBBox() ;
         } else {
-            boundingBox.expand(ps.getBBox()) ;
+            boundingBox = boundingBox.expand(ps.getBBox());
         }
         pathSections.add(ps);
 

@@ -29,12 +29,13 @@ public class BoundingBox {
     public PSPoint getRightDownPoint() {
         return new PSPoint(rightX, upperY);
     }
-    public BoundingBox expand(BoundingBox box){
+
+    public BoundingBox expand(BoundingBox box) {
         return new BoundingBox(Math.min(box.leftX, leftX),
-            Math.min(box.lowerY, lowerY),
-            Math.max(box.upperY, upperY),
-            Math.max(box.rightX, rightX)
-        ) ;
+                Math.min(box.lowerY, lowerY),
+                Math.max(box.rightX, rightX),
+                Math.max(box.upperY, upperY)
+        );
     }
 
 

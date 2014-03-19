@@ -16,7 +16,7 @@ public class LineSegment extends PathSection {
         PSPoint end = getEnd();
         double llx = Math.min(beg.getX(), end.getX()), lly = Math.min(beg.getY(), end.getY());
         double urx = Math.max(beg.getX(), end.getX()), ury = Math.max(beg.getY(), end.getY());
-        return new BoundingBox(llx, ury, urx, lly);
+        return new BoundingBox(llx, lly, urx, ury);
     }
 
     @Override
