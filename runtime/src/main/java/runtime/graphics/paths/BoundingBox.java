@@ -6,28 +6,35 @@ import runtime.graphics.figures.PSPoint;
  * Created by Дмитрий on 19.03.14.
  */
 public class BoundingBox {
-    public final double leftX, rightX, upperY, downY;
+    public final double leftX, rightX, upperY, lowerY;
 
-    public BoundingBox(PSPoint leftUpperPoint, PSPoint rightDownPoint) {
-        leftX = leftUpperPoint.getX();
-        upperY = leftUpperPoint.getY();
-        rightX = rightDownPoint.getX();
-        downY = rightDownPoint.getY();
+    public BoundingBox(PSPoint leftLowerPoint, PSPoint rightUpperPoint) {
+        leftX = leftLowerPoint.getX();
+        upperY = rightUpperPoint.getY();
+        rightX = rightUpperPoint.getX();
+        lowerY = leftLowerPoint.getY();
     }
 
-    public BoundingBox(double leftX, double upperY, double rightX, double downY) {
+    public BoundingBox(double leftX, double lowerY, double rightX, double upperY) {
         this.leftX = leftX;
         this.rightX = rightX;
         this.upperY = upperY;
-        this.downY = downY;
+        this.lowerY = lowerY;
     }
 
-    public PSPoint getLeftUpperPoint() {
-        return new PSPoint(leftX, upperY);
+    public PSPoint getLeftLowerPoint() {
+        return new PSPoint(leftX, lowerY);
     }
 
     public PSPoint getRightDownPoint() {
-        return new PSPoint(rightX, downY);
+        return new PSPoint(rightX, upperY);
+    }
+    public BoundingBox expand(BoundingBox box){
+        return new BoundingBox(Math.min(box.leftX, leftX),
+            Math.min(box.lowerY, lowerY),
+            Math.max(box.upperY, upperY),
+            Math.max(box.rightX, rightX)
+        ) ;
     }
 
     public BoundingBox expand(BoundingBox box) {
