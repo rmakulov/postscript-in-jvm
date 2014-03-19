@@ -127,13 +127,16 @@ public class Arc extends PathSection {
         return ury;
     }
 
-    public PSPoint[] getBBox() {
-        double angle1 = angleFirst, angle2 = angleSecond;
+    //todo redo it
+    public BoundingBox getBBox() {
+        return new BoundingBox(0, 0, 0, 0);
+        /*double angle1 = angleFirst, angle2 = angleSecond;
         if (Math.abs(angleSecond - angleFirst) > 360) {
             PSPoint[] box = new PSPoint[2];
             box[0] = new PSPoint(center.getX() - xRadius, center.getY() - xRadius);
             box[1] = new PSPoint(center.getX() + xRadius, center.getY() + xRadius);
-            return box;
+            //return box;
+            return null;
         }
         if (clockwise) {
             Arc newArc = (Arc) clone();
@@ -160,7 +163,8 @@ public class Arc extends PathSection {
         PSPoint[] box = new PSPoint[2];
         box[0] = new PSPoint(llx, lly);
         box[1] = new PSPoint(urx, ury);
-        return box;
+        //return box;
+        return null;*/
     }
 
     public boolean isOnArc(double angle) {

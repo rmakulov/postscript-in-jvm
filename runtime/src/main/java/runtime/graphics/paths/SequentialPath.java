@@ -15,22 +15,37 @@ public class SequentialPath {
 
     private ArrayList<PathSection> pathSections = new ArrayList<PathSection>();
     private PaintingState paintingState = PaintingState.NONE;
+    private double minX = 0, minY = 0, maxX = 0, maxY = 0;
+    private boolean isClosed = false;
 
     public SequentialPath() {
 
     }
 
     public SequentialPath(PathSection firstPath) {
-        pathSections.add(firstPath);
+        addPathSection(firstPath);
     }
 
-    public SequentialPath(PaintingState paintingState, ArrayList<PathSection> pathSections) {
+/*    public SequentialPath(PaintingState paintingState, ArrayList<PathSection> pathSections) {
         this.paintingState = paintingState;
         this.pathSections = pathSections;
-    }
+    }*/
 
     public void addPathSection(PathSection ps) {
+        isClosed = true;
+        if (pathSections.isEmpty()) {
+            minX = ps.getBBox().leftX;
+            maxX = ps.getBBox().rightX;
+            minY = ps.getBBox().downY;
+            maxY = ps.getBBox().upperY;
+        } else {
+            minX = Math.min(ps.getBBox().leftX, minX);
+            maxX = Math.max(ps.getBBox().rightX, maxX);
+            minY = Math.min(ps.getBBox().downY, minY);
+            maxY = Math.max(ps.getBBox().upperY, maxY);
+        }
         pathSections.add(ps);
+
     }
 
     public void setPaintingState(PaintingState paintingState) {
@@ -63,26 +78,12 @@ public class SequentialPath {
         return pathSections.get(pathSections.size() - 1).getEnd();
     }
 
-    public PSPoint[] getBBox() {
-        if (pathSections == null) {
-            return null;
-        }
-        PSPoint[] box = null;
-        for (PathSection pSection : pathSections) {
-            PSPoint[] newBox = pSection.getBBox();
-            if (box == null) {
-                box = newBox;
-            } else {
-                if (newBox[0].getX() < box[0].getX()) box[0].setX(newBox[0].getX());
-                if (newBox[0].getY() < box[0].getY()) box[0].setY(newBox[0].getY());
-                if (newBox[1].getX() < box[1].getX()) box[1].setX(newBox[1].getX());
-                if (newBox[1].getY() < box[1].getY()) box[1].setY(newBox[1].getY());
-            }
-        }
-        return box;
+    public BoundingBox getBBox() {
+        return new BoundingBox(minX, maxY, maxX, minY);
     }
 
     public void close() {
+        isClosed = true;
         PSPoint pBegin = pathSections.get(0).getBegin();
         PSPoint pEnd = pathSections.get(pathSections.size() - 1).getEnd();
         if (Point.distance(pBegin.getX(), pBegin.getY(), pEnd.getX(), pEnd.getY()) > 0.00001) {
@@ -105,5 +106,13 @@ public class SequentialPath {
             ans += ps.rayIntersect(point);
         }
         return ans;
+    }
+
+    public int intersect(int x, int y) {
+        return intersect(new PSPoint(x, y));
+    }
+
+    public boolean isClosed() {
+        return isClosed;
     }
 }

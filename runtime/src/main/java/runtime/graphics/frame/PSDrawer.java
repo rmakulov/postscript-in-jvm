@@ -61,7 +61,13 @@ public class PSDrawer {
     }
 
     private void fillSequentialPath(SequentialPath sequentialPath, Graphics2D g2) {
-
+        sequentialPath.close();
+        BoundingBox box = sequentialPath.getBBox();
+        for (int x = (int) box.leftX; x <= box.rightX; x++) {
+            for (int y = (int) box.downY; y < box.upperY; y++) {
+                //sequentialPath.intersect()
+            }
+        }
     }
 
     private void strokeSequentialPath(SequentialPath sequentialPath, Graphics2D g2) {
@@ -79,9 +85,6 @@ public class PSDrawer {
 
     //translate on h in y and mirror scale
     private double[] getJavaTransformMatrix() {
-        double scale = GraphicsState.psUnitToPixel(1);
-        //return new double[]{scale * 1., 0., 0., scale * (-1.), 0, GraphicsState.psUnitToPixel(frame.psHeight) - 1};
-        //return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
         return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
     }
 
@@ -117,14 +120,7 @@ public class PSDrawer {
         public void draw() {
             PSPoint psBegin = segment.getBegin();
             PSPoint psEnd = segment.getEnd();
-            //PSPoint jBegin = javaMatrix.iTransform(psBegin.getX(), psBegin.getY());
-            //PSPoint jEnd = javaMatrix.iTransform(psEnd.getX(), psEnd.getY());
-            //g.draw(new Line2D.Double((int) jBegin.getX(), (int) jBegin.getY(), (int) jEnd.getX(), (int) jEnd.getY()));
             g.draw(new Line2D.Double((int) psBegin.getX(), (int) psBegin.getY(), (int) psEnd.getX(), (int) psEnd.getY()));
-            /*g.scale(2, 1);
-            g.translate(200,200);
-            g.rotate(Math.PI / 4);
-            g.drawString("gi",30, 30);*/
             frame.repaint();
         }
     }
@@ -152,7 +148,6 @@ public class PSDrawer {
     }
 
     public class PSFrame extends JFrame {
-        //private JLabel label = new JLabel("asd");
         //public int psHeight = 631;
         public int psHeight = 800;
         //public int psWidth = 445;
@@ -160,21 +155,10 @@ public class PSDrawer {
 
         private PSFrame() {
             super();
-            //setSize((int) GraphicsState.psUnitToPixel(psWidth),(int) GraphicsState.psUnitToPixel(psHeight));
             setSize(psWidth, psHeight);
             setLocation(0, 0);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //setResizable(false);
-            //getContentPane().setLayout(new BorderLayout());
-            //getContentPane().add(label);
-            //label.setVisible(true);
-            /*addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    //label.setText("x:" + e.getX() + ",y: " + e.getY());
-                    //repaint();
-                }
-            });*/
+            setResizable(true);
         }
 
         @Override

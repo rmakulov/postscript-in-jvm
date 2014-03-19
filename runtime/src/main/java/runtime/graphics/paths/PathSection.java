@@ -9,7 +9,9 @@ public abstract class PathSection implements Cloneable {
     protected PSPoint begin = new PSPoint();
     protected PSPoint end = new PSPoint();
 
-    public abstract PSPoint[] getBBox();
+    //public abstract PSPoint[] getBBox();
+
+    public abstract BoundingBox getBBox();
 
     public abstract PathSection clone();
 

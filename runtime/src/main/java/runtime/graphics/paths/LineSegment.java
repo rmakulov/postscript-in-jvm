@@ -10,15 +10,12 @@ public class LineSegment extends PathSection {
         super(pBegin, pEnd);
     }
 
-    public PSPoint[] getBBox() {
+    public BoundingBox getBBox() {
         PSPoint beg = getBegin();
         PSPoint end = getEnd();
         double llx = Math.min(beg.getX(), end.getX()), lly = Math.min(beg.getY(), end.getY());
         double urx = Math.max(beg.getX(), end.getX()), ury = Math.max(beg.getY(), end.getY());
-        PSPoint[] box = new PSPoint[2];
-        box[0] = new PSPoint(llx, lly);
-        box[1] = new PSPoint(urx, ury);
-        return box;
+        return new BoundingBox(llx, ury, urx, lly);
     }
 
     @Override

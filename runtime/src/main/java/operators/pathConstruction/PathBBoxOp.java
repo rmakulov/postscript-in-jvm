@@ -4,7 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSReal;
-import runtime.graphics.figures.PSPoint;
+import runtime.graphics.paths.BoundingBox;
 
 /**
  * Created by user on 16.03.14.
@@ -18,9 +18,9 @@ public class PathBBoxOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() { // -- pathbbox llx lly urx ury
-        PSPoint[] bBox = gState.currentPath.getBBox();
-        double llx = bBox[0].getX(), lly = bBox[0].getY();
-        double urx = bBox[1].getX(), ury = bBox[1].getY();
+        BoundingBox bBox = gState.currentPath.getBBox();
+        double llx = bBox.leftX, lly = bBox.downY;
+        double urx = bBox.rightX, ury = bBox.upperY;
         runtime.pushToOperandStack(new PSObject(new PSReal(llx)));
         runtime.pushToOperandStack(new PSObject(new PSReal(lly)));
         runtime.pushToOperandStack(new PSObject(new PSReal(urx)));
