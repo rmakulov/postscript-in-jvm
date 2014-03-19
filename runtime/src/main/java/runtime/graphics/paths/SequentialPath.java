@@ -15,15 +15,15 @@ public class SequentialPath {
 
     private ArrayList<PathSection> pathSections = new ArrayList<PathSection>();
     private PaintingState paintingState = PaintingState.NONE;
-    private double minX = 0, minY = 0, maxX = 0, maxY = 0;
+    private BoundingBox boundingBox ;
     private boolean isClosed = false;
 
     public SequentialPath() {
-
     }
 
     public SequentialPath(PathSection firstPath) {
         addPathSection(firstPath);
+        boundingBox = firstPath.getBBox() ;
     }
 
 /*    public SequentialPath(PaintingState paintingState, ArrayList<PathSection> pathSections) {
@@ -34,15 +34,9 @@ public class SequentialPath {
     public void addPathSection(PathSection ps) {
         isClosed = true;
         if (pathSections.isEmpty()) {
-            minX = ps.getBBox().leftX;
-            maxX = ps.getBBox().rightX;
-            minY = ps.getBBox().downY;
-            maxY = ps.getBBox().upperY;
+            boundingBox = ps.getBBox() ;
         } else {
-            minX = Math.min(ps.getBBox().leftX, minX);
-            maxX = Math.max(ps.getBBox().rightX, maxX);
-            minY = Math.min(ps.getBBox().downY, minY);
-            maxY = Math.max(ps.getBBox().upperY, maxY);
+            boundingBox.expand(ps.getBBox()) ;
         }
         pathSections.add(ps);
 
@@ -79,7 +73,7 @@ public class SequentialPath {
     }
 
     public BoundingBox getBBox() {
-        return new BoundingBox(minX, maxY, maxX, minY);
+        return boundingBox ;
     }
 
     public void close() {

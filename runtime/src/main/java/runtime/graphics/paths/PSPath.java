@@ -23,23 +23,18 @@ public class PSPath {
     }
 
     public BoundingBox getBBox() {
-        //todo
         if (sequentialPaths == null) {
             return null;
         }
-        PSPoint[] box = null;
+        BoundingBox box = null;
         for (SequentialPath sP : sequentialPaths) {
-          /*  PSPoint[] newBox = sP.getBBox();
             if (box == null) {
-                box = newBox;
+                box = sP.getBBox();
             } else {
-                if (newBox[0].getX() < box[0].getX()) box[0].setX(newBox[0].getX());
-                if (newBox[0].getY() < box[0].getY()) box[0].setY(newBox[0].getY());
-                if (newBox[1].getX() < box[1].getX()) box[1].setX(newBox[1].getX());
-                if (newBox[1].getY() < box[1].getY()) box[1].setY(newBox[1].getY());
-            }*/
+                box.expand(getBBox()) ;
+            }
         }
-        return null;
+        return box ;
     }
 
     public void setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState paintingState) {

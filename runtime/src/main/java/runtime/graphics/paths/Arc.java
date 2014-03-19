@@ -4,7 +4,9 @@ package runtime.graphics.paths;
  * Created by user on 14.03.14.
  */
 
+import runtime.graphics.GraphicsState;
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.matrix.TransformMatrix;
 
 public class Arc extends PathSection {
     private PSPoint center;
@@ -49,6 +51,7 @@ public class Arc extends PathSection {
         angleFirst = relAngle1;
         angleSecond = relAngle2;
         this.clockwise = clockwise;
+        //todo if angle2 < angle1 => angle2 += 360*k
     }
 
     public void setClockwise(boolean clwise) {
@@ -75,99 +78,95 @@ public class Arc extends PathSection {
         angleSecond = angle;
     }
 
-    double lowerLeftX(double angle1, double angle2, PSPoint beg, PSPoint end) {
-        double k = 180., llx;
-        while (k < angle1) {
-            k += 360;
+    double lowerLeftX(double angle1, double angle2, PSPoint start, PSPoint finish) {
+        double angle = 180. ;
+        angle += 360 * (int)(angle1/360) ;
+        while (angle < angle1) {
+            angle += 360;
         }
-        if (k > angle2) {
-            llx = Math.min(beg.getX(), end.getX());
+        if (angle > angle2) {
+            return Math.min(start.getX(), finish.getX());
         } else {
-            llx = center.getX() - xRadius;
+            return center.getX() - xRadius;
         }
-        return llx;
     }
 
-    double lowerLeftY(double angle1, double angle2, PSPoint beg, PSPoint end) {
-        double k = 270., lly;
-        while (k < angle1) {
-            k += 360;
+    double lowerLeftY(double angle1, double angle2, PSPoint start, PSPoint finish) {
+        double angle = 270. ;
+        angle += 360 * (int)(angle1/360 ) ;
+        while (angle < angle1) {
+            angle += 360;
         }
-        if (k > angle2) {
-            lly = Math.min(beg.getY(), end.getY());
+        if (angle > angle2) {
+            return Math.min(start.getY(), finish.getY());
         } else {
-            lly = center.getY() - xRadius;
+            return center.getY() - yRadius;
         }
-        return lly;
     }
 
-    double upperRightX(double angle1, double angle2, PSPoint beg, PSPoint end) {
-        double k = 0., urx;
-        while (k < angle1) {
-            k += 360;
+    double upperRightX(double angle1, double angle2, PSPoint start, PSPoint finish) {
+        double angle = 0. ;
+        angle += 360 * (int)(angle1/360) ;
+        while (angle < angle1) {
+            angle += 360;
         }
-        if (k > angle2) {
-            urx = Math.max(beg.getX(), end.getX());
+        if (angle > angle2) {
+            return Math.max(start.getX(), finish.getX());
         } else {
-            urx = center.getX() + xRadius;
+            return center.getX() + xRadius;
         }
-        return urx;
     }
 
-    double upperRightY(double angle1, double angle2, PSPoint beg, PSPoint end) {
-        double k = 90, ury;
-        while (k < angle1) {
-            k += 360;
+    double upperRightY(double angle1, double angle2, PSPoint start, PSPoint finish) {
+        double angle = 90 ;
+        angle += 360 * (int)(angle1/360) ;
+        while (angle < angle1) {
+            angle += 360;
         }
-        if (k > angle2) {
-            ury = Math.max(beg.getY(), end.getY());
+        if (angle > angle2) {
+            return Math.max(start.getY(), end.getY());
         } else {
-            ury = center.getY() + xRadius;
+            return center.getY() + yRadius;
         }
-        return ury;
     }
 
-    //todo redo it
+
     public BoundingBox getBBox() {
-        return new BoundingBox(0, 0, 0, 0);
-        /*double angle1 = angleFirst, angle2 = angleSecond;
         if (Math.abs(angleSecond - angleFirst) > 360) {
-            PSPoint[] box = new PSPoint[2];
-            box[0] = new PSPoint(center.getX() - xRadius, center.getY() - xRadius);
-            box[1] = new PSPoint(center.getX() + xRadius, center.getY() + xRadius);
-            //return box;
-            return null;
+            PSPoint leftLowerPoint  = new PSPoint(center.getX() - xRadius, center.getY() - xRadius);
+            PSPoint rightUpperPoint = new PSPoint(center.getX() + xRadius, center.getY() + xRadius);
+            return new BoundingBox(leftLowerPoint, rightUpperPoint) ;
         }
-        if (clockwise) {
+        if(clockwise){
             Arc newArc = (Arc) clone();
-            newArc.setClockwise(false);
+            newArc.setClockwise(false) ;
             double angF = newArc.angleFirst;
             double angS = newArc.angleSecond;
             newArc.setAngleFirst(angS);
             newArc.setAngleSecond(angF + 360);
             return newArc.getBBox();
         }
-        PSPoint beg = new PSPoint(center.getX() + xRadius * Math.cos(angle1 * Math.PI / 180.),
-                center.getY() + xRadius * Math.sin(angle1 * Math.PI / 180.));
-        PSPoint end = new PSPoint(center.getX() + xRadius * Math.cos(angle2 * Math.PI / 180.),
-                center.getY() + xRadius * Math.sin(angle2 * Math.PI / 180.));
-        while (angle1 < 0) {
-            angle1 += 360;
-            angle2 += 360;
+        double angle1 = angleFirst, angle2 = angleSecond;
+        PSPoint start  = new PSPoint(center.getX() + xRadius * Math.cos(angle1 * Math.PI / 180.),
+                                     center.getY() + yRadius * Math.sin(angle1 * Math.PI / 180.));
+        PSPoint finish = new PSPoint(center.getX() + xRadius * Math.cos(angle2 * Math.PI / 180.),
+                                     center.getY() + xRadius * Math.sin(angle2 * Math.PI / 180.));
+
+        if(angle1 < 0){
+            int k =(int) (1 + -angle1/360.) ;
+            angle1 += k * 360 ;
+            angle2 += k * 360 ;
         }
-        double llx = lowerLeftX(angle1, angle2, beg, end);
-        double lly = lowerLeftY(angle1, angle2, beg, end);
-        double urx = upperRightX(angle1, angle2, beg, end);
-        double ury = upperRightY(angle1, angle2, beg, end);
 
-        PSPoint[] box = new PSPoint[2];
-        box[0] = new PSPoint(llx, lly);
-        box[1] = new PSPoint(urx, ury);
-        //return box;
-        return null;*/
-    }
+        double llx = lowerLeftX(angle1, angle2,  start, finish);
+        double lly = lowerLeftY(angle1, angle2,  start, finish);
+        double urx = upperRightX(angle1, angle2, start, finish);
+        double ury = upperRightY(angle1, angle2, start, finish);
 
-    public boolean isOnArc(double angle) {
+        return new BoundingBox(llx, lly, urx, ury);
+    }//getBBox()
+
+    public boolean isOnArc(double angle) { // supposed point is
         double angle1 = angleFirst;
         double angle2 = angleSecond;
         if (Math.abs(angle1 - angle2) > 360) {
@@ -180,18 +179,21 @@ public class Arc extends PathSection {
             newArc.setAngleSecond(angle1 + 360);
             return newArc.isOnArc(angle);
         }
-        while (angle < angle1) { // maybe it will be too long
+        if(angle1 < 0){
+            int k =(int) (1 + -angle1/360.) ;
+            angle1 += k * 360 ;
+            angle2 += k * 360 ;
+        }
+        angle += 360 * ((int)(angle1/360) - (int)(angle/360)) ;
+        while (angle < angle1) {
             angle += 360;
         }
         return angle < angle2;
     }
 
     public boolean isInCircle(PSPoint p) {
-        //todo change all methods
-        //PSPoint relP = transformMatrix.transform(p.getX(), p.getY());
-        //double difx = (relP.getX() - center.getX()), dify = (relP.getY() - center.getY());
-        //return difx * difx + dify * dify <= xRadius * xRadius;
-        return false;
+        double difx = (p.getX() - center.getX()), dify = (p.getY() - center.getY());
+        return (difx * difx)/(xRadius*xRadius) + (dify * dify)*(yRadius * yRadius) <= 1 ;
     }
 
     public boolean isGoingThroughInterior(PSPoint start, PSPoint end) {
@@ -220,8 +222,8 @@ public class Arc extends PathSection {
         double[] line = PSPoint.lineEquation(p, new PSPoint(p.getX() + 1, p.getY() + 1));
         double dist = center.distanceToLine(line);
         if (dist < xRadius) {
-            double[] circle = new double[]{center.getX(), center.getY(), xRadius};
-            PSPoint[] iPoints = PSPoint.intersectCircleLine(circle, line);
+            double[] ellipse = new double[]{center.getX(), center.getY(), xRadius, yRadius };
+            PSPoint[] iPoints = PSPoint.intersectEllipseLine(ellipse, line);
             double angle0 = Math.atan2(iPoints[0].getY() - center.getY(), iPoints[0].getX() - center.getX());
             double angle1 = Math.atan2(iPoints[1].getY() - center.getY(), iPoints[1].getX() - center.getX());
             angle0 = radianToDegree(angle0);

@@ -26,7 +26,8 @@ import javax.swing.*;
 import static psObjects.Type.*;
 
 
-public class Runtime{
+public class
+        Runtime{
     private static Runtime ourInstance = new Runtime();
 
 

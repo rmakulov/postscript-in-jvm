@@ -19,7 +19,7 @@ public class PathBBoxOp extends AbstractGraphicOperator {
     @Override
     public void execute() { // -- pathbbox llx lly urx ury
         BoundingBox bBox = gState.currentPath.getBBox();
-        double llx = bBox.leftX, lly = bBox.downY;
+        double llx = bBox.leftX, lly = bBox.lowerY;
         double urx = bBox.rightX, ury = bBox.upperY;
         runtime.pushToOperandStack(new PSObject(new PSReal(llx)));
         runtime.pushToOperandStack(new PSObject(new PSReal(lly)));

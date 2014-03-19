@@ -64,7 +64,7 @@ public class PSDrawer {
         sequentialPath.close();
         BoundingBox box = sequentialPath.getBBox();
         for (int x = (int) box.leftX; x <= box.rightX; x++) {
-            for (int y = (int) box.downY; y < box.upperY; y++) {
+            for (int y = (int) box.lowerY; y < box.upperY; y++) {
                 //sequentialPath.intersect()
             }
         }
@@ -165,6 +165,7 @@ public class PSDrawer {
         public void paint(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             AffineTransform saveAT = g2.getTransform();
+            
             g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
             drawCurrentPath(state.currentPath, g2);
             drawClippingPath(state.clippingPath, g2);
