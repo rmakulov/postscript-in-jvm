@@ -1,5 +1,6 @@
 package runtime.graphics.paths;
 
+import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
 import java.awt.*;
@@ -9,6 +10,16 @@ import java.util.ArrayList;
  * Created by user on 14.03.14.
  */
 public class SequentialPath {
+    private GraphicsSettings graphicsSettings;
+
+    public void setGraphicsSettings(GraphicsSettings graphicsSettings) {
+        this.graphicsSettings = graphicsSettings;
+    }
+
+    public GraphicsSettings getGraphicsSettings() {
+        return graphicsSettings;
+    }
+
     public enum PaintingState {
         FILL, NONE, STROKE
     }
@@ -87,7 +98,7 @@ public class SequentialPath {
         PSPoint pBegin = pathSections.get(0).getBegin();
         PSPoint pEnd = pathSections.get(pathSections.size() - 1).getEnd();
         if (Point.distance(pBegin.getX(), pBegin.getY(), pEnd.getX(), pEnd.getY()) > 0.00001) {
-            pathSections.add(new LineSegment(pBegin, pEnd));
+            pathSections.add(new LineSegment(pBegin, pEnd, graphicsSettings));
         }
     }
 

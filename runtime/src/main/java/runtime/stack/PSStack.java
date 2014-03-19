@@ -1,6 +1,7 @@
 package runtime.stack;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Stack;
 
 
@@ -66,7 +67,27 @@ public class PSStack<T> implements Iterable<T> {
     }
 
     public Iterator<T> iterator() {
-        return stack.iterator();
+        return inverseIterator();
+    }
+
+    private Iterator<T> inverseIterator() {
+        return new Iterator<T>() {
+            ListIterator<T> listIterator = stack.listIterator(stack.size());
+
+            @Override
+            public boolean hasNext() {
+                return listIterator.hasPrevious();
+            }
+
+            @Override
+            public T next() {
+                return listIterator.previous();
+            }
+
+            @Override
+            public void remove() {
+            }
+        };
     }
 
     public boolean contains(T T) {

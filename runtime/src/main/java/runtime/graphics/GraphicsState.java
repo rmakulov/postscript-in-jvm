@@ -4,35 +4,33 @@ import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
 
-import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by use 1r on 14.03.14.
  */
 public class GraphicsState {
     private static GraphicsState instance = new GraphicsState();
-
-    public double lineWidth; // 1/72 inch
     public PSPoint currentPoint;
     public PSPath currentPath;
+    public ArrayList<PSPath> paintingPaths = new ArrayList<PSPath>();
     public PSPath clippingPath;
-    public Color color;
     public TransformMatrix cTM;
+    public GraphicsSettings graphicsSettings;
+/*    public Color color;
+    public double lineWidth; // 1/72 inch
     public int lineJoin;
     public int lineCap;
     public double miterLimit;
     public float[] dash = new float[]{};
-    public float dashPhase = 0;
+    public float dashPhase = 0;*/
 
     private GraphicsState() {
         currentPath = new PSPath();
+        currentPoint = new PSPoint();
+        cTM = new TransformMatrix(new double[]{1, 0, 0, 1, 0, 0});
         //clippingPath = new PSPath() ; //todo page size rectangle
-        lineWidth = psUnitToPixel(1.0);
-        color = Color.BLACK;
-        cTM = new TransformMatrix();
-        lineJoin = 0;
-        lineCap = 0;
-        miterLimit = 10.0;
+        graphicsSettings = GraphicsSettings.mainInstance;
     }
 
     public static GraphicsState getInstance() {
@@ -51,6 +49,18 @@ public class GraphicsState {
     }
 
     public double getLineWidthInPixels() {
-        return psUnitToPixel(lineWidth);
+        return psUnitToPixel(graphicsSettings.lineWidth);
+    }
+
+    public GraphicsSettings cloneGraphicsSettings() {
+        return graphicsSettings.clone();
+    }
+
+    public void addPaintingPath(PSPath path) {
+        paintingPaths.add(path);
+    }
+
+    public void addCurrentPathInPaintingPaths() {
+        addPaintingPath(currentPath);
     }
 }

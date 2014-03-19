@@ -31,8 +31,11 @@ public class BindOp extends Operator {
         for (PSObject innerObj : psArr.getArray()) {
             resArray.addAll(bind(innerObj));
         }
-        PSArray newPsArray = new PSArray((PSObject[]) resArray.toArray());
-        o.setValue(newPsArray);
+        PSArray result = new PSArray(resArray.size());
+        for (int i = 0; i < resArray.size(); i++) {
+            result = result.setValue(i, resArray.get(resArray.size() - i - 1));
+        }
+        o.setValue(result);
         runtime.pushToOperandStack(o);
     }
 

@@ -8,7 +8,7 @@ import psObjects.values.simple.numbers.PSNumber;
 /**
  * Created by user on 15.03.14.
  */
-public class SetLineWidthOp extends AbstractGraphicOperator{
+public class SetLineWidthOp extends AbstractGraphicOperator {
     public static final SetLineWidthOp instance = new SetLineWidthOp();
 
     protected SetLineWidthOp() {
@@ -17,13 +17,13 @@ public class SetLineWidthOp extends AbstractGraphicOperator{
 
     @Override
     public void execute() {// num setlinewidth -
-        PSObject oNum = runtime.popFromOperandStack() ;
-        if(oNum == null || !(oNum.isNumber())){
-            runtime.pushToOperandStack(oNum) ;
-            return ;
+        PSObject oNum = runtime.popFromOperandStack();
+        if (oNum == null || !(oNum.isNumber())) {
+            runtime.pushToOperandStack(oNum);
+            return;
         }
-        double width = ((PSNumber) oNum.getValue()).getRealValue() ;
-        gState.lineWidth = width ;
+        double width = ((PSNumber) oNum.getValue()).getRealValue();
+        gState.graphicsSettings.lineWidth = width;
     }
 
     @Override

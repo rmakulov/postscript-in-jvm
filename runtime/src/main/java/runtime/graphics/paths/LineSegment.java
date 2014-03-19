@@ -1,13 +1,14 @@
 package runtime.graphics.paths;
 
+import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
 /**
  * Created by user on 14.03.14.
  */
 public class LineSegment extends PathSection {
-    public LineSegment(PSPoint pBegin, PSPoint pEnd) {
-        super(pBegin, pEnd);
+    public LineSegment(PSPoint pBegin, PSPoint pEnd, GraphicsSettings settings) {
+        super(pBegin, pEnd, settings);
     }
 
     public BoundingBox getBBox() {
@@ -23,7 +24,7 @@ public class LineSegment extends PathSection {
         PSPoint beg = getBegin();
         PSPoint end = getEnd();
         return new LineSegment(new PSPoint(beg.getX(), beg.getY()),
-                new PSPoint(end.getX(), end.getY()));
+                new PSPoint(end.getX(), end.getY()), graphicsSettings);
     }
 /*
     @Override

@@ -1,27 +1,22 @@
 package runtime.graphics.save;
 
+import runtime.graphics.GraphicsSettings;
 import runtime.graphics.GraphicsState;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
-
-import java.awt.*;
 
 /**
  * Created by user on 16.03.14.
  */
 
 public class GSave {
-    private double lineWidth; // 1/72 inch
-    private PSPoint currentPoint;
     private PSPath currentPath;
     private PSPath clippingPath;
-    private Color color;
     private TransformMatrix cTM;
-    private int lineJoin;
-    private int lineCap;
-    private double miterLimit;
+    private GraphicsSettings settings;
     private boolean madeByGSaveOp;
+    private PSPoint currentPoint;
 
     public GSave(boolean made) {
         madeByGSaveOp = made;
@@ -33,26 +28,20 @@ public class GSave {
 
     public void setSnapshot() {
         GraphicsState inst = GraphicsState.getInstance();
-        inst.lineWidth = lineWidth;
-        inst.currentPoint = currentPoint;
+        inst.graphicsSettings = settings;
         inst.clippingPath = clippingPath;
-        inst.color = color;
+        inst.currentPath = currentPath;
+        inst.currentPoint = currentPoint;
         inst.cTM = cTM;
-        inst.lineJoin = lineJoin;
-        inst.lineCap = lineCap;
-        inst.miterLimit = miterLimit;
     }
 
     public void getSnapshot() {
         GraphicsState inst = GraphicsState.getInstance();
-        lineWidth = inst.lineWidth;
-        currentPoint = inst.currentPoint;
+        settings = inst.cloneGraphicsSettings();
         currentPath = inst.currentPath;
         clippingPath = inst.clippingPath;
-        color = inst.color;
         cTM = inst.cTM;
-        lineJoin = inst.lineJoin;
-        miterLimit = inst.miterLimit;
+        currentPoint = inst.currentPoint;
     }
 
 }

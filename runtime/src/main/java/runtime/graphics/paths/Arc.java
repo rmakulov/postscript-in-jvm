@@ -4,6 +4,7 @@ package runtime.graphics.paths;
  * Created by user on 14.03.14.
  */
 
+import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
 public class Arc extends PathSection {
@@ -41,8 +42,9 @@ public class Arc extends PathSection {
         this.transformMatrix = transformMatrix;
     }*/
 
-    public Arc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius, double relAngle1, double relAngle2, boolean clockwise) {
-        super(absBegin, absEnd);
+    public Arc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius,
+               double relAngle1, double relAngle2, boolean clockwise, GraphicsSettings settings) {
+        super(absBegin, absEnd, settings);
         center = absCenter;
         xRadius = absXRadius;
         yRadius = absYRadius;
@@ -206,14 +208,10 @@ public class Arc extends PathSection {
 
     @Override
     public PathSection clone() {
-        return new Arc(begin, end, new PSPoint(center.getX(), center.getY()), xRadius, yRadius, angleFirst, angleSecond, clockwise);
+        return new Arc(begin, end, new PSPoint(center.getX(), center.getY()), xRadius,
+                yRadius, angleFirst, angleSecond, clockwise, graphicsSettings.clone());
     }
 
-/*    @Override
-    public void draw(Graphics g) {
-         //todo
-         //g.drawArc(g) ;
-    }*/
 
     @Override
     public int rayIntersect(PSPoint p) {

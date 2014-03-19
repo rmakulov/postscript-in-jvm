@@ -19,23 +19,23 @@ public class SetRgbColorOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {// red green blue setrgbcolor -
-        PSObject oBlue  = runtime.popFromOperandStack() ;
-        PSObject oGreen = runtime.popFromOperandStack() ;
-        PSObject oRed   = runtime.popFromOperandStack() ;
-        if( oBlue == null || oGreen == null || oRed == null ||
-                !(oBlue.isNumber() && oGreen.isNumber() && oRed.isNumber() )){
+        PSObject oBlue = runtime.popFromOperandStack();
+        PSObject oGreen = runtime.popFromOperandStack();
+        PSObject oRed = runtime.popFromOperandStack();
+        if (oBlue == null || oGreen == null || oRed == null ||
+                !(oBlue.isNumber() && oGreen.isNumber() && oRed.isNumber())) {
             runtime.pushToOperandStack(oRed);
             runtime.pushToOperandStack(oGreen);
             runtime.pushToOperandStack(oBlue);
-            return ;
+            return;
         }
-        double nBlue  = ((PSNumber) oBlue.getValue()).getRealValue() ;
-        double nGreen = ((PSNumber) oGreen.getValue()).getRealValue() ;
-        double nRed   = ((PSNumber) oRed.getValue()).getRealValue() ;
-        if(!(nBlue >= 0 && nBlue <= 1 && nGreen >= 0 && nGreen <= 1 && nRed >= 0 && nRed <= 1)){
-            return ;
+        double nBlue = ((PSNumber) oBlue.getValue()).getRealValue();
+        double nGreen = ((PSNumber) oGreen.getValue()).getRealValue();
+        double nRed = ((PSNumber) oRed.getValue()).getRealValue();
+        if (!(nBlue >= 0 && nBlue <= 1 && nGreen >= 0 && nGreen <= 1 && nRed >= 0 && nRed <= 1)) {
+            return;
         }
-        gState.color = new Color((int)(255*nRed),(int)(255*nGreen),(int)(255*nBlue)) ;
+        gState.graphicsSettings.color = new Color((int) (255 * nRed), (int) (255 * nGreen), (int) (255 * nBlue));
     }
 
     @Override

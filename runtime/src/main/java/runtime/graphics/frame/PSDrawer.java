@@ -1,14 +1,15 @@
 package runtime.graphics.frame;
 
 import runtime.Runtime;
+import runtime.graphics.GraphicsSettings;
 import runtime.graphics.GraphicsState;
 import runtime.graphics.figures.PSPoint;
-import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class PSDrawer {
     }
 
     private void drawCurrentPath(PSPath path, Graphics2D g2) {
+        if (path == null) return;
         ArrayList<SequentialPath> sequentialPaths = path.getSequentialPaths();
         for (SequentialPath p : sequentialPaths) {
             drawSequentialPath(p, g2);
@@ -60,12 +62,15 @@ public class PSDrawer {
         }
     }
 
-    private void fillSequentialPath(SequentialPath sequentialPath, Graphics2D g2) {
+    private void fillSequentialPath(SequentialPath sequentialPath, Graphics2D g) {
         sequentialPath.close();
         BoundingBox box = sequentialPath.getBBox();
         for (int x = (int) box.leftX; x <= box.rightX; x++) {
             for (int y = (int) box.downY; y < box.upperY; y++) {
-                //sequentialPath.intersect()
+                if (sequentialPath.intersect(x, y) == 0) {
+                    setGraphicsSettings(g, sequentialPath.getGraphicsSettings());
+                    g.draw(new Ellipse2D.Double(x, y, 1, 1));
+                }
             }
         }
     }
@@ -88,8 +93,17 @@ public class PSDrawer {
         return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
     }
 
+    public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
+        g.setColor(settings.color);
+        g.setStroke(new BasicStroke((float) state.getLineWidthInPixels(),
+                settings.lineCap,
+                settings.lineJoin,
+                (float) settings.miterLimit));
+        //, settings.dash, settings.dashPhase));
+
+    }
+
     private abstract class PathSectionDrawer {
-        protected TransformMatrix javaMatrix = new TransformMatrix(getJavaTransformMatrix());
         Graphics2D g;
 
         protected PathSectionDrawer(Graphics2D g) {
@@ -98,14 +112,7 @@ public class PSDrawer {
 
         public abstract void draw();
 
-        protected void setGraphicsSettings() {
-            g.setColor(state.color);
-            g.setStroke(new BasicStroke((float) state.getLineWidthInPixels(),
-                    state.lineCap,
-                    state.lineJoin,
-                    (float) state.miterLimit, state.dash, state.dashPhase));
 
-        }
     }
 
     private class LineSegmentDrawer extends PathSectionDrawer {
@@ -118,6 +125,7 @@ public class PSDrawer {
 
         @Override
         public void draw() {
+            setGraphicsSettings(g, segment.getGraphicsSettings());
             PSPoint psBegin = segment.getBegin();
             PSPoint psEnd = segment.getEnd();
             g.draw(new Line2D.Double((int) psBegin.getX(), (int) psBegin.getY(), (int) psEnd.getX(), (int) psEnd.getY()));
@@ -135,6 +143,7 @@ public class PSDrawer {
 
         @Override
         public void draw() {
+            setGraphicsSettings(g, arc.getGraphicsSettings());
             PSPoint absCenter = arc.getCenter();
             int xR = (int) arc.getXRadius();
             int yR = (int) arc.getYRadius();
@@ -166,8 +175,10 @@ public class PSDrawer {
             Graphics2D g2 = (Graphics2D) g;
             AffineTransform saveAT = g2.getTransform();
             g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
-            drawCurrentPath(state.currentPath, g2);
-            drawClippingPath(state.clippingPath, g2);
+            for (PSPath paintingPath : GraphicsState.getInstance().paintingPaths) {
+                drawCurrentPath(paintingPath, g2);
+            }
+            //drawClippingPath(state.clippingPath, g2);
             g2.setTransform(saveAT);
 
         }
