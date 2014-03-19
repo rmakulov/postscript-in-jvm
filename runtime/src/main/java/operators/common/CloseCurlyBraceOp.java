@@ -9,7 +9,13 @@ import psObjects.values.simple.PSName;
 
 import java.util.ArrayList;
 
-public class CloseCurlyBrace extends Operator {
+public class CloseCurlyBraceOp extends Operator {
+    public static final CloseCurlyBraceOp instance = new CloseCurlyBraceOp();
+
+    protected CloseCurlyBraceOp() {
+        super();
+    }
+
     @Override
     public void execute() {
         if (runtime.getOperandStackSize() < 2) return;
@@ -20,16 +26,16 @@ public class CloseCurlyBrace extends Operator {
         }
         PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
-        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject)) {
+        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue())) {
             array.add(psObject);
             psObject = runtime.popFromOperandStack();
             // todo correct check is not null
-            if (psObject.getType() == null)
+            if (psObject == null)
                 return;
         }
         PSArray result = new PSArray(array.size());
         for (int i = 0; i < array.size(); i++) {
-            result.setValue(i, array.get(array.size() - i - 1));
+            result = result.setValue(i, array.get(array.size() - i - 1));
         }
         // todo literal, not executable
         runtime.pushToOperandStack(new PSObject(result, Attribute.TreatAs.EXECUTABLE));

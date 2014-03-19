@@ -1,6 +1,8 @@
 package operators.control;
 
 import operators.array.OpenSquareBracketOp;
+import operators.common.CloseCurlyBraceOp;
+import operators.common.OpenCurlyBraceOp;
 import operators.dictionary.CloseChevronOp;
 import operators.dictionary.OpenChevronOp;
 import operators.operandStackManipulation.MarkOp;
@@ -58,9 +60,11 @@ public class ExecOp extends Operator {
                 } else if (mark.equals(PSMark.CLOSE_CHEVRON_BRACKET)) {
                     CloseChevronOp.instance.execute();
                 } else if (mark.equals(PSMark.OPEN_CURLY_BRACE)) {
-                    //todo
+                    runtime.pushToOperandStack(psObject);
+                    OpenCurlyBraceOp.instance.execute();
                 } else if (mark.equals(PSMark.CLOSE_CURLY_BRACE)) {
-                    //todo
+                    runtime.pushToOperandStack(psObject);
+                    CloseCurlyBraceOp.instance.execute();
                 }
                 break;
             case OPERATOR:

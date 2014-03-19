@@ -36,7 +36,7 @@ public class CloseSquareBracketOp extends Operator {
         }
         PSArray result = new PSArray(array.size());
         for (int i = 0; i < array.size(); i++) {
-            result.setValue(i, array.get(array.size() - i - 1));
+            result = result.setValue(i, array.get(array.size() - i - 1));
         }
         runtime.pushToOperandStack(new PSObject(result, Attribute.TreatAs.LITERAL));
     }

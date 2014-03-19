@@ -27,7 +27,7 @@ public class SetLineJoinOp extends AbstractGraphicOperator {
         if (num < 0 || num > 2) {
             return;
         }
-        gState.lineJoin = num;
+        gState.graphicsSettings.lineJoin = num;
     }
 
     @Override

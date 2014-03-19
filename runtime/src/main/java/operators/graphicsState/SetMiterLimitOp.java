@@ -17,17 +17,17 @@ public class SetMiterLimitOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {
-        PSObject oNum = runtime.popFromOperandStack() ;
-        if(oNum == null || !oNum.isNumber()){
+        PSObject oNum = runtime.popFromOperandStack();
+        if (oNum == null || !oNum.isNumber()) {
             runtime.pushToOperandStack(oNum);
-            return ;
+            return;
         }
-        double nNum = ((PSNumber) oNum.getValue()).getRealValue() ;
-        if(nNum < 1 ){
+        double nNum = ((PSNumber) oNum.getValue()).getRealValue();
+        if (nNum < 1) {
             runtime.pushToOperandStack(oNum);
-            return ;
+            return;
         }
-        gState.miterLimit = nNum;
+        gState.graphicsSettings.miterLimit = nNum;
     }
 
     @Override

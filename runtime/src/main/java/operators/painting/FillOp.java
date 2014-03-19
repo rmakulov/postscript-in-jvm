@@ -16,7 +16,11 @@ public class FillOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() { // Fill current path with current color
-        gState.currentPath.setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState.FILL);
+        gState.currentPath.setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState.FILL,
+                gState.cloneGraphicsSettings());
+        gState.addCurrentPathInPaintingPaths();
+        gState.currentPath = null;
+        gState.currentPoint = null;
     }
 
 

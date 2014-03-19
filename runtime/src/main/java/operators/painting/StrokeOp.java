@@ -16,7 +16,11 @@ public class StrokeOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() { //-- setPaintingStateOfLastSequentialPath --
-        gState.currentPath.setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState.STROKE);
+        gState.currentPath.setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState.STROKE,
+                gState.cloneGraphicsSettings());
+        gState.addCurrentPathInPaintingPaths();
+        gState.currentPath = null;
+        gState.currentPoint = null;
     }
 
     @Override

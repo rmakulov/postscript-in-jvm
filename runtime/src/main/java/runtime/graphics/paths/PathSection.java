@@ -1,5 +1,6 @@
 package runtime.graphics.paths;
 
+import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
 /**
@@ -8,7 +9,7 @@ import runtime.graphics.figures.PSPoint;
 public abstract class PathSection implements Cloneable {
     protected PSPoint begin = new PSPoint();
     protected PSPoint end = new PSPoint();
-
+    protected GraphicsSettings graphicsSettings;
     //public abstract PSPoint[] getBBox();
 
     public abstract BoundingBox getBBox();
@@ -41,5 +42,15 @@ public abstract class PathSection implements Cloneable {
 
     public PSPoint getEnd() {
         return end;
+    }
+
+    protected PathSection(PSPoint begin, PSPoint end, GraphicsSettings graphicsSettings) {
+        this.begin = begin;
+        this.end = end;
+        this.graphicsSettings = graphicsSettings;
+    }
+
+    public GraphicsSettings getGraphicsSettings() {
+        return graphicsSettings;
     }
 }

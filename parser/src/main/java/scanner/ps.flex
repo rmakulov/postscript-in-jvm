@@ -40,7 +40,7 @@ WHITE_SPACE_CHAR=[\n\r\ \t\b\f]
 STRING_TEXT=([^()] | NONNEWLINE_SEQUENCE| WHITE_SPACE_CHAR)*
 COMMENT_TEXT= ([^\n\r])*
 Ident = {ALPHA}({ALPHA}|{DIGIT}|_)*
-NAME = [^()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
+NAME = [^\{\}()\\\[\]\>\<\ \%\t\n\r\b\f\/]+
 COMMENT_END = [\n\r]*
 
 

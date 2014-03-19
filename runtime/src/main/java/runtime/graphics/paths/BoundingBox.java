@@ -36,4 +36,13 @@ public class BoundingBox {
             Math.max(box.rightX, rightX)
         ) ;
     }
+
+    public BoundingBox expand(BoundingBox box) {
+        return new BoundingBox(
+                Math.min(box.leftX, leftX),
+                Math.max(box.upperY, upperY),
+                Math.max(box.rightX, rightX),
+                Math.min(box.downY, downY)
+        );
+    }
 }

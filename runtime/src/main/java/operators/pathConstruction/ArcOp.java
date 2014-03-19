@@ -57,7 +57,8 @@ public class ArcOp extends AbstractGraphicOperator {
 
         PSPoint absBegin = new PSPoint(xBegin, yBegin);
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
-        gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR, nAngle1, nAngle2, false);
+        gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
+                nAngle1, nAngle2, false, gState.cloneGraphicsSettings());
         gState.currentPoint = gState.currentPath.getLastSP().getEnd();
     }
 
