@@ -1,0 +1,84 @@
+package operators.miscellaneous;
+
+import psObjects.PSObject;
+import psObjects.Type;
+import psObjects.values.composite.PSArray;
+import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSName;
+
+import java.util.ArrayList;
+
+/**
+ * Created by 1 on 19.03.14.
+ */
+public class BindOp extends Operator {
+    public static final BindOp instance = new BindOp();
+
+    protected BindOp() {
+        super();
+    }
+
+    @Override
+    public void execute() {
+        if (runtime.getOperandStackSize() < 1) return;
+        PSObject o = runtime.popFromOperandStack();
+        if (!o.isProc()) {
+            runtime.pushToOperandStack(o);
+            return;
+        }
+        PSArray psArr = (PSArray) o.getValue();
+        ArrayList<PSObject> resArray = new ArrayList<PSObject>();
+        for (PSObject innerObj : psArr.getArray()) {
+            resArray.addAll(bind(innerObj));
+        }
+        PSArray newPsArray = new PSArray((PSObject[]) resArray.toArray());
+        o.setValue(newPsArray);
+        runtime.pushToOperandStack(o);
+    }
+
+    private ArrayList<PSObject> bind(PSObject o) {
+        ArrayList<PSObject> resArray;
+        Type type = o.getType();
+        switch (type) {
+            case NAME:
+                resArray = bind(runtime.findValue(o));
+                break;
+            case ARRAY:
+            case PACKEDARRAY:
+                resArray = new ArrayList<PSObject>();
+                if (o.xcheck()) {
+                    for (PSObject innerObj : ((PSArray) o.getValue()).getArray()) {
+                        resArray.addAll(bind(innerObj));
+                    }
+                } else {
+                    resArray.add(o);
+
+                }
+                break;
+            case INTEGER:
+            case REAL:
+            case BOOLEAN:
+            case FONT_ID:
+            case NULL:
+            case MARK:
+            case OPERATOR:
+            case DICTIONARY:
+            case STRING:
+            case FILE:
+            case GSTATE:
+            case SAVE:
+                resArray = new ArrayList<PSObject>();
+                resArray.add(o);
+                break;
+            default:
+                resArray = new ArrayList<PSObject>();
+                resArray.add(o);
+        }
+        return resArray;
+    }
+
+    @Override
+    public PSName getDefaultKeyName() {
+        return new PSName("bind");
+    }
+}

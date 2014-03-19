@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.matrix.TransformMatrix;
 
 /**
  * Created by user on 15.03.14.
@@ -40,16 +41,23 @@ public class ArcOp extends AbstractGraphicOperator {
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
-        double xBegin = nX + nR * Math.cos(nAngle1 * Math.PI / 180);
-        double yBegin = nY + nR * Math.sin(nAngle1 * Math.PI / 180);
-        double xEnd = nX + nR * Math.cos(nAngle2 * Math.PI / 180);
-        double yEnd = nY + nR * Math.sin(nAngle2 * Math.PI / 180);
+        TransformMatrix cTM = gState.cTM;
+        PSPoint absCent = cTM.transform(nX, nY);
+        double xScale = cTM.getXScale();
+        double yScale = cTM.getYScale();
+        double xR = nR * xScale;
+        double yR = nR * yScale;
+        double rotateAngle = cTM.getRotateAngle();
+        nAngle1 = nAngle1 + rotateAngle;
+        nAngle2 = nAngle2 + rotateAngle;
+        double xBegin = absCent.getX() + xR * Math.cos(nAngle1 * Math.PI / 180);
+        double yBegin = absCent.getY() + yR * Math.sin(nAngle1 * Math.PI / 180);
+        double xEnd = absCent.getX() + xR * Math.cos(nAngle2 * Math.PI / 180);
+        double yEnd = absCent.getY() + yR * Math.sin(nAngle2 * Math.PI / 180);
 
-        PSPoint absBegin = gState.cTM.transform(xBegin, yBegin);
-        PSPoint absEnd = gState.cTM.transform(xEnd, yEnd);
-
-        PSPoint begining = new PSPoint(nX, nY);
-        gState.currentPath.addArc(absBegin, absEnd, begining, nR, nAngle1, nAngle2, false, gState.cTM);
+        PSPoint absBegin = new PSPoint(xBegin, yBegin);
+        PSPoint absEnd = new PSPoint(xEnd, yEnd);
+        gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR, nAngle1, nAngle2, false);
         gState.currentPoint = gState.currentPath.getLastSP().getEnd();
     }
 

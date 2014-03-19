@@ -98,4 +98,19 @@ public class TransformMatrix implements Cloneable {
     public AffineTransform getAffineTransform() {
         return new AffineTransform(new double[]{matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]});
     }
+
+    public double getXScale() {
+        return Math.sqrt(matrix[0] * matrix[0] + matrix[1] * matrix[1]);
+    }
+
+    public double getYScale() {
+        return Math.sqrt(matrix[2] * matrix[2] + matrix[3] * matrix[3]);
+    }
+
+    //int degrees
+    public double getRotateAngle() {
+        double y = -matrix[2] / getYScale();
+        double x = matrix[0] / getXScale();
+        return Math.atan2(y, x) * 180 / Math.PI;
+    }
 }

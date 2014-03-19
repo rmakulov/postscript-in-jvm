@@ -139,18 +139,15 @@ public class PSDrawer {
 
         @Override
         public void draw() {
-            PSPoint relCenter = arc.getCenter();
-            int r = (int) arc.getRadius();
-            TransformMatrix transformMatrix = arc.getTransformMatrix();
-            AffineTransform affineTransform = transformMatrix.getAffineTransform();
-            AffineTransform saveAT = g.getTransform();
-            g.transform(affineTransform);
-            int x = (int) (relCenter.getX() - r);
-            int y = (int) (relCenter.getY() - r);
-            int width = 2 * r;
-            int height = 2 * r;
-            g.drawArc(x, y, width, height, (int) arc.getAngleFirst(), (int) arc.getAngle());
-            g.setTransform(saveAT);
+            PSPoint absCenter = arc.getCenter();
+            int xR = (int) arc.getXRadius();
+            int yR = (int) arc.getYRadius();
+            int x = (int) (absCenter.getX() - xR);
+            int y = (int) (absCenter.getY() - yR);
+            int width = 2 * xR;
+            int height = 2 * yR;
+            int angle = (int) arc.getAngle();
+            g.drawArc(x, y, width, height, (int) -arc.getAngleFirst(), -angle);
         }
     }
 

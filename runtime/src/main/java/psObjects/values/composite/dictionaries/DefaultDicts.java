@@ -18,6 +18,7 @@ import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.*;
 import operators.file.StackOp;
 import operators.graphicsState.*;
+import operators.miscellaneous.BindOp;
 import operators.operandStackManipulation.*;
 import operators.painting.FillOp;
 import operators.painting.StrokeOp;
@@ -50,6 +51,7 @@ public class DefaultDicts {
             addDictionaryOperators();
             addGlythAndFontOperators();
             addGraphicsStateOperators();
+            addMiscellaneousOperators();
             addOperandStackOperationOperators();
             addPaintingOperators();
             addPathConstructionOperators();
@@ -62,6 +64,7 @@ public class DefaultDicts {
         }
         return systemDict;
     }
+
 
     public static PSDictionary getUserDict() {
         if (userDict == null) {
@@ -114,6 +117,10 @@ public class DefaultDicts {
         //without operands
         addOperator(RandOp.instance);
         addOperator(RrandOp.instance);  //todo operator is not ready
+    }
+
+    private static void addMiscellaneousOperators() {
+        addOperator(BindOp.instance);
     }
 
     private static void addDictionaryOperators() {

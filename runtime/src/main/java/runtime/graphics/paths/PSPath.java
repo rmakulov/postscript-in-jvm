@@ -5,7 +5,6 @@ package runtime.graphics.paths;
  */
 
 import runtime.graphics.figures.PSPoint;
-import runtime.graphics.matrix.TransformMatrix;
 
 import java.util.ArrayList;
 
@@ -76,8 +75,8 @@ public class PSPath {
         }
     }*/
 
-    public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint relCenter, double relRadius, double relAngle1, double RelAngle2, boolean clockwise, TransformMatrix transformMatrix) {
-        Arc arc = new Arc(absBegin, absEnd, relCenter, relRadius, relAngle1, RelAngle2, clockwise, transformMatrix);
+    public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius, double relAngle1, double RelAngle2, boolean clockwise) {
+        Arc arc = new Arc(absBegin, absEnd, absCenter, absXRadius, absYRadius, relAngle1, RelAngle2, clockwise);
         PSPoint curPoint = getLastSP().getEnd();
         if (sequentialPaths.size() == 0) {
             if (curPoint == null) {
