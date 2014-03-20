@@ -33,6 +33,14 @@ public class SectionSet {
         }
     }
 
+    public SectionSet(double start, double finish) {
+        this(new Section(start, finish));
+    }
+
+    public SectionSet(double start1, double finish1, double start2, double finish2) {
+        this(new Section(start1, finish1), new Section(start2, finish2));
+    }
+
     public void union(Section section) {
         if (sections.isEmpty()) {
             sections.add(section);
@@ -67,16 +75,27 @@ public class SectionSet {
             sections.clear();
             return;
         }
+        ArrayList<Section> newSections = new ArrayList<Section>();
         for (Section s : sections) {
             if (s.isIntersect(section)) {
-                s.intersect(section);
-                //todo
+                newSections.add(s.intersect(section));
             }
         }
-        //todo
+        sections = newSections;
+    }
+
+    public void intersect(SectionSet set) {
+        for (Section s : set.sections) {
+            if (isEmpty()) return;
+            intersect(s);
+        }
     }
 
     public boolean isEmpty() {
         return sections.isEmpty();
+    }
+
+    public static SectionSet get2PiSection() {
+        return new SectionSet(0, Math.PI * 2);
     }
 }

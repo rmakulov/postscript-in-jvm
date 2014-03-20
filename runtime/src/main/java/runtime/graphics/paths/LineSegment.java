@@ -35,6 +35,10 @@ public class LineSegment extends PathSection {
         g.drawLine(x, y,width, height) ;
     }*/
 
+    public boolean isAnyCommonPointWithBoundingBox() {
+        return false;
+    }
+
     @Override
     public int rayIntersect(PSPoint p) { // return +1 if left-> right, else -1 else 0
         PSPoint lineBegin = getBegin();
