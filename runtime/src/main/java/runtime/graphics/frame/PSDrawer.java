@@ -21,6 +21,7 @@ public class PSDrawer {
     private PSFrame frame = new PSFrame();
     private GraphicsState state = GraphicsState.getInstance();
     private runtime.Runtime runtime = Runtime.getInstance();
+    private boolean isPainted = false;
 
     private PSDrawer() {
     }
@@ -33,6 +34,7 @@ public class PSDrawer {
     }
 
     public void showPage() {
+        isPainted = false;
         frame.setVisible(true);
         frame.repaint();
     }
@@ -94,6 +96,7 @@ public class PSDrawer {
     }
 
     public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
+        if (settings == null) return;
         g.setColor(settings.color);
         g.setStroke(new BasicStroke((float) state.getLineWidthInPixels(),
                 settings.lineCap,
@@ -129,7 +132,6 @@ public class PSDrawer {
             PSPoint psBegin = segment.getBegin();
             PSPoint psEnd = segment.getEnd();
             g.draw(new Line2D.Double((int) psBegin.getX(), (int) psBegin.getY(), (int) psEnd.getX(), (int) psEnd.getY()));
-            frame.repaint();
         }
     }
 
@@ -167,11 +169,13 @@ public class PSDrawer {
             setSize(psWidth, psHeight);
             setLocation(0, 0);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setResizable(true);
+            setResizable(false);
         }
 
         @Override
         public void paint(Graphics g) {
+            if (isPainted) return;
+            isPainted = true;
             Graphics2D g2 = (Graphics2D) g;
             AffineTransform saveAT = g2.getTransform();
             g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
