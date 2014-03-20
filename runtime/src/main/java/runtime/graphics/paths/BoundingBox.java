@@ -38,5 +38,13 @@ public class BoundingBox {
         );
     }
 
+    public boolean isIntersect(BoundingBox box) {
+        return !(box.leftX < rightX ||
+                box.upperY < lowerY ||
+                box.rightX > leftX ||
+                box.lowerY > upperY
+        );
+    }
+
 
 }

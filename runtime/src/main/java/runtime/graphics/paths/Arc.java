@@ -4,10 +4,8 @@ package runtime.graphics.paths;
  * Created by user on 14.03.14.
  */
 
-import runtime.graphics.GraphicsState;
 import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
-import runtime.graphics.matrix.TransformMatrix;
 
 public class Arc extends PathSection {
     private PSPoint center;
@@ -80,8 +78,8 @@ public class Arc extends PathSection {
     }
 
     double lowerLeftX(double angle1, double angle2, PSPoint start, PSPoint finish) {
-        double angle = 180. ;
-        angle += 360 * (int)(angle1/360) ;
+        double angle = 180.;
+        angle += 360 * (int) (angle1 / 360);
         while (angle < angle1) {
             angle += 360;
         }
@@ -93,8 +91,8 @@ public class Arc extends PathSection {
     }
 
     double lowerLeftY(double angle1, double angle2, PSPoint start, PSPoint finish) {
-        double angle = 270. ;
-        angle += 360 * (int)(angle1/360 ) ;
+        double angle = 270.;
+        angle += 360 * (int) (angle1 / 360);
         while (angle < angle1) {
             angle += 360;
         }
@@ -106,8 +104,8 @@ public class Arc extends PathSection {
     }
 
     double upperRightX(double angle1, double angle2, PSPoint start, PSPoint finish) {
-        double angle = 0. ;
-        angle += 360 * (int)(angle1/360) ;
+        double angle = 0.;
+        angle += 360 * (int) (angle1 / 360);
         while (angle < angle1) {
             angle += 360;
         }
@@ -119,8 +117,8 @@ public class Arc extends PathSection {
     }
 
     double upperRightY(double angle1, double angle2, PSPoint start, PSPoint finish) {
-        double angle = 90 ;
-        angle += 360 * (int)(angle1/360) ;
+        double angle = 90;
+        angle += 360 * (int) (angle1 / 360);
         while (angle < angle1) {
             angle += 360;
         }
@@ -134,13 +132,13 @@ public class Arc extends PathSection {
 
     public BoundingBox getBBox() {
         if (Math.abs(angleSecond - angleFirst) > 360) {
-            PSPoint leftLowerPoint  = new PSPoint(center.getX() - xRadius, center.getY() - xRadius);
+            PSPoint leftLowerPoint = new PSPoint(center.getX() - xRadius, center.getY() - xRadius);
             PSPoint rightUpperPoint = new PSPoint(center.getX() + xRadius, center.getY() + xRadius);
-            return new BoundingBox(leftLowerPoint, rightUpperPoint) ;
+            return new BoundingBox(leftLowerPoint, rightUpperPoint);
         }
-        if(clockwise){
+        if (clockwise) {
             Arc newArc = (Arc) clone();
-            newArc.setClockwise(false) ;
+            newArc.setClockwise(false);
             double angF = newArc.angleFirst;
             double angS = newArc.angleSecond;
             newArc.setAngleFirst(angS);
@@ -148,24 +146,36 @@ public class Arc extends PathSection {
             return newArc.getBBox();
         }
         double angle1 = angleFirst, angle2 = angleSecond;
-        PSPoint start  = new PSPoint(center.getX() + xRadius * Math.cos(angle1 * Math.PI / 180.),
-                                     center.getY() + yRadius * Math.sin(angle1 * Math.PI / 180.));
+        PSPoint start = new PSPoint(center.getX() + xRadius * Math.cos(angle1 * Math.PI / 180.),
+                center.getY() + yRadius * Math.sin(angle1 * Math.PI / 180.));
         PSPoint finish = new PSPoint(center.getX() + xRadius * Math.cos(angle2 * Math.PI / 180.),
-                                     center.getY() + xRadius * Math.sin(angle2 * Math.PI / 180.));
+                center.getY() + xRadius * Math.sin(angle2 * Math.PI / 180.));
 
-        if(angle1 < 0){
-            int k =(int) (1 + -angle1/360.) ;
-            angle1 += k * 360 ;
-            angle2 += k * 360 ;
+        if (angle1 < 0) {
+            int k = (int) (1 + -angle1 / 360.);
+            angle1 += k * 360;
+            angle2 += k * 360;
         }
 
-        double llx = lowerLeftX(angle1, angle2,  start, finish);
-        double lly = lowerLeftY(angle1, angle2,  start, finish);
+        double llx = lowerLeftX(angle1, angle2, start, finish);
+        double lly = lowerLeftY(angle1, angle2, start, finish);
         double urx = upperRightX(angle1, angle2, start, finish);
         double ury = upperRightY(angle1, angle2, start, finish);
 
         return new BoundingBox(llx, lly, urx, ury);
-    }//getBBox()
+    }
+
+    public boolean isAnyCommonPointWithBoundingBox(BoundingBox box) {
+        if (!box.isIntersect(getBBox())) return false;
+        double ax = box.leftX / xRadius;
+        double bx = box.rightX / xRadius;
+        double ay = box.lowerY / yRadius;
+        double by = box.rightX / yRadius;
+        if (ax > 1 || bx < -1 || ay > 1 || by < -1) return false;
+        //SectionSet set=
+        //todo
+        return false;
+    }
 
     public boolean isOnArc(double angle) { // supposed point is
         double angle1 = angleFirst;
@@ -180,12 +190,12 @@ public class Arc extends PathSection {
             newArc.setAngleSecond(angle1 + 360);
             return newArc.isOnArc(angle);
         }
-        if(angle1 < 0){
-            int k =(int) (1 + -angle1/360.) ;
-            angle1 += k * 360 ;
-            angle2 += k * 360 ;
+        if (angle1 < 0) {
+            int k = (int) (1 + -angle1 / 360.);
+            angle1 += k * 360;
+            angle2 += k * 360;
         }
-        angle += 360 * ((int)(angle1/360) - (int)(angle/360)) ;
+        angle += 360 * ((int) (angle1 / 360) - (int) (angle / 360));
         while (angle < angle1) {
             angle += 360;
         }
@@ -194,7 +204,7 @@ public class Arc extends PathSection {
 
     public boolean isInCircle(PSPoint p) {
         double difx = (p.getX() - center.getX()), dify = (p.getY() - center.getY());
-        return (difx * difx)/(xRadius*xRadius) + (dify * dify)*(yRadius * yRadius) <= 1 ;
+        return (difx * difx) / (xRadius * xRadius) + (dify * dify) * (yRadius * yRadius) <= 1;
     }
 
     public boolean isGoingThroughInterior(PSPoint start, PSPoint end) {
@@ -219,7 +229,7 @@ public class Arc extends PathSection {
         double[] line = PSPoint.lineEquation(p, new PSPoint(p.getX() + 1, p.getY() + 1));
         double dist = center.distanceToLine(line);
         if (dist < xRadius) {
-            double[] ellipse = new double[]{center.getX(), center.getY(), xRadius, yRadius };
+            double[] ellipse = new double[]{center.getX(), center.getY(), xRadius, yRadius};
             PSPoint[] iPoints = PSPoint.intersectEllipseLine(ellipse, line);
             double angle0 = Math.atan2(iPoints[0].getY() - center.getY(), iPoints[0].getX() - center.getX());
             double angle1 = Math.atan2(iPoints[1].getY() - center.getY(), iPoints[1].getX() - center.getX());
