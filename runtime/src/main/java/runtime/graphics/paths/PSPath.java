@@ -7,103 +7,82 @@ package runtime.graphics.paths;
 import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
-import java.util.ArrayList;
+import java.awt.*;
+import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
 
 public class PSPath {
-    private ArrayList<SequentialPath> sequentialPaths;
+    private GeneralPath generalPath;
+    public GraphicsSettings graphicsSettings;
+    private PaintingState paintingState = PaintingState.NONE;
+
+    public enum PaintingState {
+        FILL, NONE, STROKE
+    }
+
+    public void setPaintingState(PaintingState paintingState) {
+        this.paintingState = paintingState;
+    }
+
+    public PaintingState getPaintingState() {
+        return paintingState;
+    }
 
     public PSPath() {
-        sequentialPaths = new ArrayList<SequentialPath>();
+        generalPath = new GeneralPath();
+        graphicsSettings = new GraphicsSettings();
     }
 
-    public SequentialPath getLastSP() {
-        if (sequentialPaths.size() == 0) {
+    private PSPath(GeneralPath generalPath, GraphicsSettings graphicsSettings) {
+        this.generalPath = generalPath;
+        this.graphicsSettings = graphicsSettings;
+    }
+
+
+    public Rectangle getBBox() {
+        if (generalPath == null) {
             return null;
         }
-        return sequentialPaths.get(sequentialPaths.size() - 1);
+        return generalPath.getBounds();
     }
 
-    public BoundingBox getBBox() {
-        if (sequentialPaths == null) {
-            return null;
-        }
-        BoundingBox box = null;
-        for (SequentialPath sP : sequentialPaths) {
-            if (box == null) {
-                box = sP.getBBox();
-            } else {
-                box.expand(getBBox()) ;
-            }
-        }
-        return box ;
-    }
-
-    public void setPaintingStateOfLastSequentialPath(SequentialPath.PaintingState paintingState, GraphicsSettings settings) {
-        SequentialPath sequentialPath = sequentialPaths.get(sequentialPaths.size() - 1);
-        sequentialPath.setPaintingState(paintingState);
-        sequentialPath.setGraphicsSettings(settings);
-    }
-
-    public void addSequentialPath(SequentialPath path) {
-        sequentialPaths.add(path);
+    public void setGraphicsSettings(GraphicsSettings settings) {
+        this.graphicsSettings = settings;
     }
 
     //absolute coordinates in postscript
     public void addLineSegment(PSPoint begining, PSPoint end, GraphicsSettings settings) {
-        if (sequentialPaths.size() == 0) {
-            SequentialPath newSPath = new SequentialPath(new LineSegment(begining, end, settings));
-            sequentialPaths.add(newSPath);
-        } else {
-            getLastSP().addPathSection(new LineSegment(begining, end, settings));
-        }
+        generalPath.lineTo(end.getX(), end.getY());
     }
 
     //absolute coordinates in postscript
     public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius,
                        double relAngle1, double RelAngle2, boolean clockwise, GraphicsSettings settings) {
-        Arc arc = new Arc(absBegin, absEnd, absCenter, absXRadius, absYRadius, relAngle1, RelAngle2, clockwise, settings);
-        PSPoint curPoint = getLastSP().getEnd();
-        if (sequentialPaths.size() == 0) {
-            if (curPoint == null) {
-                SequentialPath newSPath = new SequentialPath(arc);
-                sequentialPaths.add(newSPath);
-            } else {
-                SequentialPath newSPath = new SequentialPath(new LineSegment(curPoint, absBegin, settings));
-                newSPath.addPathSection(arc);
-                sequentialPaths.add(newSPath);
-            }
-        } else if (PSPoint.distance(curPoint, absBegin) > 0.0001) {
-            getLastSP().addPathSection(new LineSegment(curPoint, absBegin, settings));
-            getLastSP().addPathSection(arc);
-        } else {
-            getLastSP().addPathSection(arc);
-        }
+//        generalPath.moveTo(100,100);
+
+        double x = absCenter.getX() - absXRadius;
+        double y = absCenter.getY() + absYRadius;
+        double w = 2 * absXRadius;
+        double h = 2 * absYRadius;
+        double extent = relAngle1 - RelAngle2;
+//todo correct angles without minus
+        Arc2D.Double arcDouble = new Arc2D.Double(x, y, w,
+                h, -relAngle1, extent, Arc2D.OPEN);
+
+        generalPath.append(arcDouble, true);
+//        generalPath.append(new Arc2D.Double(100,100,100,100,0,-90,Arc2D.OPEN),true);
     }
 
     public void closePath() {
-        for (SequentialPath spath : sequentialPaths) {
-            spath.close();
-        }
+        generalPath.closePath();
     }
 
 
     public PSPath clone() {
-        PSPath newPath = new PSPath();
-        for (SequentialPath spath : sequentialPaths) {
-            newPath.addSequentialPath(spath.clone());
-        }
-        return newPath;
+        return new PSPath((GeneralPath) this.generalPath.clone(), (GraphicsSettings) this.graphicsSettings.clone());
     }
 
-    public boolean isInside(PSPoint point) {
-        int count = 0;
-        for (SequentialPath sp : sequentialPaths) {
-            count += sp.intersect(point);
-        }
-        return count != 0; //nonzero-winding-number-rule
-    }
-
-    public ArrayList<SequentialPath> getSequentialPaths() {
-        return sequentialPaths;
+    public GeneralPath getGeneralPath() {
+        return generalPath;
     }
 }

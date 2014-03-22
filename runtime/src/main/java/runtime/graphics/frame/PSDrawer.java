@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class PSDrawer {
     private GraphicsState state = GraphicsState.getInstance();
     private runtime.Runtime runtime = Runtime.getInstance();
     private boolean isPainted = false;
+    protected GraphicsState gState = GraphicsState.getInstance();
 
     private PSDrawer() {
     }
@@ -40,15 +42,32 @@ public class PSDrawer {
     }
 
     private void drawClippingPath(PSPath clippingPath, Graphics2D g2) {
-        //todo
+        if (clippingPath == null) {
+            return;
+        }
+        GeneralPath generalPath = clippingPath.getGeneralPath();
+        g2.clip(generalPath);
     }
 
     private void drawCurrentPath(PSPath path, Graphics2D g2) {
+//        AffineTransform affineTransform = g2.getTransform();
+//        g2.setTransform(new AffineTransform(new double[]{1.,0.,0.,-1.,0.,frame.getHeight()}));
         if (path == null) return;
-        ArrayList<SequentialPath> sequentialPaths = path.getSequentialPaths();
-        for (SequentialPath p : sequentialPaths) {
-            drawSequentialPath(p, g2);
+        GeneralPath generalPath = path.getGeneralPath();
+//        g2.transform(gState.cTM.getAffineTransform());
+        if (path.getPaintingState() == PSPath.PaintingState.FILL) {
+            g2.setColor(path.graphicsSettings.color);
+            g2.fill(path.getGeneralPath());
+        } else if (path.getPaintingState() == PSPath.PaintingState.STROKE) {
+            Stroke s = g2.getStroke();
+            Shape s1 = s.createStrokedShape(path.getGeneralPath());
+            g2.draw(s1);
         }
+//        g2.setTransform(affineTransform);
+
+//        for (SequentialPath p : sequentialPaths) {
+//            drawSequentialPath(p, g2);
+//        }
 
     }
 

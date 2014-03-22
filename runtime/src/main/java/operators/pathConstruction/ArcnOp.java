@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.matrix.TransformMatrix;
 
 /**
  * Created by user on 15.03.14.
@@ -34,17 +35,37 @@ public class ArcnOp extends AbstractGraphicOperator {
             return;
         }
         double nAngle2 = ((PSNumber) oAngle2.getValue()).getRealValue();
-        double nAngle1 = ((PSNumber) oAngle2.getValue()).getRealValue();
+        double nAngle1 = ((PSNumber) oAngle1.getValue()).getRealValue();
         double nR = ((PSNumber) oR.getValue()).getRealValue();
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
-        //todo add xR, yR, xAngle(sets ellipse rotation)
-        PSPoint begining = new PSPoint(nX, nY);
-        //gState.currentPath.addArc(gState.currentPoint, begining, nR, nAngle1, nAngle2, true, gState.cTM.clone());
-        //double centerX = begining.getX();
-        //double centerY = begining.getY();
-        gState.currentPoint = gState.currentPath.getLastSP().getEnd();
+        TransformMatrix cTM = gState.cTM;
+        PSPoint absCent = cTM.transform(nX, nY);
+        double xScale = cTM.getXScale();
+        double yScale = cTM.getYScale();
+        double xR = nR * xScale;
+        double yR = nR * yScale;
+        double rotateAngle = cTM.getRotateAngle();
+        nAngle1 = nAngle1 + rotateAngle;
+        nAngle2 = nAngle2 + rotateAngle;
+        if (nAngle1 - nAngle2 < 360) {
+            double temp = nAngle2;
+            nAngle2 = nAngle1 + 360;
+            nAngle1 = temp;
+
+        }
+        double xBegin = absCent.getX() + xR * Math.cos(nAngle1 * Math.PI / 180);
+        double yBegin = absCent.getY() + yR * Math.sin(nAngle1 * Math.PI / 180);
+        double xEnd = absCent.getX() + xR * Math.cos(nAngle2 * Math.PI / 180);
+        double yEnd = absCent.getY() + yR * Math.sin(nAngle2 * Math.PI / 180);
+
+        PSPoint absBegin = new PSPoint(xBegin, yBegin);
+        PSPoint absEnd = new PSPoint(xEnd, yEnd);
+        gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
+                nAngle1, nAngle2, false, gState.cloneGraphicsSettings());
+        gState.currentPoint = new PSPoint(absCent.getX() + xR * Math.cos(nAngle2),
+                absCent.getY() + yR * Math.sin(nAngle2));
     }
 
     @Override
