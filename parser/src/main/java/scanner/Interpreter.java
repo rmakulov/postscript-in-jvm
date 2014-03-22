@@ -16,11 +16,6 @@ import java.io.InputStreamReader;
 
 import static psObjects.Attribute.TreatAs.LITERAL;
 
-/**
- * Example showing how to convert a Postscript document to PDF using the high level API.
- *
- * @author Gilles Grousset (gi.grousset@gmail.com)
- */
 public class Interpreter {
     public static Interpreter instance = new Interpreter();
     public static final int READ_BUFFER_SIZE = 1024;
@@ -39,61 +34,61 @@ public class Interpreter {
         while ((yytoken = scanner.yylex()) != null) {
             String text = yytoken.m_text;
             //System.out.print(text + " ");
-            switch (yytoken.m_index) {
-                case 42:
+            switch (yytoken.m_type) {
+                case INTEGER:
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text))));
                     break;
-                case 11:
+                case HEX:
                     //hex
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text, 16))));
                     break;
-                case 22:
+                case RADIX:
                     //radix
                     String[] args = text.split("#");
                     int radix = Integer.parseInt(args[0]);
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(args[1], radix))));
                     break;
-                case 23:
+                case REAL:
                     //real
                     runtime.pushToOperandStack(new PSObject(new PSReal(Double.parseDouble(text))));
                     break;
-                case 43:
+                case EXEC_NAME:
                     // name without "/". it is executable by default
                     runtime.pushToOperandStack(new PSObject(new PSName(text)));
                     if (scanner.getProcDepth() == 0) ExecOp.instance.execute();
                     break;
-                case 44:
+                case LIT_NAME:
                     // name with "/". it is executable by default
                     runtime.pushToOperandStack(new PSObject(new PSName(text), LITERAL));
                     break;
-                case 46:
+                case STRINGS:
                     // strings
                     String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
                     runtime.pushToOperandStack(new PSObject(new PSString(s), LITERAL));
                     break;
-                case 5:
+                case OPEN_SQUARE_BRACKET:
                     // array
                     runtime.pushToOperandStack(new PSObject(PSMark.OPEN_SQUARE_BRACKET));
                     break;
-                case 6:
+                case CLOSE_SQUARE_BRACKET:
                     runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_SQUARE_BRACKET));
                     if (scanner.getProcDepth() == 0) {
                         ExecOp.instance.execute();
                     }
                     break;
-                case 7:
+                case OPEN_CURLY_BRACE:
                     runtime.pushToOperandStack(new PSObject(PSMark.OPEN_CURLY_BRACE));
                     break;
-                case 8:
+                case CLOSE_CURLY_BRACE:
                     runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
                     if (scanner.getProcDepth() == 0) {
                         ExecOp.instance.execute();
                     }
                     break;
-                case 9:
+                case OPEN_CHEVRON_BRACKET:
                     runtime.pushToOperandStack(new PSObject(PSMark.OPEN_CHEVRON_BRACKET));
                     break;
-                case 10:
+                case CLOSE_CHEVRON_BRACKET:
                     runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CHEVRON_BRACKET));
                     if (scanner.getProcDepth() == 0) {
                         ExecOp.instance.execute();
@@ -107,12 +102,23 @@ public class Interpreter {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        //Interpreter.instance.run(new File("test.ps"));
-        //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
-        Interpreter.instance.run(new File("1_rectangles.ps"));
-        //Interpreter.instance.run(new File("bindTest.ps"));
-        //Interpreter.instance.run(new File("colorcir.ps"));
+    public static void main(String[] args) {
+        try {
+
+            if (args.length == 0) {
+                //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
+                //Interpreter.instance.run(new File("SimpleGraphicsTest1.ps"));
+                Interpreter.instance.run(new File("1_rectangles.ps"));
+                //Interpreter.instance.run(new File("bindTest.ps"));
+                //Interpreter.instance.run(new File("colorcir.ps"));
+                //Interpreter.instance.run(new File("test.ps"));
+            } else {
+                Interpreter.instance.run(new File(args[0]));
+            }
+        } catch (IOException e) {
+            System.out.println("File not found.");
+        }
+
 
 //        System.out.print("Done");
 //        Yylex scanner = new Yylex(new InputStreamReader(new FileInputStream("test.ps")));

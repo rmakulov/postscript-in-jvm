@@ -74,17 +74,17 @@ public class PSPoint {
     }
 
 
-    public static PSPoint[] intersectEllipseLine(double[] ellipse, double[] line){
-        double x1 = ellipse[0], y1 = ellipse[1], rx = ellipse[2], ry = ellipse[3] ; //(x/rx)^2 + (y/ry)^2 = 1 && ax + by + c = 0
-        double a = line[0], b = line[1], c = line[2] ;                              // y = -(c+ax)/b
-                            //  ((rx*a/b)^2 +(ry)^2)*x^2 + (2a*c*(rx)^2/(b)^2)*x + ((rx*c/b)^2 -(ry*rx)^2) = 0 = L*x^2 + M*x + N
-                            //   after replacement x = x - x1
-                            //   we have L*x^2 + (M - 2*L*x1)*x + (L*(x1)^2 - M*x1 + N) = 0
-        double L = rx*rx*a*a/(b*b)+ ry*ry, M = 2*rx*rx*a*c/(b*b), N = rx*rx*c*c/(b*b) - ry*ry*rx*rx ;
-        double[] x = squareEquation(L, M - 2*L*x1, L*x1*x1 - M*x1 + N) ;
-                            //afetr replacement y = y-y1
-        double[] y = {y1 - (c+a*x[0])/b, y1 - (c+a*x[1])/b } ;
-        return new PSPoint[]{ new PSPoint(x[0], y[0]), new PSPoint(x[1], y[1]) } ;
+    public static PSPoint[] intersectEllipseLine(double[] ellipse, double[] line) {
+        double x1 = ellipse[0], y1 = ellipse[1], rx = ellipse[2], ry = ellipse[3]; //(x/rx)^2 + (y/ry)^2 = 1 && ax + by + c = 0
+        double a = line[0], b = line[1], c = line[2];                              // y = -(c+ax)/b
+        //  ((rx*a/b)^2 +(ry)^2)*x^2 + (2a*c*(rx)^2/(b)^2)*x + ((rx*c/b)^2 -(ry*rx)^2) = 0 = L*x^2 + M*x + N
+        //   after replacement x = x - x1
+        //   we have L*x^2 + (M - 2*L*x1)*x + (L*(x1)^2 - M*x1 + N) = 0
+        double L = rx * rx * a * a / (b * b) + ry * ry, M = 2 * rx * rx * a * c / (b * b), N = rx * rx * c * c / (b * b) - ry * ry * rx * rx;
+        double[] x = squareEquation(L, M - 2 * L * x1, L * x1 * x1 - M * x1 + N);
+        //afetr replacement y = y-y1
+        double[] y = {y1 - (c + a * x[0]) / b, y1 - (c + a * x[1]) / b};
+        return new PSPoint[]{new PSPoint(x[0], y[0]), new PSPoint(x[1], y[1])};
     }
     //correct
     /*public static PSPoint[] intersectCircleLine(double[] circle, double[] line) {
@@ -115,5 +115,13 @@ public class PSPoint {
             t = (y - sBegin.getY()) / vector.getY();
         }
         return (t >= 0 && t <= 1);
+    }
+
+    @Override
+    public String toString() {
+        return "PSPoint{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

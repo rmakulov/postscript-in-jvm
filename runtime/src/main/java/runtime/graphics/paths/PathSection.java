@@ -50,6 +50,14 @@ public abstract class PathSection implements Cloneable {
         this.graphicsSettings = graphicsSettings;
     }
 
+    @Override
+    public String toString() {
+        return "PathSection{" +
+                "begin=" + begin +
+                ", end=" + end +
+                '}';
+    }
+
     public GraphicsSettings getGraphicsSettings() {
         return graphicsSettings;
     }
