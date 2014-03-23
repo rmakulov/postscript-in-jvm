@@ -4,60 +4,60 @@ package runtime.graphics.paths;
  * Created by user on 15.03.14.
  */
 
-import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
 
 public class PSPath {
-    private GeneralPath generalPath;
-    public GraphicsSettings graphicsSettings;
-    private PaintingState paintingState = PaintingState.NONE;
+    private ArrayList<GeneralPath> sequentialPath;
+    //public GraphicsSettings graphicsSettings;
 
-    public enum PaintingState {
-        FILL, NONE, STROKE
-    }
-
-    public void setPaintingState(PaintingState paintingState) {
-        this.paintingState = paintingState;
-    }
-
-    public PaintingState getPaintingState() {
-        return paintingState;
+    public PSPath(ArrayList<GeneralPath> sequentialPath) {
+        this.sequentialPath = sequentialPath;
     }
 
     public PSPath() {
-        generalPath = new GeneralPath();
-        graphicsSettings = new GraphicsSettings();
+        sequentialPath = new ArrayList<GeneralPath>();
+        sequentialPath.add(new GeneralPath());
+//        graphicsSettings = new GraphicsSettings();
     }
 
-    private PSPath(GeneralPath generalPath, GraphicsSettings graphicsSettings) {
-        this.generalPath = generalPath;
-        this.graphicsSettings = graphicsSettings;
+    private PSPath(GeneralPath generalPath) {
+        sequentialPath.add(generalPath);
     }
 
-
-    public Rectangle getBBox() {
-        if (generalPath == null) {
+    public GeneralPath getLastSequentialPath() {
+        if (sequentialPath.size() == 0) {
             return null;
         }
-        return generalPath.getBounds();
+        return sequentialPath.get(sequentialPath.size() - 1);
     }
 
-    public void setGraphicsSettings(GraphicsSettings settings) {
-        this.graphicsSettings = settings;
+    public Rectangle getBBox() {
+        Rectangle box = null;
+        for (GeneralPath generalPath : sequentialPath) {
+            box = box == null ? generalPath.getBounds() : box.union(generalPath.getBounds());
+        }
+        return box;
     }
 
     //absolute coordinates in postscript
-    public void addLineSegment(PSPoint begining, PSPoint end, GraphicsSettings settings) {
-        generalPath.lineTo(end.getX(), end.getY());
+    public void addLineSegment(PSPoint start, PSPoint end) {
+        if (getLastSequentialPath().getCurrentPoint().distance(start.getPoint2D()) > 0.0001) {
+            GeneralPath newPath = new GeneralPath();
+            newPath.moveTo(start.getX(), start.getY());
+            newPath.lineTo(end.getX(), end.getY());
+            sequentialPath.add(newPath);
+        }
+        getLastSequentialPath().lineTo(end.getX(), end.getY());
     }
 
     //absolute coordinates in postscript
     public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius,
-                       double relAngle1, double RelAngle2, boolean clockwise, GraphicsSettings settings) {
+                       double relAngle1, double RelAngle2, boolean clockwise, boolean connect) {
 //        generalPath.moveTo(100,100);
 
         double x = absCenter.getX() - absXRadius;
@@ -69,20 +69,20 @@ public class PSPath {
         Arc2D.Double arcDouble = new Arc2D.Double(x, y, w,
                 h, -relAngle1, extent, Arc2D.OPEN);
 
-        generalPath.append(arcDouble, true);
-//        generalPath.append(new Arc2D.Double(100,100,100,100,0,-90,Arc2D.OPEN),true);
+        getLastSequentialPath().append(arcDouble, connect);
     }
 
     public void closePath() {
-        generalPath.closePath();
+        for (GeneralPath generalPath : sequentialPath) {
+            generalPath.closePath();
+        }
     }
-
 
     public PSPath clone() {
-        return new PSPath((GeneralPath) this.generalPath.clone(), (GraphicsSettings) this.graphicsSettings.clone());
+        return new PSPath((GeneralPath) this.sequentialPath.clone());
     }
 
-    public GeneralPath getGeneralPath() {
-        return generalPath;
+    public ArrayList<GeneralPath> getSequentialPath() {
+        return sequentialPath;
     }
 }

@@ -2,6 +2,7 @@ package operators.painting;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.graphics.paths.DrawPath;
 import runtime.graphics.paths.PSPath;
 
 /**
@@ -16,10 +17,8 @@ public class StrokeOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() { //-- setGraphicsSettings --
-        gState.currentPath.setGraphicsSettings(gState.cloneGraphicsSettings());
-        gState.currentPath.setPaintingState(PSPath.PaintingState.STROKE);
-        gState.addCurrentPathInPaintingPaths();
-        gState.currentPath = null;
+        gState.addCurrentPathInDrawPath(DrawPath.PaintingState.STROKE);
+        gState.currentPath = new PSPath();
         gState.currentPoint = null;
     }
 

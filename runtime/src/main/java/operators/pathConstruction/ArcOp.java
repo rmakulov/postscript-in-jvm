@@ -48,8 +48,8 @@ public class ArcOp extends AbstractGraphicOperator {
         double xR = nR * xScale;
         double yR = nR * yScale;
         double rotateAngle = cTM.getRotateAngle();
-        nAngle1 = nAngle1 + rotateAngle;
-        nAngle2 = nAngle2 + rotateAngle;
+        //nAngle1 = nAngle1 + rotateAngle;
+        //nAngle2 = nAngle2 + rotateAngle;
         double xBegin = absCent.getX() + xR * Math.cos(nAngle1 * Math.PI / 180);
         double yBegin = absCent.getY() + yR * Math.sin(nAngle1 * Math.PI / 180);
         double xEnd = absCent.getX() + xR * Math.cos(nAngle2 * Math.PI / 180);
@@ -57,9 +57,10 @@ public class ArcOp extends AbstractGraphicOperator {
 
         PSPoint absBegin = new PSPoint(xBegin, yBegin);
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
+        boolean connect = gState.currentPoint != null;
 
         gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
-                nAngle1, nAngle2, false, gState.cloneGraphicsSettings());
+                nAngle1, nAngle2, false, connect);
         gState.currentPoint = new PSPoint(absCent.getX() + xR * Math.cos(nAngle2),
                 absCent.getY() + yR * Math.sin(nAngle2));
     }

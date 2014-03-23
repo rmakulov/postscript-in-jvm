@@ -106,10 +106,18 @@ public class Interpreter {
         try {
 
             if (args.length == 0) {
+//                for(int i = 45 ; i < 80 ; i++){
+//                    TransformMatrix c = new TransformMatrix() ;
+//                    c.rotate((double)i) ;
+//                    c.scale(3,3) ;
+//                    c.translate(23,43);
+//                    c.scale(2,0) ;
+//                    System.out.println(c.getRotateAngle() );
+//                }
                 Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
 //                Interpreter.instance.run(new File("snowflak.ps"));
 //                Interpreter.instance.run(new File("SimpleGraphicsTest1.ps"));
-//                Interpreter.instance.run(new File("1_rectangles.ps"));
+                //Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
                 //Interpreter.instance.run(new File("colorcir.ps"));
                 //Interpreter.instance.run(new File("test.ps"));

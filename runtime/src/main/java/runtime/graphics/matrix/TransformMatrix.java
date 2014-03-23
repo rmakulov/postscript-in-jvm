@@ -109,8 +109,11 @@ public class TransformMatrix implements Cloneable {
 
     //int degrees
     public double getRotateAngle() {
-        double y = -matrix[2] / getYScale();
-        double x = matrix[0] / getXScale();
+        double yScale = getYScale();
+        double y = -matrix[2] / yScale;
+        double xScale = getXScale();
+        double x = matrix[0] / xScale;
         return Math.atan2(y, x) * 180 / Math.PI;
+
     }
 }

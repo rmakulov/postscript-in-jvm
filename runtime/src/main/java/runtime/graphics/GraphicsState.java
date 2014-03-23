@@ -2,6 +2,7 @@ package runtime.graphics;
 
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
+import runtime.graphics.paths.DrawPath;
 import runtime.graphics.paths.PSPath;
 
 import java.util.ArrayList;
@@ -13,10 +14,10 @@ public class GraphicsState {
     private static GraphicsState instance = new GraphicsState();
     public PSPoint currentPoint;
     public PSPath currentPath;
-    public ArrayList<PSPath> paintingPaths = new ArrayList<PSPath>();
     public PSPath clippingPath;
     public TransformMatrix cTM;
     public GraphicsSettings graphicsSettings;
+    public ArrayList<DrawPath> drawPaths;
 /*    public Color color;
     public double lineWidth; // 1/72 inch
     public int lineJoin;
@@ -27,6 +28,7 @@ public class GraphicsState {
 
     private GraphicsState() {
         currentPath = new PSPath();
+        drawPaths = new ArrayList<DrawPath>();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix(new double[]{1, 0, 0, 1, 0, 0});
         clippingPath = new PSPath(); //todo page size rectangle
@@ -56,11 +58,7 @@ public class GraphicsState {
         return graphicsSettings.clone();
     }
 
-    public void addPaintingPath(PSPath path) {
-        paintingPaths.add(path);
-    }
-
-    public void addCurrentPathInPaintingPaths() {
-        addPaintingPath(currentPath);
+    public void addCurrentPathInDrawPath(DrawPath.PaintingState state) {
+        drawPaths.add(new DrawPath(currentPath, state, graphicsSettings.clone()));
     }
 }
