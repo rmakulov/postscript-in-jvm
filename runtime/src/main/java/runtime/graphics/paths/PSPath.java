@@ -61,7 +61,7 @@ public class PSPath {
 //        generalPath.moveTo(100,100);
 
         double x = absCenter.getX() - absXRadius;
-        double y = absCenter.getY() + absYRadius;
+        double y = absCenter.getY() - absYRadius;
         double w = 2 * absXRadius;
         double h = 2 * absYRadius;
         double extent = relAngle1 - RelAngle2;

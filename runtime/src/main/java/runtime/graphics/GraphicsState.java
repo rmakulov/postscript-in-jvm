@@ -30,7 +30,7 @@ public class GraphicsState {
         currentPath = new PSPath();
         drawPaths = new ArrayList<DrawPath>();
         currentPoint = new PSPoint();
-        cTM = new TransformMatrix(new double[]{1, 0, 0, 1, 0, 0});
+        cTM = new TransformMatrix();
         clippingPath = new PSPath(); //todo page size rectangle
         graphicsSettings = GraphicsSettings.mainInstance;
     }

@@ -64,7 +64,8 @@ public class PSDrawer {
 
     //translate on h in y and mirror scale
     private double[] getJavaTransformMatrix() {
-        return new double[]{1., 0., 0., -1., 0, frame.getHeight()};
+        double scale = 1;
+        return new double[]{scale * 1., 0., 0., scale * (-1.), 0, frame.getHeight()};
     }
 
     public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
@@ -79,10 +80,11 @@ public class PSDrawer {
     }
 
     public class PSFrame extends JFrame {
-        //public int psHeight = 631;
-        public int psHeight = 800;
-        //public int psWidth = 445;
-        public int psWidth = 600;
+        public int psHeight = 631 * 4 / 3;
+        //public int psHeight = 800;
+        public int psWidth = 445 * 4 / 3;
+        //public int psWidth = 600;
+
 
         private PSFrame() {
             super();
@@ -96,11 +98,12 @@ public class PSDrawer {
         @Override
         public void paint(Graphics g) {
 
-            /*if (isPainted) {
+           /* if (isPainted) {
                 super.paint(g);
                 return;
             }
             isPainted = true;*/
+
             Graphics2D g2 = (Graphics2D) g;
 
             g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
@@ -111,6 +114,6 @@ public class PSDrawer {
 
 
         }
-
     }
+
 }

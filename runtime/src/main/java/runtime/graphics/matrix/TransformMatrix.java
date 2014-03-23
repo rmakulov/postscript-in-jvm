@@ -12,7 +12,9 @@ public class TransformMatrix implements Cloneable {
     private double[] matrix;
 
     public TransformMatrix() {// [a b c d t_x t_y ]
-        matrix = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0};//or -631
+        double scale = 1;//4.0/3;
+        //matrix = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0};//or -631
+        matrix = new double[]{scale, 0.0, 0.0, scale, 0.0, 0.0};//or -631
     }
 
     @Override
@@ -49,31 +51,32 @@ public class TransformMatrix implements Cloneable {
         return inverseMatrix;
     }
 
-    public void multMatrix(double[] transf) {
+    public TransformMatrix multMatrix(double[] transf) {
         double a = matrix[0], b = matrix[1], c = matrix[2], d = matrix[3], tx = matrix[4], ty = matrix[5];
         double a1 = transf[0], b1 = transf[1], c1 = transf[2], d1 = transf[3], tx1 = transf[4], ty1 = transf[5];
-        matrix = new double[]{a * a1 + b * c1,
+        return new TransformMatrix(new double[]{a * a1 + b * c1,
                 a * b1 + b * d1,
                 a1 * c + c1 * d,
                 b1 * c + d * d1,
                 a1 * tx + tx1 + c1 * ty,
-                b1 * tx + d1 * ty + ty1};
+                b1 * tx + d1 * ty + ty1});
+
     }
 
     public void scale(double sx, double sy) {
         double[] transform = new double[]{sx, 0, 0, sy, 0, 0};
-        multMatrix(transform);
+        matrix = (new TransformMatrix(transform)).multMatrix(matrix).getMatrix();
     }
 
     public void translate(double tx, double ty) {
         double[] transform = new double[]{1, 0, 0, 1, tx, ty};
-        multMatrix(transform);
+        matrix = (new TransformMatrix(transform)).multMatrix(matrix).getMatrix();
     }
 
     public void rotate(double angle) {
         double cos = Math.cos(angle), sin = Math.sin(angle);
         double[] transform = new double[]{cos, sin, -sin, cos, 0, 0};
-        multMatrix(transform);
+        matrix = (new TransformMatrix(transform)).multMatrix(matrix).getMatrix();
     }
 
     public PSPoint transform(double x, double y) {
@@ -109,9 +112,8 @@ public class TransformMatrix implements Cloneable {
 
     //int degrees
     public double getRotateAngle() {
-        double yScale = getYScale();
-        double y = -matrix[2] / yScale;
         double xScale = getXScale();
+        double y = -matrix[2] / xScale;
         double x = matrix[0] / xScale;
         return Math.atan2(y, x) * 180 / Math.PI;
 
