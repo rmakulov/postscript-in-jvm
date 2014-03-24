@@ -1,4 +1,4 @@
-package runtime.graphics.paths;
+package runtime.graphics.unuse;
 
 import runtime.graphics.figures.PSPoint;
 

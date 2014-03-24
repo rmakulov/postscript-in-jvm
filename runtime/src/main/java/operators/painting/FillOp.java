@@ -2,8 +2,7 @@ package operators.painting;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
-import runtime.graphics.paths.DrawPath;
-import runtime.graphics.paths.PSPath;
+import runtime.graphics.frame.PSDrawer;
 
 
 /**
@@ -18,9 +17,7 @@ public class FillOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() { // Fill current path with current color
-        gState.addCurrentPathInDrawPath(DrawPath.PaintingState.FILL);
-        gState.currentPath = new PSPath();
-        gState.currentPoint = null;
+        PSDrawer.getInstance().fill();
     }
 
 

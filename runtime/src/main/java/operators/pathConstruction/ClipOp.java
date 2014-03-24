@@ -5,22 +5,22 @@ import psObjects.values.simple.PSName;
 import runtime.graphics.frame.PSDrawer;
 
 /**
- * Created by user on 16.03.14.
+ * Created by Дмитрий on 24.03.14.
  */
-public class ClipPathOp extends AbstractGraphicOperator {
-    public static final ClipPathOp instance = new ClipPathOp();
+public class ClipOp extends AbstractGraphicOperator {
+    public static final ClipOp instance = new ClipOp();
 
-    protected ClipPathOp() {
+    protected ClipOp() {
         super();
     }
 
     @Override
     public void execute() {
-        PSDrawer.getInstance().clipPath();
+        PSDrawer.getInstance().clip();
     }
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("clippath");
+        return new PSName("clip");
     }
 }
