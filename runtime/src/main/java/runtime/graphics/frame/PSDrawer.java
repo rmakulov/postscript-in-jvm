@@ -33,7 +33,7 @@ public class PSDrawer {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = gState.currentPath;
         setGraphicsSettings(g2, gState.graphicsSettings);
-        for (GeneralPath generalPath : path.getSequentialPath()) {
+        for (GeneralPath generalPath : path.getGeneralPaths()) {
             g2.fill(generalPath);
         }
         gState.currentPath = null;
@@ -43,7 +43,7 @@ public class PSDrawer {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = gState.currentPath;
         setGraphicsSettings(g2, gState.graphicsSettings);
-        for (GeneralPath generalPath : path.getSequentialPath()) {
+        for (GeneralPath generalPath : path.getGeneralPaths()) {
             /*Stroke s = g2.getStroke();
             Shape s1 = s.createStrokedShape(generalPath);
             g2.draw(s1);*/
