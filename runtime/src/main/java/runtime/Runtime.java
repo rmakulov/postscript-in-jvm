@@ -1,7 +1,6 @@
 package runtime;
 
 import operators.graphicsState.GRestoreAllOp;
-import operators.graphicsState.GRestoreOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
@@ -20,8 +19,6 @@ import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
 import runtime.stack.PSStack;
-
-import javax.swing.*;
 
 import static psObjects.Type.*;
 
@@ -57,8 +54,8 @@ public class
 
     }
 
-    public void gsave(boolean b) {
-        GSave gsave = new GSave(b) ;
+    public void gsave(boolean isMadeByGsave) {
+        GSave gsave = new GSave(isMadeByGsave);
         gsave.getSnapshot();
         pushToGraphicStack(gsave);
 

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * Created by Дмитрий on 24.03.14.
  */
 public class PSImage {
-    public static final int width = 445, height = 631;
+    public static final int width = 445 * 4 / 3, height = 631 * 4 / 3;
     private static PSImage ourInstance;
     private BufferedImage image;
 
