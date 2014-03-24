@@ -31,7 +31,7 @@ public class RMoveToOp extends AbstractGraphicOperator {
         PSPoint p = gState.cTM.transform(nX.getRealValue() + relCurPoint.getX(), nY.getRealValue() + relCurPoint.getY());
 
         gState.currentPoint = gState.cTM.transform(p);
-        gState.currentPath.getLastSequentialPath().moveTo(p.getX(), p.getY());
+        gState.currentPath.getLastGeneralPath().moveTo(p.getX(), p.getY());
 
     }
 

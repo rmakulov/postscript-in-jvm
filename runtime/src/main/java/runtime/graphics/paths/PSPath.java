@@ -29,7 +29,7 @@ public class PSPath {
         generalPaths.add(generalPath);
     }
 
-    public GeneralPath getLastSequentialPath() {
+    public GeneralPath getLastGeneralPath() {
         if (generalPaths.size() == 0) {
             return null;
         }
@@ -46,13 +46,13 @@ public class PSPath {
 
     //absolute coordinates in postscript
     public void addLineSegment(PSPoint start, PSPoint end) {
-        if (getLastSequentialPath().getCurrentPoint().distance(start.getPoint2D()) > 0.0001) {
+        if (getLastGeneralPath().getCurrentPoint().distance(start.getPoint2D()) > 0.0001) {
             GeneralPath newPath = new GeneralPath();
             newPath.moveTo(start.getX(), start.getY());
             newPath.lineTo(end.getX(), end.getY());
             generalPaths.add(newPath);
         }
-        getLastSequentialPath().lineTo(end.getX(), end.getY());
+        getLastGeneralPath().lineTo(end.getX(), end.getY());
     }
 
     //absolute coordinates in postscript
@@ -69,7 +69,7 @@ public class PSPath {
         Arc2D.Double arcDouble = new Arc2D.Double(x, y, w,
                 h, -relAngle1, extent, Arc2D.OPEN);
 
-        getLastSequentialPath().append(arcDouble, connect);
+        getLastGeneralPath().append(arcDouble, connect);
     }
 
     public void closePath() {
