@@ -19,7 +19,7 @@ public class TransformMatrix implements Cloneable {
 
     @Override
     public TransformMatrix clone() {
-        return new TransformMatrix(new double[]{matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5], matrix[6]});
+        return new TransformMatrix(new double[]{matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]});
     }
 
     public TransformMatrix(double[] arr) {
@@ -86,12 +86,20 @@ public class TransformMatrix implements Cloneable {
         return new PSPoint(newX, newY);
     }
 
+    public PSPoint transform(PSPoint point) {
+        return transform(point.getX(), point.getY());
+    }
+
     public PSPoint iTransform(double x, double y) {
         TransformMatrix iMatrix = getInverseMatrix();
         if (iMatrix == null) {
             return null;
         }
         return iMatrix.transform(x, y);
+    }
+
+    public PSPoint iTransform(PSPoint point) {
+        return iTransform(point.getX(), point.getY());
     }
 
     public double[] getMatrix() {

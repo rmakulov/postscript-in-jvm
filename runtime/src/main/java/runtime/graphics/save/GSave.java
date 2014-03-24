@@ -38,10 +38,10 @@ public class GSave {
     public void getSnapshot() {
         GraphicsState inst = GraphicsState.getInstance();
         settings = inst.cloneGraphicsSettings();
-        currentPath = inst.currentPath;
-        clippingPath = inst.clippingPath;
-        cTM = inst.cTM;
-        currentPoint = inst.currentPoint;
+        currentPath = inst.currentPath.clone();
+        clippingPath = inst.clippingPath.clone();
+        cTM = inst.cTM.clone();
+        currentPoint = inst.currentPoint.clone();
     }
 
 }

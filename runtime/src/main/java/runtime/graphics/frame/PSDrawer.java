@@ -48,12 +48,12 @@ public class PSDrawer {
         if (drawPath == null || drawPath.path == null) return;
 
         if (drawPath.paintingState == DrawPath.PaintingState.FILL) {
-            for (GeneralPath generalPath : drawPath.path.getSequentialPath()) {
+            for (GeneralPath generalPath : drawPath.path.getGeneralPaths()) {
                 g2.setColor(drawPath.graphicsSettings.color);
                 g2.fill(generalPath);
             }
         } else if (drawPath.paintingState == DrawPath.PaintingState.STROKE) {
-            for (GeneralPath generalPath : drawPath.path.getSequentialPath()) {
+            for (GeneralPath generalPath : drawPath.path.getGeneralPaths()) {
                 Stroke s = g2.getStroke();
                 Shape s1 = s.createStrokedShape(generalPath);
                 g2.draw(s1);

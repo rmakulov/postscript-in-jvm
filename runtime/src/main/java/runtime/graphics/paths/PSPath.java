@@ -12,33 +12,33 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 
 public class PSPath {
-    private ArrayList<GeneralPath> sequentialPath;
+    private ArrayList<GeneralPath> generalPaths;
     //public GraphicsSettings graphicsSettings;
 
-    public PSPath(ArrayList<GeneralPath> sequentialPath) {
-        this.sequentialPath = sequentialPath;
+    public PSPath(ArrayList<GeneralPath> generalPaths) {
+        this.generalPaths = generalPaths;
     }
 
     public PSPath() {
-        sequentialPath = new ArrayList<GeneralPath>();
-        sequentialPath.add(new GeneralPath());
+        generalPaths = new ArrayList<GeneralPath>();
+        generalPaths.add(new GeneralPath());
 //        graphicsSettings = new GraphicsSettings();
     }
 
     private PSPath(GeneralPath generalPath) {
-        sequentialPath.add(generalPath);
+        generalPaths.add(generalPath);
     }
 
     public GeneralPath getLastSequentialPath() {
-        if (sequentialPath.size() == 0) {
+        if (generalPaths.size() == 0) {
             return null;
         }
-        return sequentialPath.get(sequentialPath.size() - 1);
+        return generalPaths.get(generalPaths.size() - 1);
     }
 
     public Rectangle getBBox() {
         Rectangle box = null;
-        for (GeneralPath generalPath : sequentialPath) {
+        for (GeneralPath generalPath : generalPaths) {
             box = box == null ? generalPath.getBounds() : box.union(generalPath.getBounds());
         }
         return box;
@@ -50,7 +50,7 @@ public class PSPath {
             GeneralPath newPath = new GeneralPath();
             newPath.moveTo(start.getX(), start.getY());
             newPath.lineTo(end.getX(), end.getY());
-            sequentialPath.add(newPath);
+            generalPaths.add(newPath);
         }
         getLastSequentialPath().lineTo(end.getX(), end.getY());
     }
@@ -73,16 +73,21 @@ public class PSPath {
     }
 
     public void closePath() {
-        for (GeneralPath generalPath : sequentialPath) {
+        for (GeneralPath generalPath : generalPaths) {
             generalPath.closePath();
         }
     }
 
     public PSPath clone() {
-        return new PSPath((GeneralPath) this.sequentialPath.clone());
+        ArrayList<GeneralPath> newPath = new ArrayList<GeneralPath>();
+        newPath.addAll(generalPaths);
+        for (GeneralPath generalPath : generalPaths) {
+            newPath.add((GeneralPath) generalPath.clone());
+        }
+        return new PSPath(newPath);
     }
 
-    public ArrayList<GeneralPath> getSequentialPath() {
-        return sequentialPath;
+    public ArrayList<GeneralPath> getGeneralPaths() {
+        return generalPaths;
     }
 }
