@@ -8,6 +8,7 @@ import operators.dictionary.OpenChevronOp;
 import operators.operandStackManipulation.MarkOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
+import psObjects.values.Value;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
@@ -77,9 +78,18 @@ public class ExecOp extends Operator {
                     runtime.pushToOperandStack(psObject);
                 } else {
                     PSObject[] execArray = ((PSArray) psObject.getValue()).getArray();
+                    int procDepth = 0;
                     for (PSObject o : execArray) {
+                        Value psValue = o.getValue();
+                        if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
+                            procDepth++;
+                        } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
+                            procDepth--;
+                        }
                         runtime.pushToOperandStack(o);
-                        execute();
+                        if (procDepth == 0) {
+                            execute();
+                        }
                     }
                 }
                 break;

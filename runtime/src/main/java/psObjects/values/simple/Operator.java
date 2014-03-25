@@ -28,4 +28,10 @@ public abstract class Operator extends SimpleValue {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Operator{" +
+                "name=" + getDefaultKeyName() +
+                "}";
+    }
 }

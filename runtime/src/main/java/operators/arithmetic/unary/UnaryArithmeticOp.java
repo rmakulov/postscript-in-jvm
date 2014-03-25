@@ -21,7 +21,7 @@ public class UnaryArithmeticOp {
         double dRes;
         switch (op) {
             case AbsOp.getSymbolicChar:
-                dRes = -r;
+                dRes = Math.abs(r);
                 break;
             case CeilingOp.getSymbolicChar:
                 dRes = Math.ceil(r);

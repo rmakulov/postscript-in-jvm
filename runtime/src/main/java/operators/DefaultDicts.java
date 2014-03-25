@@ -7,6 +7,7 @@ import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
 import operators.arithmetic.binary.*;
 import operators.arithmetic.unary.*;
+import operators.array.ArrayOp;
 import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
 import operators.common.*;
@@ -21,9 +22,11 @@ import operators.painting.FillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
 import operators.relationBooleanBitwise.*;
+import operators.string.StringOp;
 import operators.typeAttributeConvertation.*;
 import operators.virtualMemory.*;
 import psObjects.PSObject;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 
 import java.util.ArrayList;
@@ -53,6 +56,7 @@ public class DefaultDicts {
             addPaintingOperators();
             addPathConstructionOperators();
             addRelationBooleanOperators();
+            addStringOperators();
             addTypeAttributeOperators();
             addVirtualMemoryOperators();
             addArrayOperators();
@@ -108,12 +112,12 @@ public class DefaultDicts {
         addOperator(RoundOp.instance);
         addOperator(SinOp.instance);
         addOperator(SqrtOp.instance);
-        addOperator(SrandOp.instance); //todo operator is not ready
+        addOperator(SrandOp.instance);
         addOperator(TruncateOp.instance);
 
         //without operands
         addOperator(RandOp.instance);
-        addOperator(RrandOp.instance);  //todo operator is not ready
+        addOperator(RrandOp.instance);
     }
 
     private static void addMiscellaneousOperators() {
@@ -128,6 +132,7 @@ public class DefaultDicts {
         addOperator(OpenChevronOp.instance);
         addOperator(CloseChevronOp.instance);
         addOperator(WhereOp.instance);
+        addOperator(DictOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {
@@ -221,6 +226,10 @@ public class DefaultDicts {
         addOperator(StringWidthOp.instance);
     }
 
+    private static void addStringOperators() {
+        addOperator(StringOp.instance);
+    }
+
     private static void addCoordinateSystemAndMatrix() {
         addOperator(ITransformOp.instance);
         addOperator(RotateOp.instance);
@@ -250,6 +259,7 @@ public class DefaultDicts {
     private static void addArrayOperators() {
         addOperator(CloseSquareBracketOp.instance);
         addOperator(OpenSquareBracketOp.instance);
+        addOperator(ArrayOp.instance);
     }
 
     private static void addFileOperators() {

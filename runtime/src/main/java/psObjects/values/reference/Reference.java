@@ -41,4 +41,5 @@ public abstract class Reference extends Value {
     public Type determineType() {
         return getValue().determineType();
     }
+
 }

@@ -2,6 +2,7 @@ package operators.common;
 
 import psObjects.Attribute;
 import psObjects.PSObject;
+import psObjects.values.Value;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
@@ -26,9 +27,17 @@ public class CloseCurlyBraceOp extends Operator {
         }
         PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
-        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue())) {
+        int procDepth = 1;
+        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue()) || procDepth > 0) {
             array.add(psObject);
             psObject = runtime.popFromOperandStack();
+            Value psValue = psObject.getValue();
+            if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
+                procDepth--;
+            } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
+                procDepth++;
+            }
+
             // todo correct check is not null
             if (psObject == null)
                 return;

@@ -3,8 +3,8 @@ package psObjects;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
-import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
@@ -62,7 +62,7 @@ public class PSObject implements Comparable<PSObject> {
         }
         this.value = value;
         type = value.determineType();
-        if (isComposite()) attribute = new Attribute(treatAs);
+        if (isComposite() || type == Type.NAME) attribute = new Attribute(treatAs);
     }
 
 
@@ -283,7 +283,7 @@ public class PSObject implements Comparable<PSObject> {
         }
         String str = ((PSString) value.getValue()).getString();
         if (str.length() > 127) str = str.substring(0, 127);
-        return new PSObject(new PSName(str));
+        return new PSObject(new PSName(str), Attribute.TreatAs.EXECUTABLE);
     }
 
     public boolean isProc() {
@@ -300,5 +300,14 @@ public class PSObject implements Comparable<PSObject> {
             default:
                 return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "PSObject{" +
+                "value=" + value +
+                ", type=" + type +
+                ", attribute=" + attribute +
+                '}';
     }
 }

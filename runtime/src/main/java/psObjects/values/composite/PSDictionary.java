@@ -1,8 +1,7 @@
-package psObjects.values.composite.dictionaries;
+package psObjects.values.composite;
 
 import psObjects.PSObject;
 import psObjects.Type;
-import psObjects.values.composite.CompositeValue;
 import runtime.avl.AvlNode;
 import runtime.avl.AvlTree;
 

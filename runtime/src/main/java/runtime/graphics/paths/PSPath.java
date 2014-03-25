@@ -79,9 +79,8 @@ public class PSPath {
     }
 
     public void closePath() {
-        for (GeneralPath generalPath : generalPaths) {
-            generalPath.closePath();
-        }
+        getLastGeneralPath().closePath();
+        generalPaths.add(new GeneralPath());
     }
 
     public PSPath clone() {

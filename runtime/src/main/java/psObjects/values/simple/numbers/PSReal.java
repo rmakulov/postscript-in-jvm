@@ -1,7 +1,6 @@
 package psObjects.values.simple.numbers;
 
 import psObjects.Type;
-import psObjects.values.simple.numbers.PSNumber;
 
 public class PSReal extends PSNumber {
     private double value;
@@ -19,7 +18,7 @@ public class PSReal extends PSNumber {
     public String toString() {
         return "PSReal{" +
                 "value=" + value +
-                "} " + super.toString();
+                "}";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package runtime;
 
+import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
@@ -7,9 +8,8 @@ import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.Snapshot;
-import psObjects.values.composite.dictionaries.DefaultDicts;
-import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
@@ -24,8 +24,7 @@ import runtime.stack.PSStack;
 import static psObjects.Type.*;
 
 
-public class
-        Runtime{
+public class Runtime{
     private static Runtime ourInstance = new Runtime();
 
 

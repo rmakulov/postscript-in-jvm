@@ -10,11 +10,12 @@
 	cvi
     def
 	div
+	dict
     end
 	eq
 	exch
 	false
-fill
+    fill
 findfont
     for
 	forall
@@ -60,7 +61,7 @@ showpage
 srand
     stack
 stringwidth
-stroke
+    stroke
 	sub
 	transform
 	translate

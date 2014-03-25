@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static psObjects.Attribute.TreatAs.EXECUTABLE;
 import static psObjects.Attribute.TreatAs.LITERAL;
 
 public class Interpreter {
@@ -54,8 +55,10 @@ public class Interpreter {
                     break;
                 case EXEC_NAME:
                     // name without "/". it is executable by default
-                    runtime.pushToOperandStack(new PSObject(new PSName(text)));
-                    if (scanner.getProcDepth() == 0) ExecOp.instance.execute();
+                    runtime.pushToOperandStack(new PSObject(new PSName(text), EXECUTABLE));
+                    if (scanner.getProcDepth() == 0) {
+                        ExecOp.instance.execute();
+                    }
                     break;
                 case LIT_NAME:
                     // name with "/". it is executable by default
@@ -117,15 +120,15 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("7_ellipses.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
 //                Interpreter.instance.run(new File("5_star.ps"));
-//                Interpreter.instance.run(new File("6_Fractal_Arrow1.ps"));
-//                Interpreter.instance.run(new File("name_test.ps"));
+//                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
 
 // Interpreter.instance.run(new File("snowflak.ps"));
-                Interpreter.instance.run(new File("tiger.eps"));
+                //Interpreter.instance.run(new File("gsaveTest.ps"));
                 //Interpreter.instance.run(new File("SimpleGraphicsTest2.ps"));
+                //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
 //                Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
-                //Interpreter.instance.run(new File("colorcir.ps"));
+                Interpreter.instance.run(new File("colorcir.ps"));
                 //Interpreter.instance.run(new File("test.ps"));
             } else {
                 Interpreter.instance.run(new File(args[0]));
