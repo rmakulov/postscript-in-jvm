@@ -1,7 +1,7 @@
 package operators.dictionary;
 
 import psObjects.PSObject;
-import psObjects.values.composite.dictionaries.PSDictionary;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 

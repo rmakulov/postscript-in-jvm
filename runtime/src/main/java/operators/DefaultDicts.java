@@ -1,4 +1,4 @@
-package psObjects.values.composite.dictionaries;
+package operators;
 
 import operators.GlythAndFont.ShowOp;
 import operators.GlythAndFont.ShowPageOp;
@@ -24,6 +24,7 @@ import operators.relationBooleanBitwise.*;
 import operators.typeAttributeConvertation.*;
 import operators.virtualMemory.*;
 import psObjects.PSObject;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 
 import java.util.ArrayList;

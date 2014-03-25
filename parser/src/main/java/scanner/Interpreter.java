@@ -115,13 +115,14 @@ public class Interpreter {
 //                    System.out.println(c.getRotateAngle() );
 //                }
 //                Interpreter.instance.run(new File("7_ellipses.ps"));
-//                Interpreter.instance.run(new File("6_arcs.ps"));
+                Interpreter.instance.run(new File("6_arcs.ps"));
 //                Interpreter.instance.run(new File("5_star.ps"));
 //                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
 
 // Interpreter.instance.run(new File("snowflak.ps"));
-                Interpreter.instance.run(new File("gsaveTest.ps"));
+                //Interpreter.instance.run(new File("gsaveTest.ps"));
                 //Interpreter.instance.run(new File("SimpleGraphicsTest2.ps"));
+                //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
 //                Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
                 //Interpreter.instance.run(new File("colorcir.ps"));
