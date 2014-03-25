@@ -35,11 +35,6 @@ public class Interpreter {
         while ((yytoken = scanner.yylex()) != null) {
             String text = yytoken.m_text;
             //System.out.print(text + " ");
-            int i;
-            if (text.equals("graycircle")) {
-                i = 0;
-                i++;
-            }
             switch (yytoken.m_type) {
                 case INTEGER:
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text))));
@@ -124,7 +119,6 @@ public class Interpreter {
 //                }
 //                Interpreter.instance.run(new File("7_ellipses.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
-//                Interpreter.instance.run(new File("5_star.ps"));
 //                Interpreter.instance.run(new File("5_star.ps"));
 //                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
 
