@@ -3,8 +3,6 @@ package psObjects.values.simple;
 import psObjects.Type;
 
 public class PSNull extends SimpleValue {
-    int value;
-
     public final static PSNull NULL = new PSNull();
 
 

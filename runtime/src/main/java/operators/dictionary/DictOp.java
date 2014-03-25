@@ -18,9 +18,12 @@ public class DictOp extends Operator {
 
     @Override
     public void execute() {
+        if (runtime.getOperandStackSize() < 1) return;
         PSObject psObject = runtime.popFromOperandStack();
-        if (psObject == null || psObject.getType() != Type.INTEGER)
+        if (psObject.getType() != Type.INTEGER) {
+            runtime.pushToOperandStack(psObject);
             return;
+        }
 
         //todo init dictionary with int
         runtime.pushToDictionaryStack(new PSObject(new PSDictionary()));

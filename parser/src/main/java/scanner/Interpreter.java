@@ -35,6 +35,11 @@ public class Interpreter {
         while ((yytoken = scanner.yylex()) != null) {
             String text = yytoken.m_text;
             //System.out.print(text + " ");
+            int i;
+            if (text.equals("graycircle")) {
+                i = 0;
+                i++;
+            }
             switch (yytoken.m_type) {
                 case INTEGER:
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text))));
@@ -117,7 +122,7 @@ public class Interpreter {
 //                    c.scale(2,0) ;
 //                    System.out.println(c.getRotateAngle() );
 //                }
-                Interpreter.instance.run(new File("7_ellipses.ps"));
+//                Interpreter.instance.run(new File("7_ellipses.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
 //                Interpreter.instance.run(new File("5_star.ps"));
 //                Interpreter.instance.run(new File("5_star.ps"));
@@ -129,7 +134,7 @@ public class Interpreter {
                 //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
 //                Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
-                //Interpreter.instance.run(new File("colorcir.ps"));
+                Interpreter.instance.run(new File("colorcir.ps"));
                 //Interpreter.instance.run(new File("test.ps"));
             } else {
                 Interpreter.instance.run(new File(args[0]));
