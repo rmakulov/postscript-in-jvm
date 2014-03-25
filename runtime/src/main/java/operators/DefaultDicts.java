@@ -1,4 +1,4 @@
-package psObjects.values.composite.dictionaries;
+package operators;
 
 import operators.GlythAndFont.ShowOp;
 import operators.GlythAndFont.ShowPageOp;
