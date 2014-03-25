@@ -109,12 +109,12 @@ public class DefaultDicts {
         addOperator(RoundOp.instance);
         addOperator(SinOp.instance);
         addOperator(SqrtOp.instance);
-        addOperator(SrandOp.instance); //todo operator is not ready
+        addOperator(SrandOp.instance);
         addOperator(TruncateOp.instance);
 
         //without operands
         addOperator(RandOp.instance);
-        addOperator(RrandOp.instance);  //todo operator is not ready
+        addOperator(RrandOp.instance);
     }
 
     private static void addMiscellaneousOperators() {
@@ -128,6 +128,7 @@ public class DefaultDicts {
         addOperator(DefOp.instance);
         addOperator(OpenChevronOp.instance);
         addOperator(CloseChevronOp.instance);
+        addOperator(DictOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {
