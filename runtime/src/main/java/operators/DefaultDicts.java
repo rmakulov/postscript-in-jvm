@@ -17,6 +17,7 @@ import operators.dictionary.*;
 import operators.file.StackOp;
 import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
+import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
 import operators.painting.FillOp;
 import operators.painting.StrokeOp;
@@ -122,6 +123,7 @@ public class DefaultDicts {
 
     private static void addMiscellaneousOperators() {
         addOperator(BindOp.instance);
+        addOperator(UserTimeOp.instance);
     }
 
     private static void addDictionaryOperators() {

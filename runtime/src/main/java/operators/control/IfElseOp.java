@@ -26,6 +26,7 @@ public class IfElseOp extends Operator {
             runtime.pushToOperandStack(bool);
             runtime.pushToOperandStack(exec1);
             runtime.pushToOperandStack(exec2);
+            return;
         }
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {

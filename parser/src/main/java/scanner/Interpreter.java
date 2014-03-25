@@ -129,7 +129,10 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
                 Interpreter.instance.run(new File("colorcir.ps"));
+                //Interpreter.instance.run(new File("WireFrame.eps"));
+
                 //Interpreter.instance.run(new File("test.ps"));
+                //Interpreter.instance.run(new File("tiger.eps"));
             } else {
                 Interpreter.instance.run(new File(args[0]));
             }
