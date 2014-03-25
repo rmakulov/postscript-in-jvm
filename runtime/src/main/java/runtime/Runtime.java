@@ -23,20 +23,19 @@ import runtime.stack.PSStack;
 import static psObjects.Type.*;
 
 
-public class
-        Runtime {
+public class Runtime{
     private static Runtime ourInstance = new Runtime();
 
 
     private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
-    private GraphicStack graphicStack = new GraphicStack();
+    private GraphicStack graphicStack = new GraphicStack() ;
     private boolean isGlobal = false;
 
 
     private Runtime() {
-        super();
+        super() ;
     }
 
     public static Runtime getInstance() {
@@ -54,8 +53,8 @@ public class
 
     }
 
-    public void gsave(boolean b) {
-        GSave gsave = new GSave(b);
+    public void gsave(boolean isMadeByGsave) {
+        GSave gsave = new GSave(isMadeByGsave);
         gsave.getSnapshot();
         pushToGraphicStack(gsave);
 
@@ -101,17 +100,17 @@ public class
     }
 
     public void pushToGraphicStack(GSave gsave) {
-        graphicStack = graphicStack.push(gsave);
+        graphicStack = graphicStack.push(gsave) ;
     }
 
-    public GSave popFromGraphicStack() {
-        GSave gsave = graphicStack.peek();
-        graphicStack = graphicStack.removeTop();
-        return gsave;
+    public GSave popFromGraphicStack(){
+        GSave gsave = graphicStack.peek() ;
+        graphicStack = graphicStack.removeTop() ;
+        return gsave ;
     }
 
     public GSave peekFromGraphicStack() {
-        return graphicStack.peek();
+        return graphicStack.peek() ;
     }
 
     public PSObject peekFromOperandStack() {
@@ -287,6 +286,6 @@ public class
     }
 
     public int getGraphicStackSize() {
-        return graphicStack.size();
+        return graphicStack.size() ;
     }
 }

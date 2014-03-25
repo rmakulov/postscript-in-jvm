@@ -80,7 +80,6 @@ public class PSPath {
 
     public PSPath clone() {
         ArrayList<GeneralPath> newPath = new ArrayList<GeneralPath>();
-        newPath.addAll(generalPaths);
         for (GeneralPath generalPath : generalPaths) {
             newPath.add((GeneralPath) generalPath.clone());
         }
