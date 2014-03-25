@@ -60,8 +60,7 @@ public class PSDrawer {
     }
 
     public void clipPath() {
-        gState.clippingPath = gState.currentPath;
-        gState.newCurrentPath();
+        gState.currentPath = gState.clippingPath;
     }
 
 

@@ -30,6 +30,7 @@ public class CviOp extends Operator {
             double d = ((PSReal) o.getValue()).getRealValue();
             int truncatedInt = (int) d;
             runtime.pushToOperandStack(new PSObject(new PSInteger(truncatedInt)));
+            return;
         }
         String s = ((PSString) o.getValue()).getString();
         int i = 0;

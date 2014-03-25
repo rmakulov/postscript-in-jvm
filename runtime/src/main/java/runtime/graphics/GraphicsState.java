@@ -1,9 +1,12 @@
 package runtime.graphics;
 
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
 import runtime.graphics.save.GSave;
+
+import java.awt.*;
 
 public class GraphicsState {
     private static GraphicsState instance = new GraphicsState();
@@ -18,6 +21,7 @@ public class GraphicsState {
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
         clippingPath = new PSPath(); //todo page size rectangle
+        clippingPath.getLastGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
