@@ -44,9 +44,6 @@ public class PSDrawer {
         PSPath path = gState.currentPath;
         setGraphicsSettings(g2, gState.graphicsSettings);
         for (GeneralPath generalPath : path.getGeneralPaths()) {
-            /*Stroke s = g2.getStroke();
-            Shape s1 = s.createStrokedShape(generalPath);
-            g2.draw(s1);*/
             g2.draw(generalPath);
         }
         gState.newCurrentPath();

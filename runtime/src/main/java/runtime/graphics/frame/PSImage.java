@@ -18,7 +18,6 @@ public class PSImage {
         Graphics2D g2 = (Graphics2D) image.getGraphics();
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, width, height);
-        g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
     }
 
     public static PSImage getInstance() {
