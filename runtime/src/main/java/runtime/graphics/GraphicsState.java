@@ -20,8 +20,8 @@ public class GraphicsState {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
-        clippingPath = new PSPath(); //todo page size rectangle
-        clippingPath.getLastGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
+        clippingPath = new PSPath();
+        clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
