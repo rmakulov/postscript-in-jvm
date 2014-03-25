@@ -34,7 +34,7 @@ public class SetHsbColorOp extends AbstractGraphicOperator {
         float nBright = (float) ((PSNumber) oBright.getValue()).getRealValue();
         float nSatur = (float) ((PSNumber) oSatur.getValue()).getRealValue();
         float nHue = (float) ((PSNumber) oHue.getValue()).getRealValue();
-        if (nBright >= 0 && nBright <= 1 && nSatur >= 0 && nSatur <= 1 && nHue >= 0 && nHue <= 1) {
+        if (!(nBright >= 0 && nBright <= 1 && nSatur >= 0 && nSatur <= 1 && nHue >= 0 && nHue <= 1)) {
             return;
         }
         gState.graphicsSettings.color = Color.getHSBColor((float) nHue, (float) nSatur, (float) nBright);
