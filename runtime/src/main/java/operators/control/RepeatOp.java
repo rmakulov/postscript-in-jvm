@@ -2,7 +2,6 @@ package operators.control;
 
 import psObjects.PSObject;
 import psObjects.Type;
-import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
@@ -32,12 +31,9 @@ public class RepeatOp extends Operator {
             runtime.pushToOperandStack(iObj);
             runtime.pushToOperandStack(exec);
         }
-        PSArray arr = (PSArray) exec.getValue();
         for (int i = 0; i < count; i++) {
-            for (PSObject o : arr.getArray()) {
-                runtime.pushToOperandStack(o);
-                ExecOp.instance.execute();
-            }
+            runtime.pushToOperandStack(exec);
+            ExecOp.instance.execute();
         }
     }
 

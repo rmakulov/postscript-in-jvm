@@ -119,9 +119,9 @@ public class Interpreter {
 //                }
 //                Interpreter.instance.run(new File("7_ellipses.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
-                Interpreter.instance.run(new File("5_star.ps"));
-//                  Interpreter.instance.run(new File("5_star.ps"));
-                //Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
+//                Interpreter.instance.run(new File("5_star.ps"));
+//                Interpreter.instance.run(new File("5_star.ps"));
+                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
 
 // Interpreter.instance.run(new File("snowflak.ps"));
                 //Interpreter.instance.run(new File("gsaveTest.ps"));
