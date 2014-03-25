@@ -22,8 +22,12 @@ public class SetLineWidthOp extends AbstractGraphicOperator {
             runtime.pushToOperandStack(oNum);
             return;
         }
+        double XScale = gState.cTM.getXScale();
+        double YScale = gState.cTM.getXScale();
+        double scale = Math.sqrt(XScale * YScale);
         double width = ((PSNumber) oNum.getValue()).getRealValue();
-        gState.graphicsSettings.lineWidth = width;
+
+        gState.graphicsSettings.lineWidth = width * scale;
     }
 
     @Override
