@@ -127,6 +127,7 @@ public class DefaultDicts {
         addOperator(DefOp.instance);
         addOperator(OpenChevronOp.instance);
         addOperator(CloseChevronOp.instance);
+        addOperator(WhereOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {
@@ -177,10 +178,12 @@ public class DefaultDicts {
         addOperator(ClipOp.instance);
         addOperator(ClosePathOp.instance);
         addOperator(CurrentPointOp.instance);
+        addOperator(CurveToOp.instance);
         addOperator(LineToOp.instance);
         addOperator(MoveToOp.instance);
         addOperator(NewPathOp.instance);
         addOperator(PathBBoxOp.instance);
+        addOperator(RCurveToOp.instance);
         addOperator(RLineToOp.instance);
         addOperator(RMoveToOp.instance);
     }

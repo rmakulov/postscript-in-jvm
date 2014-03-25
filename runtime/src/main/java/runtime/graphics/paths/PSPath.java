@@ -56,6 +56,12 @@ public class PSPath {
     }
 
     //absolute coordinates in postscript
+    public void addCurve(PSPoint p0, PSPoint p1, PSPoint p2, PSPoint p3) {
+        getLastGeneralPath().moveTo(p0.getX(), p0.getY());
+        getLastGeneralPath().curveTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p3.getX(), p3.getY());
+    }
+
+    //absolute coordinates in postscript
     public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius,
                        double relAngle1, double RelAngle2, boolean clockwise, boolean connect) {
 //        generalPath.moveTo(100,100);

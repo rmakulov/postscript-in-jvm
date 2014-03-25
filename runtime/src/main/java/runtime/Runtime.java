@@ -14,6 +14,7 @@ import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSNull;
+import runtime.graphics.GraphicsState;
 import runtime.graphics.save.GSave;
 import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
@@ -51,14 +52,11 @@ public class
         Snapshot snapshot = new Snapshot(localVM, operandStack);
         operandStack = operandStack.push(new PSObject(snapshot));
         gsave(false);
-
     }
 
     public void gsave(boolean isMadeByGsave) {
-        GSave gsave = new GSave(isMadeByGsave);
-        gsave.getSnapshot();
+        GSave gsave = GraphicsState.getInstance().getSnapshot(isMadeByGsave);
         pushToGraphicStack(gsave);
-
     }
 
     /*
@@ -255,8 +253,16 @@ public class
         else return createLocalRef(object);
     }
 
+    public PSObject findDict(PSObject key) {
+        PSObject found;
+        for (PSObject dictObj : dictionaryStack) {
+            found = getValueAtDictionary(dictObj, key);
+            if (found != null) return dictObj;
+        }
+        return null;
+    }
+
     public PSObject findValue(PSObject key) {
-        //todo order of value search
         PSObject found;
         for (PSObject dictObj : dictionaryStack) {
             found = getValueAtDictionary(dictObj, key);

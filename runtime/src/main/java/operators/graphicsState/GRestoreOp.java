@@ -2,6 +2,7 @@ package operators.graphicsState;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.graphics.GraphicsState;
 import runtime.graphics.save.GSave;
 
 /**
@@ -16,11 +17,11 @@ public class GRestoreOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {
-        GSave gsave = runtime.peekFromGraphicStack() ;
-        if(gsave.isMadeByGSaveOp()){
-            runtime.popFromGraphicStack() ;
+        GSave gsave = runtime.peekFromGraphicStack();
+        if (gsave.isMadeByGSaveOp()) {
+            runtime.popFromGraphicStack();
         }
-        gsave.setSnapshot();
+        GraphicsState.getInstance().setSnapshot(gsave);
     }
 
     @Override
