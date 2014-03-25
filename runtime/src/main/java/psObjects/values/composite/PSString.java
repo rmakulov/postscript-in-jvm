@@ -59,7 +59,7 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
     public String toString() {
         return "PSString{" +
                 "s='" + s + '\'' +
-                "} " + super.toString();
+                "}";
     }
 
     public String getString() {

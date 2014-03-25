@@ -23,4 +23,8 @@ public class PSNull extends SimpleValue {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "PSNull{}";
+    }
 }

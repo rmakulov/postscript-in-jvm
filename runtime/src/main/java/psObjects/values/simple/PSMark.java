@@ -28,8 +28,8 @@ public class PSMark extends SimpleValue {
     @Override
     public String toString() {
         return "PSMark{" +
-                "markRecord=" + markRecord +
-                "} " + super.toString();
+                "markRecord=\"" + markRecord +
+                "\"}";
     }
 
     @Override

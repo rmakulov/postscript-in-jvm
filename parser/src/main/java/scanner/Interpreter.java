@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static psObjects.Attribute.TreatAs.EXECUTABLE;
 import static psObjects.Attribute.TreatAs.LITERAL;
 
 public class Interpreter {
@@ -54,8 +55,10 @@ public class Interpreter {
                     break;
                 case EXEC_NAME:
                     // name without "/". it is executable by default
-                    runtime.pushToOperandStack(new PSObject(new PSName(text)));
-                    if (scanner.getProcDepth() == 0) ExecOp.instance.execute();
+                    runtime.pushToOperandStack(new PSObject(new PSName(text), EXECUTABLE));
+                    if (scanner.getProcDepth() == 0) {
+                        ExecOp.instance.execute();
+                    }
                     break;
                 case LIT_NAME:
                     // name with "/". it is executable by default
@@ -115,10 +118,10 @@ public class Interpreter {
 //                    System.out.println(c.getRotateAngle() );
 //                }
 //                Interpreter.instance.run(new File("7_ellipses.ps"));
-                Interpreter.instance.run(new File("6_arcs.ps"));
-//                Interpreter.instance.run(new File("5_star.ps"));
+//                Interpreter.instance.run(new File("6_arcs.ps"));
+                Interpreter.instance.run(new File("5_star.ps"));
 //                  Interpreter.instance.run(new File("5_star.ps"));
-                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
+                //Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
 
 // Interpreter.instance.run(new File("snowflak.ps"));
                 //Interpreter.instance.run(new File("gsaveTest.ps"));

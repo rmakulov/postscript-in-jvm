@@ -36,8 +36,7 @@ public class PSDrawer {
         for (GeneralPath generalPath : path.getGeneralPaths()) {
             g2.fill(generalPath);
         }
-        gState.currentPath = new PSPath();
-        gState.currentPoint = null;
+        gState.newCurrentPath();
     }
 
     public void stroke() {
@@ -50,22 +49,19 @@ public class PSDrawer {
             g2.draw(s1);*/
             g2.draw(generalPath);
         }
-        gState.currentPath = new PSPath();
-        gState.currentPoint = null;
+        gState.newCurrentPath();
     }
 
     public void clip() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = gState.currentPath;
         g2.clip(path.getLastGeneralPath());
-        gState.currentPath = new PSPath();
-        gState.currentPoint = null;
+        gState.newCurrentPath();
     }
 
     public void clipPath() {
         gState.clippingPath = gState.currentPath;
-        gState.currentPath = new PSPath();
-        gState.currentPoint = null;
+        gState.newCurrentPath();
     }
 
 

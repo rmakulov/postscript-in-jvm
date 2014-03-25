@@ -53,4 +53,9 @@ public class Snapshot extends CompositeValue {
             i++;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Snapshot{}";
+    }
 }

@@ -43,4 +43,9 @@ public class GraphicsState {
         return graphicsSettings.clone();
     }
 
+    public void newCurrentPath() {
+        currentPath = new PSPath();
+        currentPoint = null;
+    }
+
 }
