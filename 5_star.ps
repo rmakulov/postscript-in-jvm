@@ -6,12 +6,13 @@ currentpoint translate	%move origin
 /star			%stack: x y
 { moveto
 currentpoint translate
-4 {starside} repeat
+%4 {starside} repeat
+starside starside starside starside
 closepath
 gsave 
 .5 setgray fill
 grestore
 stroke 
 } def
-200 200 star
+200 600 star
 showpage
