@@ -36,7 +36,8 @@ public class PSDrawer {
         for (GeneralPath generalPath : path.getGeneralPaths()) {
             g2.fill(generalPath);
         }
-        gState.currentPath = null;
+        gState.currentPath = new PSPath();
+        gState.currentPoint = null;
     }
 
     public void stroke() {
@@ -50,7 +51,6 @@ public class PSDrawer {
             g2.draw(generalPath);
         }
         gState.currentPath = new PSPath();
-        ;
         gState.currentPoint = null;
     }
 
