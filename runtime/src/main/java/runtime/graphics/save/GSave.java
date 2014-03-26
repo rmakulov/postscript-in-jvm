@@ -15,6 +15,7 @@ public class GSave {
     private TransformMatrix cTM;
     private GraphicsSettings settings;
     private boolean madeByGSaveOp;
+    public int flatness;
 
     public PSPoint getCurrentPoint() {
         return currentPoint;
@@ -42,35 +43,17 @@ public class GSave {
         madeByGSaveOp = madeByGSave;
     }
 
-    public GSave(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, boolean byGSaveOp, PSPoint curPoint) {
+    public GSave(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, boolean byGSaveOp, PSPoint curPoint, int flatness) {
         currentPath = curPath;
         clippingPath = clipPath;
         cTM = tM;
         settings = gSettings;
         madeByGSaveOp = byGSaveOp;
         currentPoint = curPoint;
+        this.flatness = flatness;
     }
 
     public boolean isMadeByGSaveOp() {
         return madeByGSaveOp;
     }
-/*
-    public void setSnapshot() {
-        GraphicsState inst = GraphicsState.getInstance();
-        inst.graphicsSettings = settings;
-        inst.clippingPath = clippingPath;
-        inst.currentPath = currentPath;
-        inst.currentPoint = currentPoint;
-        inst.cTM = cTM;
-    }
-
-    public void getSnapshot() {
-        GraphicsState inst = GraphicsState.getInstance();
-        settings = inst.cloneGraphicsSettings();
-        currentPath = inst.currentPath.clone();
-        clippingPath = inst.clippingPath.clone();
-        cTM = inst.cTM.clone();
-        currentPoint = inst.currentPoint.clone();
-    }
-*/
 }

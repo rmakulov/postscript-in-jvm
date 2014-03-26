@@ -274,6 +274,11 @@ public class Runtime {
             found = getValueAtDictionary(dictObj, key);
             if (found != null) return found;
         }
+        try {
+            throw new Exception(key + " is not found");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new PSObject(PSNull.NULL);
     }
 
