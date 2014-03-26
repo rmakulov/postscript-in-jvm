@@ -125,10 +125,11 @@ public class Interpreter {
 // Interpreter.instance.run(new File("snowflak.ps"));
                 //Interpreter.instance.run(new File("gsaveTest.ps"));
                 //Interpreter.instance.run(new File("SimpleGraphicsTest2.ps"));
-                //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
+//                Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
 //                Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
-                Interpreter.instance.run(new File("colorcir.ps"));
+                //Interpreter.instance.run(new File("colorcir.ps"));
+                Interpreter.instance.run(new File("snowflak.ps"));
                 //Interpreter.instance.run(new File("WireFrame.eps"));
 
                 //Interpreter.instance.run(new File("test.ps"));

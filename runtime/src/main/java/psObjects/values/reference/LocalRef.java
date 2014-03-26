@@ -22,9 +22,9 @@ public class LocalRef extends Reference {
 
     @Override
     public Integer compareTo(Value v) {
-        try{
-           return psObjectCompareTo(v);
-        }   catch (Exception e){
+        try {
+            return psObjectCompareTo(v);
+        } catch (Exception e) {
             return v instanceof LocalRef ?
                     Integer.valueOf(localCompareTo((LocalRef) v)) :
                     super.compareTo(v);
@@ -64,5 +64,12 @@ public class LocalRef extends Reference {
     @Override
     public int compareGrade() {
         return 5;
+    }
+
+    @Override
+    public String toString() {
+        return "LocalRef{" +
+                "tableIndex=" + tableIndex +
+                ", refValue= " + getValue().toString() + "}";
     }
 }

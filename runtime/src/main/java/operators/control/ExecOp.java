@@ -1,11 +1,11 @@
 package operators.control;
 
+import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
 import operators.common.CloseCurlyBraceOp;
 import operators.common.OpenCurlyBraceOp;
 import operators.dictionary.CloseChevronOp;
 import operators.dictionary.OpenChevronOp;
-import operators.operandStackManipulation.MarkOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.Value;
@@ -55,10 +55,12 @@ public class ExecOp extends Operator {
                 if (mark.equals(PSMark.OPEN_SQUARE_BRACKET)) {
                     OpenSquareBracketOp.instance.execute();
                 } else if (mark.equals(PSMark.CLOSE_SQUARE_BRACKET)) {
-                    MarkOp.instance.execute();
+                    runtime.pushToOperandStack(psObject);
+                    CloseSquareBracketOp.instance.execute();
                 } else if (mark.equals(PSMark.OPEN_CHEVRON_BRACKET)) {
                     OpenChevronOp.instance.execute();
                 } else if (mark.equals(PSMark.CLOSE_CHEVRON_BRACKET)) {
+                    runtime.pushToOperandStack(psObject);
                     CloseChevronOp.instance.execute();
                 } else if (mark.equals(PSMark.OPEN_CURLY_BRACE)) {
                     runtime.pushToOperandStack(psObject);

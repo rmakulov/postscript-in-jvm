@@ -5,6 +5,8 @@ import runtime.graphics.GraphicsState;
 import runtime.graphics.paths.PSPath;
 
 import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
 
 /**
  * Created by Дмитрий on 18.03.14.
@@ -32,7 +34,19 @@ public class PSDrawer {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = gState.currentPath;
         setGraphicsSettings(g2, gState.graphicsSettings);
-        g2.fill(path.getGeneralPath());
+        GeneralPath generalPath = path.getGeneralPath();
+        generalPath.setWindingRule(Path2D.WIND_NON_ZERO);
+        g2.fill(generalPath);
+        gState.newCurrentPath();
+    }
+
+    public void eofill() {
+        Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
+        PSPath path = gState.currentPath;
+        setGraphicsSettings(g2, gState.graphicsSettings);
+        GeneralPath generalPath = path.getGeneralPath();
+        generalPath.setWindingRule(Path2D.WIND_EVEN_ODD);
+        g2.fill(generalPath);
         gState.newCurrentPath();
     }
 

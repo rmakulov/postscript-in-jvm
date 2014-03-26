@@ -19,6 +19,7 @@ import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
 import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
+import operators.painting.EofillOp;
 import operators.painting.FillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
@@ -197,6 +198,7 @@ public class DefaultDicts {
 
     private static void addPaintingOperators() {
         addOperator(FillOp.instance);
+        addOperator(EofillOp.instance);
         addOperator(StrokeOp.instance);
     }
 
