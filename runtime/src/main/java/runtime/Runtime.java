@@ -71,6 +71,8 @@ public class Runtime {
             Value curValue = current.getValue();
             //if operand stack contains reference to composite object which was created after saving, we can't restore
             if (current.isComposite() && localVM.contains(curValue) && !savedLocalVM.contains(curValue)) {
+                System.out.println("invalid restore");
+                System.exit(0);
                 return false;
             }
         }
@@ -82,6 +84,11 @@ public class Runtime {
     public int addToLocalVM(CompositeValue value) {
         localVM = localVM.add(value);
         return localVM.size() - 1;
+    }
+
+    public int setNewValueAtLocalVM(int index, CompositeValue value) {
+        localVM = localVM.setNewValueAtIndex(index, value);
+        return index;
     }
 
     public void pushToOperandStack(PSObject psObject) {

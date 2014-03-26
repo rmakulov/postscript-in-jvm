@@ -31,7 +31,7 @@ public class GraphicsState {
     }
 
     public GSave getSnapshot(boolean isMadeByGSaveOp) {
-        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint.clone(), flatness);
+        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint, flatness);
     }
 
     public void setSnapshot(GSave gSave) {
@@ -39,7 +39,7 @@ public class GraphicsState {
         clippingPath = gSave.getClippingPath().clone();
         cTM = gSave.getcTM().clone();
         graphicsSettings = gSave.getSettings().clone();
-        currentPoint = gSave.getCurrentPoint().clone();
+        currentPoint = gSave.getCurrentPoint();
         flatness = gSave.flatness;
     }
 

@@ -47,9 +47,15 @@ public class LocalRef extends Reference {
         return tableIndex;
     }
 
-    @Override
+/*    @Override
     public Type setCompositeValue(CompositeValue obj) {
         tableIndex = runtime.Runtime.getInstance().addToLocalVM(obj);
+        return obj.determineType();
+    }*/
+
+    @Override
+    public Type setCompositeValue(CompositeValue obj) {
+        tableIndex = runtime.Runtime.getInstance().setNewValueAtLocalVM(tableIndex, obj);
         return obj.determineType();
     }
 
