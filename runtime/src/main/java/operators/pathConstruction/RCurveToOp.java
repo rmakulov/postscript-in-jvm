@@ -53,6 +53,7 @@ public class RCurveToOp extends AbstractGraphicOperator {
         PSPoint p3 = cTM.transform(absP3);
 
         gState.currentPath.addCurve(gState.currentPoint, p1, p2, p3);
+        gState.currentPoint = p3;
     }
 
     @Override

@@ -1,7 +1,7 @@
 exec            +
 if              +
 ifelse          +
-for
+for             +
 repeat          +
 loop
 exit

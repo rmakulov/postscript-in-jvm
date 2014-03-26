@@ -1,9 +1,12 @@
 package runtime.graphics;
 
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
 import runtime.graphics.save.GSave;
+
+import java.awt.*;
 
 public class GraphicsState {
     private static GraphicsState instance = new GraphicsState();
@@ -12,12 +15,14 @@ public class GraphicsState {
     public PSPath clippingPath;
     public TransformMatrix cTM;
     public GraphicsSettings graphicsSettings;
+    public int flatness;
 
     private GraphicsState() {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
-        clippingPath = new PSPath(); //todo page size rectangle
+        initClip();
+        flatness = 1;
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
@@ -26,7 +31,7 @@ public class GraphicsState {
     }
 
     public GSave getSnapshot(boolean isMadeByGSaveOp) {
-        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint.clone());
+        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint.clone(), flatness);
     }
 
     public void setSnapshot(GSave gSave) {
@@ -35,6 +40,7 @@ public class GraphicsState {
         cTM = gSave.getcTM().clone();
         graphicsSettings = gSave.getSettings().clone();
         currentPoint = gSave.getCurrentPoint().clone();
+        flatness = gSave.flatness;
     }
 
     //---------------------Fonts
@@ -60,4 +66,8 @@ public class GraphicsState {
         currentPoint = null;
     }
 
+    public void initClip() {
+        clippingPath = new PSPath();
+        clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
+    }
 }

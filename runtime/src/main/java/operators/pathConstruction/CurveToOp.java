@@ -52,6 +52,7 @@ public class CurveToOp extends AbstractGraphicOperator {
         PSPoint p2 = cTM.transform(nX2, nY2);
         PSPoint p3 = cTM.transform(nX3, nY3);
         gState.currentPath.addCurve(gState.currentPoint, p1, p2, p3);
+        gState.currentPoint = p3;
     }
 
     @Override

@@ -57,8 +57,8 @@ setfont
 	setmiterlimit
 	setrgbcolor
 show
-showpage
-srand
+    showpage
+    srand
     stack
 stringwidth
     stroke

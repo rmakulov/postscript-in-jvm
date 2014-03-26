@@ -9,56 +9,46 @@ import runtime.graphics.figures.PSPoint;
 import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
-import java.util.ArrayList;
 
 public class PSPath {
-    private ArrayList<GeneralPath> generalPaths;
+    private GeneralPath generalPath;
     //public GraphicsSettings graphicsSettings;
 
-    public PSPath(ArrayList<GeneralPath> generalPaths) {
-        this.generalPaths = generalPaths;
-    }
 
     public PSPath() {
-        generalPaths = new ArrayList<GeneralPath>();
-        generalPaths.add(new GeneralPath());
-//        graphicsSettings = new GraphicsSettings();
+        generalPath = new GeneralPath();
     }
 
-    private PSPath(GeneralPath generalPath) {
-        generalPaths.add(generalPath);
+    public PSPath(GeneralPath generalPath) {
+        this.generalPath = generalPath;
     }
 
+/*
     public GeneralPath getLastGeneralPath() {
         if (generalPaths.size() == 0) {
             return null;
         }
         return generalPaths.get(generalPaths.size() - 1);
     }
+*/
+
+    public GeneralPath getGeneralPath() {
+        return generalPath;
+    }
 
     public Rectangle getBBox() {
-        Rectangle box = null;
-        for (GeneralPath generalPath : generalPaths) {
-            box = box == null ? generalPath.getBounds() : box.union(generalPath.getBounds());
-        }
-        return box;
+        return generalPath.getBounds();
     }
 
     //absolute coordinates in postscript
     public void addLineSegment(PSPoint start, PSPoint end) {
-        if (getLastGeneralPath().getCurrentPoint().distance(start.getPoint2D()) > 0.0001) {
-            GeneralPath newPath = new GeneralPath();
-            newPath.moveTo(start.getX(), start.getY());
-            newPath.lineTo(end.getX(), end.getY());
-            generalPaths.add(newPath);
-        }
-        getLastGeneralPath().lineTo(end.getX(), end.getY());
+        generalPath.lineTo(end.getX(), end.getY());
     }
 
     //absolute coordinates in postscript
     public void addCurve(PSPoint p0, PSPoint p1, PSPoint p2, PSPoint p3) {
-        getLastGeneralPath().moveTo(p0.getX(), p0.getY());
-        getLastGeneralPath().curveTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p3.getX(), p3.getY());
+        generalPath.moveTo(p0.getX(), p0.getY());
+        generalPath.curveTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p3.getX(), p3.getY());
     }
 
     //absolute coordinates in postscript
@@ -75,23 +65,15 @@ public class PSPath {
         Arc2D.Double arcDouble = new Arc2D.Double(x, y, w,
                 h, -relAngle1, extent, Arc2D.OPEN);
 
-        getLastGeneralPath().append(arcDouble, connect);
+        generalPath.append(arcDouble, connect);
     }
 
     public void closePath() {
-        getLastGeneralPath().closePath();
-        generalPaths.add(new GeneralPath());
+        generalPath.closePath();
     }
 
     public PSPath clone() {
-        ArrayList<GeneralPath> newPath = new ArrayList<GeneralPath>();
-        for (GeneralPath generalPath : generalPaths) {
-            newPath.add((GeneralPath) generalPath.clone());
-        }
-        return new PSPath(newPath);
+        return new PSPath((GeneralPath) generalPath.clone());
     }
 
-    public ArrayList<GeneralPath> getGeneralPaths() {
-        return generalPaths;
-    }
 }

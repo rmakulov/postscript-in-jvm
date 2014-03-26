@@ -15,9 +15,13 @@ import operators.control.*;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.*;
 import operators.file.StackOp;
+import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
+import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
 import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
+import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
+import operators.painting.EofillOp;
 import operators.painting.FillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
@@ -51,6 +55,7 @@ public class DefaultDicts {
             addDictionaryOperators();
             addGlythAndFontOperators();
             addGraphicsStateOperators();
+            addGraphicStateDeviceIndependentOperators();
             addMiscellaneousOperators();
             addOperandStackOperationOperators();
             addPaintingOperators();
@@ -122,6 +127,7 @@ public class DefaultDicts {
 
     private static void addMiscellaneousOperators() {
         addOperator(BindOp.instance);
+        addOperator(UserTimeOp.instance);
     }
 
     private static void addDictionaryOperators() {
@@ -133,6 +139,16 @@ public class DefaultDicts {
         addOperator(CloseChevronOp.instance);
         addOperator(WhereOp.instance);
         addOperator(DictOp.instance);
+        addOperator(LoadOp.instance);
+        addOperator(StoreOp.instance);
+        addOperator(UndefOp.instance);
+        addOperator(KnownOp.instance);
+        addOperator(CopyOp.instance);
+        addOperator(CurrentDictOp.instance);
+        addOperator(UserDictOp.instance);
+        addOperator(GlobalDictOp.instance);
+        addOperator(SystemDictOp.instance);
+        addOperator(CountDictStackOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {
@@ -181,9 +197,11 @@ public class DefaultDicts {
         addOperator(ArcOp.instance);
         addOperator(ClipPathOp.instance);
         addOperator(ClipOp.instance);
+        addOperator(InitClipOp.instance);
         addOperator(ClosePathOp.instance);
         addOperator(CurrentPointOp.instance);
         addOperator(CurveToOp.instance);
+        addOperator(FlattenPathOp.instance);
         addOperator(LineToOp.instance);
         addOperator(MoveToOp.instance);
         addOperator(NewPathOp.instance);
@@ -195,15 +213,23 @@ public class DefaultDicts {
 
     private static void addPaintingOperators() {
         addOperator(FillOp.instance);
+        addOperator(EofillOp.instance);
         addOperator(StrokeOp.instance);
+    }
+
+    private static void addGraphicStateDeviceIndependentOperators() {
+        addOperator(SetFlatOp.instance);
+        addOperator(CurrentFlatOp.instance);
     }
 
     private static void addOperandStackOperationOperators() {
         addOperator(ClearOp.instance);
         addOperator(DupOp.instance);
         addOperator(ExchOp.instance);
+        addOperator(IndexOp.instance);
         addOperator(MarkOp.instance);
         addOperator(PopOp.instance);
+        addOperator(RollOp.instance);
     }
 
     private static void addGraphicsStateOperators() {

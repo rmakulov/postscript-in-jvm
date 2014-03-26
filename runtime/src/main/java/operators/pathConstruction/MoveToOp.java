@@ -30,7 +30,7 @@ public class MoveToOp extends AbstractGraphicOperator {
         PSNumber nX = (PSNumber) o2.getValue();
         PSPoint psPoint = gState.cTM.transform(nX.getRealValue(), nY.getRealValue());
         gState.currentPoint = psPoint;
-        gState.currentPath.getLastGeneralPath().moveTo(psPoint.getX(), psPoint.getY());
+        gState.currentPath.getGeneralPath().moveTo(psPoint.getX(), psPoint.getY());
 
     }
 

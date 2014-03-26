@@ -22,7 +22,8 @@ public class RandOp extends Operator {
     @Override
     public void execute() {
         runtime.Runtime runtime = Runtime.getInstance();
-        runtime.pushToOperandStack(new PSObject(new PSInteger(random.nextInt())));
+        int randomInt = random.nextInt(Integer.MAX_VALUE);
+        runtime.pushToOperandStack(new PSObject(new PSInteger(randomInt)));
     }
 
     public static void dropRandom() {
