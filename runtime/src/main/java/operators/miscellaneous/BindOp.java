@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import psObjects.values.simple.PSNull;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,13 @@ public class BindOp extends Operator {
         Type type = o.getType();
         switch (type) {
             case NAME:
-                resArray = bind(runtime.findValue(o));
+                PSObject value = runtime.findValue(o);
+                if (value.getValue().equals(PSNull.NULL)) {
+                    resArray = new ArrayList<PSObject>();
+                    resArray.add(o);
+                } else {
+                    resArray = bind(value);
+                }
                 break;
             case ARRAY:
             case PACKEDARRAY:
