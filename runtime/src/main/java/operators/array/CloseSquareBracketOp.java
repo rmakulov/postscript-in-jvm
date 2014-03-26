@@ -27,7 +27,7 @@ public class CloseSquareBracketOp extends Operator {
         }
         PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
-        while (!PSMark.OPEN_SQUARE_BRACKET.equals(psObject)) {
+        while (!PSMark.OPEN_SQUARE_BRACKET.equals(psObject.getValue())) {
             array.add(psObject);
             psObject = runtime.popFromOperandStack();
             // todo correct check is not null

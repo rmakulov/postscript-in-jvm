@@ -6,7 +6,7 @@ import psObjects.Type;
 public class PSMark extends SimpleValue {
     private String markRecord;
     public static PSMark OPEN_SQUARE_BRACKET = new PSMark("[");
-    public static PSMark CLOSE_SQUARE_BRACKET = new PSMark("[");
+    public static PSMark CLOSE_SQUARE_BRACKET = new PSMark("]");
     public static PSMark OPEN_CURLY_BRACE = new PSMark("{");
     public static PSMark CLOSE_CURLY_BRACE = new PSMark("}");
     public static PSMark OPEN_CHEVRON_BRACKET = new PSMark("<<");
