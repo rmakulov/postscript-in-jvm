@@ -198,6 +198,7 @@ public class DefaultDicts {
         addOperator(ClosePathOp.instance);
         addOperator(CurrentPointOp.instance);
         addOperator(CurveToOp.instance);
+        addOperator(FlattenPathOp.instance);
         addOperator(LineToOp.instance);
         addOperator(MoveToOp.instance);
         addOperator(NewPathOp.instance);
