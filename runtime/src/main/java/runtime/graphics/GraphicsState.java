@@ -20,8 +20,7 @@ public class GraphicsState {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
-        clippingPath = new PSPath();
-        clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
+        initClip();
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
@@ -64,4 +63,8 @@ public class GraphicsState {
         currentPoint = null;
     }
 
+    public void initClip() {
+        clippingPath = new PSPath();
+        clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
+    }
 }

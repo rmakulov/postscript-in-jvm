@@ -1,25 +1,25 @@
-newpath
-currentpoint
-moveto
-rmoveto
-lineto
-rlineto
-arc
-arcn
+newpath            +
+currentpoint       +
+moveto             +
+rmoveto            +
+lineto             +
+rlineto            +
+arc                +
+arcn               +
 arct
-arcto
-curveto
-rcurveto
-closepath
+arcto              +
+curveto            +
+rcurveto           +
+closepath          +
 flattenpath
 ustrokepath
-clippath
+clippath           +
 setbbox
-pathbbox
+pathbbox           +
 pathforall
 upath
 initclip
-clip
+clip               +
 eoclip
 rectclip
 ucache

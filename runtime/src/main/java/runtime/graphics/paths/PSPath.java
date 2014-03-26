@@ -19,7 +19,7 @@ public class PSPath {
         generalPath = new GeneralPath();
     }
 
-    private PSPath(GeneralPath generalPath) {
+    public PSPath(GeneralPath generalPath) {
         this.generalPath = generalPath;
     }
 

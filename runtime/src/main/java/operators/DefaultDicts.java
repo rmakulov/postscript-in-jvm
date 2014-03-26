@@ -184,6 +184,7 @@ public class DefaultDicts {
         addOperator(ArcOp.instance);
         addOperator(ClipPathOp.instance);
         addOperator(ClipOp.instance);
+        addOperator(InitClipOp.instance);
         addOperator(ClosePathOp.instance);
         addOperator(CurrentPointOp.instance);
         addOperator(CurveToOp.instance);

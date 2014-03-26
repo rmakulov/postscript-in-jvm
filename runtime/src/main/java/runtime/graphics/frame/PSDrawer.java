@@ -36,6 +36,7 @@ public class PSDrawer {
         setGraphicsSettings(g2, gState.graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_NON_ZERO);
+        g2.clip(gState.clippingPath.getGeneralPath());
         g2.fill(generalPath);
         gState.newCurrentPath();
     }
@@ -46,6 +47,7 @@ public class PSDrawer {
         setGraphicsSettings(g2, gState.graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_EVEN_ODD);
+        g2.clip(gState.clippingPath.getGeneralPath());
         g2.fill(generalPath);
         gState.newCurrentPath();
     }
@@ -54,6 +56,7 @@ public class PSDrawer {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = gState.currentPath;
         setGraphicsSettings(g2, gState.graphicsSettings);
+        g2.clip(gState.clippingPath.getGeneralPath());
         g2.draw(path.getGeneralPath());
         gState.newCurrentPath();
     }
@@ -61,14 +64,16 @@ public class PSDrawer {
     public void clip() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = gState.currentPath;
+        g2.clip(gState.clippingPath.getGeneralPath());
         g2.clip(path.getGeneralPath());
+        Shape clip = g2.getClip();
+        gState.clippingPath = new PSPath(new GeneralPath(clip));
         gState.newCurrentPath();
     }
 
     public void clipPath() {
-        gState.currentPath = gState.clippingPath;
+        gState.currentPath = gState.clippingPath.clone();
     }
-
 
     public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
         if (settings == null) return;

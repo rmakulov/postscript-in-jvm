@@ -43,15 +43,15 @@ boxsize 2 div boxsize 2 div translate
 %% If the device you are using can handle complex fills, replace the
 %% next three lines with:
 %%
-6 {arm 60 rotate} repeat
-gsave colorfill grestore gsave eocolorfill grestore colorstroke
+%6 {arm 60 rotate} repeat
+%gsave colorfill grestore gsave eocolorfill grestore colorstroke
 %%
 %% This will be not only faster, but prettier. On a LaserWriter or a
 %% Tektronix Phaser II PS it gives a limitcheck.
 
-%% 6 {arm 60 rotate colorfill} repeat
-%% 6 {arm 60 rotate eocolorfill} repeat
-%% 6 {arm 60 rotate} repeat colorstroke
+6 {arm 60 rotate colorfill} repeat
+6 {arm 60 rotate eocolorfill} repeat
+ 6 {arm 60 rotate} repeat colorstroke
 } def
 
 1 setlinewidth
