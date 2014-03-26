@@ -19,7 +19,6 @@ import runtime.graphics.save.GSave;
 import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
-import runtime.stack.PSStack;
 
 import static psObjects.Type.*;
 
@@ -50,7 +49,7 @@ public class Runtime {
     * save snapshot to operandStack
     */
     public void save() {
-        Snapshot snapshot = new Snapshot(localVM, operandStack);
+        Snapshot snapshot = new Snapshot(localVM);
         operandStack = operandStack.push(new PSObject(snapshot));
         gsave(false);
     }
@@ -67,16 +66,15 @@ public class Runtime {
         PSObject object = popFromOperandStack();
         if (object.getType() != SAVE) return false;
         Snapshot snapshot = (Snapshot) object.getValue();
-        PSStack savedOperandStack = snapshot.getOperandStack();
+        LocalVM savedLocalVM = snapshot.getLocalVM();
         for (PSObject current : operandStack) {
             Value curValue = current.getValue();
             //if operand stack contains reference to composite object which was created after saving, we can't restore
-            if (localVM.contains(curValue) && !savedOperandStack.contains(current)) {
+            if (current.isComposite() && localVM.contains(curValue) && !savedLocalVM.contains(curValue)) {
                 return false;
             }
         }
-        localVM = snapshot.getTable();
-        operandStack = snapshot.getOperandStack();
+        localVM = savedLocalVM;
         GRestoreAllOp.instance.execute();
         return true;
     }
@@ -229,7 +227,6 @@ public class Runtime {
         while (removeFromDictionaryStack()) {
             //removing done in condition automatically
         }
-        ;
     }
 
     public void clearAll() {
