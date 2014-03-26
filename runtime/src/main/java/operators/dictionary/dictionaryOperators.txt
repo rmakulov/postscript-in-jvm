@@ -1,26 +1,26 @@
-dict
-<<
->>
-length
+dict                +
+<<                  +
+>>                  +
+length              +
 maxlength
-begin
-end
-def
-load
-store
-get
-put
-undef
-known
-copy
-forall
-currentdict
+begin               +
+end                 +
+def                 +
+load                +
+store               +
+get                 +
+put                 +
+undef               +
+known               +
+copy                +
+forall              +
+currentdict         +
 errordict
 $error
-systemdict
-userdict
-globaldict
+systemdict          +
+userdict            +
+globaldict          +
 statusdict
-countdictstack
+countdictstack      +
 dictstack
-cleardictstack
+cleardictstack      +
