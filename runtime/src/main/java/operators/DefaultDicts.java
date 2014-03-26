@@ -15,6 +15,8 @@ import operators.control.*;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.*;
 import operators.file.StackOp;
+import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
+import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
 import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
 import operators.miscellaneous.UserTimeOp;
@@ -53,6 +55,7 @@ public class DefaultDicts {
             addDictionaryOperators();
             addGlythAndFontOperators();
             addGraphicsStateOperators();
+            addGraphicStateDeviceIndependentOperators();
             addMiscellaneousOperators();
             addOperandStackOperationOperators();
             addPaintingOperators();
@@ -211,6 +214,11 @@ public class DefaultDicts {
         addOperator(FillOp.instance);
         addOperator(EofillOp.instance);
         addOperator(StrokeOp.instance);
+    }
+
+    private static void addGraphicStateDeviceIndependentOperators() {
+        addOperator(SetFlatOp.instance);
+        addOperator(CurrentFlatOp.instance);
     }
 
     private static void addOperandStackOperationOperators() {

@@ -15,12 +15,14 @@ public class GraphicsState {
     public PSPath clippingPath;
     public TransformMatrix cTM;
     public GraphicsSettings graphicsSettings;
+    public int flatness;
 
     private GraphicsState() {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
         initClip();
+        flatness = 1;
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
@@ -29,7 +31,7 @@ public class GraphicsState {
     }
 
     public GSave getSnapshot(boolean isMadeByGSaveOp) {
-        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint.clone());
+        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint.clone(), flatness);
     }
 
     public void setSnapshot(GSave gSave) {
@@ -38,6 +40,7 @@ public class GraphicsState {
         cTM = gSave.getcTM().clone();
         graphicsSettings = gSave.getSettings().clone();
         currentPoint = gSave.getCurrentPoint().clone();
+        flatness = gSave.flatness;
     }
 
     //---------------------Fonts
