@@ -26,7 +26,7 @@ public class DictOp extends Operator {
         }
 
         //todo init dictionary with int
-        runtime.pushToDictionaryStack(new PSObject(new PSDictionary()));
+        runtime.pushToOperandStack(new PSObject(new PSDictionary()));
     }
 
     @Override

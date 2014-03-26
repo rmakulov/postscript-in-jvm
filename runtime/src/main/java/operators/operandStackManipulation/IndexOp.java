@@ -43,6 +43,6 @@ public class IndexOp extends Operator {
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("");
+        return new PSName("index");
     }
 }
