@@ -136,6 +136,16 @@ public class DefaultDicts {
         addOperator(CloseChevronOp.instance);
         addOperator(WhereOp.instance);
         addOperator(DictOp.instance);
+        addOperator(LoadOp.instance);
+        addOperator(StoreOp.instance);
+        addOperator(UndefOp.instance);
+        addOperator(KnownOp.instance);
+        addOperator(CopyOp.instance);
+        addOperator(CurrentDictOp.instance);
+        addOperator(UserDictOp.instance);
+        addOperator(GlobalDictOp.instance);
+        addOperator(SystemDictOp.instance);
+        addOperator(CountDictStackOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {

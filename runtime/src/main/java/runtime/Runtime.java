@@ -24,19 +24,21 @@ import runtime.stack.PSStack;
 import static psObjects.Type.*;
 
 
-public class Runtime{
+public class Runtime {
     private static Runtime ourInstance = new Runtime();
 
 
     private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
-    private GraphicStack graphicStack = new GraphicStack() ;
+    private GraphicStack graphicStack = new GraphicStack();
     private boolean isGlobal = false;
+
+    private PSObject userDict, globalDict, systemDict;
 
 
     private Runtime() {
-        super() ;
+        super();
     }
 
     public static Runtime getInstance() {
@@ -98,17 +100,17 @@ public class Runtime{
     }
 
     public void pushToGraphicStack(GSave gsave) {
-        graphicStack = graphicStack.push(gsave) ;
+        graphicStack = graphicStack.push(gsave);
     }
 
-    public GSave popFromGraphicStack(){
-        GSave gsave = graphicStack.peek() ;
-        graphicStack = graphicStack.removeTop() ;
-        return gsave ;
+    public GSave popFromGraphicStack() {
+        GSave gsave = graphicStack.peek();
+        graphicStack = graphicStack.removeTop();
+        return gsave;
     }
 
     public GSave peekFromGraphicStack() {
-        return graphicStack.peek() ;
+        return graphicStack.peek();
     }
 
     public PSObject peekFromOperandStack() {
@@ -144,6 +146,7 @@ public class Runtime{
         return new LocalRef(addToLocalVM(value));
     }
 
+    @Deprecated
     public PSObject setValueArrayAtIndex(PSObject arrayObject, int valueIndex, PSObject value) {
         if (arrayObject.getType() != ARRAY) {
             //todo throw type exception
@@ -157,6 +160,7 @@ public class Runtime{
     /*
    * Find array in Local VM by LocalRef and get interval by startIndex and length
     */
+    @Deprecated
     public PSObject getArrayInterval(PSObject arrayObject, int startIndex, int length) {
         if (arrayObject.getType() != ARRAY) {
             //todo throw type exception
@@ -169,6 +173,7 @@ public class Runtime{
     }
 
     //dict key value put – Associate key with value in dict
+    @Deprecated
     public PSObject putValueAtDictionaryKey(PSObject dictObject, PSObject key, PSObject value) {
         if (dictObject.getType() != DICTIONARY) {
             return dictObject;
@@ -180,6 +185,7 @@ public class Runtime{
     }
 
     //dict key undef – Remove key and its value from dict
+    @Deprecated
     public PSObject undefValueAtDictionaryKey(PSObject dictObject, PSObject key) {
         //todo check
         if (dictObject.getType() != Type.DICTIONARY) return dictObject;
@@ -190,6 +196,7 @@ public class Runtime{
 
     }
 
+    @Deprecated
     public PSObject copy(PSObject srcDictRef, PSObject dstDictRef) {
         //todo check
         if (srcDictRef.getType() != Type.DICTIONARY) return dstDictRef;
@@ -279,12 +286,14 @@ public class Runtime{
     }
 
     public void initDefaultDictionaries() {
-        PSObject dict = new PSObject(DefaultDicts.getSystemDict(),
+        systemDict = new PSObject(DefaultDicts.getSystemDict(),
                 Type.DICTIONARY,
                 new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
-        pushToDictionaryStack(dict);
-        pushToDictionaryStack(new PSObject(DefaultDicts.getGlobalDict()));
-        pushToDictionaryStack(new PSObject(DefaultDicts.getUserDict()));
+        pushToDictionaryStack(systemDict);
+        globalDict = new PSObject(DefaultDicts.getGlobalDict());
+        pushToDictionaryStack(globalDict);
+        userDict = new PSObject(DefaultDicts.getUserDict());
+        pushToDictionaryStack(userDict);
     }
 
     public PSObject currentDict() {
@@ -292,6 +301,18 @@ public class Runtime{
     }
 
     public int getGraphicStackSize() {
-        return graphicStack.size() ;
+        return graphicStack.size();
+    }
+
+    public PSObject getUserDict() {
+        return userDict;
+    }
+
+    public PSObject getGlobalDict() {
+        return globalDict;
+    }
+
+    public PSObject getSystemDict() {
+        return systemDict;
     }
 }
