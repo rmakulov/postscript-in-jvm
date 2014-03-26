@@ -121,6 +121,7 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("6_arcs.ps"));
 //                Interpreter.instance.run(new File("5_star.ps"));
 //                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
+//                  Interpreter.instance.run(new File("snowflak.ps"));
 
 // Interpreter.instance.run(new File("snowflak.ps"));
                 //Interpreter.instance.run(new File("gsaveTest.ps"));
@@ -130,10 +131,10 @@ public class Interpreter {
                 //Interpreter.instance.run(new File("bindTest.ps"));
 //                Interpreter.instance.run(new File("colorcir.ps"));
                 //Interpreter.instance.run(new File("WireFrame.eps"));
-                Interpreter.instance.run(new File("6_arcs.ps"));
+//                Interpreter.instance.run(new File("6_arcs.ps"));
 
-                //Interpreter.instance.run(new File("test.ps"));
-                //Interpreter.instance.run(new File("tiger.eps"));
+//                Interpreter.instance.run(new File("WireFrame.eps"));
+//                Interpreter.instance.run(new File("6_arcs.ps"));
             } else {
                 Interpreter.instance.run(new File(args[0]));
             }

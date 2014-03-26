@@ -207,8 +207,10 @@ public class DefaultDicts {
         addOperator(ClearOp.instance);
         addOperator(DupOp.instance);
         addOperator(ExchOp.instance);
+        addOperator(IndexOp.instance);
         addOperator(MarkOp.instance);
         addOperator(PopOp.instance);
+        addOperator(RollOp.instance);
     }
 
     private static void addGraphicsStateOperators() {
