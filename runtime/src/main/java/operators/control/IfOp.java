@@ -24,6 +24,7 @@ public class IfOp extends Operator {
         if (!exec.isProc() || bool.getType() != Type.BOOLEAN) {
             runtime.pushToOperandStack(bool);
             runtime.pushToOperandStack(exec);
+            return;
         }
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {

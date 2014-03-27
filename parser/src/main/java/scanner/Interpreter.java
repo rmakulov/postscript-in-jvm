@@ -31,10 +31,12 @@ public class Interpreter {
         runtime.initDefaultDictionaries();
         Yylex scanner = new Yylex(new InputStreamReader(new FileInputStream(file)));
         Yytoken yytoken;
-
+        Runtime runtime = Runtime.getInstance();
         while ((yytoken = scanner.yylex()) != null) {
             String text = yytoken.m_text;
-            //System.out.print(text + " ");
+            if (text.equals("showpage")) {
+                System.out.print(text + " ");
+            }
             switch (yytoken.m_type) {
                 case INTEGER:
                     runtime.pushToOperandStack(new PSObject(new PSInteger(Integer.parseInt(text))));
@@ -109,32 +111,44 @@ public class Interpreter {
         try {
 
             if (args.length == 0) {
+//main examples
+//                Interpreter.instance.run(new File("Picture Examples/SimpleExample_0.eps"));
+//                Interpreter.instance.run(new File("Picture Examples/WireFrame.eps"));
+//                Interpreter.instance.run(new File("Picture Examples/colorcir.ps"));
+                Interpreter.instance.run(new File("Picture Examples/snowflak.ps"));
+//                Interpreter.instance.run(new File("Picture Examples/doretree.ps"));
+
+//other examples
+//              Interpreter.instance.run(new File("7_ellipses.ps"));
+//              Interpreter.instance.run(new File("6_arcs.ps"));
+//              Interpreter.instance.run(new File("5_star.ps"));
+//              Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
+//              Interpreter.instance.run(new File("1_clip.ps"));
+//              Interpreter.instance.run(new File("1_rectangles.ps"));
+//              Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
+//              Interpreter.instance.run(new File("SimpleGraphicsTest1.ps"));
+
+
 //                for(int i = 45 ; i < 80 ; i++){
 //                    TransformMatrix c = new TransformMatrix() ;
-//                    c.rotate((double)i) ;
+//                    c.rotate((double)i*Math*PI/180) ;
 //                    c.scale(3,3) ;
 //                    c.translate(23,43);
-//                    c.scale(2,0) ;
+//                    c.scale(2,1) ;
 //                    System.out.println(c.getRotateAngle() );
 //                }
-//                Interpreter.instance.run(new File("7_ellipses.ps"));
-//                Interpreter.instance.run(new File("6_arcs.ps"));
-//                Interpreter.instance.run(new File("5_star.ps"));
-//                Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
-//                  Interpreter.instance.run(new File("snowflak.ps"));
 
-// Interpreter.instance.run(new File("snowflak.ps"));
+
                 //Interpreter.instance.run(new File("gsaveTest.ps"));
-                //Interpreter.instance.run(new File("SimpleGraphicsTest2.ps"));
-                //Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
+
+//                Interpreter.instance.run(new File("SimpleExample.eps"));
+
 //                Interpreter.instance.run(new File("1_rectangles.ps"));
                 //Interpreter.instance.run(new File("bindTest.ps"));
-                //Interpreter.instance.run(new File("colorcir.ps"));
-                Interpreter.instance.run(new File("test.ps"));
-                //Interpreter.instance.run(new File("WireFrame.eps"));
+                //Interpreter.instance.run(new File("test.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
+//                Interpreter.instance.run(new File("tiger.eps"));
 
-//                Interpreter.instance.run(new File("WireFrame.eps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
             } else {
                 Interpreter.instance.run(new File(args[0]));
