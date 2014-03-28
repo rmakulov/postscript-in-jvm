@@ -95,7 +95,7 @@ public class Runtime {
     }
 
     public void pushToOperandStack(PSObject psObject) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
+        //System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
         operandStack = operandStack.push(psObject);
     }
 

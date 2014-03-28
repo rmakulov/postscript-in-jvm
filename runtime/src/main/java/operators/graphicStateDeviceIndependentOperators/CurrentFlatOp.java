@@ -17,7 +17,7 @@ public class CurrentFlatOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {
-        runtime.pushToOperandStack(new PSObject(new PSInteger(gState.flatness)));
+        runtime.pushToOperandStack(new PSObject(new PSInteger(gState.graphicsSettings.flatness)));
     }
 
     @Override

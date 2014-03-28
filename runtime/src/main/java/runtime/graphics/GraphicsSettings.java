@@ -14,6 +14,7 @@ public class GraphicsSettings {
     public double miterLimit;
     public float[] dash;
     public float dashPhase = 0;
+    public int flatness;
 
     public GraphicsSettings(Color color, double lineWidth, int lineJoin, int lineCap, double miterLimit, float[] dash, float dashPhase) {
         this.color = color;
@@ -26,6 +27,7 @@ public class GraphicsSettings {
             this.dash = null;
         }
         this.dashPhase = dashPhase;
+        this.flatness = 1;
     }
 
     public GraphicsSettings() {

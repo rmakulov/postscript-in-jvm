@@ -125,7 +125,8 @@ public class Interpreter {
 //              Interpreter.instance.run(new File("6_arcs.ps"));
 //              Interpreter.instance.run(new File("5_star.ps"));
 //              Interpreter.instance.run(new File("6_Fractal_Arrow.ps"));
-                Interpreter.instance.run(new File("4_circles.ps"));
+                //              Interpreter.instance.run(new File("4_circles.ps"));
+                Interpreter.instance.run(new File("mandelbrotset.ps"));
 //              Interpreter.instance.run(new File("1_clip.ps"));
 //              Interpreter.instance.run(new File("1_rectangles.ps"));
 //              Interpreter.instance.run(new File("SimpleGraphicsTest.ps"));
