@@ -22,7 +22,7 @@ public class GraphicsSettings {
         this.lineCap = lineCap;
         this.miterLimit = miterLimit;
         this.dash = dash;
-        if (dash.length == 0) {
+        if (dash != null && dash.length == 0) {
             this.dash = null;
         }
         this.dashPhase = dashPhase;
@@ -37,6 +37,6 @@ public class GraphicsSettings {
     }
 
     public GraphicsSettings clone() {
-        return new GraphicsSettings(new Color(color.getRGB()), lineWidth, lineJoin, lineCap, miterLimit, dash.clone(), dashPhase);
+        return new GraphicsSettings(new Color(color.getRGB()), lineWidth, lineJoin, lineCap, miterLimit, dash, dashPhase);
     }
 }

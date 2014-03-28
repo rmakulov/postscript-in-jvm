@@ -21,4 +21,9 @@ public class ArrayElement {
 
         this.elementObject = elementObject;
     }
+
+    @Override
+    public String toString() {
+        return elementObject.toString();
+    }
 }

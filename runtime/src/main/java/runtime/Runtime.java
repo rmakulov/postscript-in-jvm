@@ -2,6 +2,7 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
+import procedures.Procedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
@@ -16,6 +17,7 @@ import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSNull;
 import runtime.graphics.GraphicsState;
 import runtime.graphics.save.GSave;
+import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
@@ -31,6 +33,7 @@ public class Runtime {
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
     private GraphicStack graphicStack = new GraphicStack();
+    private CallStack callStack = new CallStack();
     private boolean isGlobal = false;
 
     private PSObject userDict, globalDict, systemDict;
@@ -99,7 +102,7 @@ public class Runtime {
     public PSObject popFromOperandStack() {
         PSObject object = operandStack.peek();
         if (object == null)
-            return object;
+            return null;
         operandStack = operandStack.removeTop();
         return object;
     }
@@ -120,6 +123,37 @@ public class Runtime {
 
     public PSObject peekFromOperandStack() {
         return operandStack.peek();
+    }
+
+    public Procedure popFromCallStack() {
+        Procedure procedure = callStack.peek();
+        callStack = callStack.removeTop();
+        return procedure;
+    }
+
+    public Procedure peekFromCallStack() {
+        return callStack.peek();
+    }
+
+    public int getCallStackSize() {
+        return callStack.size();
+    }
+
+    public void executeCallStack() {
+        while (!callStack.isEmpty()) {
+            Procedure topProcedure = callStack.peek();
+            if (topProcedure.hasNext()) {
+                topProcedure.execNext();
+            } else {
+                topProcedure.procTerminate();
+                popFromCallStack();
+            }
+        }
+    }
+
+
+    public void pushToCallStack(Procedure procedure) {
+        callStack = callStack.push(procedure);
     }
 
 

@@ -271,6 +271,12 @@ public class DefaultDicts {
         addOperator(IfElseOp.instance);
         addOperator(RepeatOp.instance);
         addOperator(ForOp.instance);
+        addOperator(StopOp.instance);
+        addOperator(StoppedOp.instance);
+        addOperator(QuitOp.instance);
+        addOperator(CountExecStackOp.instance);
+        addOperator(LoopOp.instance);
+        addOperator(ExitOp.instance);
     }
 
     private static void addCommonOperators() {

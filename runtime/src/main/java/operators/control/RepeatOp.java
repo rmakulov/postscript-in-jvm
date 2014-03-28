@@ -1,5 +1,6 @@
 package operators.control;
 
+import procedures.RepeatProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.Operator;
@@ -25,16 +26,15 @@ public class RepeatOp extends Operator {
             runtime.pushToOperandStack(iObj);
             runtime.pushToOperandStack(exec);
         }
+
         PSInteger psInteger = (PSInteger) iObj.getValue();
         int count = psInteger.getIntValue();
         if (count < 0) {
             runtime.pushToOperandStack(iObj);
             runtime.pushToOperandStack(exec);
+            return;
         }
-        for (int i = 0; i < count; i++) {
-            runtime.pushToOperandStack(exec);
-            ExecOp.instance.execute();
-        }
+        runtime.pushToCallStack(new RepeatProcedure(count, exec));
     }
 
     @Override

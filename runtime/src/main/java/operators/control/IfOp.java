@@ -1,5 +1,6 @@
 package operators.control;
 
+import procedures.ArrayProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.Operator;
@@ -28,8 +29,7 @@ public class IfOp extends Operator {
         }
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {
-            runtime.pushToOperandStack(exec);
-            ExecOp.instance.execute();
+            runtime.pushToCallStack(new ArrayProcedure("If Procedure", exec));
         }
     }
 
