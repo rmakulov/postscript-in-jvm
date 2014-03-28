@@ -7,6 +7,7 @@ import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
 import operators.arithmetic.binary.*;
 import operators.arithmetic.unary.*;
+import operators.array.AStoreOp;
 import operators.array.ArrayOp;
 import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
@@ -293,6 +294,7 @@ public class DefaultDicts {
         addOperator(CloseSquareBracketOp.instance);
         addOperator(OpenSquareBracketOp.instance);
         addOperator(ArrayOp.instance);
+        addOperator(AStoreOp.instance);
     }
 
     private static void addFileOperators() {
