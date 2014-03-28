@@ -81,8 +81,8 @@ public class PSDrawer {
         g.setStroke(new BasicStroke((float) gState.getLineWidthInPixels(),
                 settings.lineCap,
                 settings.lineJoin,
-                (float) settings.miterLimit));
-        //, settings.dash, settings.dashPhase));
+                (float) settings.miterLimit,
+                settings.dash, settings.dashPhase));
 
     }
 

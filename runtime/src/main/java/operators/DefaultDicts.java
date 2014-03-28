@@ -243,6 +243,7 @@ public class DefaultDicts {
         addOperator(SetLineWidthOp.instance);
         addOperator(SetMiterLimitOp.instance);
         addOperator(SetRgbColorOp.instance);
+        addOperator(SetDashOp.instance);
 
     }
 

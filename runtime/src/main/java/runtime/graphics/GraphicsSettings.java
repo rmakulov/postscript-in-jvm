@@ -12,7 +12,7 @@ public class GraphicsSettings {
     public int lineJoin;
     public int lineCap;
     public double miterLimit;
-    public float[] dash = new float[]{0};
+    public float[] dash;
     public float dashPhase = 0;
 
     public GraphicsSettings(Color color, double lineWidth, int lineJoin, int lineCap, double miterLimit, float[] dash, float dashPhase) {
@@ -22,6 +22,9 @@ public class GraphicsSettings {
         this.lineCap = lineCap;
         this.miterLimit = miterLimit;
         this.dash = dash;
+        if (dash.length == 0) {
+            this.dash = null;
+        }
         this.dashPhase = dashPhase;
     }
 
