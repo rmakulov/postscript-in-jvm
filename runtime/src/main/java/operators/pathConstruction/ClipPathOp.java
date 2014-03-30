@@ -2,7 +2,6 @@ package operators.pathConstruction;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
-import runtime.graphics.frame.PSDrawer;
 
 /**
  * Created by user on 16.03.14.
@@ -16,7 +15,7 @@ public class ClipPathOp extends AbstractGraphicOperator {
 
     @Override
     public void execute() {
-        PSDrawer.getInstance().clipPath();
+        gState.currentPath = gState.clippingPath.clone();
     }
 
     @Override

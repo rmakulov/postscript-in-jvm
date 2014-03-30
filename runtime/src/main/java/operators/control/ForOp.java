@@ -1,11 +1,11 @@
 package operators.control;
 
 
+import procedures.ForProcedure;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
-import psObjects.values.simple.numbers.PSReal;
 
 public class ForOp extends Operator {
     public static final ForOp instance = new ForOp();
@@ -25,11 +25,7 @@ public class ForOp extends Operator {
             double start = ((PSNumber) (initial.getValue())).getRealValue();
             double end = ((PSNumber) (limit.getValue())).getRealValue();
             double incr = ((PSNumber) (increment.getValue())).getRealValue();
-            for (double i = start; i <= end; i = i + incr) {
-                runtime.pushToOperandStack(new PSObject(new PSReal(i)));
-                runtime.pushToOperandStack(proc);
-                ExecOp.instance.execute();
-            }
+            runtime.pushToCallStack(new ForProcedure(start, incr, end, proc));
         } else {
             runtime.pushToOperandStack(initial);
             runtime.pushToOperandStack(increment);

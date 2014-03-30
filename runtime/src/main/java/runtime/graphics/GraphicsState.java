@@ -15,14 +15,13 @@ public class GraphicsState {
     public PSPath clippingPath;
     public TransformMatrix cTM;
     public GraphicsSettings graphicsSettings;
-    public int flatness;
+
 
     private GraphicsState() {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
         initClip();
-        flatness = 1;
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
@@ -30,8 +29,13 @@ public class GraphicsState {
         return instance;
     }
 
+    public static double psUnitToPixel(double psUnits) {
+        return psUnits / 72 * 96;
+        //96 - это число пикселей в дюйме
+    }
+
     public GSave getSnapshot(boolean isMadeByGSaveOp) {
-        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint.clone(), flatness);
+        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint);
     }
 
     public void setSnapshot(GSave gSave) {
@@ -39,19 +43,10 @@ public class GraphicsState {
         clippingPath = gSave.getClippingPath().clone();
         cTM = gSave.getcTM().clone();
         graphicsSettings = gSave.getSettings().clone();
-        currentPoint = gSave.getCurrentPoint().clone();
-        flatness = gSave.flatness;
+        currentPoint = gSave.getCurrentPoint();
     }
 
     //---------------------Fonts
-    public static double psUnitToPixel(double psUnits) {
-        return psUnits / 72 * 96;
-        //96 - это число пикселей в дюйме
-    }
-
-    public static double pixelToPSUnit(double pixels) {
-        return pixels / 96 * 72;
-    }
 
     public double getLineWidthInPixels() {
         return psUnitToPixel(graphicsSettings.lineWidth);

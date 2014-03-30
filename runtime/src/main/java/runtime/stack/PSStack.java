@@ -109,7 +109,11 @@ public class PSStack<T> implements Iterable<T> {
         stack.clear();
     }
 
-    public int size(){
+    public int size() {
         return stack.size();
+    }
+
+    public boolean isEmpty() {
+        return stack.isEmpty();
     }
 }

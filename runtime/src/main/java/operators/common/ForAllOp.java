@@ -1,6 +1,6 @@
 package operators.common;
 
-import operators.control.ExecOp;
+import procedures.ForAllProcedure;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.composite.PSDictionary;
@@ -31,35 +31,35 @@ public class ForAllOp extends Operator {
             return;
         }
 
+        PSObject[] beforeArray;
         switch (elems.getType()) {
             case ARRAY:
             case PACKEDARRAY:
-                PSObject[] array = ((PSArray) elems.getValue()).getArray();
-                for (PSObject psObject : array) {
-                    runtime.pushToOperandStack(psObject);
-                    ExecOp.instance.execute();
-                }
+                beforeArray = ((PSArray) elems.getValue()).getArray();
                 break;
             case DICTIONARY:
-
                 AvlTree tree = ((PSDictionary) elems.getValue()).getTree();
+                beforeArray = new PSObject[tree.getCount() * 2];
+                int i = 0;
                 for (Pair<PSObject, PSObject> pair : tree) {
-                    runtime.pushToOperandStack(pair.getKey());
-                    runtime.pushToOperandStack(pair.getValue());
-                    ExecOp.instance.execute();
+                    beforeArray[i] = pair.getKey();
+                    beforeArray[i + 1] = pair.getValue();
+                    i += 2;
                 }
                 break;
             case STRING:
                 String s = ((PSString) elems.getValue()).getString();
-                for (int i = 0; i < s.length(); i++) {
-                    runtime.pushToOperandStack(new PSObject(new PSString(s.charAt(i) + "")));
-                    ExecOp.instance.execute();
+                beforeArray = new PSObject[s.length()];
+                for (int j = 0; j < s.length(); j++) {
+                    beforeArray[j] = new PSObject(new PSString(s.charAt(j) + ""));
                 }
                 break;
             default:
                 runtime.pushToOperandStack(elems);
                 runtime.pushToOperandStack(proc);
+                return;
         }
+        runtime.pushToCallStack(new ForAllProcedure(beforeArray, proc));
     }
 
     @Override

@@ -236,6 +236,10 @@ public class PSObject implements Comparable<PSObject> {
             //todo throw exception
             return null;
         }
+        if (type != newValue.determineType()) {
+            System.out.println("wrong set value");
+            System.exit(0);
+        }
         Reference ref = (Reference) value;
         Type valueType = newValue.determineType();
         if (type == Type.PACKEDARRAY && valueType == Type.ARRAY) {
@@ -287,7 +291,7 @@ public class PSObject implements Comparable<PSObject> {
     }
 
     public boolean isProc() {
-        return (type == Type.ARRAY) || (type == Type.PACKEDARRAY) && xcheck();
+        return ((type == Type.ARRAY) || (type == Type.PACKEDARRAY)) && xcheck();
     }
 
 

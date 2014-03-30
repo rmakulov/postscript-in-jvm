@@ -71,18 +71,14 @@ public class PSDrawer {
         gState.newCurrentPath();
     }
 
-    public void clipPath() {
-        gState.currentPath = gState.clippingPath.clone();
-    }
-
     public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
         if (settings == null) return;
         g.setColor(settings.color);
         g.setStroke(new BasicStroke((float) gState.getLineWidthInPixels(),
                 settings.lineCap,
                 settings.lineJoin,
-                (float) settings.miterLimit));
-        //, settings.dash, settings.dashPhase));
+                (float) settings.miterLimit,
+                settings.dash, settings.dashPhase));
 
     }
 

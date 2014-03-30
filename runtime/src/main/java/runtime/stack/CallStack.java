@@ -1,31 +1,30 @@
 package runtime.stack;
 
 
-import psObjects.PSObject;
-import psObjects.values.Value;
+import procedures.Procedure;
 
 import java.util.Stack;
 
-public class CallStack extends PSStack {
+public class CallStack extends PSStack<Procedure> {
     public CallStack() {
     }
 
-    public CallStack(Stack<Value> stack) {
-         super(stack);
-     }
- 
-     @Override
-     public CallStack removeTop() {
-         return new CallStack(super.removeTopAndGetStack());
-     }
- 
+    public CallStack(Stack<Procedure> stack) {
+        super(stack);
+    }
+
+    @Override
+    public CallStack removeTop() {
+        return new CallStack(super.removeTopAndGetStack());
+    }
+
     // @Override
-     public CallStack push(PSObject ref) {
-         return new CallStack(super.pushAndGetStack(ref));
-     }
- 
-     @Override
-     public CallStack exch() {
-         return new CallStack(super.exchAndGetStack());
-     }
+    public CallStack push(Procedure procedure) {
+        return new CallStack(super.pushAndGetStack(procedure));
+    }
+
+    @Override
+    public CallStack exch() {
+        return new CallStack(super.exchAndGetStack());
+    }
 }

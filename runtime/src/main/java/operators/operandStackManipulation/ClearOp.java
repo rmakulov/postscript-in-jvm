@@ -20,6 +20,6 @@ public class ClearOp extends Operator {
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("clearOperandStack");
+        return new PSName("clear");
     }
 }
