@@ -120,6 +120,13 @@ public class TransformMatrix implements Cloneable {
 
     //int degrees
     public double getRotateAngle() {
+//        PSPoint start1 = new PSPoint(0,0) ;
+//        PSPoint end1 = new PSPoint(0,1) ;
+//        PSPoint start2 = transform(start1) ;
+//        PSPoint end2 = transform(end1) ;
+//        PSPoint v1 = new PSPoint( end1.getX() - start1.getX(), end1.getY() - start1.getY() );
+//        PSPoint v2 = new PSPoint( end2.getX() - start2.getX(), end2.getY() - start2.getY() );
+//        return Math.acos( (v1.getX()*v2.getX() + v1.getY()*v2.getY())/() ) ;
         double xScale = getXScale();
         double y = -matrix[2] / xScale;
         double x = matrix[0] / xScale;

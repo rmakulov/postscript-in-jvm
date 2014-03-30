@@ -27,7 +27,7 @@ public class SetFlatOp extends AbstractGraphicOperator {
             return;
         }
         PSInteger psInteger = (PSInteger) o.getValue();
-        gState.flatness = psInteger.getIntValue();
+        gState.graphicsSettings.flatness = psInteger.getIntValue();
     }
 
     @Override

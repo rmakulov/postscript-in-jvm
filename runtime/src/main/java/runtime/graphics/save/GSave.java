@@ -15,7 +15,6 @@ public class GSave {
     private TransformMatrix cTM;
     private GraphicsSettings settings;
     private boolean madeByGSaveOp;
-    public int flatness;
 
     public PSPoint getCurrentPoint() {
         return currentPoint;
@@ -43,14 +42,13 @@ public class GSave {
         madeByGSaveOp = madeByGSave;
     }
 
-    public GSave(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, boolean byGSaveOp, PSPoint curPoint, int flatness) {
+    public GSave(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, boolean byGSaveOp, PSPoint curPoint) {
         currentPath = curPath;
         clippingPath = clipPath;
         cTM = tM;
         settings = gSettings;
         madeByGSaveOp = byGSaveOp;
         currentPoint = curPoint;
-        this.flatness = flatness;
     }
 
     public boolean isMadeByGSaveOp() {

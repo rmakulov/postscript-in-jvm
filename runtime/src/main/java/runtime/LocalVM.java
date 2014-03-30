@@ -37,6 +37,20 @@ public class LocalVM {
         return new LocalVM(newTable);
     }
 
+    public LocalVM setNewValueAtIndex(int index, CompositeValue value) {
+        Iterator<CompositeValue> iterator = table.iterator();
+        ArrayList<CompositeValue> newTable = new ArrayList<CompositeValue>();
+        for (int i = 0; i < table.size(); i++) {
+            if (i == index) {
+                newTable.add(value);
+            } else {
+                newTable.add(table.get(i));
+            }
+
+        }
+        return new LocalVM(newTable);
+    }
+
     public int getIndex(CompositeValue value) {
         for (int i = 0; i < table.size(); i++) {
             if (table.get(i).equals(value)) return i;
@@ -45,7 +59,7 @@ public class LocalVM {
     }
 
     public boolean contains(Value value) {
-        if(!(value instanceof CompositeValue)) return false;
+        if (!(value instanceof CompositeValue)) return false;
         return table.contains(value);
     }
 

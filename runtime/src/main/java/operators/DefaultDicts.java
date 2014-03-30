@@ -7,6 +7,7 @@ import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
 import operators.arithmetic.binary.*;
 import operators.arithmetic.unary.*;
+import operators.array.AStoreOp;
 import operators.array.ArrayOp;
 import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
@@ -243,6 +244,7 @@ public class DefaultDicts {
         addOperator(SetLineWidthOp.instance);
         addOperator(SetMiterLimitOp.instance);
         addOperator(SetRgbColorOp.instance);
+        addOperator(SetDashOp.instance);
 
     }
 
@@ -270,6 +272,12 @@ public class DefaultDicts {
         addOperator(IfElseOp.instance);
         addOperator(RepeatOp.instance);
         addOperator(ForOp.instance);
+        addOperator(StopOp.instance);
+        addOperator(StoppedOp.instance);
+        addOperator(QuitOp.instance);
+        addOperator(CountExecStackOp.instance);
+        addOperator(LoopOp.instance);
+        addOperator(ExitOp.instance);
     }
 
     private static void addCommonOperators() {
@@ -286,6 +294,7 @@ public class DefaultDicts {
         addOperator(CloseSquareBracketOp.instance);
         addOperator(OpenSquareBracketOp.instance);
         addOperator(ArrayOp.instance);
+        addOperator(AStoreOp.instance);
     }
 
     private static void addFileOperators() {

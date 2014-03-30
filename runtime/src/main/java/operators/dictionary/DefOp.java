@@ -23,6 +23,7 @@ public class DefOp extends Operator {
         if (!psKey.isDictKey()) {
             runtime.pushToOperandStack(psKey);
             runtime.pushToOperandStack(psValue);
+            return;
         }
         PSObject dictObj = runtime.currentDict();
         PSDictionary dict = (PSDictionary) dictObj.getValue();
