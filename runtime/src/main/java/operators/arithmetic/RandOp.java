@@ -13,14 +13,25 @@ import java.util.Random;
  */
 public class RandOp extends Operator {
     public static final RandOp instance = new RandOp();
+    public static Random random = new Random();
 
     protected RandOp() {
         super();
     }
+
     @Override
     public void execute() {
         runtime.Runtime runtime = Runtime.getInstance();
-        runtime.pushToOperandStack(new PSObject(new PSInteger(new Random().nextInt())));
+        int randomInt = random.nextInt(Integer.MAX_VALUE);
+        runtime.pushToOperandStack(new PSObject(new PSInteger(randomInt)));
+    }
+
+    public static void dropRandom() {
+        random = new Random();
+    }
+
+    public static void setRandomSeed(int seed) {
+        random = new Random(seed);
     }
 
     @Override

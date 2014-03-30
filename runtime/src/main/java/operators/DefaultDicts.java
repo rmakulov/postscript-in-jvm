@@ -1,4 +1,4 @@
-package psObjects.values.composite.dictionaries;
+package operators;
 
 import operators.GlythAndFont.ShowOp;
 import operators.GlythAndFont.ShowPageOp;
@@ -7,26 +7,31 @@ import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
 import operators.arithmetic.binary.*;
 import operators.arithmetic.unary.*;
+import operators.array.AStoreOp;
+import operators.array.ArrayOp;
 import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
 import operators.common.*;
-import operators.control.ExecOp;
-import operators.control.IfElseOp;
-import operators.control.IfOp;
-import operators.control.RepeatOp;
+import operators.control.*;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.*;
 import operators.file.StackOp;
+import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
+import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
 import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
+import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
+import operators.painting.EofillOp;
 import operators.painting.FillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
 import operators.relationBooleanBitwise.*;
+import operators.string.StringOp;
 import operators.typeAttributeConvertation.*;
 import operators.virtualMemory.*;
 import psObjects.PSObject;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 
 import java.util.ArrayList;
@@ -35,10 +40,10 @@ import java.util.ArrayList;
  * Created by Дмитрий on 17.03.14.
  */
 public class DefaultDicts {
-    private static PSDictionary systemDict = null ;
-    private static PSDictionary userDict = null ;
-    private static PSDictionary globalDict = null ;
-    private static ArrayList<PSObject> entries = new ArrayList<PSObject>() ;
+    private static PSDictionary systemDict = null;
+    private static PSDictionary userDict = null;
+    private static PSDictionary globalDict = null;
+    private static ArrayList<PSObject> entries = new ArrayList<PSObject>();
 
 
     public static PSDictionary getSystemDict() {
@@ -51,11 +56,13 @@ public class DefaultDicts {
             addDictionaryOperators();
             addGlythAndFontOperators();
             addGraphicsStateOperators();
+            addGraphicStateDeviceIndependentOperators();
             addMiscellaneousOperators();
             addOperandStackOperationOperators();
             addPaintingOperators();
             addPathConstructionOperators();
             addRelationBooleanOperators();
+            addStringOperators();
             addTypeAttributeOperators();
             addVirtualMemoryOperators();
             addArrayOperators();
@@ -111,16 +118,17 @@ public class DefaultDicts {
         addOperator(RoundOp.instance);
         addOperator(SinOp.instance);
         addOperator(SqrtOp.instance);
-        addOperator(SrandOp.instance); //todo operator is not ready
+        addOperator(SrandOp.instance);
         addOperator(TruncateOp.instance);
 
         //without operands
         addOperator(RandOp.instance);
-        addOperator(RrandOp.instance);  //todo operator is not ready
+        addOperator(RrandOp.instance);
     }
 
     private static void addMiscellaneousOperators() {
         addOperator(BindOp.instance);
+        addOperator(UserTimeOp.instance);
     }
 
     private static void addDictionaryOperators() {
@@ -130,6 +138,18 @@ public class DefaultDicts {
         addOperator(DefOp.instance);
         addOperator(OpenChevronOp.instance);
         addOperator(CloseChevronOp.instance);
+        addOperator(WhereOp.instance);
+        addOperator(DictOp.instance);
+        addOperator(LoadOp.instance);
+        addOperator(StoreOp.instance);
+        addOperator(UndefOp.instance);
+        addOperator(KnownOp.instance);
+        addOperator(CopyOp.instance);
+        addOperator(CurrentDictOp.instance);
+        addOperator(UserDictOp.instance);
+        addOperator(GlobalDictOp.instance);
+        addOperator(SystemDictOp.instance);
+        addOperator(CountDictStackOp.instance);
     }
 
     private static void addVirtualMemoryOperators() {
@@ -177,31 +197,45 @@ public class DefaultDicts {
         addOperator(ArcnOp.instance);
         addOperator(ArcOp.instance);
         addOperator(ClipPathOp.instance);
+        addOperator(ClipOp.instance);
+        addOperator(InitClipOp.instance);
         addOperator(ClosePathOp.instance);
+        addOperator(CurrentPointOp.instance);
+        addOperator(CurveToOp.instance);
+        addOperator(FlattenPathOp.instance);
         addOperator(LineToOp.instance);
         addOperator(MoveToOp.instance);
         addOperator(NewPathOp.instance);
         addOperator(PathBBoxOp.instance);
+        addOperator(RCurveToOp.instance);
         addOperator(RLineToOp.instance);
         addOperator(RMoveToOp.instance);
     }
 
     private static void addPaintingOperators() {
         addOperator(FillOp.instance);
+        addOperator(EofillOp.instance);
         addOperator(StrokeOp.instance);
+    }
+
+    private static void addGraphicStateDeviceIndependentOperators() {
+        addOperator(SetFlatOp.instance);
+        addOperator(CurrentFlatOp.instance);
     }
 
     private static void addOperandStackOperationOperators() {
         addOperator(ClearOp.instance);
         addOperator(DupOp.instance);
         addOperator(ExchOp.instance);
+        addOperator(IndexOp.instance);
         addOperator(MarkOp.instance);
         addOperator(PopOp.instance);
+        addOperator(RollOp.instance);
     }
 
     private static void addGraphicsStateOperators() {
         addOperator(GRestoreOp.instance);
-        addOperator(GRestoreAllOp.instance) ;
+        addOperator(GRestoreAllOp.instance);
         addOperator(GSaveOp.instance);
         addOperator(SetGrayOp.instance);
         addOperator(SetHsbColorOp.instance);
@@ -210,13 +244,18 @@ public class DefaultDicts {
         addOperator(SetLineWidthOp.instance);
         addOperator(SetMiterLimitOp.instance);
         addOperator(SetRgbColorOp.instance);
+        addOperator(SetDashOp.instance);
 
     }
 
     private static void addGlythAndFontOperators() {
         addOperator(ShowOp.instance);
-        addOperator(ShowPageOp.instance) ;
+        addOperator(ShowPageOp.instance);
         addOperator(StringWidthOp.instance);
+    }
+
+    private static void addStringOperators() {
+        addOperator(StringOp.instance);
     }
 
     private static void addCoordinateSystemAndMatrix() {
@@ -232,6 +271,13 @@ public class DefaultDicts {
         addOperator(IfOp.instance);
         addOperator(IfElseOp.instance);
         addOperator(RepeatOp.instance);
+        addOperator(ForOp.instance);
+        addOperator(StopOp.instance);
+        addOperator(StoppedOp.instance);
+        addOperator(QuitOp.instance);
+        addOperator(CountExecStackOp.instance);
+        addOperator(LoopOp.instance);
+        addOperator(ExitOp.instance);
     }
 
     private static void addCommonOperators() {
@@ -247,6 +293,8 @@ public class DefaultDicts {
     private static void addArrayOperators() {
         addOperator(CloseSquareBracketOp.instance);
         addOperator(OpenSquareBracketOp.instance);
+        addOperator(ArrayOp.instance);
+        addOperator(AStoreOp.instance);
     }
 
     private static void addFileOperators() {

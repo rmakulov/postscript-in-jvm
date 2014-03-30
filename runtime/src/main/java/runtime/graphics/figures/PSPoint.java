@@ -1,5 +1,7 @@
 package runtime.graphics.figures;
 
+import java.awt.geom.Point2D;
+
 /**
  * Created by user on 14.03.14.
  */
@@ -28,6 +30,14 @@ public class PSPoint {
             return true;
         }
         return false;
+    }
+
+    public PSPoint clone() {
+        return new PSPoint(x, y);
+    }
+
+    public Point2D getPoint2D() {
+        return new Point2D.Double(x, y);
     }
 
     public double getX() {

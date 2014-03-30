@@ -1,9 +1,9 @@
-pop
-exch
-dup
+pop         +
+exch        +
+dup         +
 copy
-index
-roll
+index       +
+roll        +
 clear
 count
 mark

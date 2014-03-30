@@ -1,7 +1,6 @@
 package runtime.graphics.save;
 
 import runtime.graphics.GraphicsSettings;
-import runtime.graphics.GraphicsState;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
@@ -16,32 +15,43 @@ public class GSave {
     private TransformMatrix cTM;
     private GraphicsSettings settings;
     private boolean madeByGSaveOp;
+
+    public PSPoint getCurrentPoint() {
+        return currentPoint;
+    }
+
+    public GraphicsSettings getSettings() {
+        return settings;
+    }
+
+    public TransformMatrix getcTM() {
+        return cTM;
+    }
+
+    public PSPath getClippingPath() {
+        return clippingPath;
+    }
+
+    public PSPath getCurrentPath() {
+        return currentPath;
+    }
+
     private PSPoint currentPoint;
 
-    public GSave(boolean made) {
-        madeByGSaveOp = made;
+    public GSave(boolean madeByGSave) {
+        madeByGSaveOp = madeByGSave;
+    }
+
+    public GSave(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, boolean byGSaveOp, PSPoint curPoint) {
+        currentPath = curPath;
+        clippingPath = clipPath;
+        cTM = tM;
+        settings = gSettings;
+        madeByGSaveOp = byGSaveOp;
+        currentPoint = curPoint;
     }
 
     public boolean isMadeByGSaveOp() {
         return madeByGSaveOp;
     }
-
-    public void setSnapshot() {
-        GraphicsState inst = GraphicsState.getInstance();
-        inst.graphicsSettings = settings;
-        inst.clippingPath = clippingPath;
-        inst.currentPath = currentPath;
-        inst.currentPoint = currentPoint;
-        inst.cTM = cTM;
-    }
-
-    public void getSnapshot() {
-        GraphicsState inst = GraphicsState.getInstance();
-        settings = inst.cloneGraphicsSettings();
-        currentPath = inst.currentPath;
-        clippingPath = inst.clippingPath;
-        cTM = inst.cTM;
-        currentPoint = inst.currentPoint;
-    }
-
 }

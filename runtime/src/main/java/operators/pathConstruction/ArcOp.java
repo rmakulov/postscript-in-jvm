@@ -7,8 +7,6 @@ import psObjects.values.simple.numbers.PSNumber;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 
-import java.awt.geom.GeneralPath;
-
 /**
  * Created by user on 15.03.14.
  */
@@ -59,9 +57,11 @@ public class ArcOp extends AbstractGraphicOperator {
 
         PSPoint absBegin = new PSPoint(xBegin, yBegin);
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
+        boolean connect = gState.currentPoint != null;
+
         gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
-                nAngle1, nAngle2, false, gState.cloneGraphicsSettings());
-        gState.currentPoint = gState.currentPath.getLastSP().getEnd() ;
+                nAngle1, nAngle2, false, connect);
+        gState.currentPoint = absEnd;
     }
 
     @Override

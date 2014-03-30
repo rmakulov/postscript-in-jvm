@@ -4,7 +4,6 @@ package runtime.graphics.paths;
  * Created by user on 15.03.14.
  */
 
-import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
 
 import java.awt.*;
@@ -13,55 +12,52 @@ import java.awt.geom.GeneralPath;
 
 public class PSPath {
     private GeneralPath generalPath;
-    public GraphicsSettings graphicsSettings;
-    private PaintingState paintingState = PaintingState.NONE;
+    //public GraphicsSettings graphicsSettings;
 
-    public enum PaintingState {
-        FILL, NONE, STROKE
-    }
-
-    public void setPaintingState(PaintingState paintingState) {
-        this.paintingState = paintingState;
-    }
-
-    public PaintingState getPaintingState() {
-        return paintingState;
-    }
 
     public PSPath() {
         generalPath = new GeneralPath();
-        graphicsSettings = new GraphicsSettings();
     }
 
-    private PSPath(GeneralPath generalPath, GraphicsSettings graphicsSettings) {
+    public PSPath(GeneralPath generalPath) {
         this.generalPath = generalPath;
-        this.graphicsSettings = graphicsSettings;
     }
 
-
-    public Rectangle getBBox() {
-        if (generalPath == null) {
+/*
+    public GeneralPath getLastGeneralPath() {
+        if (generalPaths.size() == 0) {
             return null;
         }
+        return generalPaths.get(generalPaths.size() - 1);
+    }
+*/
+
+    public GeneralPath getGeneralPath() {
+        return generalPath;
+    }
+
+    public Rectangle getBBox() {
         return generalPath.getBounds();
     }
 
-    public void setGraphicsSettings(GraphicsSettings settings) {
-        this.graphicsSettings = settings;
-    }
-
     //absolute coordinates in postscript
-    public void addLineSegment(PSPoint begining, PSPoint end, GraphicsSettings settings) {
+    public void addLineSegment(PSPoint start, PSPoint end) {
         generalPath.lineTo(end.getX(), end.getY());
     }
 
     //absolute coordinates in postscript
+    public void addCurve(PSPoint p0, PSPoint p1, PSPoint p2, PSPoint p3) {
+        generalPath.moveTo(p0.getX(), p0.getY());
+        generalPath.curveTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p3.getX(), p3.getY());
+    }
+
+    //absolute coordinates in postscript
     public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius,
-                       double relAngle1, double RelAngle2, boolean clockwise, GraphicsSettings settings) {
+                       double relAngle1, double RelAngle2, boolean clockwise, boolean connect) {
 //        generalPath.moveTo(100,100);
 
         double x = absCenter.getX() - absXRadius;
-        double y = absCenter.getY() + absYRadius;
+        double y = absCenter.getY() - absYRadius;
         double w = 2 * absXRadius;
         double h = 2 * absYRadius;
         double extent = relAngle1 - RelAngle2;
@@ -69,20 +65,15 @@ public class PSPath {
         Arc2D.Double arcDouble = new Arc2D.Double(x, y, w,
                 h, -relAngle1, extent, Arc2D.OPEN);
 
-        generalPath.append(arcDouble, true);
-//        generalPath.append(new Arc2D.Double(100,100,100,100,0,-90,Arc2D.OPEN),true);
+        generalPath.append(arcDouble, connect);
     }
 
     public void closePath() {
         generalPath.closePath();
     }
 
-
     public PSPath clone() {
-        return new PSPath((GeneralPath) this.generalPath.clone(), (GraphicsSettings) this.graphicsSettings.clone());
+        return new PSPath((GeneralPath) generalPath.clone());
     }
 
-    public GeneralPath getGeneralPath() {
-        return generalPath;
-    }
 }

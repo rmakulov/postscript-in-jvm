@@ -10,11 +10,12 @@
 	cvi
     def
 	div
+	dict
     end
 	eq
 	exch
 	false
-fill
+    fill
 findfont
     for
 	forall
@@ -56,11 +57,11 @@ setfont
 	setmiterlimit
 	setrgbcolor
 show
-showpage
-srand
+    showpage
+    srand
     stack
 stringwidth
-stroke
+    stroke
 	sub
 	transform
 	translate

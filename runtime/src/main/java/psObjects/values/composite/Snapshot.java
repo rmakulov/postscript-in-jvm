@@ -1,21 +1,17 @@
 package psObjects.values.composite;
 
-import psObjects.PSObject;
 import psObjects.Type;
 import runtime.LocalVM;
-import runtime.stack.OperandStack;
 
 public class Snapshot extends CompositeValue {
     private LocalVM table = new LocalVM();
-    private OperandStack operandStack = new OperandStack();
-    private Integer[] tableIndexes;
+    // private OperandStack operandStack = new OperandStack();
+    //private Integer[] tableIndexes;
 
-    public Snapshot(LocalVM table, OperandStack operandStack) {
+    public Snapshot(LocalVM table) {
         this.table = table;
-        this.operandStack = operandStack;
-        saveIndexesFromOperandStack(operandStack);
     }
-
+/*
     private void saveIndexesFromOperandStack(OperandStack operandStack) {
         tableIndexes = new Integer[operandStack.size()];
         int i = 0;
@@ -23,16 +19,16 @@ public class Snapshot extends CompositeValue {
             tableIndexes[i] = obj.getIndexInLocalVM();
             i++;
         }
-    }
+    }*/
 
-    public LocalVM getTable() {
+    public LocalVM getLocalVM() {
         return table;
     }
 
-    public OperandStack getOperandStack() {
+/*    public OperandStack getOperandStack() {
         restoreIndexesFromOperandStack();
         return operandStack;
-    }
+    }*/
 
     @Override
     public Type determineType() {
@@ -46,11 +42,16 @@ public class Snapshot extends CompositeValue {
         return true;
     }
 
-    public void restoreIndexesFromOperandStack() {
+/*    public void restoreIndexesFromOperandStack() {
         int i = 0;
         for (PSObject obj : operandStack) {
             obj.setIndexInLocalVM(tableIndexes[i]);
             i++;
         }
+    }*/
+
+    @Override
+    public String toString() {
+        return "Snapshot{}";
     }
 }

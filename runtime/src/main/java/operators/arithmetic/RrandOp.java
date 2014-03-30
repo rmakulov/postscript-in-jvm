@@ -12,10 +12,12 @@ public class RrandOp extends Operator {
     protected RrandOp() {
         super();
     }
-    //todo I haven't understood what does this operator do
+
     @Override
     public void execute() {
 
+        RandOp.dropRandom();
+        RandOp.instance.execute();
     }
 
     @Override

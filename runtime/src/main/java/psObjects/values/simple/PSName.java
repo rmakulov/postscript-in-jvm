@@ -19,7 +19,7 @@ public class PSName extends SimpleValue {
     public String toString() {
         return "PSName{" +
                 "strValue='" + strValue + '\'' +
-                "} " + super.toString();
+                "} ";
     }
 
     @Override

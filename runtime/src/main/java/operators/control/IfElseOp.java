@@ -1,8 +1,8 @@
 package operators.control;
 
+import procedures.ArrayProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
-import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
@@ -27,20 +27,13 @@ public class IfElseOp extends Operator {
             runtime.pushToOperandStack(bool);
             runtime.pushToOperandStack(exec1);
             runtime.pushToOperandStack(exec2);
+            return;
         }
         PSBoolean cond = (PSBoolean) bool.getValue();
-        PSArray arr1 = (PSArray) exec1.getValue();
-        PSArray arr2 = (PSArray) exec2.getValue();
         if (cond.getFlag()) {
-            for (PSObject o : arr1.getArray()) {
-                runtime.pushToOperandStack(o);
-                ExecOp.instance.execute();
-            }
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (true)", exec1));
         } else {
-            for (PSObject o : arr2.getArray()) {
-                runtime.pushToOperandStack(o);
-                ExecOp.instance.execute();
-            }
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (false)", exec2));
         }
     }
 

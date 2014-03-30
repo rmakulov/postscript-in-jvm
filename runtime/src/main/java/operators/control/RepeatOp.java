@@ -1,8 +1,8 @@
 package operators.control;
 
+import procedures.RepeatProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
-import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
@@ -26,19 +26,15 @@ public class RepeatOp extends Operator {
             runtime.pushToOperandStack(iObj);
             runtime.pushToOperandStack(exec);
         }
+
         PSInteger psInteger = (PSInteger) iObj.getValue();
         int count = psInteger.getIntValue();
         if (count < 0) {
             runtime.pushToOperandStack(iObj);
             runtime.pushToOperandStack(exec);
+            return;
         }
-        PSArray arr = (PSArray) exec.getValue();
-        for (int i = 0; i < count; i++) {
-            for (PSObject o : arr.getArray()) {
-                runtime.pushToOperandStack(o);
-                ExecOp.instance.execute();
-            }
-        }
+        runtime.pushToCallStack(new RepeatProcedure(count, exec));
     }
 
     @Override

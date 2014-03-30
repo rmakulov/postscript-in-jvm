@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.graphics.figures.PSPoint;
 
 /**
  * Created by user on 15.03.14.
@@ -27,8 +28,9 @@ public class MoveToOp extends AbstractGraphicOperator {
         }
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
-        gState.currentPoint = gState.cTM.transform(nX.getRealValue(), nY.getRealValue());
-        gState.currentPath.getGeneralPath().moveTo(nX.getRealValue(), nY.getRealValue());
+        PSPoint psPoint = gState.cTM.transform(nX.getRealValue(), nY.getRealValue());
+        gState.currentPoint = psPoint;
+        gState.currentPath.getGeneralPath().moveTo(psPoint.getX(), psPoint.getY());
 
     }
 

@@ -6,17 +6,21 @@ import psObjects.Type;
 import java.util.Arrays;
 
 public class PSArray extends CompositeValue implements Cloneable {
-    private PSObject[] array;
+    private ArrayElement[] array;
 
     public PSArray() {
     }
 
     public PSArray(int length) {
-        array = new PSObject[length];
+        array = new ArrayElement[length];
     }
 
-    public PSObject get(int index){
-        return array[index];
+    public PSArray(ArrayElement[] arrayElements) {
+        array = arrayElements;
+    }
+
+    public PSObject get(int index) {
+        return array[index].getElementObject();
     }
 
     public static PSArray initArray(int length) {
@@ -27,16 +31,27 @@ public class PSArray extends CompositeValue implements Cloneable {
         return psArray;
     }
 
-    public PSArray(PSObject[] array) {
-        this.array = array;
+    public PSArray(PSObject[] psObjects) {
+        array = new ArrayElement[psObjects.length];
+        for (int i = 0; i < psObjects.length; i++) {
+            array[i] = new ArrayElement(psObjects[i]);
+        }
     }
 
     public PSObject[] getArray() {
+        PSObject[] psObjects = new PSObject[array.length];
+        for (int i = 0; i < psObjects.length; i++) {
+            psObjects[i] = array[i].getElementObject();
+        }
+        return psObjects;
+    }
+
+    private ArrayElement[] getArrayElements() {
         return array;
     }
 
     public PSArray getInterval(int start, int length) {
-        PSObject[] res = new PSObject[length];
+        ArrayElement[] res = new ArrayElement[length];
         for (int i = 0; i < length; i++) {
             res[i] = array[start + i];
         }
@@ -44,25 +59,33 @@ public class PSArray extends CompositeValue implements Cloneable {
     }
 
     public PSArray setValue(int index, PSObject value) {
-        //array[index] = value;
-        PSObject[] newArray = new PSObject[array.length];
-        System.arraycopy(array, 0, newArray, 0, array.length);
-        newArray[index] = value;
-        return new PSArray(newArray);
+        ArrayElement[] res = new ArrayElement[array.length];
+        System.arraycopy(array, 0, res, 0, array.length);
+        if (res[index] == null) {
+            res[index] = new ArrayElement(value);
+        } else {
+            res[index].setElementObject(value);
+        }
+        return new PSArray(res);
     }
 
     private void setDirectValue(int index, PSObject value) {
-        array[index] = value;
+        array[index].setElementObject(value);
     }
 
-    public PSArray putInterval(int start, PSArray psArray){
-        PSObject[] newArray = new PSObject[array.length];
+    public PSArray putInterval(int start, PSArray psArray) {
+        ArrayElement[] newArray = new ArrayElement[array.length];
         System.arraycopy(array, 0, newArray, 0, array.length);
-        PSObject[] arrayFrom = psArray.getArray();
+        ArrayElement[] arrayFrom = psArray.getArrayElements();
         if (newArray.length - start < arrayFrom.length)
             return null;
-        for (int i=0; i<arrayFrom.length; i++)
-            newArray[i+start] = arrayFrom[i];
+        for (int i = 0; i < arrayFrom.length; i++) {
+            if (newArray[i + start] == null) {
+                newArray[i + start] = new ArrayElement(arrayFrom[i].getElementObject());
+            } else {
+                newArray[i + start].setElementObject(arrayFrom[i].getElementObject());
+            }
+        }
         return new PSArray(newArray);
     }
 
@@ -71,8 +94,6 @@ public class PSArray extends CompositeValue implements Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PSArray)) return false;
-        //PSArray psArray = (PSArray) o;
-       // if (!Arrays.equals(array, psArray.array)) return false;
         return true;
     }
 

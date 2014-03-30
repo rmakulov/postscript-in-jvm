@@ -16,7 +16,7 @@ public class PSBoolean extends SimpleValue {
     public String toString() {
         return "PSBoolean{" +
                 "flag=" + flag +
-                "} " + super.toString();
+                "} ";
     }
 
     public boolean getFlag() {

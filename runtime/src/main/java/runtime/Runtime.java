@@ -1,45 +1,46 @@
 package runtime;
 
+import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
-import operators.graphicsState.GRestoreOp;
+import procedures.Procedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.Snapshot;
-import psObjects.values.composite.dictionaries.DefaultDicts;
-import psObjects.values.composite.dictionaries.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSNull;
+import runtime.graphics.GraphicsState;
 import runtime.graphics.save.GSave;
+import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
-import runtime.stack.PSStack;
-
-import javax.swing.*;
 
 import static psObjects.Type.*;
 
 
-public class
-        Runtime{
+public class Runtime {
     private static Runtime ourInstance = new Runtime();
 
 
     private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
     private DictionaryStack dictionaryStack = new DictionaryStack();
-    private GraphicStack graphicStack = new GraphicStack() ;
+    private GraphicStack graphicStack = new GraphicStack();
+    private CallStack callStack = new CallStack();
     private boolean isGlobal = false;
+
+    private PSObject userDict, globalDict, systemDict;
 
 
     private Runtime() {
-        super() ;
+        super();
     }
 
     public static Runtime getInstance() {
@@ -51,17 +52,14 @@ public class
     * save snapshot to operandStack
     */
     public void save() {
-        Snapshot snapshot = new Snapshot(localVM, operandStack);
+        Snapshot snapshot = new Snapshot(localVM);
         operandStack = operandStack.push(new PSObject(snapshot));
         gsave(false);
-
     }
 
-    public void gsave(boolean b) {
-        GSave gsave = new GSave(b) ;
-        gsave.getSnapshot();
+    public void gsave(boolean isMadeByGsave) {
+        GSave gsave = GraphicsState.getInstance().getSnapshot(isMadeByGsave);
         pushToGraphicStack(gsave);
-
     }
 
     /*
@@ -71,16 +69,17 @@ public class
         PSObject object = popFromOperandStack();
         if (object.getType() != SAVE) return false;
         Snapshot snapshot = (Snapshot) object.getValue();
-        PSStack savedOperandStack = snapshot.getOperandStack();
+        LocalVM savedLocalVM = snapshot.getLocalVM();
         for (PSObject current : operandStack) {
             Value curValue = current.getValue();
             //if operand stack contains reference to composite object which was created after saving, we can't restore
-            if (localVM.contains(curValue) && !savedOperandStack.contains(current)) {
+            if (current.isComposite() && localVM.contains(curValue) && !savedLocalVM.contains(curValue)) {
+                System.out.println("invalid restore");
+                System.exit(0);
                 return false;
             }
         }
-        localVM = snapshot.getTable();
-        operandStack = snapshot.getOperandStack();
+        localVM = savedLocalVM;
         GRestoreAllOp.instance.execute();
         return true;
     }
@@ -90,35 +89,71 @@ public class
         return localVM.size() - 1;
     }
 
+    public int setNewValueAtLocalVM(int index, CompositeValue value) {
+        localVM = localVM.setNewValueAtIndex(index, value);
+        return index;
+    }
+
     public void pushToOperandStack(PSObject psObject) {
-        System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
+        //System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
         operandStack = operandStack.push(psObject);
     }
 
     public PSObject popFromOperandStack() {
         PSObject object = operandStack.peek();
         if (object == null)
-            return object;
+            return null;
         operandStack = operandStack.removeTop();
         return object;
     }
 
     public void pushToGraphicStack(GSave gsave) {
-        graphicStack = graphicStack.push(gsave) ;
+        graphicStack = graphicStack.push(gsave);
     }
 
-    public GSave popFromGraphicStack(){
-        GSave gsave = graphicStack.peek() ;
-        graphicStack = graphicStack.removeTop() ;
-        return gsave ;
+    public GSave popFromGraphicStack() {
+        GSave gsave = graphicStack.peek();
+        graphicStack = graphicStack.removeTop();
+        return gsave;
     }
 
     public GSave peekFromGraphicStack() {
-        return graphicStack.peek() ;
+        return graphicStack.peek();
     }
 
     public PSObject peekFromOperandStack() {
         return operandStack.peek();
+    }
+
+    public Procedure popFromCallStack() {
+        Procedure procedure = callStack.peek();
+        callStack = callStack.removeTop();
+        return procedure;
+    }
+
+    public Procedure peekFromCallStack() {
+        return callStack.peek();
+    }
+
+    public int getCallStackSize() {
+        return callStack.size();
+    }
+
+    public void executeCallStack() {
+        while (!callStack.isEmpty()) {
+            Procedure topProcedure = callStack.peek();
+            if (topProcedure.hasNext()) {
+                topProcedure.execNext();
+            } else {
+                topProcedure.procTerminate();
+                popFromCallStack();
+            }
+        }
+    }
+
+
+    public void pushToCallStack(Procedure procedure) {
+        callStack = callStack.push(procedure);
     }
 
 
@@ -150,6 +185,7 @@ public class
         return new LocalRef(addToLocalVM(value));
     }
 
+    @Deprecated
     public PSObject setValueArrayAtIndex(PSObject arrayObject, int valueIndex, PSObject value) {
         if (arrayObject.getType() != ARRAY) {
             //todo throw type exception
@@ -163,6 +199,7 @@ public class
     /*
    * Find array in Local VM by LocalRef and get interval by startIndex and length
     */
+    @Deprecated
     public PSObject getArrayInterval(PSObject arrayObject, int startIndex, int length) {
         if (arrayObject.getType() != ARRAY) {
             //todo throw type exception
@@ -175,6 +212,7 @@ public class
     }
 
     //dict key value put – Associate key with value in dict
+    @Deprecated
     public PSObject putValueAtDictionaryKey(PSObject dictObject, PSObject key, PSObject value) {
         if (dictObject.getType() != DICTIONARY) {
             return dictObject;
@@ -186,6 +224,7 @@ public class
     }
 
     //dict key undef – Remove key and its value from dict
+    @Deprecated
     public PSObject undefValueAtDictionaryKey(PSObject dictObject, PSObject key) {
         //todo check
         if (dictObject.getType() != Type.DICTIONARY) return dictObject;
@@ -196,6 +235,7 @@ public class
 
     }
 
+    @Deprecated
     public PSObject copy(PSObject srcDictRef, PSObject dstDictRef) {
         //todo check
         if (srcDictRef.getType() != Type.DICTIONARY) return dstDictRef;
@@ -228,7 +268,6 @@ public class
         while (removeFromDictionaryStack()) {
             //removing done in condition automatically
         }
-        ;
     }
 
     public void clearAll() {
@@ -258,12 +297,25 @@ public class
         else return createLocalRef(object);
     }
 
+    public PSObject findDict(PSObject key) {
+        PSObject found;
+        for (PSObject dictObj : dictionaryStack) {
+            found = getValueAtDictionary(dictObj, key);
+            if (found != null) return dictObj;
+        }
+        return null;
+    }
+
     public PSObject findValue(PSObject key) {
-        //todo order of value search
         PSObject found;
         for (PSObject dictObj : dictionaryStack) {
             found = getValueAtDictionary(dictObj, key);
             if (found != null) return found;
+        }
+        try {
+            throw new Exception(key + " is not found");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return new PSObject(PSNull.NULL);
     }
@@ -277,12 +329,14 @@ public class
     }
 
     public void initDefaultDictionaries() {
-        PSObject dict = new PSObject(DefaultDicts.getSystemDict(),
+        systemDict = new PSObject(DefaultDicts.getSystemDict(),
                 Type.DICTIONARY,
                 new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
-        pushToDictionaryStack(dict);
-        pushToDictionaryStack(new PSObject(DefaultDicts.getGlobalDict()));
-        pushToDictionaryStack(new PSObject(DefaultDicts.getUserDict()));
+        pushToDictionaryStack(systemDict);
+        globalDict = new PSObject(DefaultDicts.getGlobalDict());
+        pushToDictionaryStack(globalDict);
+        userDict = new PSObject(DefaultDicts.getUserDict());
+        pushToDictionaryStack(userDict);
     }
 
     public PSObject currentDict() {
@@ -290,6 +344,18 @@ public class
     }
 
     public int getGraphicStackSize() {
-        return graphicStack.size() ;
+        return graphicStack.size();
+    }
+
+    public PSObject getUserDict() {
+        return userDict;
+    }
+
+    public PSObject getGlobalDict() {
+        return globalDict;
+    }
+
+    public PSObject getSystemDict() {
+        return systemDict;
     }
 }

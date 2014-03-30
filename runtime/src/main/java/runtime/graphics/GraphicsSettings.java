@@ -12,8 +12,9 @@ public class GraphicsSettings {
     public int lineJoin;
     public int lineCap;
     public double miterLimit;
-    public float[] dash = new float[]{0};
+    public float[] dash;
     public float dashPhase = 0;
+    public int flatness;
 
     public GraphicsSettings(Color color, double lineWidth, int lineJoin, int lineCap, double miterLimit, float[] dash, float dashPhase) {
         this.color = color;
@@ -22,7 +23,11 @@ public class GraphicsSettings {
         this.lineCap = lineCap;
         this.miterLimit = miterLimit;
         this.dash = dash;
+        if (dash != null && dash.length == 0) {
+            this.dash = null;
+        }
         this.dashPhase = dashPhase;
+        this.flatness = 1;
     }
 
     public GraphicsSettings() {
@@ -34,6 +39,6 @@ public class GraphicsSettings {
     }
 
     public GraphicsSettings clone() {
-        return new GraphicsSettings(new Color(color.getRGB()), lineWidth, lineJoin, lineCap, miterLimit, dash.clone(), dashPhase);
+        return new GraphicsSettings(new Color(color.getRGB()), lineWidth, lineJoin, lineCap, miterLimit, dash, dashPhase);
     }
 }

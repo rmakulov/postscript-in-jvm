@@ -1,35 +1,27 @@
 package runtime.graphics;
 
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
+import runtime.graphics.save.GSave;
 
-import java.util.ArrayList;
+import java.awt.*;
 
-/**
- * Created by use 1r on 14.03.14.
- */
 public class GraphicsState {
     private static GraphicsState instance = new GraphicsState();
     public PSPoint currentPoint;
     public PSPath currentPath;
-    public ArrayList<PSPath> paintingPaths = new ArrayList<PSPath>();
     public PSPath clippingPath;
     public TransformMatrix cTM;
     public GraphicsSettings graphicsSettings;
-/*    public Color color;
-    public double lineWidth; // 1/72 inch
-    public int lineJoin;
-    public int lineCap;
-    public double miterLimit;
-    public float[] dash = new float[]{};
-    public float dashPhase = 0;*/
+
 
     private GraphicsState() {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
-        cTM = new TransformMatrix(new double[]{1, 0, 0, 1, 0, 0});
-        clippingPath = new PSPath(); //todo page size rectangle
+        cTM = new TransformMatrix();
+        initClip();
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
@@ -37,16 +29,24 @@ public class GraphicsState {
         return instance;
     }
 
-
-    //---------------------Fonts
     public static double psUnitToPixel(double psUnits) {
         return psUnits / 72 * 96;
         //96 - это число пикселей в дюйме
     }
 
-    public static double pixelToPSUnit(double pixels) {
-        return pixels / 96 * 72;
+    public GSave getSnapshot(boolean isMadeByGSaveOp) {
+        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint);
     }
+
+    public void setSnapshot(GSave gSave) {
+        currentPath = gSave.getCurrentPath().clone();
+        clippingPath = gSave.getClippingPath().clone();
+        cTM = gSave.getcTM().clone();
+        graphicsSettings = gSave.getSettings().clone();
+        currentPoint = gSave.getCurrentPoint();
+    }
+
+    //---------------------Fonts
 
     public double getLineWidthInPixels() {
         return psUnitToPixel(graphicsSettings.lineWidth);
@@ -56,11 +56,13 @@ public class GraphicsState {
         return graphicsSettings.clone();
     }
 
-    public void addPaintingPath(PSPath path) {
-        paintingPaths.add(path);
+    public void newCurrentPath() {
+        currentPath = new PSPath();
+        currentPoint = null;
     }
 
-    public void addCurrentPathInPaintingPaths() {
-        addPaintingPath(currentPath);
+    public void initClip() {
+        clippingPath = new PSPath();
+        clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
     }
 }

@@ -26,4 +26,12 @@ public class Attribute {
     public enum TreatAs {
         EXECUTABLE, LITERAL
     }
+
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "access=" + access +
+                ", treatAs=" + treatAs +
+                '}';
+    }
 }

@@ -20,7 +20,7 @@ public class PSInteger extends PSNumber {
     public String toString() {
         return "PSInteger{" +
                 "value=" + value +
-                "} " + super.toString();
+                "}";
     }
 
     @Override
@@ -45,7 +45,7 @@ public class PSInteger extends PSNumber {
 
     public static PSInteger initInteger() {
         Random rand = new Random();
-        int      value = rand.nextInt();
+        int value = rand.nextInt();
         return new PSInteger(value);
     }
 
@@ -58,8 +58,8 @@ public class PSInteger extends PSNumber {
         return (double) value;
     }
 
-    public static PSInteger add(PSInteger i1, PSInteger i2){
-        return new PSInteger(i1.value+i2.value);
+    public static PSInteger add(PSInteger i1, PSInteger i2) {
+        return new PSInteger(i1.value + i2.value);
     }
 
     @Override
