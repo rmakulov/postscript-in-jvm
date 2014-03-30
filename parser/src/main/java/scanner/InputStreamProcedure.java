@@ -17,11 +17,11 @@ import static psObjects.Attribute.TreatAs.LITERAL;
 /**
  * Created by Дмитрий on 28.03.14.
  */
-public class InputStreamReaderProcedure extends Procedure {
+public class InputStreamProcedure extends Procedure {
     Yylex scanner;
     Yytoken nextYytoken;
 
-    public InputStreamReaderProcedure(String name, InputStreamReader reader) {
+    public InputStreamProcedure(String name, InputStreamReader reader) {
         super(name);
         scanner = new Yylex(reader);
     }

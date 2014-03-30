@@ -29,7 +29,7 @@ public class IfOp extends Operator {
         }
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {
-            runtime.pushToCallStack(new ArrayProcedure("If Procedure", exec));
+            runtime.pushToCallStack(new ArrayProcedure("If", exec));
         }
     }
 

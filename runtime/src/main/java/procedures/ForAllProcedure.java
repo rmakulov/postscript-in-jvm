@@ -42,4 +42,9 @@ public class ForAllProcedure extends ArrayProcedure {
         return nextObject;
 
     }
+
+    @Override
+    public boolean isExitable() {
+        return true;
+    }
 }

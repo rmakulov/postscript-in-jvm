@@ -291,7 +291,7 @@ public class PSObject implements Comparable<PSObject> {
     }
 
     public boolean isProc() {
-        return (type == Type.ARRAY) || (type == Type.PACKEDARRAY) && xcheck();
+        return ((type == Type.ARRAY) || (type == Type.PACKEDARRAY)) && xcheck();
     }
 
 
