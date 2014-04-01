@@ -34,7 +34,7 @@ public class BindOp extends Operator {
         }
         PSArray result = new PSArray(resArray.size());
         for (int i = 0; i < resArray.size(); i++) {
-            result = result.setValue(i, resArray.get(resArray.size() - i - 1));
+            result = result.setValue(i, resArray.get(i));
         }
         o.setValue(result);
         runtime.pushToOperandStack(o);
