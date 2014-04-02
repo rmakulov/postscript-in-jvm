@@ -79,6 +79,7 @@ public class Runtime {
                 return false;
             }
         }
+        savedLocalVM.updateStringValues(localVM); //string values don't restores
         localVM = savedLocalVM;
         GRestoreAllOp.instance.execute();
         return true;
