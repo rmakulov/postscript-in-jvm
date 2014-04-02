@@ -59,6 +59,16 @@ public class PSArray extends CompositeValue implements Cloneable {
         return array;
     }
 
+    public int length() {
+        return array == null ? 0 : array.length;
+    }
+
+    public PSArray copy() {
+        ArrayElement[] res = new ArrayElement[array.length];
+        System.arraycopy(array, 0, res, 0, array.length);
+        return new PSArray(res);
+    }
+
     public PSArray getInterval(int start, int length) {
         ArrayElement[] res = new ArrayElement[length];
         for (int i = 0; i < length; i++) {

@@ -24,6 +24,10 @@ public class PSObject implements Comparable<PSObject> {
         return attribute.treatAs;
     }
 
+    public PSObject copy() {
+        return new PSObject(value, type, attribute);
+    }
+
     public Value getDirectValue() {
         return value;
     }

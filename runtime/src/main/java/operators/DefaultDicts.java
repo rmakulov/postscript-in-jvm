@@ -145,7 +145,6 @@ public class DefaultDicts {
         addOperator(StoreOp.instance);
         addOperator(UndefOp.instance);
         addOperator(KnownOp.instance);
-        addOperator(CopyOp.instance);
         addOperator(CurrentDictOp.instance);
         addOperator(UserDictOp.instance);
         addOperator(GlobalDictOp.instance);
@@ -284,6 +283,7 @@ public class DefaultDicts {
 
     private static void addCommonOperators() {
         addOperator(AloadOp.instance);
+        addOperator(CopyOp.instance);
         addOperator(ForAllOp.instance);
         addOperator(GetIntervalOp.instance);
         addOperator(GetOp.instance);
