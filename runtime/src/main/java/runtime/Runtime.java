@@ -86,12 +86,14 @@ public class Runtime {
     }
 
     public int addToLocalVM(CompositeValue value) {
-        localVM = localVM.add(value);
+        /*localVM = */
+        localVM.add(value);
         return localVM.size() - 1;
     }
 
     public int setNewValueAtLocalVM(int index, CompositeValue value) {
-        localVM = localVM.setNewValueAtIndex(index, value);
+        /*localVM = */
+        localVM.setNewValueAtIndex(index, value);
         return index;
     }
 

@@ -18,7 +18,7 @@ public class LocalVM {
         this.table = table;
     }
 
-    public LocalVM add(CompositeValue value) {
+/*    public LocalVM add(CompositeValue value) {
         Iterator<CompositeValue> iterator = table.iterator();
         ArrayList<CompositeValue> newTable = new ArrayList<CompositeValue>();
         while (iterator.hasNext()) {
@@ -50,6 +50,19 @@ public class LocalVM {
 
         }
         return new LocalVM(newTable);
+    }*/
+
+    public void add(CompositeValue value) {
+        table.add(value);
+    }
+
+    public void remove(int index) {
+        table.remove(index);
+    }
+
+    public void setNewValueAtIndex(int index, CompositeValue value) {
+        table.remove(index);
+        table.add(index, value);
     }
 
     public int getIndex(CompositeValue value) {
@@ -87,5 +100,14 @@ public class LocalVM {
                 table.add(i, newLocalVM.get(i));
             }
         }
+    }
+
+    public LocalVM clone() {
+        Iterator<CompositeValue> iterator = table.iterator();
+        ArrayList<CompositeValue> newTable = new ArrayList<CompositeValue>();
+        while (iterator.hasNext()) {
+            newTable.add(iterator.next());
+        }
+        return new LocalVM(newTable);
     }
 }
