@@ -1,5 +1,6 @@
 package operators.miscellaneous;
 
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSArray;
@@ -45,12 +46,17 @@ public class BindOp extends Operator {
         Type type = o.getType();
         switch (type) {
             case NAME:
-                PSObject value = runtime.findValue(o);
-                if (value.getValue().equals(PSNull.NULL)) {
+                if (o.treatAs() == Attribute.TreatAs.LITERAL) {
                     resArray = new ArrayList<PSObject>();
                     resArray.add(o);
                 } else {
-                    resArray = bind(value);
+                    PSObject value = runtime.findValue(o);
+                    if (value.getValue().equals(PSNull.NULL)) {
+                        resArray = new ArrayList<PSObject>();
+                        resArray.add(o);
+                    } else {
+                        resArray = bind(value);
+                    }
                 }
                 break;
             case ARRAY:
