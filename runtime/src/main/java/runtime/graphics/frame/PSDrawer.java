@@ -39,6 +39,7 @@ public class PSDrawer {
         g2.clip(gState.clippingPath.getGeneralPath());
         g2.fill(generalPath);
         gState.newCurrentPath();
+        frame.repaint();
     }
 
     public void eofill() {
