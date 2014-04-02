@@ -3,6 +3,7 @@ package psObjects.values.composite;
 import psObjects.PSObject;
 import psObjects.Type;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PSArray extends CompositeValue implements Cloneable {
@@ -38,6 +39,13 @@ public class PSArray extends CompositeValue implements Cloneable {
         }
     }
 
+    public PSArray(ArrayList<PSObject> psObjects) {
+        array = new ArrayElement[psObjects.size()];
+        for (int i = 0; i < psObjects.size(); i++) {
+            array[i] = new ArrayElement(psObjects.get(i));
+        }
+    }
+
     public PSObject[] getArray() {
         PSObject[] psObjects = new PSObject[array.length];
         for (int i = 0; i < psObjects.length; i++) {
@@ -45,6 +53,7 @@ public class PSArray extends CompositeValue implements Cloneable {
         }
         return psObjects;
     }
+
 
     private ArrayElement[] getArrayElements() {
         return array;

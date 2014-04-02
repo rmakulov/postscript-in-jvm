@@ -24,6 +24,7 @@ import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
 import operators.painting.EofillOp;
 import operators.painting.FillOp;
+import operators.painting.RectFillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
 import operators.relationBooleanBitwise.*;
@@ -216,6 +217,7 @@ public class DefaultDicts {
         addOperator(FillOp.instance);
         addOperator(EofillOp.instance);
         addOperator(StrokeOp.instance);
+        addOperator(RectFillOp.instance);
     }
 
     private static void addGraphicStateDeviceIndependentOperators() {

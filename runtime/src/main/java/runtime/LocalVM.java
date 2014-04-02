@@ -1,5 +1,6 @@
 package runtime;
 
+import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 
@@ -77,5 +78,14 @@ public class LocalVM {
 
     public void clear() {
         table.clear();
+    }
+
+    public void updateStringValues(LocalVM newLocalVM) {
+        for (int i = 0; i < table.size(); i++) {
+            if (table.get(i).determineType() == Type.STRING && newLocalVM.get(i).determineType() == Type.STRING) {
+                table.remove(i);
+                table.add(i, newLocalVM.get(i));
+            }
+        }
     }
 }
