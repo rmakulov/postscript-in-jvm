@@ -24,7 +24,7 @@ public class SetDashOp extends AbstractGraphicOperator {
         PSObject offsetObj = runtime.popFromOperandStack();
         PSObject arrayObj = runtime.popFromOperandStack();
 
-        if (offsetObj.getType() != Type.INTEGER || offsetObj.getType() != Type.ARRAY) {
+        if (offsetObj.getType() != Type.INTEGER || arrayObj.getType() != Type.ARRAY) {
             runtime.pushToOperandStack(arrayObj);
             runtime.pushToOperandStack(offsetObj);
             return;
