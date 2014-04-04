@@ -2,6 +2,7 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
+import procedures.ArrayProcedure;
 import procedures.Procedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
@@ -15,6 +16,7 @@ import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSNull;
+import runtime.avl.Pair;
 import runtime.graphics.GraphicsState;
 import runtime.graphics.save.GSave;
 import runtime.stack.CallStack;
@@ -22,11 +24,16 @@ import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static psObjects.Type.*;
 
 
 public class Runtime {
     private static Runtime ourInstance = new Runtime();
+    private int executionCount = 0;
+    private int executionsBeforeGarbageCleaning = 10000;
 
 
     private LocalVM localVM = new LocalVM();
@@ -52,7 +59,8 @@ public class Runtime {
     * save snapshot to operandStack
     */
     public void save() {
-        Snapshot snapshot = new Snapshot(localVM);
+        Snapshot snapshot = new Snapshot(localVM.clone());
+        localVM.initDefaultKeys();
         operandStack = operandStack.push(new PSObject(snapshot));
         gsave(false);
     }
@@ -86,13 +94,10 @@ public class Runtime {
     }
 
     public int addToLocalVM(CompositeValue value) {
-        /*localVM = */
-        localVM.add(value);
-        return localVM.size() - 1;
+        return localVM.add(value);
     }
 
     public int setNewValueAtLocalVM(int index, CompositeValue value) {
-        /*localVM = */
         localVM.setNewValueAtIndex(index, value);
         return index;
     }
@@ -146,11 +151,82 @@ public class Runtime {
         while (!callStack.isEmpty()) {
             Procedure topProcedure = callStack.peek();
             if (topProcedure.hasNext()) {
+                executionCount++;
                 topProcedure.execNext();
+                if (executionCount % executionsBeforeGarbageCleaning == 0) {
+                    //System.out.println(localVM.size());
+                    localVM.clearGarbage(getRootSet());
+                    //System.out.println(localVM.size());
+                }
             } else {
                 topProcedure.procTerminate();
                 popFromCallStack();
             }
+        }
+    }
+
+    public Set<Integer> getRootSet() {
+        Set<Integer> indexes = new HashSet<Integer>();
+        //operandStack
+        for (PSObject o : operandStack) {
+            if (!(o.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) o.getDirectValue();
+            getUsingLocalVMIndexesByRef(indexes, ref);
+        }
+        //dictStack
+        for (PSObject o : dictionaryStack) {
+
+            if (!(o.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) o.getDirectValue();
+            if (o == systemDict) {
+                indexes.add(ref.getTableIndex());
+            } else {
+                getUsingLocalVMIndexesByRef(indexes, ref);
+            }
+
+        }
+        //callStack
+        for (Procedure proc : callStack) {
+            if (!(proc instanceof ArrayProcedure)) continue;
+            PSObject array = ((ArrayProcedure) proc).getArrayObject();
+            if (!(array.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) array.getDirectValue();
+            getUsingLocalVMIndexesByRef(indexes, ref);
+        }
+        return indexes;
+    }
+
+    private void getUsingLocalVMIndexesByRef(Set<Integer> indexes, LocalRef ref) {
+        int index = ref.getTableIndex();
+        if (indexes.contains(index)) return;
+        indexes.add(index);
+        LocalRef newRef;
+        switch (ref.determineType()) {
+            case ARRAY:
+                PSObject[] objects = ((PSArray) ref.getValue()).getArray();
+                for (PSObject o : objects) {
+                    if (!(o.getDirectValue() instanceof LocalRef)) continue;
+                    newRef = (LocalRef) o.getDirectValue();
+                    getUsingLocalVMIndexesByRef(indexes, newRef);
+                }
+                break;
+            case DICTIONARY:
+                PSDictionary dict = (PSDictionary) ref.getValue();
+                for (Pair<PSObject, PSObject> pair : dict.getTree()) {
+                    PSObject key = pair.getKey();
+                    PSObject value = pair.getValue();
+                    if ((key.getDirectValue() instanceof LocalRef)) {
+                        newRef = (LocalRef) key.getDirectValue();
+                        getUsingLocalVMIndexesByRef(indexes, newRef);
+                    }
+                    if ((value.getDirectValue() instanceof LocalRef)) {
+                        newRef = (LocalRef) value.getDirectValue();
+                        getUsingLocalVMIndexesByRef(indexes, newRef);
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -330,6 +406,7 @@ public class Runtime {
     public int getDictionaryStackSize() {
         return dictionaryStack.size();
     }
+
 
     public void initDefaultDictionaries() {
         systemDict = new PSObject(DefaultDicts.getSystemDict(),
