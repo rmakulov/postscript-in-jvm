@@ -84,10 +84,10 @@ public class LocalVM {
         initSet.addAll(map.keySet());
     }
 
-    public void clearGarbage(Set<Integer> notGarbage) {
+    public void clearGarbage(Set<Integer> rootSet) {
         Set<Integer> keys = new HashSet<Integer>(map.keySet());
         for (Integer key : keys) {
-            if (!notGarbage.contains(key) && !initSet.contains(key)) {
+            if (!rootSet.contains(key) && !initSet.contains(key)) {
                 remove(key);
             }
         }

@@ -6,7 +6,6 @@ import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
-import psObjects.values.simple.PSNull;
 
 import java.util.ArrayList;
 
@@ -31,66 +30,24 @@ public class BindOp extends Operator {
         PSArray psArr = (PSArray) o.getValue();
         ArrayList<PSObject> resArray = new ArrayList<PSObject>();
         for (PSObject innerObj : psArr.getArray()) {
-            resArray.addAll(bind(innerObj));
+            switch (innerObj.getType()) {
+                case NAME:
+                    if (innerObj.treatAs() == Attribute.TreatAs.EXECUTABLE) {
+                        PSObject value = runtime.findValue(innerObj);
+                        if (value.getType() == Type.OPERATOR) {
+                            resArray.add(value);
+                            break;
+                        }
+
+                    }
+                default:
+                    resArray.add(innerObj);
+                    break;
+            }
         }
-        PSArray result = new PSArray(resArray.size());
-        for (int i = 0; i < resArray.size(); i++) {
-            result = result.setValue(i, resArray.get(i));
-        }
+        PSArray result = new PSArray(resArray);
         o.setValue(result);
         runtime.pushToOperandStack(o);
-    }
-
-    private ArrayList<PSObject> bind(PSObject o) {
-        ArrayList<PSObject> resArray;
-        Type type = o.getType();
-        switch (type) {
-            case NAME:
-                if (o.treatAs() == Attribute.TreatAs.LITERAL) {
-                    resArray = new ArrayList<PSObject>();
-                    resArray.add(o);
-                } else {
-                    PSObject value = runtime.findValue(o);
-                    if (value.getValue().equals(PSNull.NULL)) {
-                        resArray = new ArrayList<PSObject>();
-                        resArray.add(o);
-                    } else {
-                        resArray = bind(value);
-                    }
-                }
-                break;
-            case ARRAY:
-            case PACKEDARRAY:
-                resArray = new ArrayList<PSObject>();
-                if (o.xcheck()) {
-                    for (PSObject innerObj : ((PSArray) o.getValue()).getArray()) {
-                        resArray.addAll(bind(innerObj));
-                    }
-                } else {
-                    resArray.add(o);
-
-                }
-                break;
-            case INTEGER:
-            case REAL:
-            case BOOLEAN:
-            case FONT_ID:
-            case NULL:
-            case MARK:
-            case OPERATOR:
-            case DICTIONARY:
-            case STRING:
-            case FILE:
-            case GSTATE:
-            case SAVE:
-                resArray = new ArrayList<PSObject>();
-                resArray.add(o);
-                break;
-            default:
-                resArray = new ArrayList<PSObject>();
-                resArray.add(o);
-        }
-        return resArray;
     }
 
     @Override

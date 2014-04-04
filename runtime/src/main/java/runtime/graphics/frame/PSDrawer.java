@@ -16,7 +16,7 @@ public class PSDrawer {
     private PSFrame frame = PSFrame.getInstance();
     protected GraphicsState gState = GraphicsState.getInstance();
     private long lastDrawTime = 0;
-    private final long repaintTime = 500;
+    private final long repaintTime = 50;
 
     private PSDrawer() {
     }
@@ -47,10 +47,11 @@ public class PSDrawer {
 
     private void repaintImage() {
         long time = System.currentTimeMillis();
-        if (Math.abs(lastDrawTime - time) < repaintTime) {
+        if (Math.abs(time - lastDrawTime) > repaintTime) {
             frame.repaint();
+            lastDrawTime = time;
         }
-        lastDrawTime = time;
+
     }
 
     public void eofill() {

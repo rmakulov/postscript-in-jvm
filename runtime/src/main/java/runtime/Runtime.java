@@ -59,6 +59,7 @@ public class Runtime {
     * save snapshot to operandStack
     */
     public void save() {
+        localVM.clearGarbage(getRootSet());
         Snapshot snapshot = new Snapshot(localVM.clone());
         localVM.initDefaultKeys();
         operandStack = operandStack.push(new PSObject(snapshot));
@@ -154,9 +155,9 @@ public class Runtime {
                 executionCount++;
                 topProcedure.execNext();
                 if (executionCount % executionsBeforeGarbageCleaning == 0) {
-                    //System.out.println(localVM.size());
+                    System.out.println(localVM.size());
                     localVM.clearGarbage(getRootSet());
-                    //System.out.println(localVM.size());
+                    System.out.println(localVM.size());
                 }
             } else {
                 topProcedure.procTerminate();
@@ -167,6 +168,7 @@ public class Runtime {
 
     public Set<Integer> getRootSet() {
         Set<Integer> indexes = new HashSet<Integer>();
+        //todo analyse combining global and local refs together
         //operandStack
         for (PSObject o : operandStack) {
             if (!(o.getDirectValue() instanceof LocalRef)) continue;
@@ -179,6 +181,7 @@ public class Runtime {
             if (!(o.getDirectValue() instanceof LocalRef)) continue;
             LocalRef ref = (LocalRef) o.getDirectValue();
             if (o == systemDict) {
+                // in systemdict we don't have any localRefs
                 indexes.add(ref.getTableIndex());
             } else {
                 getUsingLocalVMIndexesByRef(indexes, ref);
@@ -194,6 +197,7 @@ public class Runtime {
             getUsingLocalVMIndexesByRef(indexes, ref);
         }
         return indexes;
+        //todo same for graphicstack after making collection psobjects in graphicstack
     }
 
     private void getUsingLocalVMIndexesByRef(Set<Integer> indexes, LocalRef ref) {
@@ -202,6 +206,7 @@ public class Runtime {
         indexes.add(index);
         LocalRef newRef;
         switch (ref.determineType()) {
+            case PACKEDARRAY:
             case ARRAY:
                 PSObject[] objects = ((PSArray) ref.getValue()).getArray();
                 for (PSObject o : objects) {
