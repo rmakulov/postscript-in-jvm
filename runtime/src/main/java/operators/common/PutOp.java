@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
 import psObjects.values.composite.PSDictionary;
+import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
@@ -36,30 +37,48 @@ public class PutOp extends Operator {
         CompositeValue result;
         switch (src.getType()) {
             case DICTIONARY:
-                result = ((PSDictionary) src.getValue()).put(key, value);
+                src.setValue(((PSDictionary) src.getValue()).put(key, value));
                 break;
             case ARRAY:
             case PACKEDARRAY:
-                if (key.getType() == Type.INTEGER) {
-                    int index = ((PSInteger) key.getValue()).getIntValue();
-                    result = ((PSArray) src.getValue()).setValue(index, value);
-                } else {
-                    runtime.pushToOperandStack(src);
-                    runtime.pushToOperandStack(key);
-                    runtime.pushToOperandStack(value);
-                    return;
-                }
+                copyArray(value, key, src);
                 break;
-            case STRING: //todo put integer into string
+            case STRING:
+                putString(src, key, value);
+                break;
             default: {
                 runtime.pushToOperandStack(src);
                 runtime.pushToOperandStack(key);
                 runtime.pushToOperandStack(value);
                 return;
             }
-
         }
-        src.setValue(result);
+
+    }
+
+    private void copyArray(PSObject value, PSObject key, PSObject src) {
+        if (key.getType() == Type.INTEGER) {
+            int index = ((PSInteger) key.getValue()).getIntValue();
+            src.setValue(((PSArray) src.getValue()).setValue(index, value));
+        } else {
+            runtime.pushToOperandStack(src);
+            runtime.pushToOperandStack(key);
+            runtime.pushToOperandStack(value);
+            return;
+        }
+    }
+
+    private void putString(PSObject src, PSObject key, PSObject value) {
+        if (key.getType() != Type.INTEGER || value.getType() != Type.INTEGER) {
+            runtime.pushToOperandStack(src);
+            runtime.pushToOperandStack(key);
+            runtime.pushToOperandStack(value);
+            return;
+        }
+        int iIndex = ((PSInteger) key.getValue()).getIntValue();
+        byte character = (byte) ((PSInteger) value.getValue()).getIntValue();
+        PSString string = (PSString) src.getValue();
+        src.setValue(string.put(iIndex, character));
     }
 
     @Override

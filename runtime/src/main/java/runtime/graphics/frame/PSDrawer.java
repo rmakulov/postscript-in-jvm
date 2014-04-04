@@ -15,6 +15,8 @@ public class PSDrawer {
     private static PSDrawer instance = new PSDrawer();
     private PSFrame frame = PSFrame.getInstance();
     protected GraphicsState gState = GraphicsState.getInstance();
+    private long lastDrawTime = 0;
+    private final long repaintTime = 50;
 
     private PSDrawer() {
     }
@@ -28,6 +30,7 @@ public class PSDrawer {
 
     public void showPage() {
         frame.setVisible(true);
+        frame.repaint();
     }
 
     public void fill() {
@@ -39,6 +42,16 @@ public class PSDrawer {
         g2.clip(gState.clippingPath.getGeneralPath());
         g2.fill(generalPath);
         gState.newCurrentPath();
+        repaintImage();
+    }
+
+    private void repaintImage() {
+        long time = System.currentTimeMillis();
+        if (Math.abs(time - lastDrawTime) > repaintTime) {
+            frame.repaint();
+            lastDrawTime = time;
+        }
+
     }
 
     public void eofill() {
@@ -50,6 +63,7 @@ public class PSDrawer {
         g2.clip(gState.clippingPath.getGeneralPath());
         g2.fill(generalPath);
         gState.newCurrentPath();
+        repaintImage();
     }
 
     public void stroke() {
@@ -59,6 +73,7 @@ public class PSDrawer {
         g2.clip(gState.clippingPath.getGeneralPath());
         g2.draw(path.getGeneralPath());
         gState.newCurrentPath();
+        repaintImage();
     }
 
     public void clip() {
@@ -69,6 +84,7 @@ public class PSDrawer {
         Shape clip = g2.getClip();
         gState.clippingPath = new PSPath(new GeneralPath(clip));
         gState.newCurrentPath();
+        repaintImage();
     }
 
     public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {

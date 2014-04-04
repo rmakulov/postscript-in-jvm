@@ -37,7 +37,7 @@ public class StoreOp extends Operator {
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("load");
+        return new PSName("store");
     }
 
 }

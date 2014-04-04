@@ -31,7 +31,7 @@ public abstract class Operator extends SimpleValue {
     @Override
     public String toString() {
         return "Operator{" +
-                "name=" + getDefaultKeyName() +
+                "name=" + getDefaultKeyName().getStrValue() +
                 "}";
     }
 }

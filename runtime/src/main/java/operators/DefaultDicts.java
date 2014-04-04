@@ -24,6 +24,7 @@ import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
 import operators.painting.EofillOp;
 import operators.painting.FillOp;
+import operators.painting.RectFillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
 import operators.relationBooleanBitwise.*;
@@ -144,7 +145,6 @@ public class DefaultDicts {
         addOperator(StoreOp.instance);
         addOperator(UndefOp.instance);
         addOperator(KnownOp.instance);
-        addOperator(CopyOp.instance);
         addOperator(CurrentDictOp.instance);
         addOperator(UserDictOp.instance);
         addOperator(GlobalDictOp.instance);
@@ -216,6 +216,7 @@ public class DefaultDicts {
         addOperator(FillOp.instance);
         addOperator(EofillOp.instance);
         addOperator(StrokeOp.instance);
+        addOperator(RectFillOp.instance);
     }
 
     private static void addGraphicStateDeviceIndependentOperators() {
@@ -282,6 +283,7 @@ public class DefaultDicts {
 
     private static void addCommonOperators() {
         addOperator(AloadOp.instance);
+        addOperator(CopyOp.instance);
         addOperator(ForAllOp.instance);
         addOperator(GetIntervalOp.instance);
         addOperator(GetOp.instance);

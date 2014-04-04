@@ -22,6 +22,7 @@ public class PSFrame extends JFrame {
 
     private PSFrame() {
         super();
+        setVisible(true);
         setSize(psWidth, psHeight);
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

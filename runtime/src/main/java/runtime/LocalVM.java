@@ -1,81 +1,111 @@
 package runtime;
 
+import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 public class LocalVM {
-    private ArrayList<CompositeValue> table = new ArrayList<CompositeValue>();
+    private Map<Integer, CompositeValue> map = new HashMap<Integer, CompositeValue>();
+    private Set<Integer> initSet = new HashSet<Integer>();
+    private Set<Integer> stringSet = new HashSet<Integer>();
+    private int maxInt = 0;
 
     public LocalVM() {
     }
 
-    public LocalVM(ArrayList<CompositeValue> table) {
-        this.table = table;
+    private LocalVM(Map<Integer, CompositeValue> map, Set<Integer> initSet, Set<Integer> stringSet, int maxInt) {
+        this.map = map;
+        this.initSet = initSet;
+        this.stringSet = stringSet;
+        this.maxInt = maxInt;
     }
 
-    public LocalVM add(CompositeValue value) {
-        Iterator<CompositeValue> iterator = table.iterator();
-        ArrayList<CompositeValue> newTable = new ArrayList<CompositeValue>();
-        while (iterator.hasNext()) {
-            newTable.add(iterator.next());
+
+    public int add(CompositeValue value) {
+        int index = maxInt;
+        map.put(maxInt, value);
+        if (value.determineType() == Type.STRING) {
+            stringSet.add(maxInt);
         }
-        newTable.add(value);
-        return new LocalVM(newTable);
+        maxInt++;
+        return index;
     }
 
-    public LocalVM remove(int index) {
-        Iterator<CompositeValue> iterator = table.iterator();
-        ArrayList<CompositeValue> newTable = new ArrayList<CompositeValue>();
-        while (iterator.hasNext()) {
-            newTable.add(iterator.next());
+
+    public void remove(int index) {
+        if (map.remove(index).determineType() == Type.STRING) {
+            stringSet.remove(index);
         }
-        newTable.remove(index);
-        return new LocalVM(newTable);
     }
 
-    public LocalVM setNewValueAtIndex(int index, CompositeValue value) {
-        Iterator<CompositeValue> iterator = table.iterator();
-        ArrayList<CompositeValue> newTable = new ArrayList<CompositeValue>();
-        for (int i = 0; i < table.size(); i++) {
-            if (i == index) {
-                newTable.add(value);
-            } else {
-                newTable.add(table.get(i));
+
+    public void setNewValueAtIndex(int index, CompositeValue value) {
+        if (!map.containsKey(index)) {
+            try {
+                throw new Exception("update object value by wrong index");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
         }
-        return new LocalVM(newTable);
-    }
-
-    public int getIndex(CompositeValue value) {
-        for (int i = 0; i < table.size(); i++) {
-            if (table.get(i).equals(value)) return i;
-        }
-        return -1;
+        map.put(index, value);
     }
 
     public boolean contains(Value value) {
         if (!(value instanceof CompositeValue)) return false;
-        return table.contains(value);
+        return map.containsValue(value);
     }
 
     public CompositeValue get(int index) {
-        return table.get(index);
+        return map.get(index);
     }
 
     public String toString() {
-        return table.toString();
+        return map.toString();
     }
 
     public int size() {
-        return table.size();
+        return map.size();
     }
 
     public void clear() {
-        table.clear();
+        map.clear();
+        stringSet.clear();
+        initSet.clear();
+        maxInt = 0;
+    }
+
+    public void initDefaultKeys() {
+        initSet.addAll(map.keySet());
+    }
+
+    public void clearGarbage(Set<Integer> rootSet) {
+        Set<Integer> keys = new HashSet<Integer>(map.keySet());
+        for (Integer key : keys) {
+            if (!rootSet.contains(key) && !initSet.contains(key)) {
+                remove(key);
+            }
+        }
+    }
+
+    public void updateStringValues(LocalVM newLocalVM) {
+        for (Integer i : stringSet) {
+            CompositeValue value = newLocalVM.get(i);
+            if (value.determineType() == Type.STRING) {
+                map.put(i, value);
+            }
+        }
+    }
+
+    public LocalVM clone() {
+        Map<Integer, CompositeValue> newMap = new HashMap<Integer, CompositeValue>(map);
+        Set<Integer> newInitSet = new HashSet<Integer>(initSet);
+        Set<Integer> newStringSet = new HashSet<Integer>(stringSet);
+        return new LocalVM(newMap, newInitSet, newStringSet, maxInt);
     }
 }

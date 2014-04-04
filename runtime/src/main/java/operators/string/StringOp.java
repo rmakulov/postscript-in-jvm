@@ -31,11 +31,7 @@ public class StringOp extends Operator {
             runtime.pushToOperandStack(o);
             return;
         }
-        String res = "";
-        for (int i = 0; i < size; i++) {
-            res += res + new Character((char) 0);
-        }
-        runtime.pushToOperandStack(new PSObject(new PSString(res)));
+        runtime.pushToOperandStack(new PSObject(new PSString(size)));
     }
 
     @Override

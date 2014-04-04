@@ -18,6 +18,7 @@ public class ForProcedure extends ArrayProcedure {
         this.increment = increment;
         this.limit = limit;
         this.nextIndex = -1; //for PSReal write before iteration
+        //System.out.println("For "+initial+" "+increment+" "+limit);
     }
 
     @Override

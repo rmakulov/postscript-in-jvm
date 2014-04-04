@@ -45,8 +45,7 @@ public class PutIntervalOp extends Operator {
         } else if (dst.getType() == Type.STRING && src.getType() == Type.STRING) {
             PSString dstString = (PSString) dst.getValue();
             PSString srcString = (PSString) src.getValue();
-            //todo right
-            dst.setValue((dstString).setSubstring(start, srcString.getString()));
+            dst.setValue(dstString.putInterval(start, srcString));
         } else {
             runtime.pushToOperandStack(dst);
             runtime.pushToOperandStack(index);

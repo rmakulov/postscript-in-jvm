@@ -32,4 +32,8 @@ public class ArrayProcedure extends Procedure {
     protected PSObject[] getArray() {
         return ((PSArray) arrayObj.getValue()).getArray();
     }
+
+    public PSObject getArrayObject() {
+        return arrayObj;
+    }
 }

@@ -65,8 +65,7 @@ public abstract class Procedure {
                 execMark(psObject);
                 break;
             case OPERATOR:
-                Operator operator = (Operator) psObject.getValue();
-                operator.execute();
+                execOperator(psObject);
                 break;
             case ARRAY:
             case PACKEDARRAY:
@@ -76,6 +75,15 @@ public abstract class Procedure {
                 execString(psObject);
                 break;
         }
+    }
+
+    private void execOperator(PSObject psObject) {
+        if (procDepth > 0) {
+            runtime.pushToOperandStack(psObject);
+            return;
+        }
+        Operator operator = (Operator) psObject.getValue();
+        operator.execute();
     }
 
     private void execString(PSObject psObject) {
