@@ -1,7 +1,8 @@
 %!PS-Adobe-2.0
 %%BoundingBox: 0 0 300 200
 %%EndComments
-2 2 scale
+true setglobal
+100 500 translate
 
 
 /origstate save def
@@ -10,7 +11,7 @@
 /dot { currentpoint 1 0 360 arc fill } bind def
 %%EndProlog
 % param
-/maxiter 2 def
+/maxiter 15 def
 % complex manipulation
 /complex { 2 array astore } def
 /real { 0 get } def
