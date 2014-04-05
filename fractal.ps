@@ -1,0 +1,213 @@
+% Quaternion fractal rendering 
+
+% Page size.
+/xPageLen 600 def
+/yPageLen 800 def
+
+% Resolution in the x direction
+/resolution 1000 def
+
+% Ratio of page size to grid size
+/page2grid xPageLen resolution div def
+
+% Grid size.  This is our virtual space that points get plotted into.
+% yGridLen is determined from yPageLen and the scaling factor.
+/xGridLen resolution def
+/yGridLen yPageLen page2grid div cvi def
+
+% Scale everything up to fit the whole page
+page2grid page2grid scale
+
+
+% GRAYBOX: gray y x graybox
+% Makes a 1x1 gray box with lower left hand corner at (x,y).
+/graybox
+{ %def
+	/_lowerX exch def
+	/_lowerY exch def
+	setgray
+	/_upperX _lowerX 1 add def
+	/_upperY _lowerY 1 add def
+	_lowerX _lowerY moveto
+	_lowerX _upperY lineto
+	_upperX _upperY lineto
+	_upperX _lowerY lineto closepath
+	fill
+	0 setlinewidth stroke
+} bind def
+
+
+%
+% 2dput and 2dget are utilities for accessing into a 2 dimensional array
+%
+
+% 2DPUT: grid y x value 2dput 
+% stores value at (x,y)
+/2dput
+{ %def
+	/_value exch def
+	/_x exch def
+	/_y exch def
+	/_grid exch def
+	_grid _x get _y _value put
+} bind def
+
+% 2DGET: grid y x 2dget 
+% gets value at (x,y) and puts it onto stack
+/2dget
+{ %def
+	/_x exch def
+	/_y exch def
+	/_grid exch def
+	_grid _x get _y get
+} bind def
+
+% GRAYVAL: gridVal maxGridVal grayVal
+% computes a grayscale for a given grid value (number of times a trajectory
+% intersected a point in the grid).  We sometimes have to perform some image
+% processing to bring out the finer features of the trajectory.
+% The resulting grayscale value is from 0 to 1, with 0 black and 1 white.
+/threshhold 0.90 def
+/grayVal
+{ %def
+	% if grid is greater than threshhold percentage of max, gray = 1
+	% otherwise, gray = 1 - log(grid/threshhold + 1)/log(max + 1)
+	/_max exch def
+	/_val exch def
+	_val _max threshhold mul gt {
+		0
+	} {
+		/_val _val threshhold div def
+		1 _val 1 add log _max 1 add log div sub
+	} ifelse
+} bind def
+
+% Do sin() and cos() in radians rather than degrees
+/pi 3.14159265 def
+/radian2degre 180 pi div def
+/sinRad { radian2degre mul sin } bind def
+/cosRad { radian2degre mul cos } bind def
+
+
+
+%
+% MAIN
+%
+
+% Create the array
+/grid xGridLen array def
+0 1 xGridLen 1 sub { %for
+	grid exch yGridLen array put 
+} for
+
+% Initialize the array with 0s
+0 1 xGridLen 1 sub { %for
+	/x exch def
+	0 1 yGridLen 1 sub { %for
+		/y exch def
+		grid y x 0 2dput
+	} for
+} for
+
+
+% Constants for mapping from phase space to grid space.
+% xmin goes to 0, xmax goes to xGridLen. Note that the domain to be mapped is
+% xmin <= x < xmax, and the point xmax itself is not included.
+% Similar mappings hold for y.
+/xmin -2 def
+/ymin -2 def
+/xmax  2 def
+/ymax  2 def
+/xscale xGridLen xmax xmin sub div def
+/yscale yGridLen ymax ymin sub div def
+
+% Constants for computing the picture
+/a  2.24 def
+/b  0.43 def
+/c -0.65 def
+/d -2.43 def
+/e  1.00 def
+/steps 1000 5000 mul def 
+
+/debug 20 string def
+
+% Maximum value found in the grid.  Used to normalize the grid.  
+/maxGridVal 0 def
+
+% Main Loop (the real work of computing the picture happens here)
+/x 0 def
+/y 0 def
+/z 0 def
+0 1 steps { %for
+	pop % keep the stack clean
+
+	% xx =   sin(a*y) - z*cos(b*x)
+	% yy = z*sin(c*x) -   cos(d*y)
+	% zz = e*sin(x)
+	/xx
+	  a y mul sinRad
+	  b x mul cosRad z mul
+	  sub def
+	/yy
+	  c x mul sinRad z mul
+	  d y mul cosRad
+	  sub def
+	/zz x sinRad e mul def
+
+	/x xx def
+	/y yy def
+	/z zz def
+
+	% debug
+	%(x,y,z = ) print
+	%x debug cvs print (,) print
+	%y debug cvs print (,) print
+	%z debug cvs print () =
+
+	% Convert from phase space to grid space
+	/gridx x xmin sub xscale mul cvi def
+	/gridy y ymin sub yscale mul cvi def
+
+	%( gridx=) = gridx =
+	%( gridy=) = gridy ==
+
+	% XXX !! make sure gridx and gridy are in range
+
+	% Increment the value at (gridx, gridy)
+	% Also keep track of the maximum grid value so we can normalize the
+	% grid values later
+	/gridVal grid gridy gridx 2dget 1 add def
+	grid gridy gridx gridVal 2dput
+	gridVal maxGridVal gt { /maxGridVal maxGridVal 1 add def } if 
+} for
+
+% This is where the strange attractor code will go
+% For now we'll fill it with random bits
+%0 1 1 { %for
+	%pop % Don't leave anything on the stack
+	%/x rand xGridLen mod def
+	%/y rand yGridLen mod def
+	%grid y x
+	%grid y x 2dget 0.1 add % increment the value at (x,y)
+	%2dput
+%} for
+
+
+maxGridVal =
+
+% Output the array
+% This command returns the value in the grid at (x,y)
+% grid x get y get
+0 1 xGridLen 1 sub { %for
+	/x exch def
+	0 1 yGridLen 1 sub { %for
+		/y exch def
+		%/val grid x get y get def
+		%val x y graybox
+
+		% Invert and normalize the grid value to compute a grayness
+		% gray = 1-val/maxVal
+		grid y x 2dget maxGridVal grayVal
+		y x graybox
+	} for
+} for
