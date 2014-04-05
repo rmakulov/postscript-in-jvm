@@ -26,10 +26,12 @@ public class Interpreter {
     }
 
     public void run(File file) throws IOException {
+        long startTime = System.currentTimeMillis();
         runtime.initDefaultDictionaries();
         MainProcedure mainProcedure = new MainProcedure(file);
         runtime.pushToCallStack(mainProcedure);
         runtime.executeCallStack();
+        System.out.println("Program lasted for " + ((System.currentTimeMillis() - startTime) / 1000) + " seconds");
         /*Yylex scanner = new Yylex(new InputStreamReader(new FileInputStream(file)));
         Yytoken yytoken;
         while ((yytoken = scanner.yylex()) != null) {
@@ -153,7 +155,8 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("6_arcs.ps"));
 //                Interpreter.instance.run(new File("tiger.eps"));
 //                Interpreter.instance.run(new File("tiger_0.eps"));
-                Interpreter.instance.run(new File("mandel.ps"));
+//                Interpreter.instance.run(new File("mandel.ps"));
+                Interpreter.instance.run(new File("cells.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
                 //Interpreter.instance.run(new File("3_setdash.ps"));
 
