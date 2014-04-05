@@ -153,11 +153,10 @@ public class Interpreter {
                 //Interpreter.instance.run(new File("bindTest.ps"));
                 //Interpreter.instance.run(new File("test.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
-//                Interpreter.instance.run(new File("tiger.eps"));
+                Interpreter.instance.run(new File("2_trapezoid.ps"));
 //                Interpreter.instance.run(new File("tiger_0.eps"));
 //                Interpreter.instance.run(new File("mandel.ps"));
-                Interpreter.instance.run(new File("cells.ps"));
-//                Interpreter.instance.run(new File("6_arcs.ps"));
+                //                Interpreter.instance.run(new File("6_arcs.ps"));
                 //Interpreter.instance.run(new File("3_setdash.ps"));
 
             } else {
