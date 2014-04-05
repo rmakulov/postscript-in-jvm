@@ -66,6 +66,7 @@ public class PSPath {
                 h, -relAngle1, extent, Arc2D.OPEN);
 
         generalPath.append(arcDouble, connect);
+
     }
 
     public void closePath() {

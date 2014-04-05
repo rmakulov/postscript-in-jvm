@@ -3,6 +3,7 @@ package operators.arithmetic.binary;
 
 import psObjects.PSObject;
 import psObjects.Type;
+import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
 import runtime.Runtime;
@@ -25,15 +26,27 @@ public class BinaryArithmeticOp {
         double dRes;
         switch (op) {
             case '+':
+                if (o1.getType() == Type.INTEGER && o2.getType() == Type.INTEGER) {
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(((int) r1) + ((int) r2))));
+                    return;
+                }
                 dRes = r1 + r2;
                 break;
             case '-':
+                if (o1.getType() == Type.INTEGER && o2.getType() == Type.INTEGER) {
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(((int) r1) - ((int) r2))));
+                    return;
+                }
                 dRes = r1 - r2;
                 break;
             case '/':
                 dRes = r1 / r2;
                 break;
             case '*':
+                if (o1.getType() == Type.INTEGER && o2.getType() == Type.INTEGER) {
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(((int) r1) * ((int) r2))));
+                    return;
+                }
                 dRes = r1 * r2;
                 break;
             case 't':
@@ -45,7 +58,7 @@ public class BinaryArithmeticOp {
                 dRes = Math.atan2(r1, r2) * Math.PI / 180;
                 break;
             case 'e':
-                if (o2.getType()!= Type.INTEGER && r1<0) {
+                if (o2.getType() != Type.INTEGER && r1 < 0) {
                     runtime.pushToOperandStack(o1);
                     runtime.pushToOperandStack(o2);
                     return;
