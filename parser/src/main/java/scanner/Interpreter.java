@@ -162,7 +162,16 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("psRay.ps"));
 //                Interpreter.instance.run(new File("julia.ps"));
                 //                Interpreter.instance.run(new File("6_arcs.ps"));
-                Interpreter.instance.run(new File("affineIfs.ps"));
+//                Interpreter.instance.run(new File("testim.ps"));
+//                Interpreter.instance.run(new File("cube6.ps"));
+                //Interpreter.instance.run(new File("sphere1.ps"));
+//                Interpreter.instance.run(new File("appolonain_net.ps"));
+//                Interpreter.instance.run(new File("flower.ps"));
+//                Interpreter.instance.run(new File("tiger.eps"));
+//                Interpreter.instance.run(new File("tiger0.eps"));
+//                Interpreter.instance.run(new File("mandel.ps"));
+//                Interpreter.instance.run(new File("6_arcs.ps"));
+                //Interpreter.instance.run(new File("affineIfs.ps"));
                 //Interpreter.instance.run(new File("3_setdash.ps"));
 
             } else {
