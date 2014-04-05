@@ -116,7 +116,7 @@ public class Interpreter {
 //main examples
 //                Interpreter.instance.run(new File("Picture Examples/SimpleExample_0.eps"));
 //                Interpreter.instance.run(new File("Picture Examples/WireFrame.eps"));
-//                Interpreter.instance.run(new File("Picture Examples/colorcir.ps"));
+//                Interpreter.instance.run(new File("colorcir.ps"));
 //                Interpreter.instance.run(new File("Picture Examples/snowflak.ps"));
 //                Interpreter.instance.run(new File("Picture Examples/doretree.ps"));
 
@@ -151,9 +151,14 @@ public class Interpreter {
                 //Interpreter.instance.run(new File("bindTest.ps"));
                 //Interpreter.instance.run(new File("test.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
+//                Interpreter.instance.run(new File("testim.ps"));
+//                Interpreter.instance.run(new File("cube6.ps"));
+                Interpreter.instance.run(new File("sphere1.ps"));
+//                Interpreter.instance.run(new File("appolonain_net.ps"));
+//                Interpreter.instance.run(new File("flower.ps"));
 //                Interpreter.instance.run(new File("tiger.eps"));
-//                Interpreter.instance.run(new File("tiger_0.eps"));
-                Interpreter.instance.run(new File("mandel.ps"));
+//                Interpreter.instance.run(new File("tiger0.eps"));
+//                Interpreter.instance.run(new File("mandel.ps"));
 //                Interpreter.instance.run(new File("6_arcs.ps"));
                 //Interpreter.instance.run(new File("3_setdash.ps"));
 
