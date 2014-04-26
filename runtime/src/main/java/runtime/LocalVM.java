@@ -3,6 +3,7 @@ package runtime;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
+import psObjects.values.composite.PSArray;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -104,6 +105,12 @@ public class LocalVM {
 
     public LocalVM clone() {
         Map<Integer, CompositeValue> newMap = new HashMap<Integer, CompositeValue>(map);
+        for (Integer i : map.keySet()) {
+            CompositeValue value = newMap.get(i);
+            if (value instanceof PSArray) {
+                newMap.put(i, ((PSArray) value).clone());
+            }
+        }
         Set<Integer> newInitSet = new HashSet<Integer>(initSet);
         Set<Integer> newStringSet = new HashSet<Integer>(stringSet);
         return new LocalVM(newMap, newInitSet, newStringSet, maxInt);
