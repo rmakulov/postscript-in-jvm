@@ -35,7 +35,7 @@ public class RLineToOp extends AbstractGraphicOperator {
         //double curY = gState.currentPoint.getY();
 
         PSPoint newPoint = new PSPoint(p.getX(), p.getY());
-        gState.currentPath.addLineSegment(gState.currentPoint, newPoint);
+        gState.currentPath.addLine(gState.currentPoint, newPoint);
         gState.currentPoint = newPoint;
     }
 

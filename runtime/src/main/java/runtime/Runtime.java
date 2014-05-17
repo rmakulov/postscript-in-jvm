@@ -17,7 +17,7 @@ import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSNull;
 import runtime.avl.Pair;
-import runtime.graphics.GraphicsState;
+import runtime.graphics.GState;
 import runtime.graphics.save.GSave;
 import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;
@@ -67,7 +67,7 @@ public class Runtime {
     }
 
     public void gsave(boolean isMadeByGsave) {
-        GSave gsave = GraphicsState.getInstance().getSnapshot(isMadeByGsave);
+        GSave gsave = GState.getInstance().getSnapshot(isMadeByGsave);
         pushToGraphicStack(gsave);
     }
 
@@ -175,6 +175,24 @@ public class Runtime {
             LocalRef ref = (LocalRef) o.getDirectValue();
             getUsingLocalVMIndexesByRef(indexes, ref);
         }
+
+        //graphicStack
+        for (GSave gsave : graphicStack) {
+            PSObject o = gsave.getcTM().getMatrix();
+            PSArray arr = (PSArray) o.getValue();
+            if (!(o.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) o.getDirectValue();
+            getUsingLocalVMIndexesByRef(indexes, ref);
+        }
+        LocalRef locRefCTM = GState.getInstance().getLocalRefCTM();
+        //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
+        if (locRefCTM != null) {
+            getUsingLocalVMIndexesByRef(indexes, locRefCTM);
+        }
+        //if(locRefDash != null){
+        //    getUsingLocalVMIndexesByRef(indexes, locRefDash);
+        //}
+
         //dictStack
         for (PSObject o : dictionaryStack) {
 
@@ -186,7 +204,6 @@ public class Runtime {
             } else {
                 getUsingLocalVMIndexesByRef(indexes, ref);
             }
-
         }
         //callStack
         for (Procedure proc : callStack) {

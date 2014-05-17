@@ -1,5 +1,8 @@
 package runtime.graphics;
 
+import psObjects.Type;
+import psObjects.values.composite.CompositeValue;
+import psObjects.values.reference.LocalRef;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
@@ -8,8 +11,8 @@ import runtime.graphics.save.GSave;
 
 import java.awt.*;
 
-public class GraphicsState {
-    private static GraphicsState instance = new GraphicsState();
+public class GState extends CompositeValue {
+    private static GState instance = new GState();
     public PSPoint currentPoint;
     public PSPath currentPath;
     public PSPath clippingPath;
@@ -17,7 +20,7 @@ public class GraphicsState {
     public GraphicsSettings graphicsSettings;
 
 
-    private GraphicsState() {
+    private GState() {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
@@ -25,7 +28,7 @@ public class GraphicsState {
         graphicsSettings = GraphicsSettings.mainInstance;
     }
 
-    public static GraphicsState getInstance() {
+    public static GState getInstance() {
         return instance;
     }
 
@@ -34,6 +37,20 @@ public class GraphicsState {
         //96 - это число пикселей в дюйме
     }
 
+
+    public LocalRef getLocalRefCTM() {
+        if (!(cTM.getMatrix().getDirectValue() instanceof LocalRef)) return null;
+        LocalRef ref = (LocalRef) cTM.getMatrix().getDirectValue();
+        return ref;
+    }
+
+    /*
+        public LocalRef getLocalRefDash(){
+            if( ! (graphicsSettings.dash.getDirectValue() instanceof LocalRef)) return null;
+            LocalRef ref = (LocalRef) graphicsSettings.dash.getDirectValue() ;
+            return ref ;
+        }
+    */
     public GSave getSnapshot(boolean isMadeByGSaveOp) {
         return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint);
     }
@@ -54,6 +71,7 @@ public class GraphicsState {
 
     public GraphicsSettings cloneGraphicsSettings() {
         return graphicsSettings.clone();
+
     }
 
     public void newCurrentPath() {
@@ -64,5 +82,17 @@ public class GraphicsState {
     public void initClip() {
         clippingPath = new PSPath();
         clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
+    }
+
+    @Override
+    public Type determineType() {
+        return Type.GSTATE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GState)) return false;
+        return true;
     }
 }

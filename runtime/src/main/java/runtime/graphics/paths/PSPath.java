@@ -23,15 +23,6 @@ public class PSPath {
         this.generalPath = generalPath;
     }
 
-/*
-    public GeneralPath getLastGeneralPath() {
-        if (generalPaths.size() == 0) {
-            return null;
-        }
-        return generalPaths.get(generalPaths.size() - 1);
-    }
-*/
-
     public GeneralPath getGeneralPath() {
         return generalPath;
     }
@@ -41,7 +32,7 @@ public class PSPath {
     }
 
     //absolute coordinates in postscript
-    public void addLineSegment(PSPoint start, PSPoint end) {
+    public void addLine(PSPoint start, PSPoint end) {
         generalPath.lineTo(end.getX(), end.getY());
     }
 

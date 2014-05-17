@@ -1,12 +1,12 @@
 package operators;
 
 import psObjects.values.simple.Operator;
-import runtime.graphics.GraphicsState;
+import runtime.graphics.GState;
 
 /**
  * Created by user on 15.03.14.
  */
 public abstract class AbstractGraphicOperator extends Operator {
-    protected GraphicsState gState = GraphicsState.getInstance();
+    protected GState gState = GState.getInstance();
 
 }

@@ -1,7 +1,7 @@
 package runtime.graphics.frame;
 
+import runtime.graphics.GState;
 import runtime.graphics.GraphicsSettings;
-import runtime.graphics.GraphicsState;
 import runtime.graphics.paths.PSPath;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.awt.geom.Path2D;
 public class PSDrawer {
     private static PSDrawer instance = new PSDrawer();
     private PSFrame frame = PSFrame.getInstance();
-    protected GraphicsState gState = GraphicsState.getInstance();
+    protected GState gState = GState.getInstance();
     private long lastDrawTime = 0;
     private final long repaintTime = 50;
 
@@ -94,6 +94,7 @@ public class PSDrawer {
                 settings.lineCap,
                 settings.lineJoin,
                 (float) settings.miterLimit,
+                //settings.getDash(), settings.dashPhase));
                 settings.dash, settings.dashPhase));
 
     }
