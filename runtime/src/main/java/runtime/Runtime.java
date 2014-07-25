@@ -2,6 +2,10 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import procedures.ArrayProcedure;
 import procedures.Procedure;
 import psObjects.Attribute;
@@ -16,6 +20,8 @@ import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSNull;
+import psObjects.values.simple.numbers.PSInteger;
+import psObjects.values.simple.numbers.PSReal;
 import runtime.avl.Pair;
 import runtime.graphics.GState;
 import runtime.graphics.save.GSave;
@@ -24,13 +30,134 @@ import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 import static psObjects.Type.*;
 
 
-public class Runtime {
+public class Runtime implements Opcodes {
+    private StringBuilder codeGenerator = new StringBuilder();
+
+    public void appendBytecode(String s) {
+        codeGenerator.append(s).append(" ");
+    }
+
+    public StringBuilder getCodeGenerator() {
+        return codeGenerator;
+    }
+
+    public void resetCodeGenerator() {
+        String cg = getCodeGenerator().toString();
+//         Check if we collect smth, have some args and smth contains not only from numbers.
+        if (argsCount > 0
+                && cg.split(" ").length > args.size()) {
+            runFragment(cg);
+        }
+        codeGenerator.delete(0, codeGenerator.capacity());
+        while (args.size() > 0) {
+            double tmp = args.remove();
+            if ((tmp == Math.floor(tmp)) && !Double.isInfinite(tmp)) {
+                pushToOperandStack(new PSObject(new PSInteger((int) (tmp))));
+            } else {
+                pushToOperandStack(new PSObject(new PSReal(tmp)));
+            }
+        }
+        argsCount = 0;
+        cw = new ClassWriter(0);
+        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(i), null, "java/lang/Object", null);
+        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
+        mv.visitCode();
+        Label l0 = new Label();
+        mv.visitLabel(l0);
+    }
+
+    public ClassWriter cw;
+    public MethodVisitor mv;
+
+    public Queue<Double> args = new ArrayDeque<Double>();
+    public int argsCount = 0;
+
+    private Map<String, Integer> generatedCode = new HashMap<String, Integer>();
+    //    private Set<String> generatedCode = new HashSet<String>();
+    private int i = 0;
+
+    public void runFragment(String str) {
+        if (!generatedCode.containsKey(str)) {
+//        } else if(str.length()>0 ) {
+//            generatedCode.put(str, ((Integer) i).getClass());
+
+            {
+                MethodVisitor mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
+                mv.visitCode();
+
+                mv.visitTypeInsn(NEW, "java/util/Random");
+                mv.visitInsn(DUP);
+                mv.visitMethodInsn(INVOKESPECIAL, "java/util/Random", "<init>", "()V", false);
+                mv.visitFieldInsn(PUTSTATIC, "ASM", "random", "Ljava/util/Random;");
+                mv.visitInsn(RETURN);
+                mv.visitMaxs(2, 0);
+                mv.visitEnd();
+            }
+
+//            Label stL = new Label();
+//            Label enL = new Label();
+//
+//            mv.visitLabel(stL);
+////            mv.visitFrame(F_SAME, 0, null, 0, null);
+//            mv.visitJumpInsn(IFNONNULL, enL);
+//
+//            // достаем
+//            mv.visitIntInsn(ALOAD, 0);
+//            mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "args", "Ljava/util/Queue;");
+//            mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "add", "(Ljava/lang/Object;)Z", true);
+//            mv.visitInsn(POP);
+
+
+//            mv.visitJumpInsn(GOTO, stL);
+//
+//            mv.visitLabel(enL);
+//            mv.visitFrame(F_SAME, 0, null, 0, null);
+
+            mv.visitInsn(RETURN);
+            // if argsCount equals 0, visitMaxs doesn't have to be 0
+            mv.visitMaxs((argsCount + 1) * 5, (argsCount + 1) * 5);
+
+            mv.visitEnd();
+
+            DynamicClassLoader.instance.putClass(Integer.toString(i), cw.toByteArray());
+
+            System.out.println(i + " " + str);
+            generatedCode.put(str, i);
+            i++;
+
+
+        }
+
+        Class c = null;
+        int classNumber = generatedCode.get(str);
+        try {
+            c = DynamicClassLoader.instance.loadClass(Integer.toString(classNumber));
+            c.getMethod("run", Runtime.class).invoke(null, this);
+//            final double dRes = (Double) c.getMethod("run", Runtime.class).invoke(null, this);
+//            if ((dRes == Math.floor(dRes)) && !Double.isInfinite(dRes)) {
+//                pushToOperandStack(new PSObject(new PSInteger((int) (dRes))));
+//            } else {
+//                pushToOperandStack(new PSObject(new PSReal(dRes)));
+//            }
+//            System.out.println("\t" + dRes);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private static Runtime ourInstance = new Runtime();
     private int executionCount = 0;
     private int executionsBeforeGarbageCleaning = 10000;
@@ -48,10 +175,16 @@ public class Runtime {
 
     private Runtime() {
         super();
+        cw = new ClassWriter(0);
+        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(i), null, "java/lang/Object", null);
+        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
+        mv.visitCode();
+        Label l0 = new Label();
+        mv.visitLabel(l0);
+
     }
 
     public static Runtime getInstance() {
-        //if (!ourInstance.isInitedDicts) ourInstance.initDefaultDictionaries();
         return ourInstance;
     }
 
@@ -105,7 +238,7 @@ public class Runtime {
 
     public void pushToOperandStack(PSObject psObject) {
         //System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
-        operandStack = operandStack.push(psObject);
+        if (!(psObject == null)) operandStack = operandStack.push(psObject);
     }
 
     public PSObject popFromOperandStack() {
@@ -155,9 +288,9 @@ public class Runtime {
                 executionCount++;
                 topProcedure.execNext();
                 if (executionCount % executionsBeforeGarbageCleaning == 0) {
-                    System.out.println(localVM.size());
+//                    System.out.println("Local vm argsCount before gc " + localVM.argsCount());
                     localVM.clearGarbage(getRootSet());
-                    System.out.println(localVM.size());
+//                    System.out.println("Local vm argsCount after gc " + localVM.argsCount());
                 }
             } else {
                 topProcedure.procTerminate();
@@ -382,7 +515,7 @@ public class Runtime {
 
 /*    public LocalRef putPSObjectToLocalVM(Value object) {
         localVM.add(object);
-        return new LocalRef(localVM.size() - 1);
+        return new LocalRef(localVM.argsCount() - 1);
     }*/
 
     public void setGlobal(boolean isGlobal) {

@@ -4,8 +4,8 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
-import runtime.Runtime;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -21,8 +21,17 @@ public class RandOp extends Operator {
 
     @Override
     public void execute() {
-        runtime.Runtime runtime = Runtime.getInstance();
-        int randomInt = random.nextInt(Integer.MAX_VALUE);
+
+        int randomInt = 0;
+        try {
+            randomInt = (Integer) asm.getMethod("rand").invoke(null);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         runtime.pushToOperandStack(new PSObject(new PSInteger(randomInt)));
     }
 

@@ -27,12 +27,14 @@ public class DefOp extends Operator {
         }
         PSObject dictObj = runtime.currentDict();
         PSDictionary dict = (PSDictionary) dictObj.getValue();
+
         PSDictionary newDict = dict.put(psKey, psValue);
         dictObj.setValue(newDict);
     }
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("def");
+        PSName psName = new PSName("def");
+        return psName;
     }
 }

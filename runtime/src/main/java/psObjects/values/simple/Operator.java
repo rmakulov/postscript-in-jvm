@@ -9,7 +9,7 @@ public abstract class Operator extends SimpleValue {
     protected final Attribute.TreatAs LITERAL = Attribute.TreatAs.LITERAL;
     protected final Attribute.TreatAs EXECUTABLE = Attribute.TreatAs.EXECUTABLE;
     protected runtime.Runtime runtime = Runtime.getInstance();
-    protected static Class<?> asm = null;
+    public static Class<?> asm = null;
 
     public abstract void execute();
 

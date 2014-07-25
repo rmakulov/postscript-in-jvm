@@ -7,6 +7,8 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Created by Дмитрий on 15.03.14.
  */
@@ -26,7 +28,16 @@ public class SrandOp extends Operator {
         }
         PSInteger psInteger = (PSInteger) o.getValue();
         int seed = psInteger.getIntValue();
-        RandOp.setRandomSeed(seed);
+        try {
+            asm.getMethod("srand", int.class).invoke(null, seed);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+//        RandOp.setRandomSeed(seed);
     }
 
     @Override

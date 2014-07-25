@@ -53,6 +53,9 @@ public abstract class Procedure {
             //                break;
             case INTEGER:
             case REAL:
+                if (runtime.getCodeGenerator().length() > 0) {
+                    break;
+                }
             case BOOLEAN:
             case DICTIONARY:
             case NULL:
@@ -165,7 +168,8 @@ public abstract class Procedure {
             }
 
             if (value.getType() == Type.OPERATOR) {
-                ((Operator) value.getValue()).execute();
+                Operator operator = (Operator) value.getValue();
+                operator.execute();
                 return;
             }
             //value cannot be a Mark

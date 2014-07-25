@@ -57,7 +57,9 @@ public class PSObject implements Comparable<PSObject> {
         }
         this.value = value;
         type = value.determineType();
-        if (isComposite() || type == Type.NAME) attribute = new Attribute();
+        if (isComposite() || type == Type.NAME) {
+            attribute = new Attribute();
+        }
     }
 
     public PSObject(Value value, Attribute.TreatAs treatAs) {
@@ -68,7 +70,6 @@ public class PSObject implements Comparable<PSObject> {
         type = value.determineType();
         if (isComposite() || type == Type.NAME) attribute = new Attribute(treatAs);
     }
-
 
     public boolean isComposite() {
         switch (type) {
@@ -297,7 +298,6 @@ public class PSObject implements Comparable<PSObject> {
     public boolean isProc() {
         return ((type == Type.ARRAY) || (type == Type.PACKEDARRAY)) && xcheck();
     }
-
 
     public boolean isDictKey() {
         switch (type) {

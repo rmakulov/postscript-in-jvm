@@ -4,6 +4,8 @@ import psObjects.Type;
 import psObjects.values.Value;
 
 public class PSName extends SimpleValue {
+
+
     private String strValue;
 
     public PSName(String strValue) {
@@ -49,7 +51,7 @@ public class PSName extends SimpleValue {
         return 0;
     }
 
-    public int length(){
+    public int length() {
         return strValue.length();
     }
 }

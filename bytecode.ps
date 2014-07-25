@@ -1,44 +1,9 @@
-/csquare {
-        newpath
-        0 0 moveto
-        0 1 rlineto
-        1 0 rlineto
-        0 -1 rlineto
-        closepath
-        setrgbcolor
-        fill
-} def
-
-% 75 75 scale
-
-true setglobal
-150 350 translate
-
-/i 0 def
-/j 0 def
-
-10  {
-    gsave
-    i 0 translate
-    10 {csquare 0 1 translate} repeat
-    grestore
-    /i i 1 add def
-} repeat
-i j
+/seed usertime def
+seed srand
+rand 99 mod 100 div rand 99 mod 100 div 100 rand 22 mod sub 100 div abs
+%showpage
 
 
-%i j translate csquare incJ
-%incI zeroJ
 
-%1 0 0 csquare
 
-%0 1 translate
-%0 1 0 csquare
 
-%0 1 translate
-%0 0 1 csquare
-
-%0 1 translate
-%1 1 0 csquare
-
-showpage
