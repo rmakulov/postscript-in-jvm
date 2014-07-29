@@ -38,6 +38,7 @@ public class CurveToOp extends AbstractGraphicOperator {
             runtime.pushToOperandStack(oY2);
             runtime.pushToOperandStack(oX3);
             runtime.pushToOperandStack(oY3);
+            System.out.println("TROUBLE!!!!");
             return;
         }
         double nX1 = ((PSNumber) oX1.getValue()).getRealValue();

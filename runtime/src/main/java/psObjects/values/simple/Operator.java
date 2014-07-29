@@ -2,7 +2,6 @@ package psObjects.values.simple;
 
 import psObjects.Attribute;
 import psObjects.Type;
-import runtime.DynamicClassLoader;
 import runtime.Runtime;
 
 public abstract class Operator extends SimpleValue {
@@ -14,11 +13,11 @@ public abstract class Operator extends SimpleValue {
     public abstract void execute();
 
     protected Operator() {
-        try {
-            asm = DynamicClassLoader.instance.loadClass("ASM");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            asm = DynamicClassLoader.instance.loadClass("ASM");
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

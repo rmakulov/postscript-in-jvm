@@ -1,0 +1,98 @@
+rand
+integertype
+mod
+integertype
+div
+rand
+integertype
+mod
+integertype
+div
+integertype
+rand
+integertype
+mod
+sub
+integertype
+div
+
+rand
+integertype
+mod
+integertype
+div
+integertype
+rand
+integertype
+mod
+sub
+integertype
+div
+rand
+integertype
+mod
+integertype
+div
+
+Bytecode # 1
+
+neg
+
+Bytecode # 3
+
+Bytecode # 3
+
+neg
+integertype
+
+rand
+integertype
+mod
+integertype
+div
+integertype
+rand
+integertype
+mod
+sub
+integertype
+div
+integertype
+rand
+integertype
+mod
+sub
+integertype
+div
+
+integertype
+div
+
+Bytecode # 6
+
+sub
+
+Bytecode # 7
+
+div
+
+Bytecode # 8
+
+truncate
+div
+
+Bytecode # 9
+
+Bytecode # 8
+
+Bytecode # 8
+
+rand
+integertype
+mod
+abs
+
+Bytecode # 10
+
+mul
+neg

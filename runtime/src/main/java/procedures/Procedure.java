@@ -7,9 +7,14 @@ import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import psObjects.values.simple.numbers.PSReal;
+import runtime.DynamicClassLoader;
 import runtime.Runtime;
+
+import java.lang.reflect.InvocationTargetException;
 
 import static psObjects.Attribute.TreatAs.EXECUTABLE;
 import static psObjects.Attribute.TreatAs.LITERAL;
@@ -34,6 +39,12 @@ public abstract class Procedure {
     public void execNext() {
         if (!hasNext()) return;
         PSObject nextObject = next();
+        PSObject psBW = runtime.bcGen.getCur();
+        if (procDepth > 0) {
+            runtime.pushToOperandStack(psBW);
+        } else {
+            execObject(psBW);
+        }
         if (nextObject == null) {
             return;
         }
@@ -45,6 +56,7 @@ public abstract class Procedure {
             return;
         switch (psObject.getType()) {
             case NAME:
+                runtime.bcGen.resetCodeGenerator();
                 execName(psObject);
                 break;
 
@@ -53,7 +65,7 @@ public abstract class Procedure {
             //                break;
             case INTEGER:
             case REAL:
-                if (runtime.getCodeGenerator().length() > 0) {
+                if (runtime.bcGen.getCurPattern().length() > 0) {
                     break;
                 }
             case BOOLEAN:
@@ -151,6 +163,35 @@ public abstract class Procedure {
         if (treatAs == LITERAL) {
             runtime.pushToOperandStack(psObject);
         } else {
+
+            if (psObject.getValue() instanceof PSBytecode) {
+                runtime.bcGen.args = ((PSBytecode) psObject.getValue()).getArgs();
+                Class c = null;
+                try {
+                    c = DynamicClassLoader.instance.loadClass(((PSBytecode) psObject.getValue()).getStrValue());
+                    c.getMethod("run", Runtime.class).invoke(null, runtime);
+//                    System.out.println(((PSBytecode) psObject.getValue()).getStrValue() + " used");
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                while (runtime.bcGen.args.size() > 0) {
+                    double tmp = runtime.bcGen.args.remove();
+//                    if ((tmp == Math.floor(tmp)) && !Double.isInfinite(tmp)) {
+//                        runtime.pushToOperandStack(new PSObject(new PSInteger((int) (tmp))));
+//                    } else {
+                    runtime.pushToOperandStack(new PSObject(new PSReal(tmp)));
+//                    }
+                }
+                return;
+            }
             PSObject value = runtime.findValue(psObject);
             String procName = ((PSName) psObject.getValue()).getStrValue();
             while (value.getType() == Type.NAME && value.treatAs() == EXECUTABLE) {

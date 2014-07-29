@@ -21,9 +21,12 @@ public class AloadOp extends Operator {
             return;
         if (psObject.getType() == Type.ARRAY || psObject.getType() == Type.PACKEDARRAY) {
             PSObject[] array = ((PSArray) psObject.getValue()).getArray();
+//            System.out.print("Aload: ");
             for (PSObject object : array) {
                 runtime.pushToOperandStack(object);
+//                System.out.print(object.getDirectValue() + " ");
             }
+//            System.out.println();
             runtime.pushToOperandStack(psObject);
         } else {
             runtime.pushToOperandStack(psObject);

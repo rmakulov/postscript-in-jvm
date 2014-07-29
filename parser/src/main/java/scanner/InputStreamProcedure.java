@@ -4,7 +4,6 @@ import org.objectweb.asm.Opcodes;
 import procedures.Procedure;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
-import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
@@ -12,7 +11,6 @@ import psObjects.values.simple.numbers.PSReal;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
 
 import static psObjects.Attribute.TreatAs.EXECUTABLE;
 import static psObjects.Attribute.TreatAs.LITERAL;
@@ -51,230 +49,235 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             case INTEGER:
             case REAL:
                 //real
-                runtime.appendBytecode("ARG");
-                runtime.argsCount++;
+                runtime.bcGen.appendPattern("ARG");
+                runtime.bcGen.argsCount++;
 
                 final double t2 = Double.parseDouble(text);
-                runtime.args.add(t2);
+                runtime.bcGen.args.add(t2);
 
-                runtime.mv.visitIntInsn(ALOAD, 0);
-                runtime.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "args", "Ljava/util/Queue;");
-                runtime.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
-                runtime.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
-                runtime.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);
+                runtime.bcGen.mv.visitIntInsn(ALOAD, 0);
+                runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGenerator;");
+                runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/BytecodeGenerator", "args", "Ljava/util/Queue;");
+                runtime.bcGen.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
+//                runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/util/ArrayDeque");
+//                runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayDeque", "removeLast", "()Ljava/lang/Object;", false);
+                runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);
 
-                if ((t2 == Math.floor(t2)) && !Double.isInfinite(t2)) {
-                    return new PSObject(new PSInteger((int) (t2)));
-                } else {
-                    return new PSObject(new PSReal(t2));
-                }
+//                if ((t2 == Math.floor(t2)) && !Double.isInfinite(t2)) {
+//                    return new PSObject(new PSInteger((int) (t2)));
+//                } else {
+                return new PSObject(new PSReal(t2));
+//                }
 
             case HEX:
                 //hex
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(new PSInteger(Integer.parseInt(text, 16)));
             case RADIX:
                 //radix
                 String[] args = text.split("#");
                 int radix = Integer.parseInt(args[0]);
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(new PSInteger(Integer.parseInt(args[1], radix)));
             case EXEC_NAME:
                 // name without "/". it is executable by default
                 PSObject psObject = new PSObject(new PSName(text), EXECUTABLE);
 
-                if (text.equals("add") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(DADD);
+                if (text.equals("add") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitInsn(DADD);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("mul") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(DMUL);
+                } else if (text.equals("mul") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitInsn(DMUL);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("div") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(DDIV);
+                } else if (text.equals("div") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitInsn(DDIV);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("idiv") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitVarInsn(DSTORE, 2);
-                    runtime.mv.visitInsn(D2L);
-                    runtime.mv.visitVarInsn(DLOAD, 2);
-                    runtime.mv.visitInsn(D2L);
-                    runtime.mv.visitInsn(LDIV);
-                    runtime.mv.visitInsn(L2D);
+                } else if (text.equals("idiv") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitVarInsn(DSTORE, 2);
+                    runtime.bcGen.mv.visitInsn(D2L);
+                    runtime.bcGen.mv.visitVarInsn(DLOAD, 2);
+                    runtime.bcGen.mv.visitInsn(D2L);
+                    runtime.bcGen.mv.visitInsn(LDIV);
+                    runtime.bcGen.mv.visitInsn(L2D);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("sub") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(DSUB);
+                } else if (text.equals("sub") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitInsn(DSUB);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("mod") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitVarInsn(DSTORE, 2);
-                    runtime.mv.visitInsn(D2L);
-                    runtime.mv.visitVarInsn(DLOAD, 2);
-                    runtime.mv.visitInsn(D2L);
-                    runtime.mv.visitInsn(LREM);
-                    runtime.mv.visitInsn(L2D);
+                } else if (text.equals("mod") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitVarInsn(DSTORE, 2);
+                    runtime.bcGen.mv.visitInsn(D2L);
+                    runtime.bcGen.mv.visitVarInsn(DLOAD, 2);
+                    runtime.bcGen.mv.visitInsn(D2L);
+                    runtime.bcGen.mv.visitInsn(LREM);
+                    runtime.bcGen.mv.visitInsn(L2D);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("abs") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-//                    runtime.mv.visitVarInsn(DSTORE, 3);
-//                    runtime.mv.visitIntInsn(DLOAD, 3);
-//                    runtime.mv.visitInsn(DCONST_0);
-//                    runtime.mv.visitInsn(DCMPG);
-//                    Label label = new Label();
-//                    runtime.mv.visitJumpInsn(IFGT, label);
-//                    runtime.mv.visitInsn(DCONST_0);
-//                    runtime.mv.visitIntInsn(DLOAD, 3);
-//                    runtime.mv.visitInsn(DSUB);
-//                    Label end = new Label();
-//                    runtime.mv.visitJumpInsn(GOTO, end);
-//                    runtime.mv.visitLabel(label);
-//                    runtime.mv.visitFrame(F_SAME, 0, null, 0, null);
-//                    runtime.mv.visitIntInsn(DLOAD, 3);
-//                    runtime.mv.visitLabel(end);
-//                    runtime.mv.visitFrame(F_SAME, 0, null, 0, null);
-
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "abs", "(D)D");
+                } else if (text.equals("abs") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "abs", "(D)D");
 
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("neg") && runtime.argsCount > 0) {
-//                    if (runtime.args.argsCount() != 0){
-//                        PSObject psObject1 = runtime.popFromOperandStack();
-//                        final double t3 = ((PSNumber)psObject1.getValue()).getRealValue();
-//                        runtime.args.add(t3);
-//                        runtime.appendBytecode("ARG");
-//                        runtime.mv.visitIntInsn(ALOAD, 0);
-//                        runtime.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "args", "Ljava/util/Queue;");
-//                        runtime.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
-//                        runtime.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
-//                        runtime.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);
-//                    }
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(DNEG);
+                } else if (text.equals("neg") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitInsn(DNEG);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("ceiling") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "ceil", "(D)D");
+                } else if (text.equals("ceiling") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "ceil", "(D)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("floor") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "floor", "(D)D");
+                } else if (text.equals("floor") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "floor", "(D)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("round") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "round", "(D)J");
+                } else if (text.equals("round") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "round", "(D)J");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("truncate") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(D2I);
-                    runtime.mv.visitInsn(I2D);
+                } else if (text.equals("truncate") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitInsn(D2I);
+                    runtime.bcGen.mv.visitInsn(I2D);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("sqrt") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "sqrt", "(D)D");
+                } else if (text.equals("sqrt") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "sqrt", "(D)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("atan") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "atan2", "(DD)D");
-                    runtime.mv.visitLdcInsn(3.141592653589793d);
-                    runtime.mv.visitInsn(DMUL);
-                    runtime.mv.visitLdcInsn(180.0d);
-                    runtime.mv.visitInsn(DDIV);
+                } else if (text.equals("atan") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "atan2", "(DD)D");
+                    runtime.bcGen.mv.visitLdcInsn(3.141592653589793d);
+                    runtime.bcGen.mv.visitInsn(DMUL);
+                    runtime.bcGen.mv.visitLdcInsn(180.0d);
+                    runtime.bcGen.mv.visitInsn(DDIV);
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("cos") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitLdcInsn(3.141592653589793d);
-                    runtime.mv.visitInsn(DMUL);
-                    runtime.mv.visitLdcInsn(180.0d);
-                    runtime.mv.visitInsn(DDIV);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "cos", "(D)D");
+                } else if (text.equals("cos") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitLdcInsn(3.141592653589793d);
+                    runtime.bcGen.mv.visitInsn(DMUL);
+                    runtime.bcGen.mv.visitLdcInsn(180.0d);
+                    runtime.bcGen.mv.visitInsn(DDIV);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "cos", "(D)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("sin") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitLdcInsn(3.141592653589793d);
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitInsn(DMUL);
-                    runtime.mv.visitLdcInsn(180.0d);
-                    runtime.mv.visitInsn(DDIV);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "sin", "(D)D");
+                } else if (text.equals("sin") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitLdcInsn(3.141592653589793d);
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitInsn(DMUL);
+                    runtime.bcGen.mv.visitLdcInsn(180.0d);
+                    runtime.bcGen.mv.visitInsn(DDIV);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "sin", "(D)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("exp") && runtime.argsCount > 1) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "pow", "(DD)D");
+                } else if (text.equals("exp") && runtime.bcGen.argsCount > 1) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "pow", "(DD)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("ln") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "log", "(D)D");
+                } else if (text.equals("ln") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "log", "(D)D");
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("log") && runtime.argsCount > 0) {
-                    runtime.appendBytecode(text);
-                    runtime.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "log10", "(D)D");
+                } else if (text.equals("log") && runtime.bcGen.argsCount > 0) {
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "log10", "(D)D");
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("rand")) {
-                    runtime.appendBytecode(text);
-                    double rand = 0;
-                    try {
-                        rand = (Integer) Operator.asm.getMethod("rand").invoke(null);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }
-                    runtime.mv.visitLdcInsn(rand);
-//                    runtime.mv.visitFieldInsn(GETSTATIC, "ASM", "random", "Ljava/util/Random;");
-//                    runtime.mv.visitLdcInsn(2147483647);
-//                    runtime.mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/Random", "nextInt", "(I)I", false);
-//                    runtime.mv.visitInsn(I2D);
-                    runtime.argsCount++;
+                    runtime.bcGen.appendPattern(text);
+
+                    runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/arithmetic/RandOp", "instance", "Loperators/arithmetic/RandOp;");
+                    runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/arithmetic/RandOp", "execute", "()V", false);
+                    runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "popFromOperandStack", "()LpsObjects/PSObject;", false);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "getValue", "()LpsObjects/values/Value;", false);
+                    runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "psObjects/values/simple/numbers/PSNumber");
+                    runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/numbers/PSNumber", "getRealValue", "()D", false);
+
+/*                    RandOp.instance.execute();
+                    double rand = ((PSNumber)runtime.popFromOperandStack().getValue()).getRealValue();
+                    runtime.bcGen.args.add(rand);
+                    System.out.println("I'm HERE!");
+                    runtime.bcGen.mv.visitIntInsn(ALOAD, 0);
+                    runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGenerator;");
+                    runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/BytecodeGenerator", "args", "Ljava/util/Queue;");
+                    runtime.bcGen.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
+                    runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
+                    runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);*/
+//                    try {
+//                        rand = (Integer) Operator.asm.getMethod("rand").invoke(null);
+//                    } catch (IllegalAccessException e) {
+//                        e.printStackTrace();
+//                    } catch (InvocationTargetException e) {
+//                        e.printStackTrace();
+//                    } catch (NoSuchMethodException e) {
+//                        e.printStackTrace();
+//                    }
+                    runtime.bcGen.argsCount++;
 //                    return psObject;
                     return null;
 
-                } else if (text.equals("srand") && runtime.argsCount > 0) {
+                } else if (text.equals("srand") && runtime.bcGen.argsCount > 0) {
 
-                    runtime.appendBytecode(text);
-                    int srand = runtime.args.peek().intValue();
+                    runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.argsCount--;
+//                    RandOp.instance.setRandomSeed(2);
+                    runtime.bcGen.mv.visitInsn(D2I);
+                    runtime.bcGen.mv.visitIntInsn(ISTORE, 6);
+                    runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/arithmetic/RandOp", "instance", "Loperators/arithmetic/RandOp;");
+                    runtime.bcGen.mv.visitIntInsn(ILOAD, 6);
+                    runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "operators/arithmetic/RandOp", "setRandomSeed", "(I)V", false);
+
+/*                    int srand = runtime.bcGen.args.peek().intValue();
                     try {
                         Operator.asm.getMethod("srand", int.class).invoke(null, srand);
                     } catch (IllegalAccessException e) {
@@ -283,7 +286,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                         e.printStackTrace();
                     } catch (NoSuchMethodException e) {
                         e.printStackTrace();
-                    }
+                    }*/
 //                    runtime.mv.visitInsn(D2L);
 //                    runtime.mv.visitVarInsn(LSTORE, 1);
 //                    runtime.mv.visitTypeInsn(NEW, "java/util/Random");
@@ -296,47 +299,47 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                     return null;
 
                 } else {
-                    runtime.resetCodeGenerator();
+                    runtime.bcGen.resetCodeGenerator();
                     return psObject;
                 }
 
             case LIT_NAME:
                 // name with "/". it is executable by default
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 PSObject psObject1 = new PSObject(new PSName(text), LITERAL);
                 return psObject1;
             case STRINGS:
                 // strings
                 String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(new PSString(s), LITERAL);
             case OPEN_SQUARE_BRACKET:
                 // array
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
             case CLOSE_SQUARE_BRACKET:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
             case OPEN_CURLY_BRACE:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.OPEN_CURLY_BRACE);
             case CLOSE_CURLY_BRACE:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.CLOSE_CURLY_BRACE);
             case OPEN_CHEVRON_BRACKET:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.OPEN_CHEVRON_BRACKET);
             case CLOSE_CHEVRON_BRACKET:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
             case COMMENTS:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 break;
             case STRING_TEXT:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 break;
             default:
-                runtime.resetCodeGenerator();
+                runtime.bcGen.resetCodeGenerator();
                 return null;
         }
         return null;
