@@ -265,6 +265,26 @@ public class AvlTree implements Iterable<Pair<PSObject, PSObject>> {
         return null;
     }
 
+    public boolean containKey(PSObject key) {
+        return containKeyAVL(this.root, key);
+    }
+
+    private boolean containKeyAVL(AvlNode root, PSObject key) {
+        if (root != null) {
+            if (root.key.compareTo(key) > 0) {
+                return containKeyAVL(root.left, key);
+            } else if (root.key.compareTo(key) < 0) {
+                return containKeyAVL(root.right, key);
+            } else if (root.key.compareTo(key) == 0) {
+                // we found the node in the tree.. now lets go on!
+                return true;
+            }
+        }
+        //TODO: think about return exception
+        return false;
+    }
+
+
     /**
      * Removes a node from a AVL-Tree, while balancing will be done if necessary.
      *

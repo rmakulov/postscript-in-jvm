@@ -34,120 +34,6 @@ import static psObjects.Type.*;
 public class Runtime implements Opcodes {
 
     public BytecodeGenerator bcGen = new BytecodeGenerator();
-    ;
-
-//    /* Generate bytecode for arithmetic. Start of part. */
-//    public ClassWriter cw;
-//    public MethodVisitor mv;
-//    public int argsCount = 0;
-//    public Queue<Double> args = new ArrayDeque<Double>();
-//    private Map<String, Integer> generatedCode = new HashMap<String, Integer>();
-//    private int i = 0;
-//    private StringBuilder curPattern = new StringBuilder();
-//
-//    public void appendPattern(String s) {
-//        curPattern.append(s).append(" ");
-//    }
-//    public StringBuilder getCurPattern() {
-//        return curPattern;
-//    }
-//    public PSObject resetCodeGenerator() {
-//        PSObject psObject = null;
-//        String cg = getCurPattern().toString();
-////         Check if we collect smth, have some args and smth contains not only from numbers.
-//        if (argsCount > 0 && cg.split(" ").length > args.size()) {
-//            psObject = runFragment(cg);
-//        }
-//        curPattern.delete(0, curPattern.capacity());
-////        System.out.println(argsCount);
-//
-////        while (args.size() > 0) {
-////            double tmp = args.remove();
-////            if ((tmp == Math.floor(tmp)) && !Double.isInfinite(tmp)) {
-////                pushToOperandStack(new PSObject(new PSInteger((int) (tmp))));
-////            } else {
-////                pushToOperandStack(new PSObject(new PSReal(tmp)));
-////            }
-////        }
-//
-//        argsCount = 0;
-//        args = new ArrayDeque<Double>();
-//        cw = new ClassWriter(0);
-//        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(i), null, "java/lang/Object", null);
-//        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
-//        mv.visitCode();
-//        return psObject;
-//    }
-//    private PSObject runFragment(String str) {
-//        PSObject psObject = null;
-//        if (!generatedCode.containsKey(str)) {
-//            {
-//                MethodVisitor mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
-//                mv.visitCode();
-//
-//                mv.visitTypeInsn(NEW, "java/util/Random");
-//                mv.visitInsn(DUP);
-//                mv.visitMethodInsn(INVOKESPECIAL, "java/util/Random", "<init>", "()V", false);
-//                mv.visitFieldInsn(PUTSTATIC, "ASM", "random", "Ljava/util/Random;");
-//                mv.visitInsn(RETURN);
-//                mv.visitMaxs(2, 0);
-//                mv.visitEnd();
-//            }
-//
-//            // if argsCount equals 0, visitMaxs doesn't have to be 0
-//            final int Maxs = (argsCount + 1) * 5;
-//            // возвращаем оставшиеся числа из стека фрейма в аргументы
-//            while (argsCount > 0) {
-//                mv.visitIntInsn(DSTORE, 5);
-//                mv.visitIntInsn(ALOAD, 0);
-//                mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "args", "Ljava/util/Queue;");
-//                mv.visitIntInsn(DLOAD, 5);
-//                mv.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf", "(D)Ljava/lang/Double;", false);
-//                mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "add", "(Ljava/lang/Object;)Z", true);
-//                mv.visitInsn(POP);
-//                argsCount--;
-//
-//            }
-//
-//            mv.visitInsn(RETURN);
-//            mv.visitMaxs(Maxs, Maxs);
-//            mv.visitEnd();
-//
-//            DynamicClassLoader.instance.putClass(Integer.toString(i), cw.toByteArray());
-//
-//            generatedCode.put(str, i);
-//            System.out.println("Got it: " + i + " " + str);
-//            i++;
-//
-//
-//        }
-//
-//        Class c = null;
-//        int classNumber = generatedCode.get(str);
-//        try {
-//            c = DynamicClassLoader.instance.loadClass(Integer.toString(classNumber));
-////            c.getMethod("run", Runtime.class).invoke(null, this);
-//            psObject = new PSObject(new PSBytecode(Integer.toString(classNumber), args), Attribute.TreatAs.LITERAL);
-//
-////            final double dRes = (Double) c.getMethod("run", Runtime.class).invoke(null, this);
-////            if ((dRes == Math.floor(dRes)) && !Double.isInfinite(dRes)) {
-////                pushToOperandStack(new PSObject(new PSInteger((int) (dRes))));
-////            } else {
-////                pushToOperandStack(new PSObject(new PSReal(dRes)));
-////            }
-////            System.out.println("\t" + dRes);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-////        } catch (InvocationTargetException e) {
-////            e.printStackTrace();
-////        } catch (NoSuchMethodException e) {
-////            e.printStackTrace();
-////        } catch (IllegalAccessException e) {
-////            e.printStackTrace();
-//        }
-//        return psObject;
-//    }
-//    /* Generate bytecode for arithmetic. End of part. */
 
     private static Runtime ourInstance = new Runtime();
     private int executionCount = 0;
@@ -166,7 +52,6 @@ public class Runtime implements Opcodes {
 
     private Runtime() {
         super();
-//        resetCodeGenerator();
     }
 
     public static Runtime getInstance() {

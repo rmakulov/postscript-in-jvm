@@ -3,6 +3,7 @@ package scanner;
 import org.objectweb.asm.Opcodes;
 import procedures.Procedure;
 import psObjects.PSObject;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
@@ -51,6 +52,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 //real
                 runtime.bcGen.appendPattern("ARG");
                 runtime.bcGen.argsCount++;
+                runtime.bcGen.setSleep(false);
 
                 final double t2 = Double.parseDouble(text);
                 runtime.bcGen.args.add(t2);
@@ -59,14 +61,9 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGenerator;");
                 runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/BytecodeGenerator", "args", "Ljava/util/Queue;");
                 runtime.bcGen.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
-//                runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/util/ArrayDeque");
-//                runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayDeque", "removeLast", "()Ljava/lang/Object;", false);
                 runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
                 runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);
 
-//                if ((t2 == Math.floor(t2)) && !Double.isInfinite(t2)) {
-//                    return new PSObject(new PSInteger((int) (t2)));
-//                } else {
                 return new PSObject(new PSReal(t2));
 //                }
 
@@ -83,31 +80,36 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             case EXEC_NAME:
                 // name without "/". it is executable by default
                 PSObject psObject = new PSObject(new PSName(text), EXECUTABLE);
+                if (((PSDictionary) runtime.getUserDict().getValue()).containsKey(psObject)) {
+                    runtime.bcGen.resetCodeGenerator();
+                    return psObject;
+                }
 
                 if (text.equals("add") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitInsn(DADD);
-//                    return psObject;
                     return null;
 
                 } else if (text.equals("mul") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitInsn(DMUL);
-//                    return psObject;
                     return null;
 
                 } else if (text.equals("div") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitInsn(DDIV);
-//                    return psObject;
                     return null;
 
                 } else if (text.equals("idiv") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitVarInsn(DSTORE, 2);
                     runtime.bcGen.mv.visitInsn(D2L);
                     runtime.bcGen.mv.visitVarInsn(DLOAD, 2);
@@ -120,6 +122,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 } else if (text.equals("sub") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitInsn(DSUB);
 //                    return psObject;
                     return null;
@@ -127,6 +130,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 } else if (text.equals("mod") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitVarInsn(DSTORE, 2);
                     runtime.bcGen.mv.visitInsn(D2L);
                     runtime.bcGen.mv.visitVarInsn(DLOAD, 2);
@@ -138,6 +142,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
 
                 } else if (text.equals("abs") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "abs", "(D)D");
 
 //                    return psObject;
@@ -145,24 +150,28 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
 
                 } else if (text.equals("neg") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitInsn(DNEG);
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("ceiling") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "ceil", "(D)D");
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("floor") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "floor", "(D)D");
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("round") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/Math", "round", "(D)J");
 //                    return psObject;
                     return null;
@@ -170,6 +179,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 } else if (text.equals("truncate") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitInsn(D2I);
                     runtime.bcGen.mv.visitInsn(I2D);
 //                    return psObject;
@@ -177,6 +187,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
 
                 } else if (text.equals("sqrt") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "sqrt", "(D)D");
 //                    return psObject;
                     return null;
@@ -184,6 +195,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 } else if (text.equals("atan") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "atan2", "(DD)D");
                     runtime.bcGen.mv.visitLdcInsn(3.141592653589793d);
                     runtime.bcGen.mv.visitInsn(DMUL);
@@ -194,6 +206,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
 
                 } else if (text.equals("cos") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitLdcInsn(3.141592653589793d);
                     runtime.bcGen.mv.visitInsn(DMUL);
                     runtime.bcGen.mv.visitLdcInsn(180.0d);
@@ -204,6 +217,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
 
                 } else if (text.equals("sin") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitLdcInsn(3.141592653589793d);
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.mv.visitInsn(DMUL);
@@ -216,24 +230,28 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 } else if (text.equals("exp") && runtime.bcGen.argsCount > 1) {
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "pow", "(DD)D");
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("ln") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "log", "(D)D");
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("log") && runtime.bcGen.argsCount > 0) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "java/lang/StrictMath", "log10", "(D)D");
 //                    return psObject;
                     return null;
 
                 } else if (text.equals("rand")) {
                     runtime.bcGen.appendPattern(text);
+                    runtime.bcGen.setSleep(false);
 
                     runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/arithmetic/RandOp", "instance", "Loperators/arithmetic/RandOp;");
                     runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/arithmetic/RandOp", "execute", "()V", false);
@@ -243,33 +261,14 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                     runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "psObjects/values/simple/numbers/PSNumber");
                     runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/numbers/PSNumber", "getRealValue", "()D", false);
 
-/*                    RandOp.instance.execute();
-                    double rand = ((PSNumber)runtime.popFromOperandStack().getValue()).getRealValue();
-                    runtime.bcGen.args.add(rand);
-                    System.out.println("I'm HERE!");
-                    runtime.bcGen.mv.visitIntInsn(ALOAD, 0);
-                    runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGenerator;");
-                    runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/BytecodeGenerator", "args", "Ljava/util/Queue;");
-                    runtime.bcGen.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
-                    runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
-                    runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);*/
-//                    try {
-//                        rand = (Integer) Operator.asm.getMethod("rand").invoke(null);
-//                    } catch (IllegalAccessException e) {
-//                        e.printStackTrace();
-//                    } catch (InvocationTargetException e) {
-//                        e.printStackTrace();
-//                    } catch (NoSuchMethodException e) {
-//                        e.printStackTrace();
-//                    }
                     runtime.bcGen.argsCount++;
-//                    return psObject;
                     return null;
 
                 } else if (text.equals("srand") && runtime.bcGen.argsCount > 0) {
 
                     runtime.bcGen.appendPattern(text);
                     runtime.bcGen.argsCount--;
+                    runtime.bcGen.setSleep(false);
 //                    RandOp.instance.setRandomSeed(2);
                     runtime.bcGen.mv.visitInsn(D2I);
                     runtime.bcGen.mv.visitIntInsn(ISTORE, 6);
@@ -277,25 +276,6 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                     runtime.bcGen.mv.visitIntInsn(ILOAD, 6);
                     runtime.bcGen.mv.visitMethodInsn(INVOKESTATIC, "operators/arithmetic/RandOp", "setRandomSeed", "(I)V", false);
 
-/*                    int srand = runtime.bcGen.args.peek().intValue();
-                    try {
-                        Operator.asm.getMethod("srand", int.class).invoke(null, srand);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }*/
-//                    runtime.mv.visitInsn(D2L);
-//                    runtime.mv.visitVarInsn(LSTORE, 1);
-//                    runtime.mv.visitTypeInsn(NEW, "java/util/Random");
-//                    runtime.mv.visitInsn(DUP);
-//                    runtime.mv.visitVarInsn(LLOAD, 1);
-//                    runtime.mv.visitMethodInsn(INVOKESPECIAL, "java/util/Random", "<init>", "(J)V", false);
-//                    runtime.mv.visitFieldInsn(PUTSTATIC, "ASM", "random", "Ljava/util/Random;");
-
-//                    return psObject;
                     return null;
 
                 } else {

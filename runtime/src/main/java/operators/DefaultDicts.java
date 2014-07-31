@@ -15,6 +15,7 @@ import operators.common.*;
 import operators.control.*;
 import operators.coordinatSystemAndMatrix.*;
 import operators.dictionary.*;
+import operators.file.DoubleEqOp;
 import operators.file.StackOp;
 import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
 import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
@@ -301,6 +302,7 @@ public class DefaultDicts {
     }
 
     private static void addFileOperators() {
+        addOperator(DoubleEqOp.instance);
         addOperator(StackOp.instance);
     }
 }

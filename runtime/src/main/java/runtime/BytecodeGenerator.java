@@ -19,6 +19,11 @@ import java.util.Queue;
  */
 public class BytecodeGenerator implements Opcodes {
 
+    private boolean sleep = false;
+
+    public void setSleep(boolean sleep) {
+        this.sleep = sleep;
+    }
 
     public BytecodeGenerator() {
         argsCount = 0;
@@ -58,11 +63,13 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public void resetCodeGenerator() {
+        if (sleep) return;
         Runtime runtime = Runtime.getInstance();
 
         String cg = getCurPattern().toString();
 //         Check if we collect smth, have some args and smth contains not only from numbers.
-        if (argsCount > 0 && cg.split(" ").length > args.size()) {
+        if (args.size() > 0 && cg.split(" ").length > args.size()) {
+//        if (argsCount > 0 && cg.split(" ").length > args.size()) {
             runFragment(cg);
         } else {
             while (args.size() > 0) {
@@ -86,24 +93,13 @@ public class BytecodeGenerator implements Opcodes {
         cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(i), null, "java/lang/Object", null);
         mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
         mv.visitCode();
+        sleep = true;
     }
 
     private void runFragment(String str) {
         if (!generatedCode.containsKey(str)) {
-//            {
-//                MethodVisitor mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
-//                mv.visitCode();
-//
-//                mv.visitTypeInsn(NEW, "java/util/Random");
-//                mv.visitInsn(DUP);
-//                mv.visitMethodInsn(INVOKESPECIAL, "java/util/Random", "<init>", "()V", false);
-//                mv.visitFieldInsn(PUTSTATIC, "ASM", "random", "Ljava/util/Random;");
-//                mv.visitInsn(RETURN);
-//                mv.visitMaxs(2, 0);
-//                mv.visitEnd();
-//            }
             // if argsCount equals 0, visitMaxs doesn't have to be 0
-            final int Maxs = (argsCount + 1) * 5;
+            final int Maxs = Math.max((argsCount + 1) * 5, 7);
             // возвращаем оставшиеся числа из стека фрейма в аргументы
             while (argsCount > 0) {
                 mv.visitIntInsn(DSTORE, 5);

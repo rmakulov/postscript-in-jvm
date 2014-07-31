@@ -48,6 +48,8 @@ public abstract class Procedure {
         if (nextObject == null) {
             return;
         }
+//        if (nextObject.toString().contains("thisRay"))
+//            System.out.println("GOT IT!");
         execObject(nextObject);
     }
 

@@ -25,6 +25,10 @@ public class PSDictionary extends CompositeValue {
     public PSDictionary() {
     }
 
+    public boolean containsKey(PSObject psKey) {
+        return tree.containKey(psKey);
+    }
+
     public PSDictionary(AvlTree tree) {
         this.tree = tree;
     }
