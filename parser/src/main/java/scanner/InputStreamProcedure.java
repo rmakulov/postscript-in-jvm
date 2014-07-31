@@ -3,7 +3,6 @@ package scanner;
 import org.objectweb.asm.Opcodes;
 import procedures.Procedure;
 import psObjects.PSObject;
-import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
@@ -80,7 +79,9 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             case EXEC_NAME:
                 // name without "/". it is executable by default
                 PSObject psObject = new PSObject(new PSName(text), EXECUTABLE);
-                if (((PSDictionary) runtime.getUserDict().getValue()).containsKey(psObject)) {
+                // can gen only if operator doesn't changed
+                if (runtime.findDict(psObject) == null || !runtime.findDict(psObject).equals(runtime.getSystemDict())) {
+//                if (!(runtime.findDict(psObject)).equals(runtime.getSystemDict())) {
                     runtime.bcGen.resetCodeGenerator();
                     return psObject;
                 }

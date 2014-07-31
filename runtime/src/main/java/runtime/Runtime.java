@@ -2,6 +2,8 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import procedures.ArrayProcedure;
 import procedures.Procedure;
@@ -33,6 +35,11 @@ import static psObjects.Type.*;
 
 public class Runtime implements Opcodes {
 
+    public ClassWriter cw;
+    public MethodVisitor mv;
+
+
+
     public BytecodeGenerator bcGen = new BytecodeGenerator();
 
     private static Runtime ourInstance = new Runtime();
@@ -52,6 +59,10 @@ public class Runtime implements Opcodes {
 
     private Runtime() {
         super();
+        cw = new ClassWriter(0);
+        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, "Compiled", null, "java/lang/Object", null);
+        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
+        mv.visitCode();
     }
 
     public static Runtime getInstance() {

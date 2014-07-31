@@ -69,7 +69,6 @@ public class BytecodeGenerator implements Opcodes {
         String cg = getCurPattern().toString();
 //         Check if we collect smth, have some args and smth contains not only from numbers.
         if (args.size() > 0 && cg.split(" ").length > args.size()) {
-//        if (argsCount > 0 && cg.split(" ").length > args.size()) {
             runFragment(cg);
         } else {
             while (args.size() > 0) {

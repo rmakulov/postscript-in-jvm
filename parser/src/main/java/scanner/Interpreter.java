@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Interpreter {
+
     public static Interpreter instance = new Interpreter();
     public static final int READ_BUFFER_SIZE = 1024;
     protected static byte[] content;

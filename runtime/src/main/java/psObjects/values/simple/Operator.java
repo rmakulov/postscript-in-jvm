@@ -8,16 +8,10 @@ public abstract class Operator extends SimpleValue {
     protected final Attribute.TreatAs LITERAL = Attribute.TreatAs.LITERAL;
     protected final Attribute.TreatAs EXECUTABLE = Attribute.TreatAs.EXECUTABLE;
     protected runtime.Runtime runtime = Runtime.getInstance();
-    public static Class<?> asm = null;
 
     public abstract void execute();
 
     protected Operator() {
-//        try {
-//            asm = DynamicClassLoader.instance.loadClass("ASM");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
