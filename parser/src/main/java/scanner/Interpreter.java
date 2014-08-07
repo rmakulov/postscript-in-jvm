@@ -23,6 +23,20 @@ public class Interpreter {
         MainProcedure mainProcedure = new MainProcedure(file);
         runtime.pushToCallStack(mainProcedure);
         runtime.executeCallStack();
+
+//        runtime.mv.visitInsn(Opcodes.RETURN);
+//        runtime.mv.visitMaxs(10, 10);
+//        runtime.mv.visitEnd();
+
+//        FileOutputStream fos;
+//        try{
+//            fos = new FileOutputStream("Compiled.class");
+//            fos.write(runtime.cw.toByteArray());
+//            fos.close();
+//        }
+//        catch (IOException ex){
+//            System.err.print(ex);
+//        }
         System.out.println("\nProgram lasted for " + ((System.currentTimeMillis() - startTime)) + " milliseconds");
     }
 

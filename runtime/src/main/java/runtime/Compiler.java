@@ -4,9 +4,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-/**
- * Created by user on 31.07.14.
- */
+
 public class Compiler implements Opcodes {
 
     private ClassWriter cw;

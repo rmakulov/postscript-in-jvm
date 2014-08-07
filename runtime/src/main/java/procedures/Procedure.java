@@ -186,11 +186,7 @@ public abstract class Procedure {
 
                 while (runtime.bcGen.args.size() > 0) {
                     double tmp = runtime.bcGen.args.remove();
-//                    if ((tmp == Math.floor(tmp)) && !Double.isInfinite(tmp)) {
-//                        runtime.pushToOperandStack(new PSObject(new PSInteger((int) (tmp))));
-//                    } else {
                     runtime.pushToOperandStack(new PSObject(new PSReal(tmp)));
-//                    }
                 }
                 return;
             }

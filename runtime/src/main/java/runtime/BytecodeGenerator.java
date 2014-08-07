@@ -99,7 +99,7 @@ public class BytecodeGenerator implements Opcodes {
         if (!generatedCode.containsKey(str)) {
             // if argsCount equals 0, visitMaxs doesn't have to be 0
             final int Maxs = Math.max((argsCount + 1) * 5, 7);
-            // возвращаем оставшиеся числа из стека фрейма в аргументы
+            // push into args unused nubers from frame
             while (argsCount > 0) {
                 mv.visitIntInsn(DSTORE, 5);
                 mv.visitIntInsn(ALOAD, 0);
@@ -109,8 +109,6 @@ public class BytecodeGenerator implements Opcodes {
                 mv.visitIntInsn(DLOAD, 5);
                 mv.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf", "(D)Ljava/lang/Double;", false);
                 mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayDeque", "addFirst", "(Ljava/lang/Object;)V", false);
-//                mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "add", "(Ljava/lang/Object;)Z", true);
-//                mv.visitInsn(POP);
                 argsCount--;
 
             }

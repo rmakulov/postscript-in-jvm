@@ -1,15 +1,24 @@
 package psObjects.values.simple;
 
+import org.objectweb.asm.Opcodes;
 import psObjects.Attribute;
 import psObjects.Type;
 import runtime.Runtime;
 
-public abstract class Operator extends SimpleValue {
+public abstract class Operator extends SimpleValue implements Opcodes {
     protected final Attribute.TreatAs LITERAL = Attribute.TreatAs.LITERAL;
     protected final Attribute.TreatAs EXECUTABLE = Attribute.TreatAs.EXECUTABLE;
     protected runtime.Runtime runtime = Runtime.getInstance();
 
     public abstract void execute();
+
+    public void compile() {
+        String clName = this.getClass().getCanonicalName().replace(".", "/");
+        runtime.mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
+        runtime.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "execute", "()V", false);
+    }
+
+    ;
 
     protected Operator() {
     }
