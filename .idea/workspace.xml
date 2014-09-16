@@ -6,188 +6,15 @@
     </artifacts-to-build>
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" line="29" />
+    <bookmark url="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" line="28" />
   </component>
   <component name="ChangeListManager">
-    <list id="273a8a0a-583f-40cc-8fc3-7b86283a7bba" name="Default" comment="Bytecode generation. Deferred execution.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/BytecodeGeneratorManager.java" />
-      <change type="MOVED" beforePath="C:\Users\User\Dropbox\postscript_in_jvm\runtime\src\main\java\psObjects\values\simple\PSBytecode.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSArithmethicBytecode.java" />
-      <change type="MOVED" beforePath="C:\Users\User\Dropbox\postscript_in_jvm\runtime\src\main\java\runtime\BytecodeGenerator.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/ArithmethicBytecodeGenerator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/array/AStoreOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/array/AStoreOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/AbsOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/AbsOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/AddOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/AddOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/AloadOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/AloadOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/AndOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/AndOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcnOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcnOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/array/ArrayOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/array/ArrayOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/AtanOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/AtanOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/BeginOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/BeginOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/miscellaneous/BindOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/miscellaneous/BindOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/BitshiftOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/BitshiftOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/CeilingOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/CeilingOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/ClearDictStackOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/ClearDictStackOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/ClearOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/ClearOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ClipOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ClipOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ClipPathOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ClipPathOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/CloseChevronOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/CloseChevronOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/CloseCurlyBraceOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/CloseCurlyBraceOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ClosePathOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ClosePathOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/array/CloseSquareBracketOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/array/CloseSquareBracketOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/CopyOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/CopyOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/CosOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/CosOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/CountDictStackOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/CountDictStackOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/CountExecStackOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/CountExecStackOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/CountOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/CountOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/CurrentDictOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/CurrentDictOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicStateDeviceIndependentOperators/CurrentFlatOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicStateDeviceIndependentOperators/CurrentFlatOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/CurrentGlobalOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/CurrentGlobalOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/CurrentPointOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/CurrentPointOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/CurveToOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/CurveToOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CviOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CviOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvlitOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvlitOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvnOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvnOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvrOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvrOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvrsOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvrsOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvsOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvsOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvxOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/CvxOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/DefOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/DefOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/DictOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/DictOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/DivOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/DivOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/file/DoubleEqOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/file/DoubleEqOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/DupOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/DupOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/EndOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/EndOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/EqOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/EqOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/ExchOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/ExchOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ExecOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ExecOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/ExecuteonlyOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/ExecuteonlyOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ExitOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ExitOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/ExpOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/ExpOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/FalseOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/FalseOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/FlattenPathOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/FlattenPathOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/FloorOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/FloorOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/ForAllOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/ForAllOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ForOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ForOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GRestoreAllOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GRestoreAllOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GRestoreOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GRestoreOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GSaveOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GSaveOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/GcheckOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/GcheckOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/GeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/GeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/GetIntervalOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/GetIntervalOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/GetOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/GetOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/GlobalDictOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/GlobalDictOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/GtOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/GtOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/ITransformOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/ITransformOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/IdivOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/IdivOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/IfElseOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/IfElseOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/IfOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/IfOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/IndexOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/IndexOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/InitClipOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/InitClipOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/src/main/java/scanner/InputStreamProcedure.java" afterPath="$PROJECT_DIR$/parser/src/main/java/scanner/InputStreamProcedure.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/src/main/java/scanner/Interpreter.java" afterPath="$PROJECT_DIR$/parser/src/main/java/scanner/Interpreter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/KnownOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/KnownOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/LeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/LeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/LengthOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/LengthOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/LineToOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/LineToOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/LnOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/LnOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/LoadOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/LoadOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/reference/LocalRef.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/reference/LocalRef.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/LogOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/LogOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/LoopOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/LoopOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/LtOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/LtOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/MarkOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/MarkOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/ModOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/ModOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/MoveToOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/MoveToOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/MulOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/MulOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/NeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/NeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/NegOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/NegOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/NewPathOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/NewPathOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/NoaccessOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/NoaccessOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/NotOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/NotOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/OpenChevronOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/OpenChevronOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/OpenCurlyBraceOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/OpenCurlyBraceOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/array/OpenSquareBracketOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/array/OpenSquareBracketOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/Operator.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/Operator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/OrOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/OrOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java" />
+    <list default="true" id="aee70ed2-afb3-4573-8bef-da6152f30f6f" name="Procedure|Bytecode" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/src/main/java/procedures/IntForProcedure.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/BytecodeGeneratorManager.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/BytecodeGeneratorManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSBytecode.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSBytecode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/numbers/PSInteger.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/numbers/PSInteger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSMark.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSMark.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSName.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSName.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/numbers/PSReal.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/numbers/PSReal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSString.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSString.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/PathBBoxOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/PathBBoxOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/PopOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/PopOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/procedures/Procedure.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/procedures/Procedure.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/PutIntervalOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/PutIntervalOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/common/PutOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/common/PutOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/QuitOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/QuitOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/RCurveToOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/RCurveToOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/RLineToOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/RLineToOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/RMoveToOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/RMoveToOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/RandOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/RandOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/RcheckOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/RcheckOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/ReadonlyOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/ReadonlyOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/reference/Reference.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/reference/Reference.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/RepeatOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/RepeatOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/RestoreOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/RestoreOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/RollOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/operandStackManipulation/RollOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/RotateOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/RotateOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/RoundOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/RoundOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/RrandOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/RrandOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/SaveOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/SaveOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/ScaleOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/ScaleOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetDashOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetDashOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicStateDeviceIndependentOperators/SetFlatOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicStateDeviceIndependentOperators/SetFlatOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/SetGlobalOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/virtualMemory/SetGlobalOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetGrayOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetGrayOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetHsbColorOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetHsbColorOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetLineCapOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetLineCapOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetLineJoinOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetLineJoinOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetLineWidthOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetLineWidthOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetMiterLimitOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetMiterLimitOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetRgbColorOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/SetRgbColorOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/ShowOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/ShowOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/ShowPageOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/ShowPageOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/SinOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/SinOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/SqrtOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/SqrtOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/SrandOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/SrandOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/file/StackOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/file/StackOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/StopOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/StopOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/StoppedOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/StoppedOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/StoreOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/StoreOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/string/StringOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/string/StringOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/StringWidthOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/StringWidthOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/SubOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/SubOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/SystemDictOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/SystemDictOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/TransformOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/TransformOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/TranslateOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/coordinatSystemAndMatrix/TranslateOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/TrueOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/TrueOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/TruncateOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/unary/TruncateOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/TypeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/TypeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/UndefOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/UndefOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/UserDictOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/UserDictOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/miscellaneous/UserTimeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/miscellaneous/UserTimeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/Value.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/Value.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/WcheckOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/WcheckOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/WhereOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/dictionary/WhereOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/XcheckOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/typeAttributeConvertation/XcheckOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/XorOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/relationBooleanBitwise/XorOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/de_jflex_jflex_1_4_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/de_jflex_jflex_1_4_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/junit_junit_4_11.xml" afterPath="$PROJECT_DIR$/.idea/libraries/junit_junit_4_11.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/parser.iml" afterPath="$PROJECT_DIR$/parser/parser.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/runtime.iml" afterPath="$PROJECT_DIR$/runtime/runtime.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
-    <list default="true" id="aee70ed2-afb3-4573-8bef-da6152f30f6f" name="Procedure|Bytecode" comment="" />
     <ignored path="postscript-in-jvm.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/" />
@@ -318,8 +145,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <breakpoint_rules converted="true" />
     <ui_properties converted="true" />
+    <breakpoint_rules converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -330,8 +157,8 @@
       <file leaf-file-name="Runtime.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.0" vertical-offset="697" max-vertical-offset="7497">
-              <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.7551253" vertical-offset="442" max-vertical-offset="7514">
+              <caret line="67" column="34" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -342,13 +169,9 @@
       <file leaf-file-name="BindOp.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/miscellaneous/BindOp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="92" max-vertical-offset="850">
+            <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1003">
               <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
-              <folding>
-                <element signature="e#798#808#0" expanded="true" />
-                <element signature="e#1489#1490#0" expanded="true" />
-                <element signature="e#1530#1531#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -356,7 +179,7 @@
       <file leaf-file-name="FillOp.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="442">
+            <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="578">
               <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
               <folding />
             </state>
@@ -366,7 +189,7 @@
       <file leaf-file-name="PSDrawer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="473" max-vertical-offset="2363">
+            <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="2465">
               <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
@@ -376,7 +199,7 @@
       <file leaf-file-name="Interpreter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parser/src/main/java/scanner/Interpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1309">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -594,6 +417,36 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runtime" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="procedures" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -611,7 +464,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="dynamic.classpath" value="false" />
-    <property name="options.lastSelected" value="org.objectweb.asm.idea.config.ASMPluginComponent" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="options.splitter.main.proportions" value="0.21582031" />
     <property name="options.splitter.details.proportions" value="0.34225354" />
     <property name="options.searchVisible" value="true" />
@@ -800,6 +653,27 @@
       <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -822,33 +696,25 @@
       </MavenSettings>
       <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -876,19 +742,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1001,12 +854,23 @@
       <AnalysisUIOptions />
     </option>
   </component>
+  <component name="StatisticProjectComponent">
+    <option name="excludeCompilerOutput" value="true" />
+    <option name="excludeIdea9ArtifactDirectory" value="true" />
+    <option name="excludeTargetDirectories" value="true" />
+    <option name="activateWhenOpenProject" value="true" />
+    <option name="excludedDirectories">
+      <value>
+        <list size="0" />
+      </value>
+    </option>
+    <option name="fileTypes" value="class;svn-base;svn-work;Extra;gif;png;jpg;jpeg;bmp;tga;tiff;ear;war;zip;jar;iml;iws;ipr;bz2;gz;" />
+  </component>
   <component name="SvnConfiguration" myUseAcceleration="nothing">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="273a8a0a-583f-40cc-8fc3-7b86283a7bba" name="Default" comment="" />
       <changelist id="aee70ed2-afb3-4573-8bef-da6152f30f6f" name="Procedure|Bytecode" comment="" />
       <created>1392835519617</created>
       <updated>1392835519617</updated>
@@ -1071,7 +935,11 @@
       <created>1406809589828</created>
       <updated>1406809589828</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Procedure bytecode generation.">
+      <created>1410884804063</created>
+      <updated>1410884804063</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1099,30 +967,31 @@
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.92596066" sideWeight="0.5229167" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1968135" sideWeight="0.5229167" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36738518" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15089035" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29522026" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31498194" sideWeight="0.50026953" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6075949" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.50116825" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7584746" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6522962" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1705717" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289597" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.37974682" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12135417" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.49883178" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12135417" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1578125" sideWeight="0.49860334" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1578125" sideWeight="0.49860334" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29147142" sideWeight="0.49973047" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936078" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Byte Code Viewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="174" y="140" width="1720" height="960" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1705717" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1156,7 +1025,8 @@
     <MESSAGE value="Bytecode generation. Deferred execution." />
     <MESSAGE value="Bytecode generation. Check of changes." />
     <MESSAGE value="Bytecode generation. Operator changing checker." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bytecode generation. Operator changing checker." />
+    <MESSAGE value="Procedure bytecode generation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Procedure bytecode generation." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1196,7 +1066,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/Value.java</url>
-          <line>35</line>
+          <line>33</line>
           <properties />
           <option name="timeStamp" value="355" />
         </line-breakpoint>
@@ -1246,7 +1116,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="13155" max-vertical-offset="29512">
           <caret line="809" column="18" selection-start-line="809" selection-start-column="18" selection-end-line="809" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1282,7 +1151,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1290,7 +1158,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="28" max-vertical-offset="612">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1298,13 +1165,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
           <caret line="19" column="76" selection-start-line="19" selection-start-column="39" selection-end-line="19" selection-end-column="76" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#333#334#0" expanded="false" />
-            <element signature="e#356#357#0" expanded="false" />
-            <element signature="e#726#727#0" expanded="false" />
-            <element signature="e#764#765#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1312,7 +1172,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
           <caret line="18" column="51" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1328,7 +1187,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
           <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1336,7 +1194,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.62222224" vertical-offset="21" max-vertical-offset="731">
           <caret line="31" column="10" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1344,7 +1201,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1649">
           <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1360,7 +1216,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="858" max-vertical-offset="3009">
           <caret line="78" column="20" selection-start-line="78" selection-start-column="20" selection-end-line="78" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1379,7 +1234,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1241">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1387,10 +1241,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="38" max-vertical-offset="663">
           <caret line="25" column="44" selection-start-line="25" selection-start-column="15" selection-end-line="25" selection-end-column="44" />
-          <folding>
-            <element signature="e#927#928#0" expanded="true" />
-            <element signature="e#968#969#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1398,7 +1248,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="1071">
           <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1406,7 +1255,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1428">
           <caret line="39" column="48" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1414,7 +1262,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1422,7 +1269,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="589">
           <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1430,7 +1276,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="587">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1438,7 +1283,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="119">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1446,7 +1290,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
           <caret line="0" column="39" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1454,7 +1297,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
           <caret line="1" column="20" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1462,7 +1304,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="770" max-vertical-offset="1700">
           <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1470,7 +1311,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="748">
           <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1478,7 +1318,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="102">
           <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1486,7 +1325,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="451">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1494,7 +1332,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="451">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1502,7 +1339,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="451">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1510,7 +1346,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
           <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1526,7 +1361,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.61445785" vertical-offset="0" max-vertical-offset="1258">
           <caret line="30" column="63" selection-start-line="30" selection-start-column="63" selection-end-line="30" selection-end-column="63" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1534,7 +1368,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476">
           <caret line="0" column="3" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1542,7 +1375,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.126506" vertical-offset="0" max-vertical-offset="731">
           <caret line="42" column="62" selection-start-line="42" selection-start-column="62" selection-end-line="42" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1590,7 +1422,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="252" max-vertical-offset="1054">
           <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1606,7 +1437,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="524" max-vertical-offset="1513">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1614,7 +1444,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1638,11 +1467,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="92" max-vertical-offset="850">
           <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
-          <folding>
-            <element signature="e#798#808#0" expanded="true" />
-            <element signature="e#1489#1490#0" expanded="true" />
-            <element signature="e#1530#1531#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1656,8 +1481,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.0" vertical-offset="697" max-vertical-offset="7497">
-          <caret line="53" column="23" selection-start-line="53" selection-start-column="23" selection-end-line="53" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.7551253" vertical-offset="442" max-vertical-offset="7514">
+          <caret line="67" column="34" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
