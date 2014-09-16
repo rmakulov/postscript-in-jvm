@@ -15,8 +15,7 @@ public class AloadOp extends Operator {
     }
 
     @Override
-    public void execute() {
-        compile();
+    public void interpret() {
         PSObject psObject = runtime.popFromOperandStack();
         if (psObject == null)
             return;

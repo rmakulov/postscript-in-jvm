@@ -12,8 +12,9 @@ public class SinOp extends Operator {
     protected SinOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

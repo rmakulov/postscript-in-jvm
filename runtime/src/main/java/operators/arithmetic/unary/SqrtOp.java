@@ -12,8 +12,9 @@ public class SqrtOp extends Operator {
     protected SqrtOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

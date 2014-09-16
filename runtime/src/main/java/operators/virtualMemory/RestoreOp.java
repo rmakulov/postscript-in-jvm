@@ -15,7 +15,7 @@ public class RestoreOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.restore();
     }
 

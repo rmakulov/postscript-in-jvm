@@ -15,7 +15,7 @@ public class StrokeOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { //-- setGraphicsSettings --
+    public void interpret() { //-- setGraphicsSettings --
         PSDrawer.getInstance().stroke();
     }
 

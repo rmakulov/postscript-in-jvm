@@ -18,7 +18,7 @@ public class RCurveToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {//dx1 dy1 dx2 dy2 dx3 dy3 rcurveto –
+    public void interpret() {//dx1 dy1 dx2 dy2 dx3 dy3 rcurveto –
         if (runtime.getOperandStackSize() < 6 || gState.currentPoint == null) return;
         PSObject oY3 = runtime.popFromOperandStack();
         PSObject oX3 = runtime.popFromOperandStack();

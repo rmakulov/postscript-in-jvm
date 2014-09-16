@@ -1,5 +1,6 @@
 package psObjects.values.reference;
 
+import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
@@ -42,4 +43,13 @@ public abstract class Reference extends Value {
         return getValue().determineType();
     }
 
+    @Override
+    public boolean interpret(PSObject obj) {
+        return getValue().interpret(obj);
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+        getValue().compile(obj);
+    }
 }

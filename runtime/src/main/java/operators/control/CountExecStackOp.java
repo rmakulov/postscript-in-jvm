@@ -16,7 +16,7 @@ public class CountExecStackOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.pushToOperandStack(new PSObject(new PSInteger(runtime.getCallStackSize())));
     }
 

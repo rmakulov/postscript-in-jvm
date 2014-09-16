@@ -12,8 +12,9 @@ public class RoundOp extends Operator {
     protected RoundOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

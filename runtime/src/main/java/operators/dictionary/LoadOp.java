@@ -15,7 +15,7 @@ public class LoadOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject key = runtime.popFromOperandStack();
         if (!key.isDictKey()) {

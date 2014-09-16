@@ -11,7 +11,7 @@ public class AddOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         BinaryArithmeticOp.doOperation('+');
     }
 

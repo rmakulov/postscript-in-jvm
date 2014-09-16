@@ -21,7 +21,7 @@ public class ITransformOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject first = runtime.popFromOperandStack();
         PSObject s;
         //s.getType() == Type.ARRAY

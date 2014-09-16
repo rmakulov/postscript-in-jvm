@@ -12,8 +12,9 @@ public class ModOp extends Operator {
     protected ModOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         BinaryIntArithmeticOp.doOperation('%');
     }
 

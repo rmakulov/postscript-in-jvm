@@ -20,7 +20,7 @@ public class StoppedOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject psObject = runtime.popFromOperandStack();
         if (psObject == null) {
             return;

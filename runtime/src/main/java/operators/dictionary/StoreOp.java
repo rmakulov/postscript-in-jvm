@@ -16,7 +16,7 @@ public class StoreOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
         PSObject value = runtime.popFromOperandStack();
         PSObject key = runtime.popFromOperandStack();

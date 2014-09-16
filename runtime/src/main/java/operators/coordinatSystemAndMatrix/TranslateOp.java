@@ -16,7 +16,7 @@ public class TranslateOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {//t_x t_y translate --
+    public void interpret() {//t_x t_y translate --
         if (runtime.getOperandStackSize() < 2) return;
         PSObject oTY = runtime.popFromOperandStack();
         PSObject oTX = runtime.popFromOperandStack();

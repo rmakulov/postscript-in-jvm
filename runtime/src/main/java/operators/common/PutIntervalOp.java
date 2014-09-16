@@ -18,7 +18,7 @@ public class PutIntervalOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject src = runtime.popFromOperandStack();
         if (src == null)
             return;

@@ -9,9 +9,10 @@ public class SubOp extends Operator {
     protected SubOp() {
         super();
     }
+
     @Override
-    public void execute() {
-      BinaryArithmeticOp.doOperation('-');
+    public void interpret() {
+        BinaryArithmeticOp.doOperation('-');
     }
 
     @Override

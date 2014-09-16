@@ -16,7 +16,7 @@ public class FillOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { // Fill current path with current color
+    public void interpret() { // Fill current path with current color
         PSDrawer.getInstance().fill();
     }
 

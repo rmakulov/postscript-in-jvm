@@ -18,23 +18,71 @@ public class IfElseOp extends Operator {
     }
 
     @Override
-    public void execute() {
-        if (runtime.getOperandStackSize() < 3) return;
-        PSObject exec2 = runtime.popFromOperandStack();
-        PSObject exec1 = runtime.popFromOperandStack();
+    public boolean interpret(PSObject obj) {
+        if (runtime.getOperandStackSize() < 3) return true;
+        PSObject proc2 = runtime.popFromOperandStack();
+        PSObject proc1 = runtime.popFromOperandStack();
         PSObject bool = runtime.popFromOperandStack();
-        if (!exec1.isProc() || !exec2.isProc() || bool.getType() != Type.BOOLEAN) {
-            runtime.pushToOperandStack(bool);
-            runtime.pushToOperandStack(exec1);
-            runtime.pushToOperandStack(exec2);
-            return;
-        }
+        if (wrongArgs(proc2, proc1, bool)) return true;
+
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {
-            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (true)", exec1));
+            return trueBranch(proc1);
         } else {
-            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (false)", exec2));
+            return falseBranch(proc2);
         }
+    }
+
+    @Override
+    public void interpret() {
+//        if (runtime.getOperandStackSize() < 3) return;
+//        PSObject proc2 = runtime.popFromOperandStack();
+//        PSObject proc1 = runtime.popFromOperandStack();
+//        PSObject bool = runtime.popFromOperandStack();
+//        if (wrongArgs(proc2, proc1, bool)) return;
+//
+//        PSBoolean cond = (PSBoolean) bool.getValue();
+//        if (cond.getFlag()) {
+//            trueBranch(proc1);
+//        } else {
+//            falseBranch(proc2);
+//        }
+    }
+
+    private boolean falseBranch(PSObject proc) {
+        if (runtime.isCompiling && proc.isBytecode()) {
+            return proc.execute(0);
+        } else if (!runtime.isCompiling && proc.isProc()) {
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (false)", proc));
+        } else {
+            fail();
+        }
+        return true;
+    }
+
+    private boolean trueBranch(PSObject proc) {
+        if (runtime.isCompiling && proc.isBytecode()) {
+            return proc.execute(0);
+        } else if (!runtime.isCompiling && proc.isProc()) {
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (true)", proc));
+        } else {
+            fail();
+        }
+        return true;
+    }
+
+    private boolean wrongArgs(PSObject proc2, PSObject proc1, PSObject bool) {
+        if (!(proc1.isProc() || proc1.isBytecode())
+                || !(proc2.isProc()
+                || proc1.isBytecode())
+                || bool.getType() != Type.BOOLEAN) {
+            fail();
+            runtime.pushToOperandStack(bool);
+            runtime.pushToOperandStack(proc1);
+            runtime.pushToOperandStack(proc2);
+            return true;
+        }
+        return false;
     }
 
     @Override

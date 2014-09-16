@@ -18,7 +18,7 @@ public class UserTimeOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.pushToOperandStack(new PSObject(new PSInteger((int) UserTimeOp.getUserTime())));
     }
 

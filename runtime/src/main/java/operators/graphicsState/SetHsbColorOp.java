@@ -18,7 +18,7 @@ public class SetHsbColorOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { // hue saturation brightness sethsbcolor --
+    public void interpret() { // hue saturation brightness sethsbcolor --
         PSObject oBright = runtime.popFromOperandStack();
         PSObject oSatur = runtime.popFromOperandStack();
         PSObject oHue = runtime.popFromOperandStack();

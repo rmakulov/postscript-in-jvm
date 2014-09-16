@@ -26,7 +26,7 @@ public class RectFillOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { // Fill current path with current color
+    public void interpret() { // Fill current path with current color
         if (runtime.getOperandStackSize() < 1) return;
         PSObject o = runtime.peekFromOperandStack();
         if (o.isNumber()) {

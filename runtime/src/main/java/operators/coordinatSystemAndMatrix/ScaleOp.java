@@ -16,7 +16,7 @@ public class ScaleOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {// s_x s_y scale --
+    public void interpret() {// s_x s_y scale --
         if (runtime.getOperandStackSize() < 2) return;
         PSObject oSY = runtime.popFromOperandStack();
         PSObject oSX = runtime.popFromOperandStack();

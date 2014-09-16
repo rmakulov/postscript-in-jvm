@@ -17,7 +17,7 @@ public class SetLineJoinOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {// int setlinejoin Set shape of corners for setGraphicsSettings (0 = miter, 1 = round, 2 = bevel)
+    public void interpret() {// int setlinejoin Set shape of corners for setGraphicsSettings (0 = miter, 1 = round, 2 = bevel)
         PSObject oNum = runtime.popFromOperandStack();
         if (oNum == null || oNum.getType() != Type.INTEGER) {
             runtime.pushToOperandStack(oNum);

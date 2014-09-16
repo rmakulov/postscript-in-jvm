@@ -14,7 +14,7 @@ public class NegOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

@@ -12,8 +12,9 @@ public class CosOp extends Operator {
     protected CosOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 
@@ -22,5 +23,5 @@ public class CosOp extends Operator {
         return new PSName("cos");
     }
 
-    public final static char getSymbolicChar ='C';
+    public final static char getSymbolicChar = 'C';
 }

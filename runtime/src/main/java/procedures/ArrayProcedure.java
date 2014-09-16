@@ -36,4 +36,11 @@ public class ArrayProcedure extends Procedure {
     public PSObject getArrayObject() {
         return arrayObj;
     }
+
+    @Override
+    public String toString() {
+        return "Procedure{" +
+                "name='" + getName() + '\'' + ", next Index = " + nextIndex +
+                '}';
+    }
 }

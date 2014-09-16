@@ -14,7 +14,7 @@ public class GlobalDictOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.pushToOperandStack(runtime.getGlobalDict());
     }
 

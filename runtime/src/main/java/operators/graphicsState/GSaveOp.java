@@ -14,7 +14,7 @@ public class GSaveOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { // -- gsave --
+    public void interpret() { // -- gsave --
         runtime.gsave(true);
     }
 

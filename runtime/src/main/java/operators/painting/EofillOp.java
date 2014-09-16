@@ -15,7 +15,7 @@ public class EofillOp extends Operator {
     }
 
     @Override
-    public void execute() { // Fill current path with current color
+    public void interpret() { // Fill current path with current color
         //todo
         PSDrawer.getInstance().eofill();
     }

@@ -14,7 +14,7 @@ public class FlattenPathOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         //do nothing
     }
 

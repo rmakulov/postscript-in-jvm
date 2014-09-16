@@ -16,7 +16,7 @@ public class SetLineWidthOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {// num setlinewidth -
+    public void interpret() {// num setlinewidth -
         PSObject oNum = runtime.popFromOperandStack();
         if (oNum == null || !(oNum.isNumber())) {
             runtime.pushToOperandStack(oNum);

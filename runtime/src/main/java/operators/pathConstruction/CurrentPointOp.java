@@ -17,7 +17,7 @@ public class CurrentPointOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (gState.currentPoint == null) {
             return;
         }

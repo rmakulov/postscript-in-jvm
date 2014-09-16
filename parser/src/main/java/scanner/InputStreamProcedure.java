@@ -1,5 +1,10 @@
 package scanner;
 
+import operators.array.CloseSquareBracketOp;
+import operators.array.OpenSquareBracketOp;
+import operators.common.CloseCurlyBraceOp;
+import operators.dictionary.CloseChevronOp;
+import operators.dictionary.OpenChevronOp;
 import org.objectweb.asm.Opcodes;
 import procedures.Procedure;
 import psObjects.PSObject;
@@ -28,6 +33,88 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
     }
 
     @Override
+    public void execNext() {
+        if (runtime.bcGen.isSleep()) {
+            super.execNext();
+        } else {
+            compileNext();
+        }
+    }
+
+    private void compileNext() {
+        if (!hasNext()) return;
+        String text = nextYytoken.m_text;
+        Tokens m_type = nextYytoken.m_type;
+        nextYytoken = null;
+        switch (m_type) {
+            case INTEGER:
+                PSInteger.compile(Integer.parseInt(text));
+                return;
+            case REAL:
+                PSReal.compile(Double.parseDouble(text));
+                return;
+            case HEX:
+                //hex
+                PSInteger.compile(Integer.parseInt(text, 16));
+                return;
+            case RADIX:
+                //radix
+                String[] args = text.split("#");
+                int radix = Integer.parseInt(args[0]);
+                PSInteger.compile(Integer.parseInt(args[1], radix));
+                return;
+            case EXEC_NAME:
+                // name without "/". it is executable by default
+                PSName.executiveCompile(text);
+                return;
+            case LIT_NAME:
+                // name with "/". it is executable by default
+                PSName.literalCompile(text);
+                return;
+            case STRINGS:
+                // strings
+                String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
+                PSString.compile(s);
+                return;
+
+            case OPEN_SQUARE_BRACKET:
+                // array
+                OpenSquareBracketOp.instance.compile();
+//                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
+                return;
+            case CLOSE_SQUARE_BRACKET:
+                CloseSquareBracketOp.instance.compile();
+//                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
+                return;
+            case OPEN_CURLY_BRACE:
+                runtime.bcGen.startCodeGenerator();
+                procDepth++;
+                return;
+            case CLOSE_CURLY_BRACE:
+                if (procDepth == 1) {
+                    CloseCurlyBraceOp.instance.interpret();
+                } else {
+                    runtime.bcGen.endBytecode();
+                    CloseCurlyBraceOp.compile();
+                }
+                procDepth--;
+                return;
+            case OPEN_CHEVRON_BRACKET:
+                OpenChevronOp.instance.compile();
+                return;
+            case CLOSE_CHEVRON_BRACKET:
+                CloseChevronOp.instance.compile();
+//                return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
+                return;
+            case COMMENTS:
+                break;
+            default:
+                return;
+        }
+        return;
+    }
+
+    @Override
     public boolean hasNext() {
         if (nextYytoken != null) return true;
         try {
@@ -47,83 +134,49 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
         nextYytoken = null;
         switch (m_type) {
             case INTEGER:
+                return new PSObject(new PSInteger(Integer.parseInt(text)));
             case REAL:
-                //real
-                runtime.bcGen.appendPattern("ARG");
-                runtime.bcGen.argsCount++;
-                runtime.bcGen.setSleep(false);
-
-                final double t2 = Double.parseDouble(text);
-                runtime.bcGen.args.add(t2);
-
-                runtime.bcGen.mv.visitIntInsn(ALOAD, 0);
-                runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGenerator;");
-                runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/BytecodeGenerator", "args", "Ljava/util/Queue;");
-                runtime.bcGen.mv.visitMethodInsn(INVOKEINTERFACE, "java/util/Queue", "remove", "()Ljava/lang/Object;", true);
-                runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "java/lang/Double");
-                runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D", false);
-
-                return new PSObject(new PSReal(t2));
-//                }
-
+                return new PSObject(new PSReal(Double.parseDouble(text)));
             case HEX:
                 //hex
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(new PSInteger(Integer.parseInt(text, 16)));
             case RADIX:
                 //radix
                 String[] args = text.split("#");
                 int radix = Integer.parseInt(args[0]);
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(new PSInteger(Integer.parseInt(args[1], radix)));
             case EXEC_NAME:
                 // name without "/". it is executable by default
-                PSObject psObject = new PSObject(new PSName(text), EXECUTABLE);
-                return createBytecodeByPattern(text, psObject);
-
+                return new PSObject(new PSName(text), EXECUTABLE);
             case LIT_NAME:
                 // name with "/". it is executable by default
-                runtime.bcGen.resetCodeGenerator();
-                PSObject psObject1 = new PSObject(new PSName(text), LITERAL);
-                return psObject1;
+                return new PSObject(new PSName(text), LITERAL);
             case STRINGS:
                 // strings
                 String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(new PSString(s), LITERAL);
             case OPEN_SQUARE_BRACKET:
                 // array
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
             case CLOSE_SQUARE_BRACKET:
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
             case OPEN_CURLY_BRACE:
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.OPEN_CURLY_BRACE);
             case CLOSE_CURLY_BRACE:
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.CLOSE_CURLY_BRACE);
             case OPEN_CHEVRON_BRACKET:
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.OPEN_CHEVRON_BRACKET);
             case CLOSE_CHEVRON_BRACKET:
-                runtime.bcGen.resetCodeGenerator();
                 return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
             case COMMENTS:
-                runtime.bcGen.resetCodeGenerator();
-                break;
-            case STRING_TEXT:
-                runtime.bcGen.resetCodeGenerator();
                 break;
             default:
-                runtime.bcGen.resetCodeGenerator();
                 return null;
         }
         return null;
     }
 
-    private PSObject createBytecodeByPattern(String text, PSObject psObject) {
+   /* private PSObject createBytecodeByPattern(String text, PSObject psObject) {
         // can gen only if operator doesn't changed
         if (runtime.findDict(psObject) == null || !runtime.findDict(psObject).equals(runtime.getSystemDict())) {
             runtime.bcGen.resetCodeGenerator();
@@ -282,7 +335,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             runtime.bcGen.setSleep(false);
 
             runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/arithmetic/RandOp", "instance", "Loperators/arithmetic/RandOp;");
-            runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/arithmetic/RandOp", "execute", "()V", false);
+            runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/arithmetic/RandOp", "interpret", "()V", false);
             runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
             runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "popFromOperandStack", "()LpsObjects/PSObject;", false);
             runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "getValue", "()LpsObjects/values/Value;", false);
@@ -307,6 +360,6 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             runtime.bcGen.resetCodeGenerator();
             return psObject;
         }
-    }
+    }*/
 
 }

@@ -14,7 +14,7 @@ public class SystemDictOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.pushToOperandStack(runtime.getSystemDict());
     }
 

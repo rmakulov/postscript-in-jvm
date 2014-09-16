@@ -15,7 +15,7 @@ public class EndOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.removeFromDictionaryStack();
     }
 

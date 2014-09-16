@@ -12,8 +12,9 @@ public class LnOp extends Operator {
     protected LnOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 
@@ -22,5 +23,5 @@ public class LnOp extends Operator {
         return new PSName("ln");
     }
 
-    public final static char getSymbolicChar='L';
+    public final static char getSymbolicChar = 'L';
 }

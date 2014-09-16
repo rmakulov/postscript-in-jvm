@@ -1,6 +1,5 @@
 package operators.GlythAndFont;
 
-import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.Operator;
@@ -17,11 +16,11 @@ public class StringWidthOp extends Operator {
     }
 
     @Override
-    public void execute() { // stinrg stringwidth w_x w_y
-        PSObject oStr = runtime.popFromOperandStack() ;
-        if(oStr == null || !(oStr.getType() == Type.STRING)){
+    public void interpret() { // stinrg stringwidth w_x w_y
+        PSObject oStr = runtime.popFromOperandStack();
+        if (oStr == null || !(oStr.getType() == Type.STRING)) {
             runtime.pushToOperandStack(oStr);
-            return ;
+            return;
         }
     }
 

@@ -21,14 +21,14 @@ public class GRestoreAllOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {//todo check errors with stack and type
+    public void interpret() {//todo check errors with stack and type
         if (runtime.getGraphicStackSize() == 0) {
             return;
         }
         GSave gsave = runtime.peekFromGraphicStack();
 
         while (gsave.isMadeByGSaveOp() && runtime.getGraphicStackSize() > 0) {
-            GRestoreOp.instance.execute();
+            GRestoreOp.instance.interpret();
             gsave = runtime.peekFromGraphicStack();
         }
         GState.getInstance().setSnapshot(gsave);

@@ -5,6 +5,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Runtime;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,8 @@ public class CloseChevronOp extends Operator {
     }
 
     @Override
-    public void execute() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject psObject = runtime.popFromOperandStack();
-        if (psObject.getValue() != PSMark.CLOSE_CHEVRON_BRACKET) {
-            runtime.pushToOperandStack(psObject);
-        }
+    public void interpret() {
+        if (runtime.getOperandStackSize() < 1) return;
         ArrayList<PSObject> entries = new ArrayList<PSObject>();
         PSObject obj2, obj1;
         while ((obj2 = runtime.popFromOperandStack()).getValue() != PSMark.OPEN_CHEVRON_BRACKET &&
@@ -39,5 +36,13 @@ public class CloseChevronOp extends Operator {
     @Override
     public PSName getDefaultKeyName() {
         return new PSName(">>");
+    }
+
+
+    public void compile() {
+        runtime.Runtime runtime = Runtime.getInstance();
+//        CloseChevronOp.instance.interpret();
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/CloseChevronOp", "instance", "Loperators/dictionary/CloseChevronOp;");
+        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/CloseChevronOp", "interpret", "()V", false);
     }
 }

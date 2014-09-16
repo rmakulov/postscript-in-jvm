@@ -16,7 +16,7 @@ public class DefOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
         PSObject psValue = runtime.popFromOperandStack();
         PSObject psKey = runtime.popFromOperandStack();

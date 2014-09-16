@@ -18,23 +18,45 @@ public class RepeatOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
-        PSObject exec = runtime.popFromOperandStack();
+        PSObject proc = runtime.popFromOperandStack();
         PSObject iObj = runtime.popFromOperandStack();
-        if (!exec.isProc() || iObj.getType() != Type.INTEGER) {
-            runtime.pushToOperandStack(iObj);
-            runtime.pushToOperandStack(exec);
-        }
+        if (wrongArgs(proc, iObj)) return;
 
         PSInteger psInteger = (PSInteger) iObj.getValue();
         int count = psInteger.getIntValue();
-        if (count < 0) {
-            runtime.pushToOperandStack(iObj);
-            runtime.pushToOperandStack(exec);
-            return;
+        if (wrongCount(proc, iObj, count)) return;
+
+        if (runtime.isCompiling && proc.isBytecode()) {
+            for (int i = 0; i < count; i++) {
+                if (!proc.execute(0)) break;
+            }
+        } else if (!runtime.isCompiling && proc.isProc()) {
+            runtime.pushToCallStack(new RepeatProcedure(count, proc));
+        } else {
+            fail();
         }
-        runtime.pushToCallStack(new RepeatProcedure(count, exec));
+    }
+
+    private boolean wrongCount(PSObject proc, PSObject iObj, int count) {
+        if (count < 0) {
+            fail();
+            runtime.pushToOperandStack(iObj);
+            runtime.pushToOperandStack(proc);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean wrongArgs(PSObject proc, PSObject iObj) {
+        if (!(proc.isProc() || proc.isBytecode()) || iObj.getType() != Type.INTEGER) {
+            fail();
+            runtime.pushToOperandStack(iObj);
+            runtime.pushToOperandStack(proc);
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package operators.control;
 
 import procedures.Procedure;
+import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
@@ -15,12 +16,21 @@ public class ExitOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public boolean interpret(PSObject obj) {
+        if (runtime.isCompiling) {
+            return false;
+        } else {
+            interpret();
+            return true;
+        }
+    }
+
+    @Override
+    public void interpret() {
         Procedure procedure;
         while ((procedure = runtime.peekFromCallStack()) != null && !procedure.isExitable()) {
             procedure.procBreak();
             runtime.popFromCallStack();
-
         }
         if (procedure == null) {
             return;
@@ -33,4 +43,6 @@ public class ExitOp extends Operator {
     public PSName getDefaultKeyName() {
         return new PSName("exit");
     }
+
+
 }

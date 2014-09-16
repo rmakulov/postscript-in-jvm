@@ -17,7 +17,7 @@ public class RollOp extends Operator {
     }
 
     @Override
-    public void execute() { //anyn-1 … any0 n j roll any (j-1) mod n … any0 anyn-1 … anyj mod n
+    public void interpret() { //anyn-1 … any0 n j roll any (j-1) mod n … any0 anyn-1 … anyj mod n
         if (runtime.getOperandStackSize() < 2) return;
         PSObject oJ = runtime.popFromOperandStack();
         PSObject oN = runtime.popFromOperandStack();

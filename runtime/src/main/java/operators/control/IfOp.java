@@ -18,19 +18,52 @@ public class IfOp extends Operator {
     }
 
     @Override
-    public void execute() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject exec = runtime.popFromOperandStack();
+    public boolean interpret(PSObject obj) {
+        if (runtime.getOperandStackSize() < 2) return true;
+        PSObject proc = runtime.popFromOperandStack();
         PSObject bool = runtime.popFromOperandStack();
-        if (!exec.isProc() || bool.getType() != Type.BOOLEAN) {
-            runtime.pushToOperandStack(bool);
-            runtime.pushToOperandStack(exec);
-            return;
-        }
+        if (wrongArgs(proc, bool)) return true;
+
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {
-            runtime.pushToCallStack(new ArrayProcedure("If", exec));
+            if (runtime.isCompiling && proc.isBytecode()) {
+                return proc.execute(0);
+            } else if (!runtime.isCompiling && proc.isProc()) {
+                runtime.pushToCallStack(new ArrayProcedure("If", proc));
+            } else {
+                fail();
+            }
         }
+        return true;
+    }
+
+    @Override
+    public void interpret() {
+//        if (runtime.getOperandStackSize() < 2) return;
+//        PSObject proc = runtime.popFromOperandStack();
+//        PSObject bool = runtime.popFromOperandStack();
+//        if (wrongArgs(proc, bool)) return;
+//
+//        PSBoolean cond = (PSBoolean) bool.getValue();
+//        if (cond.getFlag()) {
+//            if (runtime.isCompiling && proc.isBytecode()) {
+//                proc.execute(0);
+//            } else if (!runtime.isCompiling && proc.isProc()) {
+//                runtime.pushToCallStack(new ArrayProcedure("If", proc));
+//            } else {
+//                fail();
+//            }
+//        }
+    }
+
+    private boolean wrongArgs(PSObject proc, PSObject bool) {
+        if (!(proc.isProc() || proc.isBytecode()) || bool.getType() != Type.BOOLEAN) {
+            fail();
+            runtime.pushToOperandStack(bool);
+            runtime.pushToOperandStack(proc);
+            return true;
+        }
+        return false;
     }
 
     @Override

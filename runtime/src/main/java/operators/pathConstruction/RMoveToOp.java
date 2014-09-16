@@ -17,7 +17,7 @@ public class RMoveToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject o1 = runtime.popFromOperandStack();
         PSObject o2 = runtime.popFromOperandStack();
         if ((o1 == null || o2 == null) || !(o1.isNumber() && o2.isNumber())) {

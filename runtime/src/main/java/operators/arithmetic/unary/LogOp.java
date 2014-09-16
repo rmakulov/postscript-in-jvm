@@ -12,8 +12,9 @@ public class LogOp extends Operator {
     protected LogOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

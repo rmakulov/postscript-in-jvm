@@ -18,7 +18,7 @@ public class SetRgbColorOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {// red green blue setrgbcolor -
+    public void interpret() {// red green blue setrgbcolor -
         PSObject oBlue = runtime.popFromOperandStack();
         PSObject oGreen = runtime.popFromOperandStack();
         PSObject oRed = runtime.popFromOperandStack();

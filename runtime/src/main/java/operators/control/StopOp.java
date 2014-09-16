@@ -15,7 +15,7 @@ public class StopOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         Procedure procedure = runtime.popFromCallStack();
         if (procedure != null) {
             procedure.procBreak();

@@ -12,8 +12,9 @@ public class CeilingOp extends Operator {
     protected CeilingOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

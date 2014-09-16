@@ -15,7 +15,7 @@ public class ClipOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSDrawer.getInstance().clip();
     }
 

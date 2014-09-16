@@ -18,7 +18,7 @@ public class ArcnOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 5) return;
         PSObject oAngle2 = runtime.popFromOperandStack();
         PSObject oAngle1 = runtime.popFromOperandStack();

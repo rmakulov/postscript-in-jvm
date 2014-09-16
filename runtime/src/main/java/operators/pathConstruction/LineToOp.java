@@ -17,7 +17,7 @@ public class LineToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {// x y lineto ---
+    public void interpret() {// x y lineto ---
         PSObject o1 = runtime.popFromOperandStack();
         PSObject o2 = runtime.popFromOperandStack();
         if ((o1 == null || o2 == null) || !(o1.isNumber() && o2.isNumber())) {

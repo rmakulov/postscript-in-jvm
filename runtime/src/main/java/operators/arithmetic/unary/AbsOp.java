@@ -12,8 +12,9 @@ public class AbsOp extends Operator {
     protected AbsOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

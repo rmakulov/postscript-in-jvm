@@ -14,10 +14,10 @@ public class RrandOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
 
         RandOp.dropRandom();
-        RandOp.instance.execute();
+        RandOp.instance.interpret();
     }
 
     @Override

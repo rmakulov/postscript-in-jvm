@@ -12,8 +12,9 @@ public class DivOp extends Operator {
     protected DivOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         BinaryArithmeticOp.doOperation('/');
     }
 

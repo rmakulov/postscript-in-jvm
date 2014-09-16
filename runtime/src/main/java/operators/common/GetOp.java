@@ -19,7 +19,7 @@ public class GetOp extends Operator {
 
     // todo delete from runtime get operator
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject key = runtime.popFromOperandStack();
         if (key == null)
             return;

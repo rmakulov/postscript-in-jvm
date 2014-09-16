@@ -17,7 +17,7 @@ public class TrueOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.pushToOperandStack(new PSObject(PSBoolean.TRUE));
     }
 

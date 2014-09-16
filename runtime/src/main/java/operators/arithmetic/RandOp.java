@@ -20,7 +20,7 @@ public class RandOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
 
         runtime.Runtime runtime = Runtime.getInstance();
         int randomInt = random.nextInt(Integer.MAX_VALUE);

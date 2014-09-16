@@ -16,7 +16,7 @@ public class WhereOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject oKey = runtime.popFromOperandStack();
         PSObject dictObj = runtime.findDict(oKey);

@@ -17,7 +17,7 @@ public class SetFlatOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {//todo check errors with stack and type
+    public void interpret() {//todo check errors with stack and type
         if (runtime.getOperandStackSize() < 1) {
             return;
         }

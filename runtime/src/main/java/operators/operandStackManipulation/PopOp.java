@@ -14,7 +14,7 @@ public class PopOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         runtime.popFromOperandStack();
     }
 

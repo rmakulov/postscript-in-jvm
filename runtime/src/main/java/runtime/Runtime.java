@@ -2,8 +2,6 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import procedures.ArrayProcedure;
 import procedures.Procedure;
@@ -18,6 +16,7 @@ import psObjects.values.composite.Snapshot;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
+import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import runtime.avl.Pair;
 import runtime.graphics.GState;
@@ -34,18 +33,13 @@ import static psObjects.Type.*;
 
 
 public class Runtime implements Opcodes {
-
-    public ClassWriter cw;
-    public MethodVisitor mv;
-
-
-
-    public BytecodeGenerator bcGen = new BytecodeGenerator();
-
     private static Runtime ourInstance = new Runtime();
+
+    public final boolean isCompiling;
+    public BytecodeGeneratorManager bcGen = new BytecodeGeneratorManager();
+
     private int executionCount = 0;
     private int executionsBeforeGarbageCleaning = 10000;
-
 
     private LocalVM localVM = new LocalVM();
     private OperandStack operandStack = new OperandStack();
@@ -53,16 +47,12 @@ public class Runtime implements Opcodes {
     private GraphicStack graphicStack = new GraphicStack();
     private CallStack callStack = new CallStack();
     private boolean isGlobal = false;
-
     private PSObject userDict, globalDict, systemDict;
-
 
     private Runtime() {
         super();
-        cw = new ClassWriter(0);
-        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, "Compiled", null, "java/lang/Object", null);
-        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
-        mv.visitCode();
+        isCompiling = false;
+//        isCompiling = true;
     }
 
     public static Runtime getInstance() {
@@ -104,7 +94,7 @@ public class Runtime implements Opcodes {
         }
         savedLocalVM.updateStringValues(localVM); //string values don't restores
         localVM = savedLocalVM;
-        GRestoreAllOp.instance.execute();
+        GRestoreAllOp.instance.interpret();
         return true;
     }
 
@@ -228,7 +218,7 @@ public class Runtime implements Opcodes {
             getUsingLocalVMIndexesByRef(indexes, ref);
         }
         return indexes;
-        //todo same for graphicstack after making collection psobjects in graphicstack
+        //todo same for graphicstack after making collection psObjects in graphicstack
     }
 
     private void getUsingLocalVMIndexesByRef(Set<Integer> indexes, LocalRef ref) {
@@ -422,10 +412,10 @@ public class Runtime implements Opcodes {
     }
 
     public PSObject findValue(PSObject key) {
-        PSObject found;
-        for (PSObject dictObj : dictionaryStack) {
-            found = getValueAtDictionary(dictObj, key);
-            if (found != null) return found;
+        PSObject found = search(key);
+        //if(key.equals(new PSObject(new PSName("xd"))) && key.xcheck())
+        if (found != null) {
+            return found;
         }
         try {
             throw new Exception(key + " is not found");
@@ -433,6 +423,22 @@ public class Runtime implements Opcodes {
             e.printStackTrace();
         }
         return new PSObject(PSNull.NULL);
+    }
+
+    public PSObject search(PSObject key) {
+        PSObject found = null;
+        for (PSObject dictObj : dictionaryStack) {
+            found = getValueAtDictionary(dictObj, key);
+            if (found != null) {
+                return found;
+            }
+        }
+        return found;
+    }
+
+    /*called through bytecode*/
+    public PSObject findValue(String str) {
+        return findValue(new PSObject(new PSName(str)));
     }
 
     public int getOperandStackSize() {

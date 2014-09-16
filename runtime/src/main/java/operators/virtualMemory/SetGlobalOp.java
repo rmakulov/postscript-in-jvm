@@ -18,7 +18,7 @@ public class SetGlobalOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject o = runtime.popFromOperandStack();
         if (o == null) return;
         if (o.getType() != Type.BOOLEAN) {

@@ -7,7 +7,7 @@ import runtime.graphics.frame.PSDrawer;
 /**
  * Created by user on 17.03.14.
  */
-public class ShowPageOp extends AbstractGraphicOperator{
+public class ShowPageOp extends AbstractGraphicOperator {
 
     public static final ShowPageOp instance = new ShowPageOp();
 
@@ -16,7 +16,7 @@ public class ShowPageOp extends AbstractGraphicOperator{
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSDrawer.getInstance().showPage();
     }
 

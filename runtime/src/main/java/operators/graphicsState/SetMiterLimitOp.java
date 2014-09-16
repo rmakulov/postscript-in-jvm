@@ -16,7 +16,7 @@ public class SetMiterLimitOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject oNum = runtime.popFromOperandStack();
         if (oNum == null || !oNum.isNumber()) {
             runtime.pushToOperandStack(oNum);

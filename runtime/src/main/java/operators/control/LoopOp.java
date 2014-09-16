@@ -16,12 +16,17 @@ public class LoopOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject proc = runtime.popFromOperandStack();
-        if (proc.isProc()) {
+        if (proc.isProc() && !runtime.isCompiling) {
             runtime.pushToCallStack(new LoopProcedure(proc));
+        } else if (proc.isBytecode() && runtime.isCompiling) {
+            while (true) {
+                if (!proc.execute(0)) break;
+            }
         } else {
+            fail();
             runtime.pushToOperandStack(proc);
         }
     }

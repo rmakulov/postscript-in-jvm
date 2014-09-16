@@ -17,7 +17,7 @@ public class CvrsOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 3) return;
         PSObject o3 = runtime.popFromOperandStack();
         PSObject o2 = runtime.popFromOperandStack();

@@ -12,9 +12,10 @@ public class MulOp extends Operator {
     protected MulOp() {
         super();
     }
+
     @Override
-    public void execute() {
-         BinaryArithmeticOp.doOperation('*');
+    public void interpret() {
+        BinaryArithmeticOp.doOperation('*');
     }
 
     @Override

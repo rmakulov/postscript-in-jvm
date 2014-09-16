@@ -20,7 +20,7 @@ public class BindOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject o = runtime.popFromOperandStack();
         if (!o.isProc()) {
@@ -30,19 +30,15 @@ public class BindOp extends Operator {
         PSArray psArr = (PSArray) o.getValue();
         ArrayList<PSObject> resArray = new ArrayList<PSObject>();
         for (PSObject innerObj : psArr.getArray()) {
-            switch (innerObj.getType()) {
-                case NAME:
-                    if (innerObj.treatAs() == Attribute.TreatAs.EXECUTABLE) {
-                        PSObject value = runtime.findValue(innerObj);
-                        if (value.getType() == Type.OPERATOR) {
-                            resArray.add(value);
-                            break;
-                        }
-
-                    }
-                default:
+            if (innerObj.getType() == Type.NAME && innerObj.treatAs() == Attribute.TreatAs.EXECUTABLE) {
+                PSObject value = runtime.search(innerObj);
+                if (value != null && value.getType() == Type.OPERATOR) {
+                    resArray.add(value);
+                } else {
                     resArray.add(innerObj);
-                    break;
+                }
+            } else {
+                resArray.add(innerObj);
             }
         }
         PSArray result = new PSArray(resArray);

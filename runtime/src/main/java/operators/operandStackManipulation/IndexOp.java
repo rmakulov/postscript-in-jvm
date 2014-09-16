@@ -17,7 +17,7 @@ public class IndexOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject oN = runtime.popFromOperandStack();
         if (!(oN.getType() == Type.INTEGER)) {

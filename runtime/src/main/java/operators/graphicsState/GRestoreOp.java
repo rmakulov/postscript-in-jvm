@@ -16,7 +16,7 @@ public class GRestoreOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         GSave gsave = runtime.peekFromGraphicStack();
         if (gsave.isMadeByGSaveOp()) {
             runtime.popFromGraphicStack();

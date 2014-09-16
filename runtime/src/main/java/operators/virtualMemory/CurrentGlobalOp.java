@@ -17,7 +17,7 @@ public class CurrentGlobalOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         boolean b = runtime.currentGlobal();
         runtime.pushToOperandStack(new PSObject(PSBoolean.get(b)));
     }

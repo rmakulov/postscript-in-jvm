@@ -12,8 +12,9 @@ public class TruncateOp extends Operator {
     protected TruncateOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

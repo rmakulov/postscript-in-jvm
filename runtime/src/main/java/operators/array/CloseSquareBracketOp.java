@@ -6,6 +6,7 @@ import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Runtime;
 
 import java.util.ArrayList;
 
@@ -18,13 +19,8 @@ public class CloseSquareBracketOp extends Operator {
     }
 
     @Override
-    public void execute() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject closeBracket = runtime.popFromOperandStack();
-        if (!closeBracket.getValue().equals(PSMark.CLOSE_SQUARE_BRACKET)) {
-            runtime.pushToOperandStack(closeBracket);
-            return;
-        }
+    public void interpret() {
+        if (runtime.getOperandStackSize() < 1) return;
         PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
         while (!PSMark.OPEN_SQUARE_BRACKET.equals(psObject.getValue())) {
@@ -44,5 +40,12 @@ public class CloseSquareBracketOp extends Operator {
     @Override
     public PSName getDefaultKeyName() {
         return new PSName("]");
+    }
+
+    public static void compile() {
+        runtime.Runtime runtime = Runtime.getInstance();
+//        CloseSquareBracketOp.instance.interpret();
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/array/CloseSquareBracketOp", "instance", "Loperators/array/CloseSquareBracketOp;");
+        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/CloseSquareBracketOp", "interpret", "()V", false);
     }
 }

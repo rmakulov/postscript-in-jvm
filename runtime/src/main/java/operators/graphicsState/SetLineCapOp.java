@@ -16,7 +16,7 @@ public class SetLineCapOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject oLC = runtime.popFromOperandStack();
         if (oLC == null || !oLC.isNumber()) {
             runtime.pushToOperandStack(oLC);

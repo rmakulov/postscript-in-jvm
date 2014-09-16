@@ -17,7 +17,7 @@ public class LengthOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject psObject = runtime.popFromOperandStack();
         int length;
         switch (psObject.getType()) {

@@ -12,8 +12,9 @@ public class FloorOp extends Operator {
     protected FloorOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         UnaryArithmeticOp.doOperation(getSymbolicChar);
     }
 

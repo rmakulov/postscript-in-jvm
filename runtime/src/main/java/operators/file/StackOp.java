@@ -16,7 +16,7 @@ public class StackOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject o1 = runtime.popFromOperandStack();
         String newString;

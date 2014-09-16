@@ -19,7 +19,7 @@ public class PutOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject value = runtime.popFromOperandStack();
         if (value == null)
             return;

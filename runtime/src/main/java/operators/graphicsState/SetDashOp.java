@@ -19,7 +19,7 @@ public class SetDashOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { // -- gsave --
+    public void interpret() { // -- gsave --
         if (runtime.getOperandStackSize() < 2) return;
         PSObject offsetObj = runtime.popFromOperandStack();
         PSObject arrayObj = runtime.popFromOperandStack();

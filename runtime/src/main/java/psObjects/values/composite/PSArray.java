@@ -1,5 +1,6 @@
 package psObjects.values.composite;
 
+import procedures.ArrayProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
 
@@ -44,6 +45,11 @@ public class PSArray extends CompositeValue implements Cloneable {
         for (int i = 0; i < psObjects.size(); i++) {
             array[i] = new ArrayElement(psObjects.get(i));
         }
+    }
+
+    public PSArray(PSObject obj) {
+        array = new ArrayElement[1];
+        array[0] = new ArrayElement(obj);
     }
 
     public PSObject[] getArray() {
@@ -116,6 +122,15 @@ public class PSArray extends CompositeValue implements Cloneable {
         return new PSArray(newArray);
     }
 
+    @Override
+    public boolean interpret(PSObject obj) {
+        if (runtime.isCompiling) {
+            return array[0].getElementObject().execute(0);
+        } else {
+            runtime.pushToCallStack(new ArrayProcedure(obj));
+            return true;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -132,6 +147,12 @@ public class PSArray extends CompositeValue implements Cloneable {
     @Override
     public Type determineType() {
         return Type.ARRAY;
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+        // we have only one element - it is bytecode, so just execute it
+        array[0].getElementObject().compile();
     }
 
 }

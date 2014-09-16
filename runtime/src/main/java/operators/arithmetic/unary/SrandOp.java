@@ -18,7 +18,7 @@ public class SrandOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject o = runtime.popFromOperandStack();
         if (o == null || o.getType() != Type.INTEGER) {
             runtime.pushToOperandStack(o);

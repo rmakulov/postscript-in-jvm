@@ -18,7 +18,7 @@ public class StringOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject o = runtime.popFromOperandStack();
         if (o.getType() == Type.INTEGER) {

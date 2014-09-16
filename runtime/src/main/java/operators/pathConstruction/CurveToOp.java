@@ -23,7 +23,7 @@ public class CurveToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {//x1 y1 x2 y2 x3 y3 curveto –
+    public void interpret() {//x1 y1 x2 y2 x3 y3 curveto –
         if (runtime.getOperandStackSize() < 6 || gState.currentPoint == null) return;
         PSObject oY3 = runtime.popFromOperandStack();
         PSObject oX3 = runtime.popFromOperandStack();

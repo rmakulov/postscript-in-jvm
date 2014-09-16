@@ -18,7 +18,7 @@ public class CvsOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
         PSObject o2 = runtime.popFromOperandStack();
         if (o2.getType() != Type.STRING) {

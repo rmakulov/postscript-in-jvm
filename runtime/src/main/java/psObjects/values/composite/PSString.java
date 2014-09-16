@@ -1,8 +1,11 @@
 package psObjects.values.composite;
 
+import procedures.StringProcedure;
+import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.compareableInterfaces.PSComparable;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Runtime;
 
 import java.util.Random;
 
@@ -67,6 +70,13 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
         for (int i = 0; i < bytes.length; i++) {
             characters[i] = new StringElement(bytes[i]);
         }
+    }
+
+    @Override
+    public boolean interpret(PSObject obj) {
+        runtime.pushToCallStack(new StringProcedure(obj));
+        runtime.pushToOperandStack(obj);
+        return true;
     }
 
     @Override
@@ -166,5 +176,19 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
             newArray[index].setCharacter(character);
         }
         return new PSString(newArray);
+    }
+
+    public static void compile(String s) {
+        runtime.Runtime runtime = Runtime.getInstance();
+        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGen.mv.visitInsn(DUP);
+        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSString");
+        runtime.bcGen.mv.visitInsn(DUP);
+        runtime.bcGen.mv.visitLdcInsn(s);
+        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSString", "<init>", "(Ljava/lang/String;)V", false);
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
+        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
+        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

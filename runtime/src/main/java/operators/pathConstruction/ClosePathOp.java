@@ -12,9 +12,9 @@ public class ClosePathOp extends AbstractGraphicOperator {
     protected ClosePathOp() {
         super();
     }
-    
+
     @Override
-    public void execute() {
+    public void interpret() {
         gState.currentPath.closePath();
     }
 

@@ -18,7 +18,7 @@ public class GetIntervalOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject count = runtime.popFromOperandStack();
         if (count == null)
             return;

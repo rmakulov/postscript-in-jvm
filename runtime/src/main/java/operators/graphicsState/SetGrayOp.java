@@ -18,7 +18,7 @@ public class SetGrayOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { //num setgray setgray --
+    public void interpret() { //num setgray setgray --
         PSObject oNum = runtime.popFromOperandStack();
         if (oNum == null || !(oNum.isNumber())) {
             runtime.pushToOperandStack(oNum);

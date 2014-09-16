@@ -18,7 +18,7 @@ public class KnownOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
         PSObject key = runtime.popFromOperandStack();
         PSObject dict = runtime.popFromOperandStack();

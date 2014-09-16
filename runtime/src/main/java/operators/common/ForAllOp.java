@@ -19,18 +19,32 @@ public class ForAllOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
 
         PSObject proc = runtime.popFromOperandStack();
-        if (proc == null)
-            return;
-
         PSObject elems = runtime.popFromOperandStack();
-        if (elems == null || !proc.isProc()) {
-            runtime.pushToOperandStack(proc);
+        if (wrongArgs(proc, elems)) return;
+
+        PSObject[] beforeArray = getBeforeArray(elems);
+        if (beforeArray == null) {
+            fail();
             return;
         }
 
+        if (runtime.isCompiling && proc.isBytecode()) {
+            for (PSObject psObj : beforeArray) {
+                runtime.pushToOperandStack(psObj);
+                if (!proc.execute(0)) break;
+//                ((PSArray) proc.getValue()).get(0).execute(0);
+            }
+        } else if (!runtime.isCompiling && proc.isProc()) {
+            runtime.pushToCallStack(new ForAllProcedure(beforeArray, proc));
+        } else {
+            fail();
+        }
+    }
+
+    private PSObject[] getBeforeArray(PSObject elems) {
         PSObject[] beforeArray;
         switch (elems.getType()) {
             case ARRAY:
@@ -55,11 +69,18 @@ public class ForAllOp extends Operator {
                 }
                 break;
             default:
-                runtime.pushToOperandStack(elems);
-                runtime.pushToOperandStack(proc);
-                return;
+                beforeArray = null;
         }
-        runtime.pushToCallStack(new ForAllProcedure(beforeArray, proc));
+        return beforeArray;
+    }
+
+    private boolean wrongArgs(PSObject proc, PSObject elems) {
+        if (elems == null || !(proc.isProc() || proc.isBytecode())) {
+            fail();
+            runtime.pushToOperandStack(proc);
+            return true;
+        }
+        return false;
     }
 
     @Override

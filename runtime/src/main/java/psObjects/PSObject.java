@@ -1,5 +1,6 @@
 package psObjects;
 
+import org.objectweb.asm.Opcodes;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
@@ -8,13 +9,41 @@ import psObjects.values.composite.PSString;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
+import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Runtime;
 
-public class PSObject implements Comparable<PSObject> {
+public class PSObject implements Comparable<PSObject>, Opcodes {
     private Value value;
     private Type type;
     private Attribute attribute;
+    private Runtime runtime = Runtime.getInstance();
+
+    public boolean execute(int procDepth) {
+        if (!runtime.isCompiling || runtime.bcGen.isSleep()) {
+            return interpret(procDepth);
+        } else {
+            compile();
+            return true;
+        }
+
+    }
+
+    public boolean interpret(int procDepth) {
+        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0)
+                /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
+            runtime.pushToOperandStack(this);
+            return true;
+        } else {
+            return value.interpret(this);
+        }
+    }
+
+
+    public void compile() {
+        value.compile(this);
+    }
 
     public Value getValue() {
         return value.getValue();
@@ -34,7 +63,7 @@ public class PSObject implements Comparable<PSObject> {
 
     public PSObject(Value value, Type type, Attribute attribute) {
         if ((value.determineType() == Type.ARRAY && type == Type.PACKEDARRAY)) {
-            value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
+            value = runtime.createReference((CompositeValue) value);
             this.value = value;
             this.type = type;
             this.attribute = new Attribute(Attribute.Access.READ_ONLY, attribute.treatAs);
@@ -44,7 +73,7 @@ public class PSObject implements Comparable<PSObject> {
             return;
         }
         if (value instanceof CompositeValue) {
-            value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
+            value = runtime.createReference((CompositeValue) value);
         }
         this.value = value;
         this.type = type;
@@ -53,18 +82,18 @@ public class PSObject implements Comparable<PSObject> {
 
     public PSObject(Value value) {
         if (value instanceof CompositeValue) {
-            value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
+            value = runtime.createReference((CompositeValue) value);
         }
         this.value = value;
         type = value.determineType();
-        if (isComposite() || type == Type.NAME) {
-            attribute = new Attribute();
-        }
+        //if (isComposite() || type == Type.NAME)
+        attribute = new Attribute();
+
     }
 
     public PSObject(Value value, Attribute.TreatAs treatAs) {
         if (value instanceof CompositeValue) {
-            value = runtime.Runtime.getInstance().createReference((CompositeValue) value);
+            value = runtime.createReference((CompositeValue) value);
         }
         this.value = value;
         type = value.determineType();
@@ -271,12 +300,12 @@ public class PSObject implements Comparable<PSObject> {
 
         PSObject psObject = (PSObject) o;
         if (type == Type.NAME && xcheck()) {
-            PSObject obj = runtime.Runtime.getInstance().findValue(this);
+            PSObject obj = runtime.findValue(this);
             return psObject.equals(obj);
         }
 
         if (psObject.getType() == Type.NAME && psObject.xcheck()) {
-            PSObject obj = runtime.Runtime.getInstance().findValue(psObject);
+            PSObject obj = runtime.findValue(psObject);
             return this.equals(obj);
         }
 
@@ -297,6 +326,10 @@ public class PSObject implements Comparable<PSObject> {
 
     public boolean isProc() {
         return ((type == Type.ARRAY) || (type == Type.PACKEDARRAY)) && xcheck();
+    }
+
+    public boolean isBytecode() {
+        return value instanceof PSBytecode;
     }
 
     public boolean isDictKey() {

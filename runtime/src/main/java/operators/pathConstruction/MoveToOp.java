@@ -17,7 +17,7 @@ public class MoveToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
         PSObject o1 = runtime.popFromOperandStack();
         PSObject o2 = runtime.popFromOperandStack();

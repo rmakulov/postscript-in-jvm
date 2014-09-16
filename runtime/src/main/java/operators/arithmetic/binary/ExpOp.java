@@ -12,8 +12,9 @@ public class ExpOp extends Operator {
     protected ExpOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         BinaryArithmeticOp.doOperation('e');
     }
 

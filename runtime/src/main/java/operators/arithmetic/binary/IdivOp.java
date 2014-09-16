@@ -12,9 +12,10 @@ public class IdivOp extends Operator {
     protected IdivOp() {
         super();
     }
+
     @Override
-    public void execute() {
-       BinaryIntArithmeticOp.doOperation('/');
+    public void interpret() {
+        BinaryIntArithmeticOp.doOperation('/');
     }
 
     @Override

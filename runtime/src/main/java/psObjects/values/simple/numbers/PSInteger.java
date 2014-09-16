@@ -1,6 +1,8 @@
 package psObjects.values.simple.numbers;
 
+import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Runtime;
 
 import java.util.Random;
 
@@ -65,5 +67,33 @@ public class PSInteger extends PSNumber {
     @Override
     public Type determineType() {
         return Type.INTEGER;
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+//        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
+        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGen.mv.visitInsn(DUP);
+        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
+        runtime.bcGen.mv.visitInsn(DUP);
+        runtime.bcGen.mv.visitLdcInsn(value);
+        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
+        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+
+    }
+
+    public static void compile(int value) {
+        Runtime runtime = Runtime.getInstance();
+        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGen.mv.visitInsn(DUP);
+        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
+        runtime.bcGen.mv.visitInsn(DUP);
+        runtime.bcGen.mv.visitLdcInsn(value);
+        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
+        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

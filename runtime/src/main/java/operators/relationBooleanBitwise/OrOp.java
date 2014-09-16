@@ -19,7 +19,7 @@ public class OrOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 2) return;
         PSObject o2 = runtime.popFromOperandStack();
         PSObject o1 = runtime.popFromOperandStack();

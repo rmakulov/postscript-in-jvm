@@ -17,7 +17,7 @@ public class DictOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject psObject = runtime.popFromOperandStack();
         if (psObject.getType() != Type.INTEGER) {

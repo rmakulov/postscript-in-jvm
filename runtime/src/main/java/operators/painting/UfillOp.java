@@ -14,7 +14,7 @@ public class UfillOp extends Operator {
     }
 
     @Override
-    public void execute() { // Fill current path with current color
+    public void interpret() { // Fill current path with current color
         //todo
         //it is very difficult. it use userpath
     }

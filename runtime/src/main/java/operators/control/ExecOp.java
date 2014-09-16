@@ -18,19 +18,27 @@ public class ExecOp extends Operator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject psObject = runtime.popFromOperandStack();
         if (psObject == null) {
             return;
         }
         if (psObject.isProc()) {
-            runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
+            if (!runtime.isCompiling) {
+                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
+            } else {
+                fail();
+            }
         } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
             runtime.pushToCallStack(new StringProcedure(psObject));
         } else {
-            PSObject[] singleArray = new PSObject[]{psObject};
-            PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);
-            runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
+            if (runtime.isCompiling) {
+                psObject.execute(0);
+            } else {
+                PSObject[] singleArray = new PSObject[]{psObject};
+                PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);
+                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
+            }
         }
     }
 

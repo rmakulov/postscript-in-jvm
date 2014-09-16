@@ -16,7 +16,7 @@ public class RotateOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() {
+    public void interpret() {
         PSObject oAngle = runtime.popFromOperandStack();
         if (oAngle == null || !oAngle.isNumber()) {
             runtime.pushToOperandStack(oAngle);

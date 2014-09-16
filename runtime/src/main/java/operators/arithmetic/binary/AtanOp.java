@@ -12,8 +12,9 @@ public class AtanOp extends Operator {
     protected AtanOp() {
         super();
     }
+
     @Override
-    public void execute() {
+    public void interpret() {
         BinaryArithmeticOp.doOperation('t');
     }
 

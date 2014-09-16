@@ -17,13 +17,13 @@ public class ShowOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void execute() { // string show --
-        PSObject oStr = runtime.popFromOperandStack() ;
-        if(oStr == null && !(oStr.getType() == Type.STRING)){
-            runtime.pushToOperandStack(oStr) ;
-            return ;
+    public void interpret() { // string show --
+        PSObject oStr = runtime.popFromOperandStack();
+        if (oStr == null && !(oStr.getType() == Type.STRING)) {
+            runtime.pushToOperandStack(oStr);
+            return;
         }
-        String str = ((PSString) oStr.getValue()).getString() ;
+        String str = ((PSString) oStr.getValue()).getString();
         //frame.print string or something such
     }
 
