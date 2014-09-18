@@ -4,6 +4,8 @@ import psObjects.Type;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.reference.LocalRef;
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.frame.PSDrawer;
+import runtime.graphics.frame.PSFrame;
 import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
@@ -12,7 +14,7 @@ import runtime.graphics.save.GSave;
 import java.awt.*;
 
 public class GState extends CompositeValue {
-    private static GState instance = new GState();
+    public static GState instance = new GState();
     public PSPoint currentPoint;
     public PSPath currentPath;
     public PSPath clippingPath;
@@ -84,6 +86,13 @@ public class GState extends CompositeValue {
         clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
     }
 
+    public static void reset() {
+        instance = new GState();
+        PSDrawer.reset();
+        PSImage.reset();
+        PSFrame.reset();
+    }
+
     @Override
     public Type determineType() {
         return Type.GSTATE;
@@ -95,4 +104,5 @@ public class GState extends CompositeValue {
         if (!(o instanceof GState)) return false;
         return true;
     }
+
 }

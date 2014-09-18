@@ -38,4 +38,8 @@ public class PSFrame extends JFrame {
         panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         add(new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
     }
+
+    public static void reset() {
+        ourInstance = new PSFrame();
+    }
 }

@@ -3,9 +3,7 @@ package runtime;
 import org.junit.Assert;
 import org.junit.Test;
 import psObjects.PSObject;
-import psObjects.values.composite.PSArray;
 import psObjects.values.composite.PSString;
-import psObjects.values.reference.LocalRef;
 import psObjects.values.simple.numbers.PSInteger;
 
 
@@ -25,52 +23,52 @@ public class Tests {
         System.out.println("1");
     }
 
-    @Test
-    /*
-     * Check if table doesn't repair
-     * after save when we have common object in operand stack and table(localVM)
-     */
-    public void saveRestoreTest2() {
-        runtime.pushToOperandStack(PSObject.initInteger());
-        runtime.save();
-        runtime.pushToOperandStack(PSObject.initString());
-        runtime.exchangeTopOfOperandStack();
-        Assert.assertFalse(runtime.restore());
-        System.out.println("2");
-    }
+//    @Test
+//    /*
+//     * Check if table doesn't repair
+//     * after save when we have common object in operand stack and table(localVM)
+//     */
+//    public void saveRestoreTest2() {
+//        runtime.pushToOperandStack(PSObject.initInteger());
+//        runtime.save();
+//        runtime.pushToOperandStack(PSObject.initString());
+//        runtime.exchangeTopOfOperandStack();
+//        Assert.assertFalse(runtime.restore());
+//        System.out.println("2");
+//    }
 
-    @Test
-    /*
-     * Check if after save and change array element, "restore" repair original value in source array
-     */
-    public void saveRestore3() {
-        PSObject arrObj = PSObject.initArray(5);
-        runtime.pushToOperandStack(arrObj);
-        runtime.save();
-        arrObj=runtime.setValueArrayAtIndex(arrObj, 1, PSObject.initInteger());
-        runtime.restore();
-        PSObject arrObj2 = runtime.popFromOperandStack();
-        PSObject[] newArr = ((PSArray) arrObj.getValue()).getArray();
-        PSObject[] oldArr =((PSArray) arrObj2.getValue()).getArray();
-        Assert.assertArrayEquals(newArr, oldArr);
-        System.out.println("3");
-    }
+//    @Test
+//    /*
+//     * Check if after save and change array element, "restore" repair original value in source array
+//     */
+//    public void saveRestore3() {
+//        PSObject arrObj = PSObject.initArray(5);
+//        runtime.pushToOperandStack(arrObj);
+//        runtime.save();
+//        arrObj=runtime.setValueArrayAtIndex(arrObj, 1, PSObject.initInteger());
+//        runtime.restore();
+//        PSObject arrObj2 = runtime.popFromOperandStack();
+//        PSObject[] newArr = ((PSArray) arrObj.getValue()).getArray();
+//        PSObject[] oldArr =((PSArray) arrObj2.getValue()).getArray();
+//        Assert.assertArrayEquals(newArr, oldArr);
+//        System.out.println("3");
+//    }
 
-    @Test
-    /*
-     * Check if after get subarray and change it element, "restore" repair original value in source array
-     */
-    public void saveRestore4() {
-        PSObject arrObj = PSObject.initArray(5);
-        LocalRef ref = (LocalRef) arrObj.getDirectValue();
-        PSObject subArrObj = runtime.getArrayInterval(arrObj, 1, 3);
-        runtime.save();
-        runtime.setValueArrayAtIndex(subArrObj, 1, PSObject.initInteger());
-        runtime.restore();
-        PSObject[] newArr = ((PSArray) arrObj.getValue()).getArray();
-        Assert.assertArrayEquals(newArr, ((PSArray) runtime.getValueByLocalRef(ref)).getArray());
-        System.out.println("4");
-    }
+//    @Test
+//    /*
+//     * Check if after get subarray and change it element, "restore" repair original value in source array
+//     */
+//    public void saveRestore4() {
+//        PSObject arrObj = PSObject.initArray(5);
+//        LocalRef ref = (LocalRef) arrObj.getDirectValue();
+//        PSObject subArrObj = runtime.getArrayInterval(arrObj, 1, 3);
+//        runtime.save();
+//        runtime.setValueArrayAtIndex(subArrObj, 1, PSObject.initInteger());
+//        runtime.restore();
+//        PSObject[] newArr = ((PSArray) arrObj.getValue()).getArray();
+//        Assert.assertArrayEquals(newArr, ((PSArray) runtime.getValueByLocalRef(ref)).getArray());
+//        System.out.println("4");
+//    }
 
     @Test
     /*

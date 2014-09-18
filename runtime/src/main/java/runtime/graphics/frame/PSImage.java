@@ -54,4 +54,8 @@ public class PSImage {
         double scale = 1;
         return new double[]{scale * 1., 0., 0., scale * (-1.), 0, height};
     }
+
+    public static void reset() {
+        ourInstance = new PSImage();
+    }
 }

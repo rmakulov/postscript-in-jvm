@@ -35,7 +35,7 @@ import static psObjects.Type.*;
 public class Runtime implements Opcodes {
     private static Runtime ourInstance = new Runtime();
 
-    public final boolean isCompiling;
+    public boolean isCompiling;
     public BytecodeGeneratorManager bcGen = new BytecodeGeneratorManager();
 
     private int executionCount = 0;
@@ -63,7 +63,7 @@ public class Runtime implements Opcodes {
     * save snapshot to operandStack
     */
     public void save() {
-        localVM.clearGarbage(getRootSet());
+        //localVM.clearGarbage(getRootSet());
         Snapshot snapshot = new Snapshot(localVM.clone());
         localVM.initDefaultKeys();
         operandStack = operandStack.push(new PSObject(snapshot));
@@ -377,7 +377,15 @@ public class Runtime implements Opcodes {
 
     public void clearAll() {
         operandStack.clear();
+//        operandStack = new OperandStack();
         localVM.clear();
+//        localVM = new LocalVM();
+        graphicStack.clear();
+//        graphicStack = new GraphicStack();
+        dictionaryStack.clear();
+//        dictionaryStack = new DictionaryStack();
+        GState.reset();
+//        initDefaultDictionaries();
     }
 
     public CompositeValue getValueByLocalRef(LocalRef ref) {
@@ -480,4 +488,9 @@ public class Runtime implements Opcodes {
     public PSObject getSystemDict() {
         return systemDict;
     }
+
+    public void switchCompiling() {
+        this.isCompiling = !isCompiling;
+    }
+
 }

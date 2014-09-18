@@ -99,6 +99,10 @@ public class PSDrawer {
 
     }
 
+    public static void reset() {
+        instance = new PSDrawer();
+    }
+
 /*    public class PSFrame extends JFrame {
         public int psHeight = 631 * 4 / 3;
         //public int psHeight = 800;

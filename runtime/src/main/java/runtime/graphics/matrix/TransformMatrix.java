@@ -46,6 +46,7 @@ public class TransformMatrix implements Cloneable {
 
     private double[] getDoubleArray() {
         PSArray psArray = (PSArray) matrix.getValue();
+
         PSObject[] objArray = psArray.getArray();
         return new double[]{((PSReal) objArray[0].getValue()).getRealValue(),
                 ((PSReal) objArray[1].getValue()).getRealValue(),
