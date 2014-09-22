@@ -61,19 +61,21 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("Examples/doretree.ps"));
 //                Interpreter.instance.run(new File("Examples/WireFrame.eps"));
 
-                String fileName = "Examples/snowflak.ps";
+                String fileName = "Examples/chupcko.ps";
                 System.out.print(fileName + "\t");
                 double totalSum = 0;
-                int testCounts = 1000;
+                int testCounts = 2;
                 for (int i = 0; i < testCounts; i++) {
+//                    System.out.println(i);
+                    Interpreter.instance.runtime.clearAll();
                     totalSum += Interpreter.instance.run(new File(fileName));
-//                    Interpreter.instance.runtime.clearAll();
                 }
                 System.out.print(totalSum / testCounts + " vs ");
 
                 totalSum = 0;
                 Interpreter.instance.runtime.switchCompiling();
                 for (int i = 0; i < testCounts; i++) {
+                    Interpreter.instance.runtime.clearAll();
                     totalSum += Interpreter.instance.run(new File(fileName));
                 }
                 System.out.println(totalSum / testCounts + " ");

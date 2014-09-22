@@ -9,30 +9,42 @@ import runtime.graphics.frame.PSFrame;
 import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
-import runtime.graphics.save.GSave;
 
 import java.awt.*;
 
 public class GState extends CompositeValue {
-    public static GState instance = new GState();
+//    public static GState instance = new GState();
+
     public PSPoint currentPoint;
     public PSPath currentPath;
     public PSPath clippingPath;
     public TransformMatrix cTM;
     public GraphicsSettings graphicsSettings;
+    private boolean madeByGSaveOp;//save call gsave with false arg
 
 
-    private GState() {
+    public GState() {
         currentPath = new PSPath();
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
         initClip();
         graphicsSettings = GraphicsSettings.mainInstance;
+        PSDrawer.reset();
+        PSImage.reset();
+        PSFrame.reset();
     }
 
-    public static GState getInstance() {
-        return instance;
+    public GState(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, PSPoint curPoint) {
+        currentPath = curPath;
+        clippingPath = clipPath;
+        cTM = tM;
+        graphicsSettings = gSettings;
+        madeByGSaveOp = true; // for example
+        currentPoint = curPoint;
     }
+//    public static GState getInstance() {
+//        return instance;
+//    }
 
     public static double psUnitToPixel(double psUnits) {
         return psUnits / 72 * 96;
@@ -46,23 +58,15 @@ public class GState extends CompositeValue {
         return ref;
     }
 
-    /*
-        public LocalRef getLocalRefDash(){
-            if( ! (graphicsSettings.dash.getDirectValue() instanceof LocalRef)) return null;
-            LocalRef ref = (LocalRef) graphicsSettings.dash.getDirectValue() ;
-            return ref ;
-        }
-    */
-    public GSave getSnapshot(boolean isMadeByGSaveOp) {
-        return new GSave(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), isMadeByGSaveOp, currentPoint);
-    }
 
-    public void setSnapshot(GSave gSave) {
-        currentPath = gSave.getCurrentPath().clone();
-        clippingPath = gSave.getClippingPath().clone();
-        cTM = gSave.getcTM().clone();
-        graphicsSettings = gSave.getSettings().clone();
-        currentPoint = gSave.getCurrentPoint();
+//    public LocalRef getLocalRefDash() {
+//        if (!(graphicsSettings.dash.getDirectValue() instanceof LocalRef)) return null;
+//        LocalRef ref = (LocalRef) graphicsSettings.dash.getDirectValue();
+//        return ref;
+//    }
+
+    public GState getSnapshot() {
+        return new GState(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), currentPoint);
     }
 
     //---------------------Fonts
@@ -86,13 +90,6 @@ public class GState extends CompositeValue {
         clippingPath.getGeneralPath().append(new Rectangle(0, 0, PSImage.width, PSImage.height), true);
     }
 
-    public static void reset() {
-        instance = new GState();
-        PSDrawer.reset();
-        PSImage.reset();
-        PSFrame.reset();
-    }
-
     @Override
     public Type determineType() {
         return Type.GSTATE;
@@ -105,4 +102,11 @@ public class GState extends CompositeValue {
         return true;
     }
 
+    public boolean isMadeByGSaveOp() {
+        return madeByGSaveOp;
+    }
+
+    public void setMadeByGSaveOp(boolean madeByGSaveOp) {
+        this.madeByGSaveOp = madeByGSaveOp;
+    }
 }

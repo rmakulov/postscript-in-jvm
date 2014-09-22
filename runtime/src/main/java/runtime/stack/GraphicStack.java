@@ -1,34 +1,43 @@
 package runtime.stack;
 
-import psObjects.PSObject;
-import psObjects.values.Value;
-import runtime.graphics.save.GSave;
+import psObjects.values.composite.Snapshot;
+import runtime.graphics.GState;
 
 import java.util.Stack;
 
 /**
  * Created by 1 on 10.12.13.
  */
-public class GraphicStack extends PSStack<GSave> {
+public class GraphicStack extends PSStack<GState> {
     public GraphicStack() {
     }
 
-    public GraphicStack(Stack<GSave> stack) {
+    public GraphicStack(Stack<GState> stack) {
          super(stack);
      }
- 
-     @Override
-     public GraphicStack removeTop() {
-         return new GraphicStack(super.removeTopAndGetStack());
-     }
- 
-     //@Override
-     public GraphicStack push(GSave gsave) {
-         return new GraphicStack(super.pushAndGetStack(gsave));
-     }
- 
-     @Override
-     public GraphicStack exch() {
-         return new GraphicStack(super.exchAndGetStack());
-     }
+
+    public void init() {
+        push(new GState());
+
+    }
+
+    public void reset() {
+        clear();
+        init();
+    }
+
+    // for restore
+    public void setGState(Snapshot snapshot) {
+        GState savedGState = snapshot.getGState();
+        while (size() > 0 && peek() != savedGState) {
+            pop();
+        }
+        if (isEmpty()) {
+            try {
+                throw new Exception("Gsave is not found!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

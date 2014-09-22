@@ -27,7 +27,7 @@ public class ScaleOp extends AbstractGraphicOperator {
         }
         double sY = ((PSNumber) (oSY.getValue())).getRealValue();
         double sX = ((PSNumber) (oSX.getValue())).getRealValue();
-        gState.cTM.scale(sX, sY);
+        runtime.getGState().cTM.scale(sX, sY);
     }
 
     @Override

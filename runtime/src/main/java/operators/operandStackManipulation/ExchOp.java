@@ -1,5 +1,6 @@
 package operators.operandStackManipulation;
 
+import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
@@ -15,7 +16,11 @@ public class ExchOp extends Operator {
 
     @Override
     public void interpret() {
-        runtime.exchangeTopOfOperandStack();
+        if (runtime.getOperandStackSize() < 2) fail();
+        PSObject o2 = runtime.popFromOperandStack();
+        PSObject o1 = runtime.popFromOperandStack();
+        runtime.pushToOperandStack(o2);
+        runtime.pushToOperandStack(o1);
     }
 
     @Override

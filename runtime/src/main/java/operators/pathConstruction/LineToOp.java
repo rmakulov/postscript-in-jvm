@@ -29,9 +29,9 @@ public class LineToOp extends AbstractGraphicOperator {
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
 
-        PSPoint newPoint = gState.cTM.transform(nX.getRealValue(), nY.getRealValue());
-        gState.currentPath.addLine(gState.currentPoint, newPoint);
-        gState.currentPoint = newPoint;
+        PSPoint newPoint = runtime.getGState().cTM.transform(nX.getRealValue(), nY.getRealValue());
+        runtime.getGState().currentPath.addLine(runtime.getGState().currentPoint, newPoint);
+        runtime.getGState().currentPoint = newPoint;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class ClipPathOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {
-        gState.currentPath = gState.clippingPath.clone();
+        runtime.getGState().currentPath = runtime.getGState().clippingPath.clone();
     }
 
     @Override

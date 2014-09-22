@@ -15,21 +15,11 @@ public class DictionaryStack extends PSStack<PSObject> {
     }
 
     @Override
-    public DictionaryStack removeTop() {
-        return new DictionaryStack(super.removeTopAndGetStack());
-    }
-
-    @Override
-    public DictionaryStack push(PSObject psDictionaryRef) {
-        if(psDictionaryRef.getType()!= Type.DICTIONARY){
+    public void push(PSObject psDictionary) {
+        if (psDictionary.getType() != Type.DICTIONARY) {
             //todo throw exception: this is not a dictionary reference
-            return this;
+            return;
         }
-        return new DictionaryStack(super.pushAndGetStack(psDictionaryRef));
-    }
-
-    @Override
-    public DictionaryStack exch() {
-        return new DictionaryStack(super.exchAndGetStack());
+        super.push(psDictionary);
     }
 }

@@ -13,7 +13,7 @@ import runtime.graphics.figures.PSPoint;
 
 //todo check in methods if PSObject is array
 public class TransformMatrix implements Cloneable {
-    private PSObject matrix;
+    private PSObject matrix = null;
 
     public TransformMatrix() {// [a b c d t_x t_y ]
         double scale = 1;//4.0/3;

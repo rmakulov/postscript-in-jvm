@@ -2,8 +2,6 @@ package operators.graphicsState;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
-import runtime.graphics.GState;
-import runtime.graphics.save.GSave;
 
 /**
  * Created by user on 16.03.14.
@@ -15,13 +13,14 @@ public class GRestoreOp extends AbstractGraphicOperator {
         super();
     }
 
+    /*it's too hard to explain, but we try
+    * if last gstate was made by save*/
     @Override
     public void interpret() {
-        GSave gsave = runtime.peekFromGraphicStack();
-        if (gsave.isMadeByGSaveOp()) {
-            runtime.popFromGraphicStack();
+        runtime.popFromGraphicStack();
+        if (!runtime.getGState().isMadeByGSaveOp()) {
+            runtime.gsave(false);
         }
-        GState.getInstance().setSnapshot(gsave);
     }
 
     @Override

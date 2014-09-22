@@ -27,7 +27,7 @@ public class SetMiterLimitOp extends AbstractGraphicOperator {
             runtime.pushToOperandStack(oNum);
             return;
         }
-        gState.graphicsSettings.miterLimit = nNum;
+        runtime.getGState().graphicsSettings.miterLimit = nNum;
     }
 
     @Override

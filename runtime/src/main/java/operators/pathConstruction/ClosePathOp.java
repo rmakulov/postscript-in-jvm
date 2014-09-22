@@ -15,7 +15,7 @@ public class ClosePathOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {
-        gState.currentPath.closePath();
+        runtime.getGState().currentPath.closePath();
     }
 
     @Override

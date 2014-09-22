@@ -37,7 +37,7 @@ public class ITransformOp extends AbstractGraphicOperator {
             }
             double y = ((PSNumber) first.getValue()).getRealValue();
             double x = ((PSNumber) oX.getValue()).getRealValue();
-            PSPoint res = gState.cTM.iTransform(x, y);
+            PSPoint res = runtime.getGState().cTM.iTransform(x, y);
             if (res == null) {
                 runtime.pushToOperandStack(oX);
                 runtime.pushToOperandStack(first);

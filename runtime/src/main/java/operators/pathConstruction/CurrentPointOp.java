@@ -18,10 +18,10 @@ public class CurrentPointOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {
-        if (gState.currentPoint == null) {
+        if (runtime.getGState().currentPoint == null) {
             return;
         }
-        PSPoint p = gState.cTM.iTransform(gState.currentPoint);
+        PSPoint p = runtime.getGState().cTM.iTransform(runtime.getGState().currentPoint);
         runtime.pushToOperandStack(new PSObject(new PSReal(p.getX())));
         runtime.pushToOperandStack(new PSObject(new PSReal(p.getY())));
 

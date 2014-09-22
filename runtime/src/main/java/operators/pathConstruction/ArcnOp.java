@@ -40,7 +40,7 @@ public class ArcnOp extends AbstractGraphicOperator {
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
-        TransformMatrix cTM = gState.cTM;
+        TransformMatrix cTM = runtime.getGState().cTM;
         PSPoint absCent = cTM.transform(nX, nY);
         double xScale = cTM.getXScale();
         double yScale = cTM.getYScale();
@@ -62,10 +62,10 @@ public class ArcnOp extends AbstractGraphicOperator {
 
         PSPoint absBegin = new PSPoint(xBegin, yBegin);
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
-        boolean connect = gState.currentPoint != null;
-        gState.currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
+        boolean connect = runtime.getGState().currentPoint != null;
+        runtime.getGState().currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
                 nAngle1, nAngle2, false, connect);
-        gState.currentPoint = new PSPoint(absCent.getX() + xR * Math.cos(nAngle2),
+        runtime.getGState().currentPoint = new PSPoint(absCent.getX() + xR * Math.cos(nAngle2),
                 absCent.getY() + yR * Math.sin(nAngle2));
     }
 

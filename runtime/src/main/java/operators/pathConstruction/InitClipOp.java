@@ -15,7 +15,7 @@ public class InitClipOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {
-        gState.initClip();
+        runtime.getGState().initClip();
     }
 
     @Override

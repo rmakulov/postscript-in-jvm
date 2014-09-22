@@ -16,7 +16,7 @@ public class NewPathOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {
-        gState.currentPath = new PSPath();
+        runtime.getGState().currentPath = new PSPath();
     }
 
     @Override

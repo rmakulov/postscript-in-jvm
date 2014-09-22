@@ -24,7 +24,7 @@ public class RotateOp extends AbstractGraphicOperator {
         }
         double angle = ((PSNumber) oAngle.getValue()).getRealValue();
         double newAngle = angle * Math.PI / 180;
-        gState.cTM.rotate(newAngle);
+        runtime.getGState().cTM.rotate(newAngle);
     }
 
     @Override

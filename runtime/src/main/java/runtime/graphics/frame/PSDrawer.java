@@ -1,6 +1,6 @@
 package runtime.graphics.frame;
 
-import runtime.graphics.GState;
+import runtime.Runtime;
 import runtime.graphics.GraphicsSettings;
 import runtime.graphics.paths.PSPath;
 
@@ -14,7 +14,7 @@ import java.awt.geom.Path2D;
 public class PSDrawer {
     private static PSDrawer instance = new PSDrawer();
     private PSFrame frame = PSFrame.getInstance();
-    protected GState gState = GState.getInstance();
+    private Runtime runtime = Runtime.getInstance();
     private long lastDrawTime = 0;
     private final long repaintTime = 50;
 
@@ -35,13 +35,13 @@ public class PSDrawer {
 
     public void fill() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = gState.currentPath;
-        setGraphicsSettings(g2, gState.graphicsSettings);
+        PSPath path = runtime.getGState().currentPath;
+        setGraphicsSettings(g2, runtime.getGState().graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_NON_ZERO);
-        g2.clip(gState.clippingPath.getGeneralPath());
+        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
         g2.fill(generalPath);
-        gState.newCurrentPath();
+        runtime.getGState().newCurrentPath();
         repaintImage();
     }
 
@@ -56,41 +56,41 @@ public class PSDrawer {
 
     public void eofill() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = gState.currentPath;
-        setGraphicsSettings(g2, gState.graphicsSettings);
+        PSPath path = runtime.getGState().currentPath;
+        setGraphicsSettings(g2, runtime.getGState().graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_EVEN_ODD);
-        g2.clip(gState.clippingPath.getGeneralPath());
+        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
         g2.fill(generalPath);
-        gState.newCurrentPath();
+        runtime.getGState().newCurrentPath();
         repaintImage();
     }
 
     public void stroke() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = gState.currentPath;
-        setGraphicsSettings(g2, gState.graphicsSettings);
-        g2.clip(gState.clippingPath.getGeneralPath());
+        PSPath path = runtime.getGState().currentPath;
+        setGraphicsSettings(g2, runtime.getGState().graphicsSettings);
+        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
         g2.draw(path.getGeneralPath());
-        gState.newCurrentPath();
+        runtime.getGState().newCurrentPath();
         repaintImage();
     }
 
     public void clip() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = gState.currentPath;
-        g2.clip(gState.clippingPath.getGeneralPath());
+        PSPath path = runtime.getGState().currentPath;
+        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
         g2.clip(path.getGeneralPath());
         Shape clip = g2.getClip();
-        gState.clippingPath = new PSPath(new GeneralPath(clip));
-        gState.newCurrentPath();
+        runtime.getGState().clippingPath = new PSPath(new GeneralPath(clip));
+        runtime.getGState().newCurrentPath();
         repaintImage();
     }
 
     public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
         if (settings == null) return;
         g.setColor(settings.color);
-        g.setStroke(new BasicStroke((float) gState.getLineWidthInPixels(),
+        g.setStroke(new BasicStroke((float) runtime.getGState().getLineWidthInPixels(),
                 settings.lineCap,
                 settings.lineJoin,
                 (float) settings.miterLimit,
@@ -131,10 +131,10 @@ public class PSDrawer {
             Graphics2D g2 = (Graphics2D) g;
 
             g2.setTransform(new AffineTransform(getJavaTransformMatrix()));
-            for (DrawPath path : gState.drawPaths) {
+            for (DrawPath path : runtime.getGState().drawPaths) {
                 drawCurrentPath(path, g2);
             }
-            // gState.drawPaths.clear() ;
+            // runtime.getGState().drawPaths.clear() ;
 
 
         }

@@ -28,7 +28,7 @@ public class TranslateOp extends AbstractGraphicOperator {
         }
         double t_y = ((PSNumber) (oTY.getValue())).getRealValue();
         double t_x = ((PSNumber) (oTX.getValue())).getRealValue();
-        gState.cTM.translate(t_x, t_y);
+        runtime.getGState().cTM.translate(t_x, t_y);
     }
 
     @Override

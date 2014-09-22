@@ -28,7 +28,7 @@ public class SetGrayOp extends AbstractGraphicOperator {
         if (grayScale < 0) grayScale = 0;
         if (grayScale > 1) grayScale = 1;
         int col = (int) (255 * grayScale);
-        gState.graphicsSettings.color = new Color(col, col, col, 255);
+        runtime.getGState().graphicsSettings.color = new Color(col, col, col, 255);
     }
 
     @Override

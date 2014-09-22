@@ -35,7 +35,7 @@ public class SetRgbColorOp extends AbstractGraphicOperator {
         if (!(nBlue >= 0 && nBlue <= 1 && nGreen >= 0 && nGreen <= 1 && nRed >= 0 && nRed <= 1)) {
             return;
         }
-        gState.graphicsSettings.color = new Color((int) (255 * nRed), (int) (255 * nGreen), (int) (255 * nBlue));
+        runtime.getGState().graphicsSettings.color = new Color((int) (255 * nRed), (int) (255 * nGreen), (int) (255 * nBlue));
     }
 
     @Override

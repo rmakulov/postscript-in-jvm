@@ -20,7 +20,6 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import runtime.avl.Pair;
 import runtime.graphics.GState;
-import runtime.graphics.save.GSave;
 import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
@@ -51,8 +50,8 @@ public class Runtime implements Opcodes {
 
     private Runtime() {
         super();
-        isCompiling = false;
-//        isCompiling = true;
+//        isCompiling = false;
+        isCompiling = true;
     }
 
     public static Runtime getInstance() {
@@ -64,15 +63,17 @@ public class Runtime implements Opcodes {
     */
     public void save() {
         //localVM.clearGarbage(getRootSet());
-        Snapshot snapshot = new Snapshot(localVM.clone());
-        localVM.initDefaultKeys();
-        operandStack = operandStack.push(new PSObject(snapshot));
+
+        Snapshot snapshot = new Snapshot(localVM.clone(), getGState());
         gsave(false);
+        localVM.initDefaultKeys();
+        operandStack.push(new PSObject(snapshot));
     }
 
     public void gsave(boolean isMadeByGsave) {
-        GSave gsave = GState.getInstance().getSnapshot(isMadeByGsave);
-        pushToGraphicStack(gsave);
+        getGState().setMadeByGSaveOp(isMadeByGsave);
+        GState gState = getGState().getSnapshot();
+        pushToGraphicStack(gState);
     }
 
     /*
@@ -94,7 +95,9 @@ public class Runtime implements Opcodes {
         }
         savedLocalVM.updateStringValues(localVM); //string values don't restores
         localVM = savedLocalVM;
+
         GRestoreAllOp.instance.interpret();
+        graphicStack.setGState(snapshot);
         return true;
     }
 
@@ -109,28 +112,24 @@ public class Runtime implements Opcodes {
 
     public void pushToOperandStack(PSObject psObject) {
         //System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
-        if (!(psObject == null)) operandStack = operandStack.push(psObject);
+        if (!(psObject == null)) {
+            operandStack.push(psObject);
+        }
     }
 
     public PSObject popFromOperandStack() {
-        PSObject object = operandStack.peek();
-        if (object == null)
-            return null;
-        operandStack = operandStack.removeTop();
-        return object;
+        return operandStack.pop();
     }
 
-    public void pushToGraphicStack(GSave gsave) {
-        graphicStack = graphicStack.push(gsave);
+    public void pushToGraphicStack(GState gsave) {
+        graphicStack.push(gsave);
     }
 
-    public GSave popFromGraphicStack() {
-        GSave gsave = graphicStack.peek();
-        graphicStack = graphicStack.removeTop();
-        return gsave;
+    public GState popFromGraphicStack() {
+        return graphicStack.pop();
     }
 
-    public GSave peekFromGraphicStack() {
+    public GState peekFromGraphicStack() {
         return graphicStack.peek();
     }
 
@@ -139,9 +138,9 @@ public class Runtime implements Opcodes {
     }
 
     public Procedure popFromCallStack() {
-        Procedure procedure = callStack.peek();
-        callStack = callStack.removeTop();
-        return procedure;
+//        Procedure procedure = callStack.peek();
+//        callStack = callStack.pop();
+        return callStack.pop();
     }
 
     public Procedure peekFromCallStack() {
@@ -181,14 +180,14 @@ public class Runtime implements Opcodes {
         }
 
         //graphicStack
-        for (GSave gsave : graphicStack) {
-            PSObject o = gsave.getcTM().getMatrix();
+        for (GState gState : graphicStack) {
+            PSObject o = gState.cTM.getMatrix();
             PSArray arr = (PSArray) o.getValue();
             if (!(o.getDirectValue() instanceof LocalRef)) continue;
             LocalRef ref = (LocalRef) o.getDirectValue();
             getUsingLocalVMIndexesByRef(indexes, ref);
         }
-        LocalRef locRefCTM = GState.getInstance().getLocalRefCTM();
+        LocalRef locRefCTM = getGState().getLocalRefCTM();
         //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
         if (locRefCTM != null) {
             getUsingLocalVMIndexesByRef(indexes, locRefCTM);
@@ -258,12 +257,12 @@ public class Runtime implements Opcodes {
 
 
     public void pushToCallStack(Procedure procedure) {
-        callStack = callStack.push(procedure);
+        callStack.push(procedure);
     }
 
 
     public void pushToDictionaryStack(PSObject dict) {
-        dictionaryStack = dictionaryStack.push(dict);
+        dictionaryStack.push(dict);
     }
 
     public PSObject peekFromDictionaryStack() {
@@ -272,7 +271,7 @@ public class Runtime implements Opcodes {
 
     public boolean removeFromDictionaryStack() {
         if (dictionaryStack.size() > 3) {
-            dictionaryStack = dictionaryStack.removeTop();
+            dictionaryStack.pop();
             return true;
         }
         return false;
@@ -356,14 +355,6 @@ public class Runtime implements Opcodes {
         return ((PSDictionary) dictObject.getValue()).get(key);
     }
 
-
-    public boolean exchangeTopOfOperandStack() {
-        OperandStack stack = operandStack.exch();
-        if (stack == null) return false;
-        operandStack = stack;
-        return true;
-    }
-
     //clearOperandStack operandStack;
     public void clearOperandStack() {
         operandStack.clear();
@@ -384,7 +375,7 @@ public class Runtime implements Opcodes {
 //        graphicStack = new GraphicStack();
         dictionaryStack.clear();
 //        dictionaryStack = new DictionaryStack();
-        GState.reset();
+        graphicStack.reset();
 //        initDefaultDictionaries();
     }
 
@@ -469,6 +460,12 @@ public class Runtime implements Opcodes {
         pushToDictionaryStack(userDict);
     }
 
+    public void initRuntime() {
+        initDefaultDictionaries();
+        graphicStack.init();
+
+    }
+
     public PSObject currentDict() {
         return dictionaryStack.peek();
     }
@@ -493,4 +490,10 @@ public class Runtime implements Opcodes {
         this.isCompiling = !isCompiling;
     }
 
+    public GState getGState() {
+        if (graphicStack.isEmpty()) {
+            graphicStack.init();
+        }
+        return graphicStack.peek();
+    }
 }

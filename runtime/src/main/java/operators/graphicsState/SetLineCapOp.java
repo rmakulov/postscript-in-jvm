@@ -23,7 +23,7 @@ public class SetLineCapOp extends AbstractGraphicOperator {
             return;
         }
         int nLC = ((PSInteger) oLC.getValue()).getIntValue();
-        gState.graphicsSettings.lineCap = nLC;
+        runtime.getGState().graphicsSettings.lineCap = nLC;
     }
 
     @Override

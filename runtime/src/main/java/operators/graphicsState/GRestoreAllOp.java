@@ -3,7 +3,6 @@ package operators.graphicsState;
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
 import runtime.graphics.GState;
-import runtime.graphics.save.GSave;
 
 /**
  * repeatedly performs grestore operations until it encounters a graphics state that
@@ -25,15 +24,13 @@ public class GRestoreAllOp extends AbstractGraphicOperator {
         if (runtime.getGraphicStackSize() == 0) {
             return;
         }
-        GSave gsave = runtime.peekFromGraphicStack();
+        GState gState = runtime.peekFromGraphicStack();
 
-        while (gsave.isMadeByGSaveOp() && runtime.getGraphicStackSize() > 0) {
+        while (gState.isMadeByGSaveOp() && runtime.getGraphicStackSize() > 0) {
             GRestoreOp.instance.interpret();
-            gsave = runtime.peekFromGraphicStack();
+            runtime.popFromGraphicStack();
+            gState = runtime.peekFromGraphicStack();
         }
-        GState.getInstance().setSnapshot(gsave);
-
-
     }
 
     @Override

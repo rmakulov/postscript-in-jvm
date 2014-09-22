@@ -19,7 +19,7 @@ public class RCurveToOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {//dx1 dy1 dx2 dy2 dx3 dy3 rcurveto –
-        if (runtime.getOperandStackSize() < 6 || gState.currentPoint == null) return;
+        if (runtime.getOperandStackSize() < 6 || runtime.getGState().currentPoint == null) return;
         PSObject oY3 = runtime.popFromOperandStack();
         PSObject oX3 = runtime.popFromOperandStack();
         PSObject oY2 = runtime.popFromOperandStack();
@@ -42,8 +42,8 @@ public class RCurveToOp extends AbstractGraphicOperator {
         double dX3 = ((PSNumber) oX3.getValue()).getRealValue();
         double dY3 = ((PSNumber) oY3.getValue()).getRealValue();
 
-        TransformMatrix cTM = gState.cTM;
-        PSPoint absP0 = cTM.iTransform(gState.currentPoint);
+        TransformMatrix cTM = runtime.getGState().cTM;
+        PSPoint absP0 = cTM.iTransform(runtime.getGState().currentPoint);
         PSPoint absP1 = new PSPoint(absP0.getX() + dX1, absP0.getY() + dY1);
         PSPoint absP2 = new PSPoint(absP0.getX() + dX2, absP0.getY() + dY2);
         PSPoint absP3 = new PSPoint(absP0.getX() + dX3, absP0.getY() + dY3);
@@ -52,8 +52,8 @@ public class RCurveToOp extends AbstractGraphicOperator {
         PSPoint p2 = cTM.transform(absP2);
         PSPoint p3 = cTM.transform(absP3);
 
-        gState.currentPath.addCurve(gState.currentPoint, p1, p2, p3);
-        gState.currentPoint = p3;
+        runtime.getGState().currentPath.addCurve(runtime.getGState().currentPoint, p1, p2, p3);
+        runtime.getGState().currentPoint = p3;
     }
 
     @Override

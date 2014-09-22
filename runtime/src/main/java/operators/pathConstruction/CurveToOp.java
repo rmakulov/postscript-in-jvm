@@ -24,23 +24,14 @@ public class CurveToOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {//x1 y1 x2 y2 x3 y3 curveto –
-        if (runtime.getOperandStackSize() < 6 || gState.currentPoint == null) return;
+        if (runtime.getOperandStackSize() < 6 || runtime.getGState().currentPoint == null) return;
         PSObject oY3 = runtime.popFromOperandStack();
         PSObject oX3 = runtime.popFromOperandStack();
         PSObject oY2 = runtime.popFromOperandStack();
         PSObject oX2 = runtime.popFromOperandStack();
         PSObject oY1 = runtime.popFromOperandStack();
         PSObject oX1 = runtime.popFromOperandStack();
-        if (!(oX1.isNumber() && oY1.isNumber() && oX2.isNumber() && oY2.isNumber() && oX3.isNumber() && oY3.isNumber())) {
-            runtime.pushToOperandStack(oX1);
-            runtime.pushToOperandStack(oY1);
-            runtime.pushToOperandStack(oX2);
-            runtime.pushToOperandStack(oY2);
-            runtime.pushToOperandStack(oX3);
-            runtime.pushToOperandStack(oY3);
-            System.out.println("TROUBLE!!!!");
-            return;
-        }
+        if (wrongArgs(oY3, oX3, oY2, oX2, oY1, oX1)) return;
         double nX1 = ((PSNumber) oX1.getValue()).getRealValue();
         double nY1 = ((PSNumber) oY1.getValue()).getRealValue();
         double nX2 = ((PSNumber) oX2.getValue()).getRealValue();
@@ -48,12 +39,27 @@ public class CurveToOp extends AbstractGraphicOperator {
         double nX3 = ((PSNumber) oX3.getValue()).getRealValue();
         double nY3 = ((PSNumber) oY3.getValue()).getRealValue();
 
-        TransformMatrix cTM = gState.cTM;
+        TransformMatrix cTM = runtime.getGState().cTM;
         PSPoint p1 = cTM.transform(nX1, nY1);
         PSPoint p2 = cTM.transform(nX2, nY2);
         PSPoint p3 = cTM.transform(nX3, nY3);
-        gState.currentPath.addCurve(gState.currentPoint, p1, p2, p3);
-        gState.currentPoint = p3;
+        runtime.getGState().currentPath.addCurve(runtime.getGState().currentPoint, p1, p2, p3);
+        runtime.getGState().currentPoint = p3;
+    }
+
+    private boolean wrongArgs(PSObject oY3, PSObject oX3, PSObject oY2, PSObject oX2, PSObject oY1, PSObject oX1) {
+        if (!(oX1.isNumber() && oY1.isNumber() && oX2.isNumber() && oY2.isNumber() && oX3.isNumber() && oY3.isNumber())) {
+            fail();
+            runtime.pushToOperandStack(oX1);
+            runtime.pushToOperandStack(oY1);
+            runtime.pushToOperandStack(oX2);
+            runtime.pushToOperandStack(oY2);
+            runtime.pushToOperandStack(oX3);
+            runtime.pushToOperandStack(oY3);
+            System.out.println("TROUBLE!!!!");
+            return true;
+        }
+        return false;
     }
 
     @Override

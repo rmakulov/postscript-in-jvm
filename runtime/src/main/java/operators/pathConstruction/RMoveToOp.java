@@ -27,11 +27,11 @@ public class RMoveToOp extends AbstractGraphicOperator {
         }
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
-        PSPoint relCurPoint = gState.cTM.iTransform(gState.currentPoint);
-        PSPoint p = gState.cTM.transform(nX.getRealValue() + relCurPoint.getX(), nY.getRealValue() + relCurPoint.getY());
+        PSPoint relCurPoint = runtime.getGState().cTM.iTransform(runtime.getGState().currentPoint);
+        PSPoint p = runtime.getGState().cTM.transform(nX.getRealValue() + relCurPoint.getX(), nY.getRealValue() + relCurPoint.getY());
 
-        gState.currentPoint = gState.cTM.transform(p);
-        gState.currentPath.getGeneralPath().moveTo(p.getX(), p.getY());
+        runtime.getGState().currentPoint = runtime.getGState().cTM.transform(p);
+        runtime.getGState().currentPath.getGeneralPath().moveTo(p.getX(), p.getY());
 
     }
 

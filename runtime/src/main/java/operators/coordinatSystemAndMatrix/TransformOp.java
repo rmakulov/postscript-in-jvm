@@ -37,7 +37,7 @@ public class TransformOp extends AbstractGraphicOperator {
             }
             double y = ((PSNumber) first.getValue()).getRealValue();
             double x = ((PSNumber) oX.getValue()).getRealValue();
-            PSPoint res = gState.cTM.transform(x, y);
+            PSPoint res = runtime.getGState().cTM.transform(x, y);
             runtime.pushToOperandStack(new PSObject(new PSReal(res.getX())));
             runtime.pushToOperandStack(new PSObject(new PSReal(res.getY())));
         } else if (first.getType() == Type.ARRAY && ((PSArray) first.getValue()).getArray().length == 6) {//x y matrix transform x' y'

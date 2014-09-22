@@ -9,61 +9,30 @@ public class PSStack<T> implements Iterable<T> {
     private Stack<T> stack = new Stack<T>();
 
     public PSStack() {
-
     }
 
     public PSStack(Stack<T> stack) {
         this.stack = stack;
     }
 
-    public PSStack removeTop() {
-        return new PSStack<T>(removeTopAndGetStack());
+    public T pop() {
+        return stack.pop();
     }
 
-    public PSStack push(T t) {
-        return new PSStack<T>(pushAndGetStack(t));
+    public void push(T t) {
+        stack.push(t);
     }
 
-    public PSStack exch() {
-        return new PSStack<T>(exchAndGetStack());
-    }
-
-
-    protected Stack<T> removeTopAndGetStack() {
-        Iterator<T> iterator = stack.iterator();
-        Stack<T> newStack = new Stack<T>();
-        while (iterator.hasNext()) {
-            newStack.push(iterator.next());
-        }
-        newStack.pop();
-        return newStack;
-    }
-
-    protected Stack<T> pushAndGetStack(T t) {
-        Iterator<T> iterator = stack.iterator();
-        Stack<T> newStack = new Stack<T>();
-        while (iterator.hasNext()) {
-            newStack.push(iterator.next());
-        }
-        newStack.push(t);
-        return newStack;
-    }
-
-    protected Stack<T> exchAndGetStack() {
+    public void exch() {
         if (stack.size() < 2) {
             //todo throw exception
-            return null;
+            return;
         }
         Iterator<T> iterator = stack.iterator();
-        Stack<T> newStack = new Stack<T>();
-        while (iterator.hasNext()) {
-            newStack.push(iterator.next());
-        }
-        T top = newStack.pop();
-        T down = newStack.pop();
-        newStack.push(top);
-        newStack.push(down);
-        return newStack;
+        T top = stack.pop();
+        T down = stack.pop();
+        stack.push(top);
+        stack.push(down);
     }
 
     public Iterator<T> iterator() {

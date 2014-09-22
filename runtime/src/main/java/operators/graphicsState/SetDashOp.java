@@ -46,10 +46,10 @@ public class SetDashOp extends AbstractGraphicOperator {
             dashArr = null;
         }
         //gState.graphicsSettings.setDash(dashArr);
-        gState.graphicsSettings.dash = dashArr;
+        runtime.getGState().graphicsSettings.dash = dashArr;
 
         PSInteger psDashPhase = (PSInteger) offsetObj.getValue();
-        gState.graphicsSettings.dashPhase = psDashPhase.getIntValue();
+        runtime.getGState().graphicsSettings.dashPhase = psDashPhase.getIntValue();
     }
 
     @Override
