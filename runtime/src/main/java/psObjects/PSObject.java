@@ -351,4 +351,9 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
                 ", attribute=" + attribute +
                 '}';
     }
+
+    public String toStringView() {
+
+        return getValue().toStringView();
+    }
 }

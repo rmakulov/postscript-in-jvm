@@ -58,4 +58,9 @@ public abstract class Operator extends SimpleValue implements Opcodes {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toStringView() {
+        return toString();
+    }
 }

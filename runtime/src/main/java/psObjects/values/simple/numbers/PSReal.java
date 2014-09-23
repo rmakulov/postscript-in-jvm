@@ -41,6 +41,11 @@ public class PSReal extends PSNumber {
         runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 
+    @Override
+    public String toStringView() {
+        return value + "";
+    }
+
     public static void compile(double value) {
         Runtime runtime = Runtime.getInstance();
 //        runtime.pushToOperandStack(new PSObject(new PSReal(value)));

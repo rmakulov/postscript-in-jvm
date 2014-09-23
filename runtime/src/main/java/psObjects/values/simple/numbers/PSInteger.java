@@ -37,6 +37,11 @@ public class PSInteger extends PSNumber {
         return true;
     }
 
+    @Override
+    public String toStringView() {
+        return value + "";
+    }
+
 
     /*
     @Override

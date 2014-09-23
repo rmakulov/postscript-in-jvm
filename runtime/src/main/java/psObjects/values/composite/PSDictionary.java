@@ -90,4 +90,9 @@ public class PSDictionary extends CompositeValue {
         if (!(o instanceof PSDictionary)) return false;
         return true;
     }
+
+    @Override
+    public String toStringView() {
+        return "--dict--";
+    }
 }

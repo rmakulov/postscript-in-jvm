@@ -178,6 +178,11 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
         return new PSString(newArray);
     }
 
+    @Override
+    public String toStringView() {
+        return "(" + getString() + ")";
+    }
+
     public static void compile(String s) {
         runtime.Runtime runtime = Runtime.getInstance();
         runtime.bcGen.mv.visitVarInsn(ALOAD, 0);

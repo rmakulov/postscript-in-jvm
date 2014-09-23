@@ -101,6 +101,11 @@ public class GState extends CompositeValue {
         return true;
     }
 
+    @Override
+    public String toStringView() {
+        return "--gstate--";
+    }
+
     public boolean isMadeByGSaveOp() {
         return madeByGSaveOp;
     }

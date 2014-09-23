@@ -84,6 +84,11 @@ public class PSMark extends SimpleValue {
         return true;
     }
 
+    @Override
+    public String toStringView() {
+        return "--mark--";
+    }
+
     private Operator getBracketOperator() {
         switch (bracket) {
             case OPEN_SQUARE:

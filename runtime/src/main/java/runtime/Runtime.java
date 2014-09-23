@@ -494,4 +494,12 @@ public class Runtime {
         }
         return graphicStack.peek();
     }
+
+    public String operandStackToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (PSObject psObject : operandStack) {
+            stringBuilder.append(psObject.toStringView()).append(" ");
+        }
+        return stringBuilder.toString().trim().concat("\n");
+    }
 }

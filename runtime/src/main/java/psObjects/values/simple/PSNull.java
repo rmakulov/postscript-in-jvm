@@ -22,7 +22,12 @@ public class PSNull extends SimpleValue {
     }
 
     @Override
+    public String toStringView() {
+        return toString();
+    }
+
+    @Override
     public String toString() {
-        return "PSNull{}";
+        return "PSNull";
     }
 }

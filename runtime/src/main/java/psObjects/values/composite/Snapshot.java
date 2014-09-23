@@ -38,6 +38,11 @@ public class Snapshot extends CompositeValue {
     }
 
     @Override
+    public String toStringView() {
+        return "--snapshot--";
+    }
+
+    @Override
     public String toString() {
         return "Snapshot{}";
     }

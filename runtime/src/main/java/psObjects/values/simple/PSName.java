@@ -126,6 +126,11 @@ public class PSName extends SimpleValue {
         return true;
     }
 
+    @Override
+    public String toStringView() {
+        return "/" + strValue;
+    }
+
     public int compareGrade() {
         return 0;
     }

@@ -140,6 +140,15 @@ public class PSArray extends CompositeValue implements Cloneable {
     }
 
     @Override
+    public String toStringView() {
+        StringBuilder sb = new StringBuilder().append("[");
+        for (ArrayElement arrayElement : array) {
+            sb.append(arrayElement.getElementObject().toStringView()).append(" ");
+        }
+        return sb.toString().trim() + "]";
+    }
+
+    @Override
     public int hashCode() {
         return Arrays.hashCode(array);
     }

@@ -1,0 +1,4 @@
+7_ellipses.ps 		 Interpreter 54.0 vs 		 Compiler 16.0
+chupcko.ps 		 Interpreter 2519.0 vs 		 Compiler 997.0
+WireFrame.eps 		 Interpreter 455.0 vs 		 Compiler 213.0
+mandel.ps 

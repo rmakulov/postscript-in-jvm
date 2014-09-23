@@ -9,7 +9,7 @@ import java.io.IOException;
 public class SpeedTests {
 
     private static Interpreter interpreter = new Interpreter();
-    static final int TEST_COUNTS = 100;
+    static final int TEST_COUNTS = 1;
 
     public static void main(String[] args) {
         final File folder = new File("tests/speedTestExamples");

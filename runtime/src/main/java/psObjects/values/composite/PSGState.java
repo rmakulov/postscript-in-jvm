@@ -19,4 +19,9 @@ public class PSGState extends CompositeValue {
         return true;
         //todo what if o is array and not equal
     }
+
+    @Override
+    public String toStringView() {
+        return "--gstate--";
+    }
 }

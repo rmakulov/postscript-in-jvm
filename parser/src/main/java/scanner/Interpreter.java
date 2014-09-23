@@ -16,6 +16,7 @@ public class Interpreter {
         MainProcedure mainProcedure = new MainProcedure(file);
         runtime.pushToCallStack(mainProcedure);
         runtime.executeCallStack();
+//        System.out.println(runtime.operandStackToString());
         return (System.currentTimeMillis() - startTime);
 
 //        System.out.println("\nProgram lasted for " + ((System.currentTimeMillis() - startTime)) + " milliseconds");
@@ -33,7 +34,8 @@ public class Interpreter {
         try {
             if (args.length == 0) {
                   /*main examples*/
-//                Interpreter.instance.run(new File("0thStep.ps"));
+                Interpreter.instance.run(new File("tests/operandStackExamples/5thStep.ps"));
+
 //                Interpreter.instance.run(new File("1stStep.ps"));
 //                Interpreter.instance.run(new File("2ndStep.ps"));
 //                Interpreter.instance.run(new File("3rdStep.ps"));
@@ -73,5 +75,9 @@ public class Interpreter {
         } catch (IOException e) {
             System.out.println("File not found.");
         }
+    }
+
+    public String operandStackToString() {
+        return runtime.operandStackToString();
     }
 }

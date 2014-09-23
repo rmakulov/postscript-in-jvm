@@ -73,4 +73,9 @@ public class PSBoolean extends SimpleValue {
     public PSBoolean not() {
         return flag ? FALSE : TRUE;
     }
+
+    @Override
+    public String toStringView() {
+        return flag + "";
+    }
 }

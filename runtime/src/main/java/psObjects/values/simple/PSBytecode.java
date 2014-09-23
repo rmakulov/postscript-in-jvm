@@ -72,4 +72,9 @@ public class PSBytecode extends PSName {
     public boolean equals(Object o) {
         return false;
     }
+
+    @Override
+    public String toStringView() {
+        return "bytecode{#" + strValue + "}";
+    }
 }

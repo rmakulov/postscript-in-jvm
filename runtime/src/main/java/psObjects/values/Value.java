@@ -52,4 +52,6 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
     }
 
     public abstract boolean equals(Object o);
+
+    public abstract String toStringView();
 }

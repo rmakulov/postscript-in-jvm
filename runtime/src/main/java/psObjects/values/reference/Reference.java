@@ -52,4 +52,9 @@ public abstract class Reference extends Value {
     public void compile(PSObject obj) {
         getValue().compile(obj);
     }
+
+    @Override
+    public String toStringView() {
+        return getValue().toStringView();
+    }
 }
