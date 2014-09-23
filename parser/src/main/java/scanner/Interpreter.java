@@ -31,7 +31,6 @@ public class Interpreter {
 
     public static void main(String[] args) {
         try {
-
             if (args.length == 0) {
                   /*main examples*/
 //                Interpreter.instance.run(new File("0thStep.ps"));
@@ -54,7 +53,7 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("17thStep.ps"));
 //                Interpreter.instance.run(new File("18thStep.ps"));
 //                Interpreter.instance.run(new File("19thStep.ps"));
-//                Interpreter.instance.run(new File("Examples/bytecode.ps"));
+//                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));
 //                Interpreter.instance.run(new File("Examples/psRay.ps"));
 //                Interpreter.instance.run(new File("Examples/plant2.ps"));
 //                Interpreter.instance.run(new File("Examples/FractalByAlunJones.ps"));
@@ -67,17 +66,12 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("Examples/6_Fractal_Arrow.ps"));
 //                Interpreter.instance.run(new File("Examples/mandel.ps"));
 //                Interpreter.instance.run(new File("Examples/doretree.ps"));
-                Interpreter.instance.run(new File("Examples/WireFrame.eps"));
-
-
-
+//                Interpreter.instance.run(new File("Examples/WireFrame.eps"));
             } else {
                 Interpreter.instance.run(new File(args[0]));
             }
         } catch (IOException e) {
             System.out.println("File not found.");
         }
-
-
     }
 }

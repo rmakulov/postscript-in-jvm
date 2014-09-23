@@ -10,6 +10,7 @@ import runtime.Runtime;
 
 public abstract class Value implements ValueComparable<Value>, Opcodes {
     protected Runtime runtime = Runtime.getInstance();
+
 /*
     public int compareTo(Value object) {
         return this.hashCode()-object.hashCode();

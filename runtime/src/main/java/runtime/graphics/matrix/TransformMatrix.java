@@ -15,6 +15,10 @@ import runtime.graphics.figures.PSPoint;
 public class TransformMatrix implements Cloneable {
     private PSObject matrix = null;
 
+    public void setMatrix(PSObject matrix) {
+        this.matrix = matrix;
+    }
+
     public TransformMatrix() {// [a b c d t_x t_y ]
         double scale = 1;//4.0/3;
         //matrix = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0};//or -631
@@ -111,18 +115,18 @@ public class TransformMatrix implements Cloneable {
 
     public void scale(double sx, double sy) {
         double[] transform = new double[]{sx, 0, 0, sy, 0, 0};
-        matrix = (new TransformMatrix(transform)).multMatrix(matrix).getMatrix();
+        setMatrix((new TransformMatrix(transform)).multMatrix(matrix).getMatrix());
     }
 
     public void translate(double tx, double ty) {
         double[] transform = new double[]{1, 0, 0, 1, tx, ty};
-        matrix = (new TransformMatrix(transform)).multMatrix(matrix).getMatrix();
+        setMatrix((new TransformMatrix(transform)).multMatrix(matrix).getMatrix());
     }
 
     public void rotate(double angle) {
         double cos = Math.cos(angle), sin = Math.sin(angle);
         double[] transform = new double[]{cos, sin, -sin, cos, 0, 0};
-        matrix = (new TransformMatrix(transform)).multMatrix(matrix).getMatrix();
+        setMatrix((new TransformMatrix(transform)).multMatrix(matrix).getMatrix());
     }
 
     public PSPoint transform(double x, double y) {

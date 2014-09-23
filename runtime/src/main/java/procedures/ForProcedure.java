@@ -49,4 +49,12 @@ public class ForProcedure extends ArrayProcedure {
     public boolean isExitable() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "ForProcedure{" +
+                "repeatedTimes=" + repeatedTimes +
+                ", next Index = " + nextIndex +
+                '}';
+    }
 }

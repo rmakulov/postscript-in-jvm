@@ -9,7 +9,7 @@ import java.io.IOException;
 public class SpeedTests {
 
     private static Interpreter interpreter = new Interpreter();
-    static final int TEST_COUNTS = 1;
+    static final int TEST_COUNTS = 100;
 
     public static void main(String[] args) {
         final File folder = new File("tests/speedTestExamples");
@@ -43,7 +43,7 @@ public class SpeedTests {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Interpreter failed at " + i + "step from " + TEST_COUNTS);
+            System.out.println("Interpreter failed at " + i + " step from " + TEST_COUNTS);
         }
     }
 
@@ -60,7 +60,7 @@ public class SpeedTests {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Interpreter failed at " + i + "step from " + TEST_COUNTS);
+            System.out.println("Interpreter failed at " + i + " step from " + TEST_COUNTS);
         }
     }
 

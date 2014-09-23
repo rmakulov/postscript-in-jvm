@@ -36,4 +36,12 @@ public class RepeatProcedure extends ArrayProcedure {
     public boolean isExitable() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "RepeatProcedure{" +
+                "repeatedTimes=" + repeatedTimes +
+                ", next Index = " + nextIndex +
+                '}';
+    }
 }
