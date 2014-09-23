@@ -1,0 +1,185 @@
+%!PS-Adobe-2.0
+%%Creator: Chris Foster
+%%Title: julia.ps
+%%Pages: 1
+%%BoundingBox: 0 0 596 842
+%%EndComments
+
+%-------------------------------------------------------------------------------
+% Julia fractal drawing program in postscript, using the equations which are 
+% inverse to the usual  z = z^2 + c.
+%
+% Two algorithms are implemented: a recursive and a Monte Carlo one;
+% they seem to be of comparable speed.
+% algorithm == 0    => Monte Carlo
+% algorithm == 1    => Recursive determenistic
+%
+% Note: Due to the accuracy (or lack thereof) of postscript floating
+%       point values, artifacts may be observed.  It seems that some
+%       values of c are more likely to get you into trouble, for 
+%       example c = 0 + i is pretty bad...
+%
+% Note: Render this on a FAST (as in processing speed) printer or 
+%       turn down the iterations or recursionLevel variables!
+%
+% Author: Chris Foster
+
+%-------------------------------------------------------------------------------
+% scale all units to centimeters, put the origin in the center
+28.346 28.346 scale
+10.5 14.85 translate
+% further scale up and rotate for landscape
+7 7 scale
+-90 rotate
+
+%-------------------------------------------------------------------------------
+% coords of julia fractal constant c = c1 + i*c2
+/c1 -0.5 def
+/c2 0.62 def
+%/c1 0 def
+%/c2 1 def
+/iterations 1000000 def
+/recursionLevel 20 def
+/algorithm 1 def % 0 for Monte Carlo, 1 for recursive
+/x0 0.0 def
+/y0 0.0 def
+
+% maximum value for the random number generator
+/RandMax 2147483647 def
+% max value for RNG divide by 2
+/RandMaxOn2 RandMax 2 idiv def
+
+%-------------------------------------------------------------------------------
+% draw a set of axes.
+/axes {
+  0.005 setlinewidth
+  newpath
+  0 -1 moveto
+  0 1.5 lineto
+  -2 0 moveto
+  2 0 lineto
+  stroke
+} def
+
+%-------------------------------------------------------------------------------
+% draw a small filled circle,
+% in stack: x y - coordinates of center
+/drawDot {0.001 0 360 arc fill} def
+
+%-------------------------------------------------------------------------------
+% compute (abs of) the X coordinate for the inverse julia mapping
+% in stack: x y - input coordinates from previous iteration
+% out stack: abs(x') mapped x coordinate
+/juliaMappingX {
+  c2 sub exch
+  c1 sub
+  dup 3 1 roll 
+  dup mul
+  exch dup mul
+  add
+  sqrt
+  add
+  2 div
+  sqrt
+} def
+
+%-------------------------------------------------------------------------------
+% compute the Y coordinate for the inverse julia mapping
+% in stack: y x'
+%   y  - y coord of previous iteration
+%   x' - precomputed x coordinate of current iteration
+% out stack: y' - mapped y coordinate
+/juliaMappingY{
+  % kludge to prevent division by x' = 0 - behaviour is not correct,
+  % but it prevents divison by zero errors...
+  dup 0 eq
+  %{ 1e-2 add} if
+  {
+    c1 add
+    abs
+    sqrt
+    rand RandMaxOn2 lt { neg } if
+    exch pop
+  }
+  {
+    2 mul exch
+    c2 sub exch
+    div
+  }
+  ifelse
+} def
+
+%-------------------------------------------------------------------------------
+% compute first inverse julia mapping
+% in stack: x y - coordinates of current point
+% out stack: x' y' - mapped coordinates
+/juliaInverse1{
+  dup 3 1 roll
+  juliaMappingX
+  dup 3 1 roll
+  juliaMappingY
+} def
+
+%-------------------------------------------------------------------------------
+% compute second inverse julia mapping
+% in stack: x y - coordinates of current point
+% out stack: x' y' - mapped coordinates
+/juliaInverse2{
+  dup 3 1 roll
+  juliaMappingX neg
+  dup 3 1 roll
+  juliaMappingY
+} def
+
+%-------------------------------------------------------------------------------
+% monte-carlo fractal drawer
+% in stack: x0 y0 N 
+%   x0 y0 - starting point
+%   N     - number of iterations
+% out stack: xn yn - last point in the iteration
+/juliaMonteCarlo{
+  {
+    % apply one of the inverse julia mappings at random
+    rand RandMaxOn2 gt
+    { juliaInverse1 }
+    { juliaInverse2 }
+    ifelse
+    % display the position of the resulting drawDot
+    2 copy
+    drawDot
+  } repeat
+} def
+
+%-------------------------------------------------------------------------------
+% recursive julia fractal drawer
+% in stack: x0 y0 level
+/juliaRecursive {
+  %dup ==
+  dup 0 eq % recursion test
+  { % this is the highest level of recursion
+    pop
+    drawDot % draw leaf nodes in recursion tree
+  }
+  { % else call self two times with different inverse mappings
+    1 sub 
+    3 1 roll
+    3 copy
+    juliaInverse1
+    3 2 roll juliaRecursive
+    juliaInverse2
+    3 2 roll juliaRecursive
+  }
+  ifelse
+} def
+
+%-------------------------------------------------------------------------------
+% Call the drawing algorithm
+algorithm 0 eq
+{ x0 y0 iterations juliaMonteCarlo }
+{ x0 y0 recursionLevel juliaRecursive }
+ifelse
+
+showpage
+
+%-------------------------------------------------------------------------------
+%%EOF

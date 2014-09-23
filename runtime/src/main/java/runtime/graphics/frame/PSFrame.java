@@ -40,8 +40,9 @@ public class PSFrame extends JFrame {
     }
 
     public static void reset() {
-        ourInstance.dispose();
-        ourInstance.setVisible(false);
+//        ourInstance.dispose();
+//        ourInstance.setVisible(false);
+        //ourInstance.repaint();
         ourInstance = new PSFrame();
     }
 }

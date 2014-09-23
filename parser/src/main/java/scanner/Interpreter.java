@@ -21,6 +21,14 @@ public class Interpreter {
 //        System.out.println("\nProgram lasted for " + ((System.currentTimeMillis() - startTime)) + " milliseconds");
     }
 
+    public void clearRuntime() {
+        instance.runtime.clearAll();
+    }
+
+    public void setCompilingMode(boolean compilingMode) {
+        runtime.setCompilingMode(compilingMode);
+    }
+
     public static void main(String[] args) {
         try {
 
@@ -59,26 +67,8 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("Examples/6_Fractal_Arrow.ps"));
 //                Interpreter.instance.run(new File("Examples/mandel.ps"));
 //                Interpreter.instance.run(new File("Examples/doretree.ps"));
-//                Interpreter.instance.run(new File("Examples/WireFrame.eps"));
+                Interpreter.instance.run(new File("Examples/WireFrame.eps"));
 
-                String fileName = "Examples/chupcko.ps";
-                System.out.print(fileName + "\t");
-                double totalSum = 0;
-                int testCounts = 2;
-                for (int i = 0; i < testCounts; i++) {
-//                    System.out.println(i);
-                    Interpreter.instance.runtime.clearAll();
-                    totalSum += Interpreter.instance.run(new File(fileName));
-                }
-                System.out.print(totalSum / testCounts + " vs ");
-
-                totalSum = 0;
-                Interpreter.instance.runtime.switchCompiling();
-                for (int i = 0; i < testCounts; i++) {
-                    Interpreter.instance.runtime.clearAll();
-                    totalSum += Interpreter.instance.run(new File(fileName));
-                }
-                System.out.println(totalSum / testCounts + " ");
 
 
             } else {

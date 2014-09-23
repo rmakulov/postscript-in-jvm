@@ -12,6 +12,7 @@
     <modules>
         <module>parser</module>
         <module>runtime</module>
+        <module>tests</module>
     </modules>
 
 

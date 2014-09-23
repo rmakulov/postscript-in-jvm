@@ -2,7 +2,6 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
-import org.objectweb.asm.Opcodes;
 import procedures.ArrayProcedure;
 import procedures.Procedure;
 import psObjects.Attribute;
@@ -31,7 +30,8 @@ import java.util.Set;
 import static psObjects.Type.*;
 
 
-public class Runtime implements Opcodes {
+public class Runtime {
+
     private static Runtime ourInstance = new Runtime();
 
     public boolean isCompiling;
@@ -49,9 +49,16 @@ public class Runtime implements Opcodes {
     private PSObject userDict, globalDict, systemDict;
 
     private Runtime() {
-        super();
-//        isCompiling = false;
-        isCompiling = true;
+        isCompiling = false;
+//        isCompiling = true;
+    }
+
+    public void setCompilingMode(boolean compilingMode) {
+        ourInstance.isCompiling = compilingMode;
+    }
+
+    public Runtime(boolean isCompiling) {
+        this.isCompiling = isCompiling;
     }
 
     public static Runtime getInstance() {
@@ -368,15 +375,10 @@ public class Runtime implements Opcodes {
 
     public void clearAll() {
         operandStack.clear();
-//        operandStack = new OperandStack();
         localVM.clear();
-//        localVM = new LocalVM();
         graphicStack.clear();
-//        graphicStack = new GraphicStack();
         dictionaryStack.clear();
-//        dictionaryStack = new DictionaryStack();
         graphicStack.reset();
-//        initDefaultDictionaries();
     }
 
     public CompositeValue getValueByLocalRef(LocalRef ref) {
@@ -484,10 +486,6 @@ public class Runtime implements Opcodes {
 
     public PSObject getSystemDict() {
         return systemDict;
-    }
-
-    public void switchCompiling() {
-        this.isCompiling = !isCompiling;
     }
 
     public GState getGState() {
