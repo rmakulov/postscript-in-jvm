@@ -638,8 +638,8 @@ class Yylex {
                 case 23:
                     break;
                 case 2:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [120] { String text = yytext();" + ZZ_NL + "                //todo" + ZZ_NL + "                //curString = curString + text.substring(yychar,yychar+yylength());" + ZZ_NL + "                curString = curString + text.substring(0,text.length()); }");
+//                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+//                    System.out.println("action [120] { String text = yytext();" + ZZ_NL + "                //todo" + ZZ_NL + "                //curString = curString + text.substring(yychar,yychar+yylength());" + ZZ_NL + "                curString = curString + text.substring(0,text.length()); }");
                 {
                     String text = yytext();
                     //todo
@@ -726,8 +726,8 @@ class Yylex {
                 case 33:
                     break;
                 case 12:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [84] { curString =  \"\";" + ZZ_NL + "    string_depth = 1;" + ZZ_NL + "    yybegin(YYSTRING); }");
+//                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+//                    System.out.println("action [84] { curString =  \"\";" + ZZ_NL + "    string_depth = 1;" + ZZ_NL + "    yybegin(YYSTRING); }");
                 {
                     curString = "";
                     string_depth = 1;
@@ -744,8 +744,8 @@ class Yylex {
                 case 35:
                     break;
                 case 14:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [113] { if (--string_depth == 0) {" + ZZ_NL + "            yybegin(YYINITIAL);" + ZZ_NL + "            return (new Yytoken(Tokens.STRINGS,curString,yyline,0,curString.length()));" + ZZ_NL + "            } else {" + ZZ_NL + "            curString = curString+ \")\";" + ZZ_NL + "         } }");
+//                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+//                    System.out.println("action [113] { if (--string_depth == 0) {" + ZZ_NL + "            yybegin(YYINITIAL);" + ZZ_NL + "            return (new Yytoken(Tokens.STRINGS,curString,yyline,0,curString.length()));" + ZZ_NL + "            } else {" + ZZ_NL + "            curString = curString+ \")\";" + ZZ_NL + "         } }");
                 {
                     if (--string_depth == 0) {
                         yybegin(YYINITIAL);

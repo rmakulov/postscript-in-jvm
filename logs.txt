@@ -1,4 +1,40 @@
-7_ellipses.ps 		 Interpreter 54.0 vs 		 Compiler 16.0
-chupcko.ps 		 Interpreter 2519.0 vs 		 Compiler 997.0
-WireFrame.eps 		 Interpreter 455.0 vs 		 Compiler 213.0
-mandel.ps 
+7_ellipses.ps 		 Interpreter 53.0 vs 		 Compiler 11.0
+chupcko.ps 		 Interpreter 2557.0 vs 		 Compiler 1235.0
+WireFrame.eps 		 Interpreter 485.0 vs 		 Compiler 213.0
+mandel.ps 		 Interpreter 221736.0 vs 		 Compiler 174501.0
+6_arcs.ps 		 Interpreter 3.0 vs 		 Compiler 1.0
+henon.ps~ line: 56 match: --)--
+action [129] { System.out.println("Illegal character: <" + yytext() + ">");
+	Utility.error(Utility.E_UNMATCHED); }
+Illegal character: <)>
+Error: Illegal character.
+		 Interpreter 14824.0 vs line: 56 match: --)--
+action [129] { System.out.println("Illegal character: <" + yytext() + ">");
+	Utility.error(Utility.E_UNMATCHED); }
+Illegal character: <)>
+Error: Illegal character.
+		 Compiler 13084.0
+mandelbrotset.ps 		 Interpreter 46477.0 vs 		 Compiler 19113.0
+flower.ps 		 Interpreter 7.0 vs 		 Compiler 6.0
+simpleGraphicsTest1.ps 		 Interpreter 2.0 vs 		 Compiler 0.0
+4_circles.ps 		 Interpreter 9.0 vs 		 Compiler 11.0
+psRay.ps 		 Interpreter 143755.0 vs 		 Compiler 72058.0
+6_Fractal_Arrow.ps 		 Interpreter 1167.0 vs 		 Compiler 1068.0
+henon.ps 		 Interpreter 13268.0 vs 		 Compiler 12401.0
+1_clip.ps 		 Interpreter 6.0 vs 		 Compiler 8.0
+1_rectangles.ps 		 Interpreter 1.0 vs 		 Compiler 1.0
+simpleGraphicsTest.ps 		 Interpreter 3.0 vs 		 Compiler 4.0
+gsaveTest.ps 		 Interpreter 2.0 vs 		 Compiler 5.0
+mandelbrotseterxample.ps 		 Interpreter 2353.0 vs 		 Compiler 2319.0
+FractalByAlunJones2.ps 		 Interpreter 60001.0 vs 		 Compiler 60002.0
+gingerbread.ps 		 Interpreter 1530.0 vs 		 Compiler 1500.0
+julia.ps 		 Interpreter 121084.0 vs 		 Compiler 86622.0
+colorcir.ps 		 Interpreter 101.0 vs 		 Compiler 86.0
+snowflak.ps 		 Interpreter 73.0 vs 		 Compiler 65.0
+2_trapezoid.ps 		 Interpreter 2.0 vs 		 Compiler 4.0
+FractalByAlunJones.ps 		 Interpreter 60011.0 vs 		 Compiler 60038.0
+bytecode.ps 		 Interpreter 0.0 vs 		 Compiler 0.0
+doretree.ps 		 Interpreter 140.0 vs 		 Compiler 152.0
+5_star.ps 		 Interpreter 0.0 vs 		 Compiler 1.0
+appolonain_net.ps 		 Interpreter 1294.0 vs 		 Compiler 471.0
+bindTest.ps 		 Interpreter 0.0 vs 		 Compiler 0.0

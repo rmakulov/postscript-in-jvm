@@ -6,7 +6,7 @@ import java.awt.*;
  * Created by Дмитрий on 19.03.14.
  */
 public class GraphicsSettings {
-    public static GraphicsSettings mainInstance = new GraphicsSettings();
+    //    public static GraphicsSettings mainInstance = new GraphicsSettings();
     public Color color;
     public double lineWidth; // 1/72 inch
     public int lineJoin;

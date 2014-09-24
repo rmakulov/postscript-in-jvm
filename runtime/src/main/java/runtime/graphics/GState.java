@@ -27,7 +27,7 @@ public class GState extends CompositeValue {
         currentPoint = new PSPoint();
         cTM = new TransformMatrix();
         initClip();
-        graphicsSettings = GraphicsSettings.mainInstance;
+        graphicsSettings = new GraphicsSettings();
         PSDrawer.reset();
         PSImage.reset();
 //        PSFrame.reset();

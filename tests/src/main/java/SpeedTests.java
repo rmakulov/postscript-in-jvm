@@ -14,6 +14,7 @@ public class SpeedTests {
     public static void main(String[] args) {
         final File folder = new File("tests/speedTestExamples");
         iterateExamples(folder);
+        System.out.println("All tests have been finished.");
     }
 
     public static void iterateExamples(final File folder) {
