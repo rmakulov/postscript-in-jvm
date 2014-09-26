@@ -424,7 +424,7 @@ public class Runtime {
         try {
             throw new Exception(key + " is not found");
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
         return new PSObject(PSNull.NULL);
     }

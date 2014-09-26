@@ -8,6 +8,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.ArrayElement;
 import psObjects.values.composite.PSArray;
+import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
 import runtime.graphics.figures.PSPoint;
 
@@ -52,12 +53,12 @@ public class TransformMatrix implements Cloneable {
         PSArray psArray = (PSArray) matrix.getValue();
 
         PSObject[] objArray = psArray.getArray();
-        return new double[]{((PSReal) objArray[0].getValue()).getRealValue(),
-                ((PSReal) objArray[1].getValue()).getRealValue(),
-                ((PSReal) objArray[2].getValue()).getRealValue(),
-                ((PSReal) objArray[3].getValue()).getRealValue(),
-                ((PSReal) objArray[4].getValue()).getRealValue(),
-                ((PSReal) objArray[5].getValue()).getRealValue(),
+        return new double[]{((PSNumber) objArray[0].getValue()).getRealValue(),
+                ((PSNumber) objArray[1].getValue()).getRealValue(),
+                ((PSNumber) objArray[2].getValue()).getRealValue(),
+                ((PSNumber) objArray[3].getValue()).getRealValue(),
+                ((PSNumber) objArray[4].getValue()).getRealValue(),
+                ((PSNumber) objArray[5].getValue()).getRealValue(),
         };
     }
 
@@ -96,12 +97,12 @@ public class TransformMatrix implements Cloneable {
         double d = doubleMatrix[3], tx = doubleMatrix[4], ty = doubleMatrix[5];
 
         PSObject[] objTransf = ((PSArray) transf.getValue()).getArray();
-        double a1 = ((PSReal) objTransf[0].getValue()).getRealValue();
-        double b1 = ((PSReal) objTransf[1].getValue()).getRealValue();
-        double c1 = ((PSReal) objTransf[2].getValue()).getRealValue();
-        double d1 = ((PSReal) objTransf[3].getValue()).getRealValue();
-        double tx1 = ((PSReal) objTransf[4].getValue()).getRealValue();
-        double ty1 = ((PSReal) objTransf[5].getValue()).getRealValue();
+        double a1 = ((PSNumber) objTransf[0].getValue()).getRealValue();
+        double b1 = ((PSNumber) objTransf[1].getValue()).getRealValue();
+        double c1 = ((PSNumber) objTransf[2].getValue()).getRealValue();
+        double d1 = ((PSNumber) objTransf[3].getValue()).getRealValue();
+        double tx1 = ((PSNumber) objTransf[4].getValue()).getRealValue();
+        double ty1 = ((PSNumber) objTransf[5].getValue()).getRealValue();
 
         return new TransformMatrix(new double[]
                 {a * a1 + b * c1,

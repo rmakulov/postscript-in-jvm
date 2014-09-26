@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class Interpreter {
 
+
     public static Interpreter instance = new Interpreter();
     private runtime.Runtime runtime = Runtime.getInstance();
 
@@ -55,9 +56,10 @@ public class Interpreter {
 //                instance.run(new File("16thStep.ps"));
 //                instance.run(new File("17thStep.ps"));
 //                instance.run(new File("18thStep.ps"));
-//                instance.run(new File("Examples/Abstract_Floral_Butterfly_Vector_Graphic.ps"));
-//                instance.run(new File("Examples/Butterfly-Vector_Sample.ps"));
-                instance.run(new File("Examples/drop.ps"));
+//                instance.run(new File("tests/speedTestExamples/Abstract_Floral_Butterfly_Vector_Graphic.ps"));
+//                instance.run(new File("tests/speedTestExamples/Final_Composition.ps"));
+//                instance.run(new File("tests/speedTestExamples/drop.ps"));
+//                instance.run(new File("Examples/рисунок.ps"));
 //                instance.run(new File("Examples/drawing.ps"));
 //                instance.run(new File("Examples/triangle.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));

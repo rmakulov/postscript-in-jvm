@@ -123,6 +123,10 @@ public class PSArray extends CompositeValue implements Cloneable {
         return new PSArray(newArray);
     }
 
+    public int size() {
+        return array.length;
+    }
+
     @Override
     public boolean interpret(PSObject obj) {
         if (runtime.isCompiling) {

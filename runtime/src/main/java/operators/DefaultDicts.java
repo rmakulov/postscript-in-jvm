@@ -267,6 +267,7 @@ public class DefaultDicts {
         addOperator(ScaleOp.instance);
         addOperator(TransformOp.instance);
         addOperator(TranslateOp.instance);
+        addOperator(ConcatOp.instance);
     }
 
     private static void addControlOperators() {
