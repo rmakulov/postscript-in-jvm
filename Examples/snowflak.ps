@@ -5,7 +5,8 @@
 
 /snowflaksave save def		% prevent left over effects
 /newflake
-{/seed usertime def
+%{/seed usertime def
+{/seed 1		 def
 seed srand
 /strokecolor  [rand 99 mod 100 div 
 	       rand 99 mod 100 div

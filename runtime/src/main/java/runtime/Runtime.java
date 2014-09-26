@@ -125,6 +125,9 @@ public class Runtime {
     }
 
     public PSObject popFromOperandStack() {
+        PSObject object = operandStack.peek();
+        if (object == null)
+            return null;
         return operandStack.pop();
     }
 
@@ -421,7 +424,7 @@ public class Runtime {
         try {
             throw new Exception(key + " is not found");
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return new PSObject(PSNull.NULL);
     }

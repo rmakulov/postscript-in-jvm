@@ -41,6 +41,7 @@ public class PSArray extends CompositeValue implements Cloneable {
     }
 
     public PSArray(ArrayList<PSObject> psObjects) {
+        if (psObjects == null) return;
         array = new ArrayElement[psObjects.size()];
         for (int i = 0; i < psObjects.size(); i++) {
             array[i] = new ArrayElement(psObjects.get(i));

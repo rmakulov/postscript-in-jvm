@@ -26,8 +26,11 @@ public class CloseCurlyBraceOp extends Operator {
             runtime.pushToOperandStack(new PSObject(runtime.bcGen.getCur()));
         } else {
             //runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
-            PSArray result = new PSArray(gatherArray());
-            if (result == null) return;
+            ArrayList<PSObject> gatherArray = gatherArray();
+            if (gatherArray == null) {
+                return;
+            }
+            PSArray result = new PSArray(gatherArray);
             runtime.pushToOperandStack(new PSObject(result, Attribute.TreatAs.EXECUTABLE));
         }
     }

@@ -1,4 +1,4 @@
-7_ellipses.ps 		 Interpreter 57.0 vs 		 Compiler 15.0
+﻿7_ellipses.ps 		 Interpreter 57.0 vs 		 Compiler 15.0
 chupcko.ps 		 Interpreter 2469.0 vs 		 Compiler 1020.0
 WireFrame.eps 		 Interpreter 508.0 vs 		 Compiler 208.0
 mandel.ps 		 Interpreter 218562.0 vs 	 Compiler 177471.0
@@ -28,3 +28,34 @@ doretree.ps 		 Interpreter 146.0 vs 		 Compiler 141.0
 appolonain_net.ps 	 Interpreter 1318.0 vs 		 Compiler 493.0
 bindTest.ps 		 Interpreter 0.0 vs 		 Compiler 0.0
 
+Filename            Interpreter         Compiler
+7_ellipses.ps       10,100              5,400
+chupcko.ps          2357,300            996,700
+WireFrame.eps       413,700             182,500
+mandel.ps           214324,900          164432,700
+6_arcs.ps           0,300               1,000
+mandelbrotset.ps    30719,700           18222,000
+flower.ps           2,700               6,000
+simpleGraphicsTest1.ps0,200               0,300
+4_circles.ps        7,800               7,700
+psRay.ps            137870,300          71343,200
+6_Fractal_Arrow.ps  1117,400            1031,200
+henon.ps            12783,100           12164,400
+1_clip.ps           1,400               2,400
+1_rectangles.ps     0,300               0,300
+simpleGraphicsTest.ps0,900               2,100
+gsaveTest.ps        0,700               2,200
+mandelbrotseterxample.ps2295,300            2297,700
+FractalByAlunJones2.ps60001,400           60001,400
+gingerbread.ps      1493,600            1429,600
+julia.ps            120693,300          83347,300
+colorcir.ps         85,800              84,400
+snowflak.ps         66,700              66,700
+2_trapezoid.ps      1,700               19,700
+FractalByAlunJones.ps60041,400           60041,200
+bytecode.ps         0,000               0,000
+doretree.ps         145,200             148,400
+5_star.ps           0,200               0,400
+appolonain_net.ps   1343,000            530,700
+bindTest.ps         0,000               1,200
+All tests have been finished.

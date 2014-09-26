@@ -38,7 +38,7 @@ public class PSPath {
 
     //absolute coordinates in postscript
     public void addCurve(PSPoint p0, PSPoint p1, PSPoint p2, PSPoint p3) {
-        generalPath.moveTo(p0.getX(), p0.getY());
+        //generalPath.moveTo(p0.getX(), p0.getY());
         generalPath.curveTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p3.getX(), p3.getY());
     }
 

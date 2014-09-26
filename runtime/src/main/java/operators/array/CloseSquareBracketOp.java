@@ -27,7 +27,7 @@ public class CloseSquareBracketOp extends Operator {
             array.add(psObject);
             psObject = runtime.popFromOperandStack();
             // todo correct check is not null
-            if (psObject.getType() == null)
+            if (psObject == null)
                 return;
         }
         PSArray result = new PSArray(array.size());
