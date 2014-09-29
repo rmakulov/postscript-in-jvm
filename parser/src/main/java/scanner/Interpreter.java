@@ -32,13 +32,13 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-        instance.setCompilingMode(false);
+        instance.setCompilingMode(true);
         try {
             if (args.length == 0) {
                   /*main examples*/
 //                Interpreter.instance.run(new File("tests/operandStackExamples/5thStep.ps"));
 
-//                instance.run(new File("1stStep.ps"));
+//                instance.run(new File("tests/operandStackExamples/1Step.ps"));
 //                instance.run(new File("2ndStep.ps"));
 //                instance.run(new File("3rdStep.ps"));
 //                instance.run(new File("4thStep.ps"));
@@ -64,7 +64,7 @@ public class Interpreter {
 //                instance.run(new File("Examples/triangle.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));
 //                instance.run(new File("Examples/Ship_Demo.ps"));
-//                instance.run(new File("Examples/tiger.eps"));
+                instance.run(new File("Examples/tiger.eps"));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));
 //                instance.run(new File("Examples/psRay.ps"));
 //                instance.run(new File("Examples/plant2.ps"));
@@ -72,6 +72,9 @@ public class Interpreter {
 //                instance.run(new File("FractalByAlunJones2.ps"));
 //                instance.run(new File("Examples/chupcko.ps"));
 //                instance.run(new File("Examples/snowflak.ps"));
+//                instance.run(new File("tests/speedTestExamples/snowflakByPozdin.ps"));
+//                instance.run(new File("tests/speedTestExamples/snowflak.ps"));
+//                instance.run(new File("tests/Examples/sizeExample.ps"));
 //                instance.run(new File("Examples/mandelbrotset.ps"));
 //                instance.run(new File("Examples/5_star.ps"));
 //                instance.run(new File("Examples/6_arcs.ps"));

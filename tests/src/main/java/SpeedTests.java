@@ -9,7 +9,8 @@ import java.io.IOException;
 public class SpeedTests {
 
     private static Interpreter interpreter;
-    static final int TEST_COUNTS = 1;
+    static final int TEST_COUNTS = 10;
+
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();

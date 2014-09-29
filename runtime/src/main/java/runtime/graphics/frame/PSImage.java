@@ -8,12 +8,14 @@ import java.awt.image.BufferedImage;
  * Created by Дмитрий on 24.03.14.
  */
 public class PSImage {
-    public static final int width = 445 * 4 / 3, height = 631 * 4 / 3;
+    //    public static final int width = 445 * 4 / 3, height = 631 * 4 / 3;
+    public static final int width = 651, height = 843;
     private static PSImage ourInstance;
     private BufferedImage image;
 
     private PSImage() {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Dimension dimension = PSFrame.getInstance().getContentPane().getSize();
 
         Graphics2D g2 = (Graphics2D) image.getGraphics();
         g2.setColor(Color.WHITE);

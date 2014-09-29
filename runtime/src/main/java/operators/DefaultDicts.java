@@ -60,7 +60,7 @@ public class DefaultDicts {
             addGraphicsStateOperators();
             addGraphicStateDeviceIndependentOperators();
             addMiscellaneousOperators();
-            addOperandStackOperationOperators();
+            addOperandStackManipulationOperators();
             addPaintingOperators();
             addPathConstructionOperators();
             addRelationBooleanOperators();
@@ -209,6 +209,7 @@ public class DefaultDicts {
         addOperator(NewPathOp.instance);
         addOperator(PathBBoxOp.instance);
         addOperator(RCurveToOp.instance);
+        addOperator(RectClipOp.instance);
         addOperator(RLineToOp.instance);
         addOperator(RMoveToOp.instance);
     }
@@ -225,7 +226,7 @@ public class DefaultDicts {
         addOperator(CurrentFlatOp.instance);
     }
 
-    private static void addOperandStackOperationOperators() {
+    private static void addOperandStackManipulationOperators() {
         addOperator(ClearOp.instance);
         addOperator(DupOp.instance);
         addOperator(ExchOp.instance);
@@ -234,6 +235,7 @@ public class DefaultDicts {
         addOperator(PopOp.instance);
         addOperator(RollOp.instance);
         addOperator(CountOp.instance);
+        addOperator(ClearToMarkOp.instance);
     }
 
     private static void addGraphicsStateOperators() {

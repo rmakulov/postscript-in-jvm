@@ -17,6 +17,7 @@ public class BytecodeGeneratorManager implements Opcodes {
 
     public ClassWriter cw;
     public MethodVisitor mv;
+    public String bytecodeName;
     private BytecodeGenerator bcGen;
 
     private int lastNumber = 0;
@@ -65,6 +66,7 @@ public class BytecodeGeneratorManager implements Opcodes {
         bytecodeGenerators.push(bcGen);
         mv = bcGen.getMethodVisitor();
         cw = bcGen.getClassWriter();
+        bytecodeName = bcGen.getBytecodeName();
 
     }
 
@@ -80,10 +82,12 @@ public class BytecodeGeneratorManager implements Opcodes {
             bcGen = null;
             mv = null;
             cw = null;
+            bytecodeName = null;
         } else {
             bcGen = bytecodeGenerators.peek();
             mv = bcGen.getMethodVisitor();
             cw = bcGen.getClassWriter();
+            bytecodeName = bcGen.getBytecodeName();
         }
     }
 

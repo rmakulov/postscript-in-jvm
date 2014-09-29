@@ -77,7 +77,9 @@ public class PSInteger extends PSNumber {
     @Override
     public void compile(PSObject obj) {
 //        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
@@ -91,7 +93,9 @@ public class PSInteger extends PSNumber {
 
     public static void compile(int value) {
         Runtime runtime = Runtime.getInstance();
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");

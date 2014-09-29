@@ -32,7 +32,9 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 
     public void compile(PSObject obj) {
 
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitFieldInsn(GETFIELD, "psObjects/values/Value", "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGeneratorManager;");
         runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/BytecodeGeneratorManager", "getCur", "()LpsObjects/PSObject;", false);

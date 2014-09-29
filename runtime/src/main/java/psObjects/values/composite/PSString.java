@@ -185,7 +185,9 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
 
     public static void compile(String s) {
         runtime.Runtime runtime = Runtime.getInstance();
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSString");

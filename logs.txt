@@ -1,4 +1,42 @@
 Filename            Interpreter         Compiler
-7_ellipses.ps                 45,000              14,000
-chupcko.ps                    2503,000            1033,000
-WireFrame.eps                 504,000             263,000
+Exception in thread "main" java.lang.VerifyError: Expecting a stackmap frame at branch target 127
+Exception Details:
+  Location:
+    0.run_1()Z @122: ifne
+  Reason:
+    Expected stackmap frame at this location.
+  Bytecode:
+    0x0000000: b200 12bb 0015 59bb 0017 5912 18b7 001c
+    0x0000010: b700 1fb6 0023 b200 12bb 0015 59bb 0017
+    0x0000020: 5912 18b7 001c b700 1fb6 0023 b200 12bb
+    0x0000030: 0015 59bb 0017 5912 24b7 001c b700 1fb6
+    0x0000040: 0023 b200 12bb 0015 59bb 0017 5912 18b7
+    0x0000050: 001c b700 1fb6 0023 b200 12bb 0015 59bb
+    0x0000060: 0017 5912 25b7 001c b700 1fb6 0023 b200
+    0x0000070: 1212 27b6 002b 03b6 002f 9a00 0503 acb2
+    0x0000080: 0012 1231 b600 2b03 b600 2f9a 0005 03ac
+    0x0000090: 04ac                                   
+
+	at java.lang.Class.getDeclaredMethods0(Native Method)
+	at java.lang.Class.privateGetDeclaredMethods(Class.java:2688)
+	at java.lang.Class.privateGetMethodRecursive(Class.java:3035)
+	at java.lang.Class.getMethod0(Class.java:3005)
+	at java.lang.Class.getMethod(Class.java:1771)
+	at psObjects.values.simple.PSBytecode.interpret(PSBytecode.java:23)
+	at psObjects.PSObject.interpret(PSObject.java:39)
+	at psObjects.PSObject.execute(PSObject.java:25)
+	at psObjects.values.simple.PSName.interpret(PSName.java:38)
+	at psObjects.PSObject.interpret(PSObject.java:39)
+	at psObjects.PSObject.execute(PSObject.java:25)
+	at procedures.Procedure.execNext(Procedure.java:33)
+	at scanner.InputStreamProcedure.execNext(InputStreamProcedure.java:38)
+	at runtime.Runtime.executeCallStack(Runtime.java:169)
+	at scanner.Interpreter.run(Interpreter.java:19)
+	at SpeedTests.performTestInCompiler(SpeedTests.java:65)
+	at SpeedTests.iterateExamples(SpeedTests.java:30)
+	at SpeedTests.main(SpeedTests.java:19)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:483)
+	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)

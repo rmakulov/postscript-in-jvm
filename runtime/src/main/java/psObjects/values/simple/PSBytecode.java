@@ -2,7 +2,6 @@ package psObjects.values.simple;
 
 import psObjects.PSObject;
 import runtime.DynamicClassLoader;
-import runtime.Runtime;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -19,7 +18,8 @@ public class PSBytecode extends PSName {
     public boolean interpret(PSObject obj) {
         try {
             Class c = DynamicClassLoader.instance.loadClass(strValue);
-            return (Boolean) c.getMethod("run", Runtime.class).invoke(null, Runtime.getInstance());
+//            return (Boolean) c.getMethod("run", Runtime.class).invoke(null, Runtime.getInstance());
+            return (Boolean) c.getMethod("run").invoke(null);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -56,7 +56,9 @@ public class PSBytecode extends PSName {
 
         //old version
         //runtime.pushToOperandStack(new PSObject(new PSBytecode(this.strValue)));
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");

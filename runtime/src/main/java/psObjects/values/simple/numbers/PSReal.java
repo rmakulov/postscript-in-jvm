@@ -30,7 +30,9 @@ public class PSReal extends PSNumber {
 
     @Override
     public void compile(PSObject obj) {
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
@@ -49,7 +51,9 @@ public class PSReal extends PSNumber {
     public static void compile(double value) {
         Runtime runtime = Runtime.getInstance();
 //        runtime.pushToOperandStack(new PSObject(new PSReal(value)));
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");

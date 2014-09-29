@@ -63,7 +63,9 @@ public class PSName extends SimpleValue {
     public static void executiveCompile(String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
 //          begin  Runtime.getInstance().findValue(str).interpret(0);
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitLdcInsn(strValue);
         runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
         runtime.bcGen.mv.visitInsn(ICONST_0);
@@ -83,7 +85,9 @@ public class PSName extends SimpleValue {
         runtime.Runtime runtime = Runtime.getInstance();
 //        PSObject psObject = new PSObject(new PSName(strValue), LITERAL);
 //        runtime.pushToOperandStack(psObject);
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGen.bytecodeName;
+        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
         runtime.bcGen.mv.visitInsn(DUP);
         runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
