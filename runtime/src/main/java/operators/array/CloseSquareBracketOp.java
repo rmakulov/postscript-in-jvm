@@ -45,7 +45,7 @@ public class CloseSquareBracketOp extends Operator {
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
 //        CloseSquareBracketOp.instance.interpret();
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/array/CloseSquareBracketOp", "instance", "Loperators/array/CloseSquareBracketOp;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/CloseSquareBracketOp", "interpret", "()V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/array/CloseSquareBracketOp", "instance", "Loperators/array/CloseSquareBracketOp;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/CloseSquareBracketOp", "interpret", "()V", false);
     }
 }

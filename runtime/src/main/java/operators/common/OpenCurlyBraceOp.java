@@ -15,7 +15,7 @@ public class OpenCurlyBraceOp extends Operator {
     @Override
     public void interpret() {
         if (runtime.isCompiling) {
-            runtime.bcGen.startCodeGenerator();
+            runtime.bcGenManager.startCodeGenerator();
         } else {
             runtime.pushToOperandStack(new PSObject(PSMark.OPEN_CURLY_BRACE));
         }

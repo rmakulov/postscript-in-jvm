@@ -38,36 +38,36 @@ public class PSBytecode extends PSName {
 
 
        /* //runtime.pushToOperandStack(new PSObject(new PSArray(new PSObject(new PSBytecode(this.strValue)))));
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSArray");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitLdcInsn(this.strValue);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSArray", "<init>", "(LpsObjects/PSObject;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);*/
+        runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSArray");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitLdcInsn(this.strValue);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSArray", "<init>", "(LpsObjects/PSObject;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);*/
 
         //old version
         //runtime.pushToOperandStack(new PSObject(new PSBytecode(this.strValue)));
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitLdcInsn(this.strValue);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
-        //runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitLdcInsn(this.strValue);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
     }
 
     @Override

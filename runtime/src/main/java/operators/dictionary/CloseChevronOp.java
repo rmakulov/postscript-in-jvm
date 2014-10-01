@@ -42,7 +42,7 @@ public class CloseChevronOp extends Operator {
     public void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
 //        CloseChevronOp.instance.interpret();
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/CloseChevronOp", "instance", "Loperators/dictionary/CloseChevronOp;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/CloseChevronOp", "interpret", "()V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/CloseChevronOp", "instance", "Loperators/dictionary/CloseChevronOp;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/CloseChevronOp", "interpret", "()V", false);
     }
 }

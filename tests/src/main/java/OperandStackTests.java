@@ -33,7 +33,7 @@ public class OperandStackTests {
         }
         String real = interpreter.operandStackToString().trim();
 
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -145,7 +145,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -177,7 +177,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -193,7 +193,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -209,7 +209,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -225,7 +225,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -241,7 +241,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -257,7 +257,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -273,7 +273,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -289,7 +289,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -305,7 +305,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -321,7 +321,7 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
     }
 
     @Test
@@ -337,7 +337,23 @@ public class OperandStackTests {
             e.printStackTrace();
         }
         String real = interpreter.operandStackToString().trim();
-        Assert.assertEquals(real, expectedString);
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check sequence of run*/
+    public void compile20Test() {
+        int i = 20;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
     }
 
 }

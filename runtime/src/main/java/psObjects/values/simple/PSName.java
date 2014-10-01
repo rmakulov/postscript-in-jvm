@@ -52,30 +52,43 @@ public class PSName extends SimpleValue {
 /*    @Override
     public void compile(PSObject obj) {
 //          begin  Runtime.getInstance().findValue(str).interpret(0);
-        runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        runtime.bcGen.mv.visitLdcInsn(strValue);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
-        runtime.bcGen.mv.visitInsn(ICONST_0);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        runtime.bcGenManager.mv.visitLdcInsn(strValue);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
+        runtime.bcGenManager.mv.visitInsn(ICONST_0);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
 //          end  Runtime.getInstance().findValue(str).interpret(0);
     }*/
 
     public static void executiveCompile(String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
-//          begin  Runtime.getInstance().findValue(str).interpret(0);
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitLdcInsn(strValue);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
-        runtime.bcGen.mv.visitInsn(ICONST_0);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        Label l8 = new Label();
-        runtime.bcGen.mv.visitJumpInsn(IFNE, l8);
-        runtime.bcGen.mv.visitInsn(ICONST_0);
-        runtime.bcGen.mv.visitInsn(IRETURN);
-        runtime.bcGen.mv.visitLabel(l8);
+//      begin   Runtime.getInstance().findValue(strValue).interpret(0);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
 
+        boolean isOperator = runtime.checkIsOperator(strValue);
+        if (isOperator) {
+            runtime.bcGenManager.endMethod();
+            runtime.bcGenManager.startMethod();
+        }
+
+
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitLdcInsn(strValue);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
+        runtime.bcGenManager.mv.visitInsn(ICONST_0);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        Label l8 = new Label();
+        runtime.bcGenManager.mv.visitJumpInsn(IFNE, l8);
+        runtime.bcGenManager.mv.visitInsn(ICONST_0);
+        runtime.bcGenManager.mv.visitInsn(IRETURN);
+        runtime.bcGenManager.mv.visitLabel(l8);
+//        runtime.bcGenManager.mv.visitFrame(F_FULL, 0, null, 0, null);
+//        runtime.bcGenManager.mv.visitFrame(F_SAME, 0, null, 0, null);
+        if (isOperator) {
+            runtime.bcGenManager.endMethod();
+            runtime.bcGenManager.startMethod();
+        }
 
 //          end  Runtime.getInstance().findValue(str).interpret(0);
     }
@@ -85,18 +98,18 @@ public class PSName extends SimpleValue {
         runtime.Runtime runtime = Runtime.getInstance();
 //        PSObject psObject = new PSObject(new PSName(strValue), LITERAL);
 //        runtime.pushToOperandStack(psObject);
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitLdcInsn(strValue);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitLdcInsn(strValue);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
 //
     }
 

@@ -77,32 +77,32 @@ public class PSInteger extends PSNumber {
     @Override
     public void compile(PSObject obj) {
 //        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitLdcInsn(value);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitLdcInsn(value);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
 
     }
 
     public static void compile(int value) {
         Runtime runtime = Runtime.getInstance();
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitLdcInsn(value);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitLdcInsn(value);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

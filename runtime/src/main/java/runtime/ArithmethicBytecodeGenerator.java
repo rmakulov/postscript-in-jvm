@@ -103,7 +103,7 @@ public class ArithmethicBytecodeGenerator implements Opcodes {
             while (argsCount > 0) {
                 mv.visitIntInsn(DSTORE, 5);
                 mv.visitIntInsn(ALOAD, 0);
-                mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/ArithmethicBytecodeGenerator;");
+                mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGenManager", "Lruntime/ArithmethicBytecodeGenerator;");
                 mv.visitFieldInsn(GETFIELD, "runtime/ArithmethicBytecodeGenerator", "args", "Ljava/util/Queue;");
                 mv.visitTypeInsn(CHECKCAST, "java/util/ArrayDeque");
                 mv.visitIntInsn(DLOAD, 5);

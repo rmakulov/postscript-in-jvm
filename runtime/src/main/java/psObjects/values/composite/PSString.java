@@ -185,17 +185,17 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
 
     public static void compile(String s) {
         runtime.Runtime runtime = Runtime.getInstance();
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSString");
-        runtime.bcGen.mv.visitInsn(DUP);
-        runtime.bcGen.mv.visitLdcInsn(s);
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSString", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSString");
+        runtime.bcGenManager.mv.visitInsn(DUP);
+        runtime.bcGenManager.mv.visitLdcInsn(s);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSString", "<init>", "(Ljava/lang/String;)V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

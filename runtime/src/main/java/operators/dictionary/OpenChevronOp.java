@@ -29,7 +29,7 @@ public class OpenChevronOp extends Operator {
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
 //        OpenChevronOp.instance.interpret();
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/OpenChevronOp", "instance", "Loperators/dictionary/OpenChevronOp;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/OpenChevronOp", "interpret", "()V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/OpenChevronOp", "instance", "Loperators/dictionary/OpenChevronOp;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/OpenChevronOp", "interpret", "()V", false);
     }
 }

@@ -72,7 +72,7 @@ public class BytecodeGeneratorManager implements Opcodes {
 
     public void endBytecode() {
         cur = bcGen.endBytecode();
-        //bytecodes.put(bcGen.getNumber(), cur);
+        //bytecodes.put(bcGenManager.getNumber(), cur);
         popBytecodeGenerator();
     }
 
@@ -102,4 +102,12 @@ public class BytecodeGeneratorManager implements Opcodes {
             element.compile(0);
         }
     }*/
+   public void startMethod() {
+       bcGen.startMethod();
+       mv = bcGen.getMethodVisitor();
+   }
+
+    public void endMethod() {
+        bcGen.endMethod();
+    }
 }

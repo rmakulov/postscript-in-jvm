@@ -1,9 +1,6 @@
 package runtime;
 
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.*;
 import psObjects.values.simple.PSBytecode;
 
 /**
@@ -44,7 +41,7 @@ public class BytecodeGenerator implements Opcodes {
             mv.visitMaxs(2, 0);
             mv.visitEnd();
         }
-//        startMethod();
+        startMethod();
     }
 
 
@@ -62,8 +59,26 @@ public class BytecodeGenerator implements Opcodes {
 
     public PSBytecode endBytecode() {
 //        mainMV.visitVarInsn(ALOAD, 0);
-//        endMethod();
-//        mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_0", "()Z", false);
+        endMethod();
+        Label[] l = new Label[blockNumber + 1];
+//        mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_"+1, "()Z", false);
+//        mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_"+2, "()Z", false);
+
+        for (int i = 1; i < blockNumber; i++) {
+            mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_" + i, "()Z", false);
+//            mainMV.visitInsn(POP);
+            l[i] = new Label();
+//            Label label = new Label();
+            mainMV.visitJumpInsn(IFNE, l[i]);
+//            mainMV.visitJumpInsn(IFNE, label);
+            mainMV.visitInsn(ICONST_0);
+            mainMV.visitInsn(IRETURN);
+//            mainMV.visitLabel(label);
+//            mainMV.visitLineNumber(800,label);
+//            mv.visitFrame(F_FULL, 0, null, 0, null);
+            mainMV.visitLabel(l[i]);
+        }
+
         mainMV.visitInsn(ICONST_1);
         mainMV.visitInsn(IRETURN);
         mainMV.visitMaxs(0, 0);
@@ -75,7 +90,8 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public MethodVisitor getMethodVisitor() {
-        return mainMV /*mv*/;
+//        return mainMV ;
+        return mv;
     }
 
 

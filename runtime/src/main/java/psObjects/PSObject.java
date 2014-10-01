@@ -21,7 +21,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private Runtime runtime = Runtime.getInstance();
 
     public boolean execute(int procDepth) {
-        if (!runtime.isCompiling || runtime.bcGen.isSleep()) {
+        if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
             return interpret(procDepth);
         } else {
             compile();

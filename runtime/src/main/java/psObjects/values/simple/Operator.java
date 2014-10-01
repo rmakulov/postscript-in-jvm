@@ -22,8 +22,8 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     public void compile(PSObject obj) {
         //todo make in runtime current bytecode, I think it is ready
         String clName = this.getClass().getCanonicalName().replace(".", "/");
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
     }
 
 

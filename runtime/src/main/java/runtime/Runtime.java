@@ -35,7 +35,7 @@ public class Runtime {
     private static Runtime ourInstance = new Runtime();
 
     public boolean isCompiling;
-    public BytecodeGeneratorManager bcGen = new BytecodeGeneratorManager();
+    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
 
     private int executionCount = 0;
     private int executionsBeforeGarbageCleaning = 10000;
@@ -424,25 +424,31 @@ public class Runtime {
         try {
             throw new Exception(key + " is not found");
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.err.println(e);
         }
         return new PSObject(PSNull.NULL);
     }
 
     public PSObject search(PSObject key) {
-        PSObject found = null;
+        PSObject found;
         for (PSObject dictObj : dictionaryStack) {
             found = getValueAtDictionary(dictObj, key);
             if (found != null) {
                 return found;
             }
         }
-        return found;
+        return null;
     }
 
     /*called through bytecode*/
     public PSObject findValue(String str) {
         return findValue(new PSObject(new PSName(str)));
+    }
+
+    public boolean checkIsOperator(String str) {
+        PSObject obj = search(new PSObject(new PSName(str)));
+        return (obj != null && obj.getType() == Type.OPERATOR);
     }
 
     public int getOperandStackSize() {

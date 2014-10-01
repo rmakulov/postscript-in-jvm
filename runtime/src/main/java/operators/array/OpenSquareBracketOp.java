@@ -17,8 +17,8 @@ public class OpenSquareBracketOp extends Operator {
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
 //        OpenSquareBracketOp.instance.interpret();
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, "operators/array/OpenSquareBracketOp", "instance", "Loperators/array/OpenSquareBracketOp;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/OpenSquareBracketOp", "interpret", "()V", false);
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/array/OpenSquareBracketOp", "instance", "Loperators/array/OpenSquareBracketOp;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/OpenSquareBracketOp", "interpret", "()V", false);
     }
 
     @Override

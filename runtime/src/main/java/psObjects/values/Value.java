@@ -32,16 +32,16 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 
     public void compile(PSObject obj) {
 
-        //runtime.bcGen.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGen.bytecodeName;
-        runtime.bcGen.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitFieldInsn(GETFIELD, "psObjects/values/Value", "runtime", "Lruntime/Runtime;");
-        runtime.bcGen.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGen", "Lruntime/BytecodeGeneratorManager;");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/BytecodeGeneratorManager", "getCur", "()LpsObjects/PSObject;", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "getValue", "()LpsObjects/values/Value;", false);
-        runtime.bcGen.mv.visitTypeInsn(CHECKCAST, "psObjects/values/simple/PSBytecode");
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "getArg", "()LpsObjects/PSObject;", false);
-        runtime.bcGen.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/Value", "interpret", "(LpsObjects/PSObject;)V", false);
+        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
+        String name = runtime.bcGenManager.bytecodeName;
+        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitFieldInsn(GETFIELD, "psObjects/values/Value", "runtime", "Lruntime/Runtime;");
+        runtime.bcGenManager.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGenManager", "Lruntime/BytecodeGeneratorManager;");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/BytecodeGeneratorManager", "getCur", "()LpsObjects/PSObject;", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "getValue", "()LpsObjects/values/Value;", false);
+        runtime.bcGenManager.mv.visitTypeInsn(CHECKCAST, "psObjects/values/simple/PSBytecode");
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "getArg", "()LpsObjects/PSObject;", false);
+        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/Value", "interpret", "(LpsObjects/PSObject;)V", false);
     }
 
     public Integer compareTo(Value o) {
