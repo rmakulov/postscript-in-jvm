@@ -99,7 +99,6 @@ public class PSName extends SimpleValue {
         runtime.Runtime runtime = Runtime.getInstance();
 //        PSObject psObject = new PSObject(new PSName(strValue), LITERAL);
 //        runtime.pushToOperandStack(psObject);
-        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
         runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");

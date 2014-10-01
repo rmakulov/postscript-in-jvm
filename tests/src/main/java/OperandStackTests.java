@@ -356,4 +356,19 @@ public class OperandStackTests {
         Assert.assertEquals(expectedString, real);
     }
 
+    @Test
+   /*check simple for*/
+    public void compile21Test() {
+        int i = 21;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
 }

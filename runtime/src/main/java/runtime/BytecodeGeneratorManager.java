@@ -38,30 +38,6 @@ public class BytecodeGeneratorManager implements Opcodes {
         }
     }
 
- /*   public PSObject getCur(int n) {
-        return bytecodes.remove(n);
-    }*/
-
-/*    public void endBytecode() {
-        mv.visitInsn(RETURN);
-        mv.visitMaxs(10, 10);
-        mv.visitEnd();
-        DynamicClassLoader.instance.putClass(Integer.toString(lastNumber), cw.toByteArray());
-        cw = null;
-        mv = null;
-        sleep = true;
-        cur = new PSBytecode(Integer.toString(lastNumber));
-        lastNumber++;
-    }
-
-    public void startCodeGenerator() {
-        cw = new ClassWriter(0);
-        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(lastNumber), null, "java/lang/Object", null);
-        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "(Lruntime/Runtime;)V", null, null);
-        mv.visitCode();
-        setSleep(false);
-    }*/
-
     public void startCodeGenerator() {
         bcGen = new BytecodeGenerator(lastNumber++);
         bytecodeGenerators.push(bcGen);
@@ -97,16 +73,11 @@ public class BytecodeGeneratorManager implements Opcodes {
         return bytecodeGenerators.empty();
     }
 
-    /* public void setProcedure(ArrayList<PSObject> arr) {
-         for (PSObject element : arr) {
-             //todo procDepth
-             element.compile(0);
-         }
-     }*/
     public void startMethod() {
         bcGen.startMethod();
         mv = bcGen.getMethodVisitor();
         blockNumber = bcGen.getBlockNumber();
+
     }
 
     public void endMethod() {

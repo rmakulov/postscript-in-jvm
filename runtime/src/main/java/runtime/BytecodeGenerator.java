@@ -16,8 +16,7 @@ public class BytecodeGenerator implements Opcodes {
     private int number;
     private int blockNumber = 1;
     private String name;
-    //private static ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
-
+    public ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
 
     public BytecodeGenerator(int number) {
 
@@ -36,8 +35,9 @@ public class BytecodeGenerator implements Opcodes {
 
         mainMV.visitCode();
 
+
         {
-            MethodVisitor mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
+            mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
             mv.visitCode();
 
             mv.visitMethodInsn(INVOKESTATIC, "runtime/Runtime", "getInstance", "()Lruntime/Runtime;", false);
@@ -47,6 +47,9 @@ public class BytecodeGenerator implements Opcodes {
             mv.visitInsn(DUP);
             mv.visitMethodInsn(INVOKESPECIAL, "java/util/ArrayList", "<init>", "()V", false);
             mv.visitFieldInsn(PUTSTATIC, Integer.toString(number), "operatorIndexes", "Ljava/util/ArrayList;");
+
+//            mv.visitFieldInsn(GETSTATIC, getBytecodeName(), "operatorIndexes", "Ljava/util/ArrayList;");
+//            mv.visitMethodInsn(INVOKESTATIC, "runtime/BytecodeGenerator", "printOperatorIndexes", "(Ljava/util/ArrayList;)V", false);
 
             mv.visitInsn(RETURN);
             mv.visitMaxs(2, 0);
@@ -64,6 +67,7 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public void startMethod() {
+//        System.out.println("blockNum"+blockNumber);
         mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run_" + blockNumber, "()Z", null, null);
         mv.visitCode();
     }
@@ -82,9 +86,11 @@ public class BytecodeGenerator implements Opcodes {
             mainMV.visitLabel(l[i]);
         }
         //printOperatorIndexes(operatorIndexes);
-        mainMV.visitFieldInsn(GETSTATIC, getBytecodeName(), "operatorIndexes", "Ljava/util/ArrayList;");
-        mainMV.visitMethodInsn(INVOKESTATIC, "runtime/BytecodeGenerator", "printOperatorIndexes", "(Ljava/util/ArrayList;)V", false);
+//        mainMV.visitFieldInsn(GETSTATIC, getBytecodeName(), "operatorIndexes", "Ljava/util/ArrayList;");
+//        mainMV.visitMethodInsn(INVOKESTATIC, "runtime/BytecodeGenerator", "printOperatorIndexes", "(Ljava/util/ArrayList;)V", false);
 
+        mainMV.visitFieldInsn(GETSTATIC, getBytecodeName(), "operatorIndexes", "Ljava/util/ArrayList;");
+        mainMV.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "clear", "()V", false);
         mainMV.visitInsn(ICONST_1);
         mainMV.visitInsn(IRETURN);
         mainMV.visitMaxs(0, 0);
@@ -118,9 +124,10 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public static void printOperatorIndexes(ArrayList<Integer> arr) {
-        System.out.println();
+        System.out.println("printOperatorIndexes_begin ");
         for (Integer integer : arr) {
             System.out.print(integer + ", ");
         }
+        System.out.println(" printOperatorIndexes_end");
     }
 }
