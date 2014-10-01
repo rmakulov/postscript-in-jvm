@@ -21,6 +21,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     private BytecodeGenerator bcGen;
 
     private int lastNumber = 0;
+    public int blockNumber = 0;
 
     public BytecodeGeneratorManager() {
     }
@@ -96,18 +97,21 @@ public class BytecodeGeneratorManager implements Opcodes {
         return bytecodeGenerators.empty();
     }
 
-   /* public void setProcedure(ArrayList<PSObject> arr) {
-        for (PSObject element : arr) {
-            //todo procDepth
-            element.compile(0);
-        }
-    }*/
-   public void startMethod() {
-       bcGen.startMethod();
-       mv = bcGen.getMethodVisitor();
-   }
+    /* public void setProcedure(ArrayList<PSObject> arr) {
+         for (PSObject element : arr) {
+             //todo procDepth
+             element.compile(0);
+         }
+     }*/
+    public void startMethod() {
+        bcGen.startMethod();
+        mv = bcGen.getMethodVisitor();
+        blockNumber = bcGen.getBlockNumber();
+    }
 
     public void endMethod() {
         bcGen.endMethod();
     }
+
+
 }

@@ -3,6 +3,8 @@ package runtime;
 import org.objectweb.asm.*;
 import psObjects.values.simple.PSBytecode;
 
+import java.util.ArrayList;
+
 /**
  * Created by User on 10/9/2014.
  */
@@ -13,19 +15,23 @@ public class BytecodeGenerator implements Opcodes {
     private FieldVisitor fv;
     private int number;
     private int blockNumber = 1;
-    private static Runtime runtime = Runtime.getInstance();
     private String name;
+    //private static ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
 
 
     public BytecodeGenerator(int number) {
+
         this.number = number;
         name = number + "";
+
         cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(number), null, "java/lang/Object", null);
-        //cw.visitField(ACC_PRIVATE, "runtime", "Lruntime/Runtime;", null, null);
         mainMV = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "()Z", null, null);
 
         fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, "runtime", "Lruntime/Runtime;", null, null);
+        fv.visitEnd();
+
+        fv = cw.visitField(ACC_PRIVATE + ACC_STATIC, "operatorIndexes", "Ljava/util/ArrayList;", "Ljava/util/ArrayList<Ljava/lang/Integer;>;", null);
         fv.visitEnd();
 
         mainMV.visitCode();
@@ -36,6 +42,11 @@ public class BytecodeGenerator implements Opcodes {
 
             mv.visitMethodInsn(INVOKESTATIC, "runtime/Runtime", "getInstance", "()Lruntime/Runtime;", false);
             mv.visitFieldInsn(PUTSTATIC, Integer.toString(number), "runtime", "Lruntime/Runtime;");
+
+            mv.visitTypeInsn(NEW, "java/util/ArrayList");
+            mv.visitInsn(DUP);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/util/ArrayList", "<init>", "()V", false);
+            mv.visitFieldInsn(PUTSTATIC, Integer.toString(number), "operatorIndexes", "Ljava/util/ArrayList;");
 
             mv.visitInsn(RETURN);
             mv.visitMaxs(2, 0);
@@ -58,26 +69,21 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public PSBytecode endBytecode() {
+
 //        mainMV.visitVarInsn(ALOAD, 0);
         endMethod();
         Label[] l = new Label[blockNumber + 1];
-//        mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_"+1, "()Z", false);
-//        mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_"+2, "()Z", false);
-
         for (int i = 1; i < blockNumber; i++) {
             mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_" + i, "()Z", false);
-//            mainMV.visitInsn(POP);
             l[i] = new Label();
-//            Label label = new Label();
             mainMV.visitJumpInsn(IFNE, l[i]);
-//            mainMV.visitJumpInsn(IFNE, label);
             mainMV.visitInsn(ICONST_0);
             mainMV.visitInsn(IRETURN);
-//            mainMV.visitLabel(label);
-//            mainMV.visitLineNumber(800,label);
-//            mv.visitFrame(F_FULL, 0, null, 0, null);
             mainMV.visitLabel(l[i]);
         }
+        //printOperatorIndexes(operatorIndexes);
+        mainMV.visitFieldInsn(GETSTATIC, getBytecodeName(), "operatorIndexes", "Ljava/util/ArrayList;");
+        mainMV.visitMethodInsn(INVOKESTATIC, "runtime/BytecodeGenerator", "printOperatorIndexes", "(Ljava/util/ArrayList;)V", false);
 
         mainMV.visitInsn(ICONST_1);
         mainMV.visitInsn(IRETURN);
@@ -90,7 +96,6 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public MethodVisitor getMethodVisitor() {
-//        return mainMV ;
         return mv;
     }
 
@@ -106,5 +111,16 @@ public class BytecodeGenerator implements Opcodes {
     public String getBytecodeName() {
 
         return name;
+    }
+
+    public int getBlockNumber() {
+        return blockNumber;
+    }
+
+    public static void printOperatorIndexes(ArrayList<Integer> arr) {
+        System.out.println();
+        for (Integer integer : arr) {
+            System.out.print(integer + ", ");
+        }
     }
 }

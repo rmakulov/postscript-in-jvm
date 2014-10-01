@@ -11,10 +11,12 @@ import runtime.Runtime;
 import static psObjects.Attribute.TreatAs.EXECUTABLE;
 
 public class PSName extends SimpleValue {
+    private static boolean isBinded;
 
 
     protected String strValue;
 
+    // private ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
     public PSName(String strValue) {
         this.strValue = strValue;
     }
@@ -26,6 +28,7 @@ public class PSName extends SimpleValue {
 
     @Override
     public boolean interpret(PSObject obj) {
+        //operatorIndexes.add(2);
         PSObject value = runtime.findValue(obj);
         String procName = ((PSName) obj.getValue()).getStrValue();
         while (value.getType() == Type.NAME && !(value.isBytecode()) && value.treatAs() == EXECUTABLE) {
@@ -63,16 +66,17 @@ public class PSName extends SimpleValue {
     public static void executiveCompile(String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
 //      begin   Runtime.getInstance().findValue(strValue).interpret(0);
-        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-
         boolean isOperator = runtime.checkIsOperator(strValue);
+        String name = runtime.bcGenManager.bytecodeName;
         if (isOperator) {
             runtime.bcGenManager.endMethod();
             runtime.bcGenManager.startMethod();
+            runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "operatorIndexes", "Ljava/util/ArrayList;");
+            runtime.bcGenManager.mv.visitLdcInsn(runtime.bcGenManager.blockNumber);
+            runtime.bcGenManager.mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+            runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "add", "(Ljava/lang/Object;)Z", false);
         }
 
-
-        String name = runtime.bcGenManager.bytecodeName;
         runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGenManager.mv.visitLdcInsn(strValue);
         runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
@@ -83,13 +87,10 @@ public class PSName extends SimpleValue {
         runtime.bcGenManager.mv.visitInsn(ICONST_0);
         runtime.bcGenManager.mv.visitInsn(IRETURN);
         runtime.bcGenManager.mv.visitLabel(l8);
-//        runtime.bcGenManager.mv.visitFrame(F_FULL, 0, null, 0, null);
-//        runtime.bcGenManager.mv.visitFrame(F_SAME, 0, null, 0, null);
         if (isOperator) {
             runtime.bcGenManager.endMethod();
             runtime.bcGenManager.startMethod();
         }
-
 //          end  Runtime.getInstance().findValue(str).interpret(0);
     }
 
