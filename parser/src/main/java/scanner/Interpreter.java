@@ -64,7 +64,7 @@ public class Interpreter {
 //                instance.run(new File("Examples/triangle.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));
 //                instance.run(new File("Examples/Ship_Demo.ps"));
-                System.out.println(instance.run(new File("Examples/tiger.eps")));
+//                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));
 //                instance.run(new File("Examples/psRay.ps"));
 //                instance.run(new File("Examples/plant2.ps"));

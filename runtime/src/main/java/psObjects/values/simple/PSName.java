@@ -6,6 +6,7 @@ import procedures.StringProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
+import runtime.BytecodeGenerator;
 import runtime.Runtime;
 
 import static psObjects.Attribute.TreatAs.EXECUTABLE;
@@ -71,10 +72,15 @@ public class PSName extends SimpleValue {
         if (isOperator) {
             runtime.bcGenManager.endMethod();
             runtime.bcGenManager.startMethod();
-            runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "operatorIndexes", "Ljava/util/ArrayList;");
-            runtime.bcGenManager.mv.visitLdcInsn(runtime.bcGenManager.blockNumber);
-            runtime.bcGenManager.mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
-            runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "java/util/ArrayList", "add", "(Ljava/lang/Object;)Z", false);
+
+            String operatorIndexesName = BytecodeGenerator.operatorIndexesName;
+            String operatorIndexesType = BytecodeGenerator.operatorIndexesType;
+
+            runtime.bcGenManager.clinitMV.visitFieldInsn(GETSTATIC, name, operatorIndexesName, "L" + operatorIndexesType + ";");
+            runtime.bcGenManager.clinitMV.visitLdcInsn(runtime.bcGenManager.blockNumber);
+            runtime.bcGenManager.clinitMV.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
+            runtime.bcGenManager.clinitMV.visitLdcInsn(strValue);
+            runtime.bcGenManager.clinitMV.visitMethodInsn(INVOKEVIRTUAL, operatorIndexesType, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;", false);
         }
 
         runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");

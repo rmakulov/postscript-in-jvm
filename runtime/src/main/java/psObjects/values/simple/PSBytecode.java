@@ -18,7 +18,6 @@ public class PSBytecode extends PSName {
     public boolean interpret(PSObject obj) {
         try {
             Class c = DynamicClassLoader.instance.loadClass(strValue);
-//            return (Boolean) c.getMethod("run", Runtime.class).invoke(null, Runtime.getInstance());
             return (Boolean) c.getMethod("run").invoke(null);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -28,6 +27,8 @@ public class PSBytecode extends PSName {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
         }
         return true;
     }
