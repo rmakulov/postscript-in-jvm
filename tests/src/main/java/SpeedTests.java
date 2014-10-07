@@ -9,7 +9,7 @@ import java.io.IOException;
 public class SpeedTests {
 
     private static Interpreter interpreter;
-    static final int TEST_COUNTS = 10;
+    static final int TEST_COUNTS = 1;
 
 
     public static void main(String[] args) {
@@ -24,12 +24,16 @@ public class SpeedTests {
         System.out.printf("%-20s%-20s%s\n", "Filename", "Interpreter", "Compiler");
 
         for (final File exampleFile : folder.listFiles()) {
-            if (!exampleFile.isDirectory()) {
-                double v1 = performTestInInterpreter(exampleFile);
-                double v2 = performTestInCompiler(exampleFile);
-                System.out.printf("%-30s%-20.3f%.3f\n", exampleFile.getName(), v1, v2);
+            if (TEST_COUNTS == 0) {
+                System.out.println(exampleFile.getName());
             } else {
-                System.out.println(" is directory");
+                if (!exampleFile.isDirectory()) {
+                    double v1 = performTestInInterpreter(exampleFile);
+                    double v2 = performTestInCompiler(exampleFile);
+                    System.out.printf("%-30s%-20.3f%.3f\n", exampleFile.getName(), v1, v2);
+                } else {
+                    System.out.println(" is directory");
+                }
             }
         }
     }

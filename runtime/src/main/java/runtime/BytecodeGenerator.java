@@ -22,9 +22,6 @@ public class BytecodeGenerator implements Opcodes {
     public ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
     public HashMap<Integer, String> operatorIndexesTest = new HashMap<Integer, String>();
 
-    public static final String operatorIndexesType = "java/util/HashMap";
-    public static final String operatorIndexesSignature = "Ljava/util/HashMap<Ljava/lang/Integer;Ljava/lang/String;>;";
-    public static final String operatorIndexesName = "operatorIndexes";
 
     public BytecodeGenerator(int number) {
         operatorIndexesTest.put(1, "one");
@@ -36,9 +33,6 @@ public class BytecodeGenerator implements Opcodes {
         mainMV = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "()Z", null, null);
 
         fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, "runtime", "Lruntime/Runtime;", null, null);
-        fv.visitEnd();
-
-        fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, operatorIndexesName, "L" + operatorIndexesType + ";", operatorIndexesSignature, null);
         fv.visitEnd();
 
         mainMV.visitCode();
@@ -53,11 +47,6 @@ public class BytecodeGenerator implements Opcodes {
 
         clinitMV.visitMethodInsn(INVOKESTATIC, "runtime/Runtime", "getInstance", "()Lruntime/Runtime;", false);
         clinitMV.visitFieldInsn(PUTSTATIC, Integer.toString(number), "runtime", "Lruntime/Runtime;");
-
-        clinitMV.visitTypeInsn(NEW, operatorIndexesType);
-        clinitMV.visitInsn(DUP);
-        clinitMV.visitMethodInsn(INVOKESPECIAL, operatorIndexesType, "<init>", "()V", false);
-        clinitMV.visitFieldInsn(PUTSTATIC, Integer.toString(number), operatorIndexesName, "L" + operatorIndexesType + ";");
     }
 
     private void endClinitMethod() {

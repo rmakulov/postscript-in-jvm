@@ -33,6 +33,7 @@ public class Interpreter {
 
     public static void main(String[] args) {
         instance.setCompilingMode(true);
+//        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -66,22 +67,51 @@ public class Interpreter {
 //                instance.run(new File("Examples/Ship_Demo.ps"));
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));
-//                instance.run(new File("Examples/psRay.ps"));
 //                instance.run(new File("Examples/plant2.ps"));
 //                instance.run(new File("Examples/FractalByAlunJones.ps"));
 //                instance.run(new File("FractalByAlunJones2.ps"));
 //                instance.run(new File("Examples/chupcko.ps"));
 //                instance.run(new File("Examples/snowflak.ps"));
-//                instance.run(new File("tests/speedTestExamples/snowflakByPozdin.ps"));
-//                instance.run(new File("tests/speedTestExamples/snowflak.ps"));
-//                instance.run(new File("tests/Examples/sizeExample.ps"));
-//                instance.run(new File("Examples/mandelbrotset.ps"));
-//                instance.run(new File("Examples/5_star.ps"));
-//                instance.run(new File("Examples/6_arcs.ps"));
-//                instance.run(new File("Examples/6_Fractal_Arrow.ps"));
-//                instance.run(new File("Examples/mandel.ps"));
-//                instance.run(new File("Examples/doretree.ps"));
-//                instance.run(new File("Examples/WireFrame.eps"));
+
+//                System.out.println(instance.run(new File("tests/speedTestExamples/7_ellipses.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/snowflakByPozdin.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/chupcko.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/mandel.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/mandelbrotset.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/psRay.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/Butterfly-Vector_Sample.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/6_Fractal_Arrow.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/henon.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/drawing.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/1_clip.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/1_rectangles.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/gsaveTest.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/mandelbrotseterxample.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/FractalByAlunJones2.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/gingerbread.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/julia.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/colorcir.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/2_trapezoid.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/FractalByAlunJones.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/bytecode.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/doretree.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/snowflak.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/drop.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/5_star.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/appolonain_net.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/bindTest.ps")));
+
+                instance.run(new File("tests/otherExamples/plant2.ps"));
+//                                instance.run(new File("tests/operandStackExamples/24Step.ps"));
+
+
             } else {
                 Interpreter.instance.run(new File(args[0]));
             }

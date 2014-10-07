@@ -6,13 +6,13 @@ import procedures.StringProcedure;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
-import runtime.BytecodeGenerator;
+import runtime.BytecodeGeneratorManager;
+import runtime.DynamicClassLoader;
 import runtime.Runtime;
 
 import static psObjects.Attribute.TreatAs.EXECUTABLE;
 
 public class PSName extends SimpleValue {
-    private static boolean isBinded;
 
 
     protected String strValue;
@@ -66,38 +66,47 @@ public class PSName extends SimpleValue {
 
     public static void executiveCompile(String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
-//      begin   Runtime.getInstance().findValue(strValue).interpret(0);
-        boolean isOperator = runtime.checkIsOperator(strValue);
-        String name = runtime.bcGenManager.bytecodeName;
+        PSObject obj = runtime.search(new PSObject(new PSName(strValue)));
+        boolean isOperator = (obj != null && obj.getType() == Type.OPERATOR);
+        BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
+
+        String className = bcGenManager.bytecodeName;
         if (isOperator) {
-            runtime.bcGenManager.endMethod();
-            runtime.bcGenManager.startMethod();
-
-            String operatorIndexesName = BytecodeGenerator.operatorIndexesName;
-            String operatorIndexesType = BytecodeGenerator.operatorIndexesType;
-
-            runtime.bcGenManager.clinitMV.visitFieldInsn(GETSTATIC, name, operatorIndexesName, "L" + operatorIndexesType + ";");
-            runtime.bcGenManager.clinitMV.visitLdcInsn(runtime.bcGenManager.blockNumber);
-            runtime.bcGenManager.clinitMV.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;", false);
-            runtime.bcGenManager.clinitMV.visitLdcInsn(strValue);
-            runtime.bcGenManager.clinitMV.visitMethodInsn(INVOKEVIRTUAL, operatorIndexesType, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;", false);
+            bcGenManager.endMethod();
+            bcGenManager.startMethod();
+            saveSuspectOperatorIndex(obj, bcGenManager, className);
         }
 
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGenManager.mv.visitLdcInsn(strValue);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
-        runtime.bcGenManager.mv.visitInsn(ICONST_0);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        writeExecutiveBytecode(strValue, bcGenManager, className);
+
+        if (isOperator) {
+            bcGenManager.endMethod();
+            bcGenManager.startMethod();
+        }
+
+    }
+
+    private static void writeExecutiveBytecode(String strValue, BytecodeGeneratorManager bcGenManager, String className) {
+        //      begin   Runtime.getInstance().findValue(strValue).interpret(0);
+        bcGenManager.mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
+        bcGenManager.mv.visitLdcInsn(strValue);
+        bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
+        bcGenManager.mv.visitInsn(ICONST_0);
+        bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
         Label l8 = new Label();
-        runtime.bcGenManager.mv.visitJumpInsn(IFNE, l8);
-        runtime.bcGenManager.mv.visitInsn(ICONST_0);
-        runtime.bcGenManager.mv.visitInsn(IRETURN);
-        runtime.bcGenManager.mv.visitLabel(l8);
-        if (isOperator) {
-            runtime.bcGenManager.endMethod();
-            runtime.bcGenManager.startMethod();
-        }
-//          end  Runtime.getInstance().findValue(str).interpret(0);
+        bcGenManager.mv.visitJumpInsn(IFNE, l8);
+        bcGenManager.mv.visitInsn(ICONST_0);
+        bcGenManager.mv.visitInsn(IRETURN);
+        bcGenManager.mv.visitLabel(l8);
+        //          end  Runtime.getInstance().findValue(str).interpret(0);
+    }
+
+    private static void saveSuspectOperatorIndex(PSObject obj, BytecodeGeneratorManager bcGenManager, String className) {
+        DynamicClassLoader l = DynamicClassLoader.instance;
+        String operatorPath = obj.getValue().getClass().getCanonicalName().replace(".", "/");
+        int classNumber = Integer.parseInt(className);
+        int methodNumber = bcGenManager.blockNumber;
+        l.putSuspectOperatorIndex(classNumber, methodNumber, operatorPath);
     }
 
 

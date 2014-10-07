@@ -169,4 +169,9 @@ public class PSArray extends CompositeValue implements Cloneable {
         array[0].getElementObject().compile();
     }
 
+    @Override
+    public String toString() {
+        return "PSArray{" + toStringView() +
+                '}';
+    }
 }

@@ -35,6 +35,7 @@ public class IfElseOp extends Operator {
 
     @Override
     public void interpret() {
+        System.out.println("lol");
 //        if (runtime.getOperandStackSize() < 3) return;
 //        PSObject proc2 = runtime.popFromOperandStack();
 //        PSObject proc1 = runtime.popFromOperandStack();

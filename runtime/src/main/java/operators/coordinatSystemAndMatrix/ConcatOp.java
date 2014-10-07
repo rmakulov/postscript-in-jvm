@@ -4,7 +4,6 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSArray;
-import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import runtime.graphics.matrix.TransformMatrix;
 
@@ -12,7 +11,11 @@ import runtime.graphics.matrix.TransformMatrix;
  * Created by user on 26.09.14.
  */
 public class ConcatOp extends AbstractGraphicOperator {
-    public static final Operator instance = new ConcatOp();
+    public static final ConcatOp instance = new ConcatOp();
+
+    protected ConcatOp() {
+        super();
+    }
 
     @Override
     public void interpret() {
