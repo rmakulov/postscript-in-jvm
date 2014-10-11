@@ -71,12 +71,13 @@ public class PSName extends SimpleValue {
         BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
 
         String className = bcGenManager.bytecodeName;
-        if (isOperator) {
+        if (isOperator && !bcGenManager.lastMethodIsEmpty()) {
             bcGenManager.endMethod();
             bcGenManager.startMethod();
             saveSuspectOperatorIndex(obj, bcGenManager, className);
         }
 
+        bcGenManager.incInstrCounter();
         writeExecutiveBytecode(strValue, bcGenManager, className);
 
         if (isOperator) {

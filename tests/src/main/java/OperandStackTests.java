@@ -403,4 +403,36 @@ public class OperandStackTests {
         String real = interpreter.operandStackToString().trim();
         Assert.assertEquals(expectedString, real);
     }
+
+    @Test
+   /*check cvx*/
+    public void compile24Test() {
+        int i = 24;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check inner cvx*/
+    public void compile25Test() {
+        int i = 25;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
 }

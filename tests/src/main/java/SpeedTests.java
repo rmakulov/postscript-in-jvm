@@ -2,6 +2,7 @@ import scanner.Interpreter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by User on 23/9/2014.
@@ -9,7 +10,7 @@ import java.io.IOException;
 public class SpeedTests {
 
     private static Interpreter interpreter;
-    static final int TEST_COUNTS = 1;
+    static final int TEST_COUNTS = 7;
 
 
     public static void main(String[] args) {
@@ -17,13 +18,16 @@ public class SpeedTests {
         final File folder = new File("tests/speedTestExamples");
         iterateExamples(folder);
         long ms = System.currentTimeMillis() - startTime;
-        System.out.println("All tests have been finished in " + ms / (1000 * 60 * 60) + " hours.");
+        System.out.println("All tests have been finished in " + ((double) ms) / (1000 * 60 * 60) + " hours.");
     }
 
     public static void iterateExamples(final File folder) {
         System.out.printf("%-20s%-20s%s\n", "Filename", "Interpreter", "Compiler");
 
-        for (final File exampleFile : folder.listFiles()) {
+        File[] fileList = folder.listFiles();
+        Arrays.sort(fileList);
+
+        for (final File exampleFile : fileList) {
             if (TEST_COUNTS == 0) {
                 System.out.println(exampleFile.getName());
             } else {

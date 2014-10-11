@@ -29,33 +29,36 @@ appolonain_net.ps 	 Interpreter 1318.0 vs 		 Compiler 493.0
 bindTest.ps 		 Interpreter 0.0 vs 		 Compiler 0.0
 
 Filename            Interpreter         Compiler
-7_ellipses.ps       10,100              5,400
-chupcko.ps          2357,300            996,700
-WireFrame.eps       413,700             182,500
-mandel.ps           214324,900          164432,700
-6_arcs.ps           0,300               1,000
-mandelbrotset.ps    30719,700           18222,000
-flower.ps           2,700               6,000
-simpleGraphicsTest1.ps0,200               0,300
-4_circles.ps        7,800               7,700
-psRay.ps            137870,300          71343,200
-6_Fractal_Arrow.ps  1117,400            1031,200
-henon.ps            12783,100           12164,400
 1_clip.ps           1,400               2,400
 1_rectangles.ps     0,300               0,300
-simpleGraphicsTest.ps0,900               2,100
-gsaveTest.ps        0,700               2,200
-mandelbrotseterxample.ps2295,300            2297,700
-FractalByAlunJones2.ps60001,400           60001,400
-gingerbread.ps      1493,600            1429,600
-julia.ps            120693,300          83347,300
-colorcir.ps         85,800              84,400
-snowflak.ps         66,700              66,700
 2_trapezoid.ps      1,700               19,700
-FractalByAlunJones.ps60041,400           60041,200
-bytecode.ps         0,000               0,000
-doretree.ps         145,200             148,400
+4_circles.ps        7,800               7,700
 5_star.ps           0,200               0,400
+6_Fractal_Arrow.ps  1117,400            1031,200
+6_arcs.ps           0,300               1,000
+7_ellipses.ps       10,100              5,400
+Butterfly-Vector...
+FractalByAlunJones.ps60041,400           60041,200
+FractalByAlunJones2.ps60001,400           60001,400
+WireFrame.eps       413,700             182,500
+
 appolonain_net.ps   1343,000            530,700
 bindTest.ps         0,000               1,200
+bytecode.ps         0,000               0,000
+chupcko.ps          2357,300            996,700
+colorcir.ps         85,800              84,400
+doretree.ps         145,200             148,400
+flower.ps           2,700               6,000
+gingerbread.ps      1493,600            1429,600
+gsaveTest.ps        0,700               2,200
+henon.ps            12783,100           12164,400
+julia.ps            120693,300          83347,300
+
+mandel.ps           214324,900          164432,700
+mandelbrotset.ps    30719,700           18222,000
+mandelbrotseterxample.ps2295,300            2297,700
+psRay.ps            137870,300          71343,200
+simpleGraphicsTest1.ps0,200               0,300
+simpleGraphicsTest.ps0,900               2,100
+snowflak.ps         66,700              66,700
 All tests have been finished.

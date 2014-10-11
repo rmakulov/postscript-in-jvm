@@ -46,50 +46,51 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
         String text = nextYytoken.m_text;
         Tokens m_type = nextYytoken.m_type;
         nextYytoken = null;
+
         switch (m_type) {
             case INTEGER:
                 PSInteger.compile(Integer.parseInt(text));
-                return;
+                break;
             case REAL:
                 PSReal.compile(Double.parseDouble(text));
-                return;
+                break;
             case HEX:
                 //hex
                 PSInteger.compile(Integer.parseInt(text, 16));
-                return;
+                break;
             case RADIX:
                 //radix
                 String[] args = text.split("#");
                 int radix = Integer.parseInt(args[0]);
                 PSInteger.compile(Integer.parseInt(args[1], radix));
-                return;
+                break;
             case EXEC_NAME:
                 // name without "/". it is executable by default
                 PSName.executiveCompile(text);
-                return;
+                break;
             case LIT_NAME:
                 // name with "/". it is executable by default
                 PSName.literalCompile(text);
-                return;
+                break;
             case STRINGS:
                 // strings
                 String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
                 PSString.compile(s);
-                return;
+                break;
 
             case OPEN_SQUARE_BRACKET:
                 // array
                 OpenSquareBracketOp.instance.compile();
 //                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
-                return;
+                break;
             case CLOSE_SQUARE_BRACKET:
                 CloseSquareBracketOp.instance.compile();
 //                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
-                return;
+                break;
             case OPEN_CURLY_BRACE:
                 runtime.bcGenManager.startCodeGenerator();
                 procDepth++;
-                return;
+                break;
             case CLOSE_CURLY_BRACE:
                 if (procDepth == 1) {
                     CloseCurlyBraceOp.instance.interpret();
@@ -98,20 +99,40 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                     CloseCurlyBraceOp.compile();
                 }
                 procDepth--;
-                return;
+                break;
             case OPEN_CHEVRON_BRACKET:
                 OpenChevronOp.instance.compile();
-                return;
+                break;
             case CLOSE_CHEVRON_BRACKET:
                 CloseChevronOp.instance.compile();
 //                return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
-                return;
+                break;
             case COMMENTS:
                 break;
             default:
-                return;
+                break;
         }
-        return;
+
+        switch (m_type) {
+            case EXEC_NAME:
+                break;
+            case INTEGER:
+            case HEX:
+            case RADIX:
+            case REAL:
+            case LIT_NAME:
+            case STRINGS:
+            case OPEN_SQUARE_BRACKET:
+            case CLOSE_SQUARE_BRACKET:
+            case OPEN_CHEVRON_BRACKET:
+            case CLOSE_CHEVRON_BRACKET:
+                runtime.bcGenManager.incInstrCounter();
+            case OPEN_CURLY_BRACE:
+            case CLOSE_CURLY_BRACE:
+            case COMMENTS:
+            case STRING_TEXT:
+                break;
+        }
     }
 
     @Override

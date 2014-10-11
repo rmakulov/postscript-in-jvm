@@ -40,29 +40,7 @@ public class Interpreter {
 //                Interpreter.instance.run(new File("tests/operandStackExamples/5thStep.ps"));
 
 //                instance.run(new File("tests/operandStackExamples/0Step.ps"));
-//                instance.run(new File("2ndStep.ps"));
-//                instance.run(new File("3rdStep.ps"));
-//                instance.run(new File("4thStep.ps"));
-//                instance.run(new File("5thStep.ps"));
-//                instance.run(new File("6thStep.ps"));
-//                instance.run(new File("7thStep.ps"));
-//                instance.run(new File("8thStep.ps"));
-//                instance.run(new File("9thStep.ps"));
-//                instance.run(new File("10thStep.ps"));
-//                instance.run(new File("11thStep.ps"));
-//                instance.run(new File("12thStep.ps"));
-//                instance.run(new File("13thStep.ps"));
-//                instance.run(new File("14thStep.ps"));
-//                instance.run(new File("15thStep.ps"));
-//                instance.run(new File("16thStep.ps"));
-//                instance.run(new File("17thStep.ps"));
-//                instance.run(new File("18thStep.ps"));
-//                instance.run(new File("tests/speedTestExamples/Abstract_Floral_Butterfly_Vector_Graphic.ps"));
-//                instance.run(new File("tests/speedTestExamples/Final_Composition.ps"));
-//                instance.run(new File("tests/speedTestExamples/drop.ps"));
 //                instance.run(new File("Examples/рисунок.ps"));
-//                instance.run(new File("Examples/drawing.ps"));
-//                instance.run(new File("Examples/triangle.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));
 //                instance.run(new File("Examples/Ship_Demo.ps"));
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
@@ -108,8 +86,10 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/appolonain_net.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/bindTest.ps")));
 
-                instance.run(new File("tests/otherExamples/plant2.ps"));
+//                instance.run(new File("tests/otherExamples/plant2.ps"));
 //                                instance.run(new File("tests/operandStackExamples/24Step.ps"));
+
+//                System.out.println(instance.run(new File("tests/otherExamples/vasarely.ps")));
 
 
             } else {

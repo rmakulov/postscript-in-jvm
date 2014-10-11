@@ -24,6 +24,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     private int lastNumber = 0;
     public int blockNumber = 0;
 
+
     public BytecodeGeneratorManager() {
     }
 
@@ -52,6 +53,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     public void endBytecode() {
         cur = bcGen.endBytecode();
         //bytecodes.put(bcGenManager.getNumber(), cur);
+
         popBytecodeGenerator();
     }
 
@@ -87,5 +89,11 @@ public class BytecodeGeneratorManager implements Opcodes {
         bcGen.endMethod();
     }
 
+    public void incInstrCounter() {
+        bcGen.incInstrCounter();
+    }
 
+    public boolean lastMethodIsEmpty() {
+        return bcGen.lastMethodIsEmpty();
+    }
 }

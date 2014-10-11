@@ -22,6 +22,9 @@ public class BytecodeGenerator implements Opcodes {
     public ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
     public HashMap<Integer, String> operatorIndexesTest = new HashMap<Integer, String>();
 
+    private int instrCounter = 0;
+    private boolean consoleOutput = false;
+
 
     public BytecodeGenerator(int number) {
         operatorIndexesTest.put(1, "one");
@@ -57,6 +60,10 @@ public class BytecodeGenerator implements Opcodes {
 
 
     public void endMethod() {
+        if (consoleOutput) {
+            System.out.print("run_" + blockNumber + ": " + instrCounter + "| ");
+        }
+        instrCounter = 0;
         mv.visitInsn(ICONST_1);
         mv.visitInsn(IRETURN);
         mv.visitMaxs(0, 0);
@@ -70,8 +77,6 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public PSBytecode endBytecode() {
-
-//        mainMV.visitVarInsn(ALOAD, 0);
         endMethod();
         endClinitMethod();
         Label[] l = new Label[blockNumber + 1];
@@ -91,7 +96,11 @@ public class BytecodeGenerator implements Opcodes {
         DynamicClassLoader.instance.putClass(Integer.toString(number), cw.toByteArray());
         cw = null;
         mainMV = null;
+        if (consoleOutput) {
+            System.out.print("for " + number + "\n");
+        }
         return new PSBytecode(Integer.toString(number));
+
     }
 
     public MethodVisitor getMethodVisitor() {
@@ -125,5 +134,13 @@ public class BytecodeGenerator implements Opcodes {
             System.out.print(integer + ", ");
         }
         System.out.println(" printOperatorIndexes_end");
+    }
+
+    public void incInstrCounter() {
+        instrCounter++;
+    }
+
+    public boolean lastMethodIsEmpty() {
+        return instrCounter == 0;
     }
 }
