@@ -1,6 +1,8 @@
 package psObjects.values.reference;
 
 
+import org.objectweb.asm.MethodVisitor;
+import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
@@ -57,6 +59,29 @@ public class LocalRef extends Reference {
     public Type setCompositeValue(CompositeValue obj) {
         tableIndex = runtime.setNewValueAtLocalVM(tableIndex, obj);
         return obj.determineType();
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+//        Attribute attribute = obj.getAttribute();
+//        Attribute.Access access =attribute.access;
+//        Attribute.TreatAs treatAs = attribute.treatAs;
+
+        //runtime.pushToOperandStack(new PSObject(runtime.getValueByTableIndex(tableIndex)));
+
+        String name = runtime.bcGenManager.bytecodeName;
+        MethodVisitor mv = runtime.bcGenManager.mv;
+
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitLdcInsn(tableIndex);
+//        mv.visitFieldInsn(GETFIELD, "psObjects/values/reference/LocalRef", "tableIndex", "I");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getValueByTableIndex", "(I)LpsObjects/values/composite/CompositeValue;", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        //todo
     }
 
     public CompositeValue getValue() {

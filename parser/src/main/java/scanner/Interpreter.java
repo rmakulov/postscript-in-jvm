@@ -86,7 +86,8 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/appolonain_net.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/bindTest.ps")));
 
-//                instance.run(new File("tests/otherExamples/plant2.ps"));
+                instance.run(new File("tests/otherExamples/plant2.ps"));
+//                instance.run(new File("tests/otherExamples/cube6.ps"));
 //                                instance.run(new File("tests/operandStackExamples/24Step.ps"));
 
 //                System.out.println(instance.run(new File("tests/otherExamples/vasarely.ps")));

@@ -28,6 +28,8 @@ public class AloadOp extends Operator {
             }
 //            System.out.println();
             runtime.pushToOperandStack(psObject);
+//        } else if (psObject.isBytecode()){
+//            psObject.interpret(0);
         } else {
             runtime.pushToOperandStack(psObject);
             return;

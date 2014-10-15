@@ -511,4 +511,8 @@ public class Runtime {
         }
         return stringBuilder.toString().trim().concat("\n");
     }
+
+    public CompositeValue getValueByTableIndex(int tableIndex) {
+        return localVM.get(tableIndex);
+    }
 }

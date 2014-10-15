@@ -783,8 +783,8 @@ class Yylex {
                 case 39:
                     break;
                 case 18:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [64] { return (new Yytoken(Tokens.OPEN_CHEVRON_BRACKET,yytext(),yyline,yychar,yychar+1)); }");
+//                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+//                    System.out.println("action [64] { return (new Yytoken(Tokens.OPEN_CHEVRON_BRACKET,yytext(),yyline,yychar,yychar+1)); }");
                 {
                     return (new Yytoken(Tokens.OPEN_CHEVRON_BRACKET, yytext(), yyline, yychar, yychar + 1));
                 }
@@ -800,8 +800,8 @@ class Yylex {
                 case 41:
                     break;
                 case 20:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [65] { return (new Yytoken(Tokens.CLOSE_CHEVRON_BRACKET,yytext(),yyline,yychar,yychar+1)); }");
+//                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+//                    System.out.println("action [65] { return (new Yytoken(Tokens.CLOSE_CHEVRON_BRACKET,yytext(),yyline,yychar,yychar+1)); }");
                 {
                     return (new Yytoken(Tokens.CLOSE_CHEVRON_BRACKET, yytext(), yyline, yychar, yychar + 1));
                 }
