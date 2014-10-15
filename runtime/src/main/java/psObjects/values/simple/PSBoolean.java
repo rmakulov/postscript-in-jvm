@@ -1,5 +1,7 @@
 package psObjects.values.simple;
 
+import org.objectweb.asm.MethodVisitor;
+import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 
@@ -77,5 +79,19 @@ public class PSBoolean extends SimpleValue {
     @Override
     public String toStringView() {
         return flag + "";
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = runtime.bcGenManager.bytecodeName;
+        String fieldName = ("" + flag).toUpperCase();
+
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, "psObjects/values/simple/PSBoolean", fieldName, "LpsObjects/values/simple/PSBoolean;");
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }
