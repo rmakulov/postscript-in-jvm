@@ -1,5 +1,7 @@
 package psObjects.values.simple;
 
+import org.objectweb.asm.MethodVisitor;
+import psObjects.PSObject;
 import psObjects.Type;
 
 public class PSNull extends SimpleValue {
@@ -22,8 +24,21 @@ public class PSNull extends SimpleValue {
     }
 
     @Override
+    public void compile(PSObject obj) {
+//        runtime.pushToOperandStack(new PSObject(PSNull.NULL));
+        String name = runtime.bcGenManager.bytecodeName;
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, "psObjects/values/simple/PSNull", "NULL", "LpsObjects/values/simple/PSNull;");
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+    }
+
+    @Override
     public String toStringView() {
-        return toString();
+        return "null";
     }
 
     @Override

@@ -2,6 +2,7 @@ package psObjects.values.reference;
 
 
 import org.objectweb.asm.MethodVisitor;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
@@ -63,11 +64,11 @@ public class LocalRef extends Reference {
 
     @Override
     public void compile(PSObject obj) {
-//        Attribute attribute = obj.getAttribute();
-//        Attribute.Access access =attribute.access;
-//        Attribute.TreatAs treatAs = attribute.treatAs;
+        Attribute attribute = obj.getAttribute();
+        int attributeIndex = attribute.getAttributeTypeIndex();
 
-        //runtime.pushToOperandStack(new PSObject(runtime.getValueByTableIndex(tableIndex)));
+      /*  PSObject psObject = new PSObject(new LocalRef(tableIndex), Attribute.getAttributeByIndex(attributeIndex));
+        runtime.pushToOperandStack(psObject);*/
 
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
@@ -75,11 +76,13 @@ public class LocalRef extends Reference {
         mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/values/reference/LocalRef");
+        mv.visitInsn(DUP);
         mv.visitLdcInsn(tableIndex);
-//        mv.visitFieldInsn(GETFIELD, "psObjects/values/reference/LocalRef", "tableIndex", "I");
-        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getValueByTableIndex", "(I)LpsObjects/values/composite/CompositeValue;", false);
-        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/reference/LocalRef", "<init>", "(I)V", false);
+        mv.visitLdcInsn(attributeIndex);
+        mv.visitMethodInsn(INVOKESTATIC, "psObjects/Attribute", "getAttributeByIndex", "(I)LpsObjects/Attribute;", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
         mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         //todo
     }

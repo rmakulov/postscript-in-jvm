@@ -80,6 +80,12 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         this.attribute = attribute;
     }
 
+    public PSObject(Value value, Attribute attribute) {
+        this.value = value;
+        type = value.determineType();
+        this.attribute = attribute;
+    }
+
     public PSObject(Value value) {
         if (value instanceof CompositeValue) {
             value = runtime.createReference((CompositeValue) value);

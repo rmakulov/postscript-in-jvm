@@ -1,8 +1,10 @@
 package psObjects.values.simple;
 
 import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 import procedures.ArrayProcedure;
 import procedures.StringProcedure;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
@@ -127,6 +129,30 @@ public class PSName extends SimpleValue {
         runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
         runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
 //
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+        Attribute attribute = obj.getAttribute();
+        int attributeIndex = attribute.getAttributeTypeIndex();
+
+//        PSObject psObject = new PSObject(new PSName(strValue), Attribute.getAttributeByIndex(attributeIndex));
+//        runtime.pushToOperandStack(psObject);
+
+        String name = runtime.bcGenManager.bytecodeName;
+        MethodVisitor mv = runtime.bcGenManager.mv;
+
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(strValue);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
+        mv.visitLdcInsn(attributeIndex);
+        mv.visitMethodInsn(INVOKESTATIC, "psObjects/Attribute", "getAttributeByIndex", "(I)LpsObjects/Attribute;", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 
     @Override
