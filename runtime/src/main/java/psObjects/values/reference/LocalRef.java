@@ -88,7 +88,7 @@ public class LocalRef extends Reference {
     }
 
     public CompositeValue getValue() {
-        return runtime.getInstance().getValueByLocalRef(this);
+        return runtime.getValueByLocalRef(this);
     }
 
     public int localCompareTo(LocalRef localRef) {
