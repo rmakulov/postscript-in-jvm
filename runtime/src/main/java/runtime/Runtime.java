@@ -24,6 +24,7 @@ import runtime.stack.DictionaryStack;
 import runtime.stack.GraphicStack;
 import runtime.stack.OperandStack;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,6 +48,9 @@ public class Runtime {
     private CallStack callStack = new CallStack();
     private boolean isGlobal = false;
     private PSObject userDict, globalDict, systemDict;
+
+    //costyl#1
+    private HashMap<Integer, PSObject> cvxGlobalObjectMap = new HashMap<Integer, PSObject>();
 
     private Runtime() {
         isCompiling = false;
@@ -514,5 +518,20 @@ public class Runtime {
 
     public CompositeValue getValueByTableIndex(int tableIndex) {
         return localVM.get(tableIndex);
+    }
+
+    public PSObject getCVXGlobalObject(int id) {
+        return cvxGlobalObjectMap.get(id);
+    }
+
+    public void putCvxGlobalObject(int id, PSObject obj) {
+        if (!(obj.getDirectValue() instanceof GlobalRef)) {
+            try {
+                throw new Exception("attempt put not global object");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        cvxGlobalObjectMap.put(id, obj);
     }
 }

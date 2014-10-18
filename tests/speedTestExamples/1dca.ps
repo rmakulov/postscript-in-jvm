@@ -1,0 +1,103 @@
+%!PS-Adobe-1.0
+%%Title: 1D Boolean Cellular Automata
+%%Creator: vi
+%%CreationDate: 31-07-03
+%%Pages: 2
+%%BoundingBox: 0 0 596 842
+%%EndComments
+
+% Author: Tim Vaughan
+
+%%% Parameters
+
+%/rule [ 0 1 0 1 1 0 1 0 ] def  % Rule 90
+/rule [ 0 0 0 1 1 1 1 0 ] def % Rule 30
+/randomize 0 def % 1 -> random initial state
+                 % 0 -> seed single cell
+/cell {0.5 mul} bind def % cell size multiplier (pts)
+/border 0.05 def % Percentage of page width for border
+/pages 2 def % Number of pages to run for
+%/pages 1 def % Number of pages to run for
+
+%%%
+
+/cm {28.35 mul} bind def
+/a4width 21 cm def
+/a4height 29.7 cm def
+
+/xmargin border a4width mul def
+/ymargin border 0.707 mul a4height mul def
+
+/N a4width xmargin 2 mul sub 1 cell div cvi def
+/maxiter a4height ymargin 2 mul sub 1 cell div cvi def
+
+/line1 N array def
+/line2 N array def
+
+/Nsub1 N 1 sub def
+
+/cellfortune { % idx => new_spin
+	dup dup 
+	1 sub N add N mod line1 exch get 4 mul
+	exch line1 exch get 2 mul add
+	exch 1 add N mod line1 exch get add
+	7 exch sub
+	rule exch get
+} bind def
+
+/iterate { % Evolves system according to rule
+	0 1 Nsub1 {
+		line2 exch dup cellfortune put
+	} for
+	line1 0 line2 putinterval
+} bind def
+
+/draw_cell { % x y => -
+	moveto
+	1 cell 0 rlineto
+	0 cell 1 cell rlineto
+	-1 cell 0 cell rlineto
+	closepath fill stroke
+} bind def
+
+/draw_row { % iter => -
+	cell ymargin add dup
+	0 1 Nsub1 {
+		dup line1 exch get 1 eq {
+			cell xmargin add exch
+			draw_cell
+			dup
+		} {
+			pop
+		} ifelse
+	} for
+	pop pop
+} bind def
+
+%%%% Main
+
+% Initialize line arrays
+
+0 1 Nsub1 {
+	dup line1 exch 0 put
+	line2 exch 0 put
+} for
+
+randomize 0 eq {
+	line1 N 2 idiv 1 put
+} {
+	N { rand 2 mod } repeat
+	line1 astore pop
+} ifelse
+
+% Main loop
+
+pages {
+	newpath
+	0 draw_row
+	1 1 maxiter { iterate draw_row } for
+} repeat
+	showpage
+
+%%EOF
+)

@@ -1,0 +1,152 @@
+%!PS-Adobe-1.0
+%%Title: Bubbles
+%%Creator: vi
+%%CreationDate: 16-11-02
+%%Pages: 1
+%%BoundingBox: 0 0 596 842
+%%EndComments
+
+% bubbles.ps - bubbly mandelbrot
+% Tim Vaughan, 2003
+
+% ----- Variables and Procedures -----
+
+/cm {28.35 mul} def
+
+/a4width 21 cm def
+/a4height 29.7 cm def
+
+/rmin -2 def
+/rmax 1 def
+/imin -1 def
+/imax 1 def
+%/rmin -0.5 def
+%/rmax 0.3 def
+%/imin 0.5 def
+%/imax 1 def
+
+/isteps 100 def
+/rsteps 100 def
+
+/maxiter 100 def
+/zmax2 4 def
+
+/dup2 % x y => x y x y
+{
+	dup 3 -1 roll dup 4 1 roll exch
+} def
+
+/tocomplex % x y => z0r z0i
+{
+	exch
+	imax imin sub a4width div mul imin add
+
+	exch
+	rmax rmin sub a4height div mul rmin add
+
+	exch
+} def
+
+/fromcomplex % z0r z0i => x y
+{
+	imin sub a4width imax imin sub div mul
+	exch
+	rmin sub a4height rmax rmin sub div mul
+	
+} def
+
+/z2+c % zr zi
+{
+	/zi exch def
+	/zr exch def
+
+	zr 2 exp zi 2 exp sub cr add
+	zr zi mul 2 mul ci add
+} def
+
+/mandeltest % zr zi iter => bool
+{
+	3 1 roll
+
+	z2+c
+	dup2
+	2 exp exch 2 exp add
+	zmax2 lt
+
+	dup
+	
+	5 -1 roll
+	1 sub dup
+	6 1 roll
+	1 gt
+	
+	and
+
+	{pop 3 -1 roll mandeltest}
+	{4 1 roll pop pop pop}
+	ifelse
+
+} def
+
+/findradius % x y => x y rad
+{
+	dup2
+	tocomplex
+	2 exp exch 2 exp add sqrt
+	cm 100 exch div
+	dup 1 cm gt {pop 1 cm} if
+
+} def
+
+/insetshape % x y => ___
+{
+	findradius 0 360 arc stroke
+} def
+
+% ---- main ----
+
+rmin rmax rmin sub rsteps div rmax
+{
+	/cr exch def
+	imin imax imin sub isteps div imax
+	{
+		/ci exch def
+
+		0 0 maxiter mandeltest
+		{
+			cr ci fromcomplex insetshape
+		} if
+	} for
+} for
+
+/margin 2 cm def
+/ypos -1.5 cm def
+/dy 22 def
+/newline
+{
+	/ypos ypos dy sub dup 3 1 roll def
+	margin exch
+	moveto
+} def
+
+/Times-Italic findfont
+20 scalefont
+setfont
+90 rotate
+margin ypos moveto
+
+
+(Any intelligent fool can make) show newline
+(things bigger, more complex, and) show newline
+(more violent. It takes a touch of) show newline
+(genius - and a lot of courage - to) show newline
+(move in the opposite direction.) show newline
+newline
+/Times-Roman findfont
+20 scalefont
+setfont
+(- Albert Einstein) show
+
+showpage
+%%EOF
+)
