@@ -1,5 +1,6 @@
 package psObjects.values.simple.numbers;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.Type;
 import runtime.Runtime;
@@ -32,15 +33,19 @@ public class PSReal extends PSNumber {
     public void compile(PSObject obj) {
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitLdcInsn(value);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(I)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        MethodVisitor mv = runtime.bcGenManager.mv;
+
+//        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(value);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(I)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+//        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        mv.visitInsn(ICONST_0);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
     }
 
     @Override

@@ -129,9 +129,9 @@ rmin rmax rmin sub rsteps div rmax
 	moveto
 } def
 
-/Times-Italic findfont
+/Times-Italic (findfont
 20 scalefont
-setfont
+setfont)
 90 rotate
 margin ypos moveto
 
@@ -142,9 +142,9 @@ margin ypos moveto
 (genius - and a lot of courage - to) show newline
 (move in the opposite direction.) show newline
 newline
-/Times-Roman findfont
+/Times-Roman (findfont
 20 scalefont
-setfont
+setfont)
 (- Albert Einstein) show
 
 showpage

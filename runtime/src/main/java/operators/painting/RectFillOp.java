@@ -1,6 +1,7 @@
 package operators.painting;
 
 import operators.AbstractGraphicOperator;
+import operators.arithmetic.unary.NegOp;
 import operators.graphicsState.GRestoreOp;
 import operators.graphicsState.GSaveOp;
 import operators.pathConstruction.ClosePathOp;
@@ -47,8 +48,7 @@ public class RectFillOp extends AbstractGraphicOperator {
                     xObj, yObj, new PSObject(MoveToOp.instance),
                     wObj, new PSObject(new PSInteger(0)), new PSObject(RLineToOp.instance),
                     new PSObject(new PSInteger(0)), hObj, new PSObject(RLineToOp.instance),
-//                    wObj, new PSObject(NegOp.instance), new PSObject(new PSInteger(0)), new PSObject(RLineToOp.instance),
-                    wObj, new PSObject(new PSInteger(0)), new PSObject(RLineToOp.instance),
+                    wObj, new PSObject(NegOp.instance), new PSObject(new PSInteger(0)), new PSObject(RLineToOp.instance),
                     new PSObject(ClosePathOp.instance),
                     new PSObject(FillOp.instance),
                     new PSObject(GRestoreOp.instance)

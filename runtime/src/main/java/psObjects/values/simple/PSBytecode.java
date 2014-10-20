@@ -1,5 +1,6 @@
 package psObjects.values.simple;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import runtime.DynamicClassLoader;
 
@@ -27,46 +28,26 @@ public class PSBytecode extends PSName {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-//        } catch (NoSuchFieldException e) {
-//            e.printStackTrace();
         }
         return true;
     }
 
     @Override
     public void compile(PSObject obj) {
-//        interpret(obj);
-
-
-       /* //runtime.pushToOperandStack(new PSObject(new PSArray(new PSObject(new PSBytecode(this.strValue)))));
-        runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSArray");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitLdcInsn(this.strValue);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSArray", "<init>", "(LpsObjects/PSObject;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);*/
-
-        //old version
         //runtime.pushToOperandStack(new PSObject(new PSBytecode(this.strValue)));
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitLdcInsn(this.strValue);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(this.strValue);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+//        mv.visitInsn(ICONST_0);
+//        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
         runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
     }
@@ -80,4 +61,5 @@ public class PSBytecode extends PSName {
     public String toStringView() {
         return "bytecode{#" + strValue + "}";
     }
+
 }

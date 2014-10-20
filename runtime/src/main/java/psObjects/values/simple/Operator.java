@@ -1,5 +1,6 @@
 package psObjects.values.simple;
 
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import psObjects.Attribute;
 import psObjects.PSObject;
@@ -8,7 +9,6 @@ import psObjects.Type;
 public abstract class Operator extends SimpleValue implements Opcodes {
     protected final Attribute.TreatAs LITERAL = Attribute.TreatAs.LITERAL;
     protected final Attribute.TreatAs EXECUTABLE = Attribute.TreatAs.EXECUTABLE;
-//    protected runtime.Runtime runtime = Runtime.getInstance();
 
     @Override
     public boolean interpret(PSObject obj) {
@@ -21,9 +21,15 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     @Override
     public void compile(PSObject obj) {
         //todo make in runtime current bytecode, I think it is ready
+        MethodVisitor mv = runtime.bcGenManager.mv;
         String clName = this.getClass().getCanonicalName().replace(".", "/");
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitInsn(ICONST_0);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
     }
 
 

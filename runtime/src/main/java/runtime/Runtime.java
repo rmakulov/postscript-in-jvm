@@ -51,6 +51,7 @@ public class Runtime {
 
     //costyl#1
     private HashMap<Integer, PSObject> cvxGlobalObjectMap = new HashMap<Integer, PSObject>();
+    private boolean ALoading = false;
 
     private Runtime() {
         isCompiling = false;
@@ -426,7 +427,7 @@ public class Runtime {
             return found;
         }
         try {
-//            throw new Exception(key + " is not found");
+            throw new Exception(key + " is not found");
         } catch (Exception e) {
 //            e.printStackTrace();
             System.err.println(e);
@@ -533,5 +534,13 @@ public class Runtime {
             }
         }
         cvxGlobalObjectMap.put(id, obj);
+    }
+
+    public void setALoading(boolean ALoading) {
+        this.ALoading = ALoading;
+    }
+
+    public boolean getALoading() {
+        return ALoading;
     }
 }

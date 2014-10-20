@@ -38,7 +38,7 @@ public class CloseCurlyBraceOp extends Operator {
 
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
-        //todo right
+        //todo alright
         (runtime.bcGenManager.getCur()).compile(null);
 
         //runtime.pushToOperandStack(runtime.bcGenManager.getCur());

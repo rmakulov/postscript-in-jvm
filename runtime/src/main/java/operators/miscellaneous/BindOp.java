@@ -85,13 +85,20 @@ public class BindOp extends Operator {
     private void transformMethod(MethodNode method, String suspectOperatorName) {
         InsnList insnList = method.instructions;
         Iterator ite = insnList.iterator();
-        for (int i = 0; i < 5; i++) {
+        int replacingInstrCount = 10;
+        for (int i = 0; i < replacingInstrCount; i++) {
             AbstractInsnNode insn = (AbstractInsnNode) ite.next();
-            if (i == 4) {
+            if (i == (replacingInstrCount - 1)) {
                 InsnList tempList = new InsnList();
+//                (new PSObject(AddOp.instance)).interpret(0);
+                tempList.add(new TypeInsnNode(NEW, "psObjects/PSObject"));
+                tempList.add(new InsnNode(DUP));
                 tempList.add(new FieldInsnNode(GETSTATIC, suspectOperatorName, "instance", "L" + suspectOperatorName + ";"));
-                tempList.add(new InsnNode(ACONST_NULL));
-                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, suspectOperatorName, "interpret", "(LpsObjects/PSObject;)Z", false));
+                tempList.add(new MethodInsnNode(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false));
+                tempList.add(new InsnNode(ICONST_0));
+                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false));
+//                tempList.add(new InsnNode(ACONST_NULL));
+//                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, suspectOperatorName, "interpret", "(LpsObjects/PSObject;)Z", false));
                 insnList.insert(insn, tempList);
                 method.maxStack += 2;
             }
@@ -99,24 +106,6 @@ public class BindOp extends Operator {
 
         }
 
-
-//        while (ite.hasNext()) {
-//            AbstractInsnNode insn = (AbstractInsnNode) ite.next();
-//            int opcode = insn.getOpcode();
-//            if (opcode == LDC) {
-//                InsnList tempList = new InsnList();
-//                tempList.add(new FieldInsnNode(GETSTATIC, suspectOperatorName, "instance", "L" + suspectOperatorName + ";"));
-//                tempList.add(new InsnNode(NULL));
-//                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, suspectOperatorName, "interpret", "(LpsObjects/PSObject;)Z", false));
-//                insnList.insert(insn, tempList);
-//                            method.maxStack += 2;
-//            } else if (opcode == GETSTATIC || opcode == INVOKEVIRTUAL || opcode == ICONST_0) {
-//                insnList.remove(insn);
-////            todo improve exit condition, now we exit when first 3 instructions removed
-////            } else if (opcode == ICONST_0){
-////                break;
-//            }
-//        }
 
     }
 

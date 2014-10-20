@@ -32,8 +32,8 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-        instance.setCompilingMode(true);
-//        instance.setCompilingMode(false);
+//        instance.setCompilingMode(true);
+        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -54,7 +54,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/7_ellipses.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/snowflakByPozdin.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/chupcko.ps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/mandel.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/mandelbrotset.ps")));
@@ -86,9 +86,10 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/appolonain_net.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/bindTest.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/1dca.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/bubbles.ps")));
 
-//                instance.run(new File("tests/otherExamples/plant2.ps"));
-//                instance.run(new File("tests/otherExamples/cube6.ps"));
+//                System.out.println(instance.run(new File("tests/otherExamples/plant2.ps")));
+                instance.run(new File("tests/otherExamples/cube6.ps"));
 //                                instance.run(new File("tests/operandStackExamples/24Step.ps"));
 
 //                System.out.println(instance.run(new File("tests/otherExamples/vasarely.ps")));

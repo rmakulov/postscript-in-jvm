@@ -5,7 +5,8 @@ import operators.GlythAndFont.ShowPageOp;
 import operators.GlythAndFont.StringWidthOp;
 import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
-import operators.arithmetic.unary.SrandOp;
+import operators.arithmetic.binary.*;
+import operators.arithmetic.unary.*;
 import operators.array.AStoreOp;
 import operators.array.ArrayOp;
 import operators.array.CloseSquareBracketOp;
@@ -20,6 +21,7 @@ import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
 import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
 import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
+import operators.miscellaneous.NullOp;
 import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
 import operators.painting.EofillOp;
@@ -36,8 +38,6 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 
 import java.util.ArrayList;
-
-//import operators.arithmetic.binary.*;
 
 /**
  * Created by Дмитрий on 17.03.14.
@@ -97,32 +97,32 @@ public class DefaultDicts {
 
     private static void addArithmeticOperators() {
         //binary
-//        addOperator(AddOp.instance);
-//        addOperator(SubOp.instance);
-//        addOperator(DivOp.instance);
-//        addOperator(IdivOp.instance);
-//        addOperator(ModOp.instance);
-//        addOperator(ExpOp.instance);
-//        addOperator(AtanOp.instance);
-//        addOperator(MulOp.instance);
-//        addOperator(AddOp.instance);
-//        addOperator(AddOp.instance);
-//        addOperator(AddOp.instance);
-//        addOperator(AddOp.instance);
+        addOperator(AddOp.instance);
+        addOperator(SubOp.instance);
+        addOperator(DivOp.instance);
+        addOperator(IdivOp.instance);
+        addOperator(ModOp.instance);
+        addOperator(ExpOp.instance);
+        addOperator(AtanOp.instance);
+        addOperator(MulOp.instance);
+        addOperator(AddOp.instance);
+        addOperator(AddOp.instance);
+        addOperator(AddOp.instance);
+        addOperator(AddOp.instance);
 
         //unary
-//        addOperator(AbsOp.instance);
-//        addOperator(CeilingOp.instance);
-//        addOperator(CosOp.instance);
-//        addOperator(FloorOp.instance);
-//        addOperator(LnOp.instance);
-//        addOperator(LogOp.instance);
-//        addOperator(NegOp.instance);
-//        addOperator(RoundOp.instance);
-//        addOperator(SinOp.instance);
-//        addOperator(SqrtOp.instance);
+        addOperator(AbsOp.instance);
+        addOperator(CeilingOp.instance);
+        addOperator(CosOp.instance);
+        addOperator(FloorOp.instance);
+        addOperator(LnOp.instance);
+        addOperator(LogOp.instance);
+        addOperator(NegOp.instance);
+        addOperator(RoundOp.instance);
+        addOperator(SinOp.instance);
+        addOperator(SqrtOp.instance);
         addOperator(SrandOp.instance);
-//        addOperator(TruncateOp.instance);
+        addOperator(TruncateOp.instance);
 
         //without operands
         addOperator(RandOp.instance);
@@ -132,6 +132,7 @@ public class DefaultDicts {
     private static void addMiscellaneousOperators() {
         addOperator(BindOp.instance);
         addOperator(UserTimeOp.instance);
+        addOperator(NullOp.instance);
     }
 
     private static void addDictionaryOperators() {

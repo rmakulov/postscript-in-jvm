@@ -163,11 +163,11 @@ public class PSArray extends CompositeValue implements Cloneable {
         return Type.ARRAY;
     }
 
-    @Override
-    public void compile(PSObject obj) {
-        // we have only one element - it is bytecode, so just execute it
-        array[0].getElementObject().compile();
-    }
+//    @Override
+//    public void compile(PSObject obj) {
+//        // we have only one element - it is bytecode, so just execute it
+//        array[0].getElementObject().compile();
+//    }
 
     @Override
     public String toString() {

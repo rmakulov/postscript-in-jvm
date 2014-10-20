@@ -4,7 +4,6 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import procedures.ArrayProcedure;
 import procedures.StringProcedure;
-import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
@@ -80,7 +79,7 @@ public class PSName extends SimpleValue {
         }
 
         bcGenManager.incInstrCounter();
-        writeExecutiveBytecode(strValue, bcGenManager, className);
+        writeExecutiveBytecode(strValue, className);
 
         if (isOperator) {
             bcGenManager.endMethod();
@@ -89,19 +88,25 @@ public class PSName extends SimpleValue {
 
     }
 
-    private static void writeExecutiveBytecode(String strValue, BytecodeGeneratorManager bcGenManager, String className) {
-        //      begin   Runtime.getInstance().findValue(strValue).interpret(0);
-        bcGenManager.mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
-        bcGenManager.mv.visitLdcInsn(strValue);
-        bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
-        bcGenManager.mv.visitInsn(ICONST_0);
-        bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+    private static void writeExecutiveBytecode(String strValue, String className) {
+        MethodVisitor mv = Runtime.getInstance().bcGenManager.mv;
+        // for bindOP operator: next 10 replacing instructions
+        mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(strValue);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitInsn(ICONST_0);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        // here they ends
         Label l8 = new Label();
-        bcGenManager.mv.visitJumpInsn(IFNE, l8);
-        bcGenManager.mv.visitInsn(ICONST_0);
-        bcGenManager.mv.visitInsn(IRETURN);
-        bcGenManager.mv.visitLabel(l8);
-        //          end  Runtime.getInstance().findValue(str).interpret(0);
+        mv.visitJumpInsn(IFNE, l8);
+        mv.visitInsn(ICONST_0);
+        mv.visitInsn(IRETURN);
+        mv.visitLabel(l8);
     }
 
     private static void saveSuspectOperatorIndex(PSObject obj, BytecodeGeneratorManager bcGenManager, String className) {
@@ -118,30 +123,7 @@ public class PSName extends SimpleValue {
 //        PSObject psObject = new PSObject(new PSName(strValue), LITERAL);
 //        runtime.pushToOperandStack(psObject);
         String name = runtime.bcGenManager.bytecodeName;
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitLdcInsn(strValue);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
-//
-    }
-
-    @Override
-    public void compile(PSObject obj) {
-        Attribute attribute = obj.getAttribute();
-        int attributeIndex = attribute.getAttributeTypeIndex();
-
-//        PSObject psObject = new PSObject(new PSName(strValue), Attribute.getAttributeByIndex(attributeIndex));
-//        runtime.pushToOperandStack(psObject);
-
-        String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
-
         mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
@@ -149,10 +131,40 @@ public class PSName extends SimpleValue {
         mv.visitInsn(DUP);
         mv.visitLdcInsn(strValue);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
-        mv.visitLdcInsn(attributeIndex);
-        mv.visitMethodInsn(INVOKESTATIC, "psObjects/Attribute", "getAttributeByIndex", "(I)LpsObjects/Attribute;", false);
-        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
+        mv.visitInsn(ICONST_0);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+//
+    }
+
+    @Override
+    public void compile(PSObject obj) {
+        //Attribute attribute = obj.getAttribute();
+        //int attributeIndex = attribute.getAttributeTypeIndex();
+
+//        PSObject psObject = new PSObject(new PSName(strValue), Attribute.getAttributeByIndex(attributeIndex));
+//        runtime.pushToOperandStack(psObject);
+        if (obj.xcheck()) {
+            executiveCompile(strValue);
+        } else {
+            literalCompile(strValue);
+        }
+//        String name = runtime.bcGenManager.bytecodeName;
+//        MethodVisitor mv = runtime.bcGenManager.mv;
+//
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+//        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+//        mv.visitInsn(DUP);
+//        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
+//        mv.visitInsn(DUP);
+//        mv.visitLdcInsn(strValue);
+//        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
+//        mv.visitLdcInsn(attributeIndex);
+//        mv.visitMethodInsn(INVOKESTATIC, "psObjects/Attribute", "getAttributeByIndex", "(I)LpsObjects/Attribute;", false);
+//        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
+//        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 
     @Override

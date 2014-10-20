@@ -31,7 +31,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean interpret(int procDepth) {
-        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0)
+        boolean aLoading = runtime.getALoading();
+        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
             runtime.pushToOperandStack(this);
             return true;
