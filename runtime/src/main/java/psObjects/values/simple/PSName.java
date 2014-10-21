@@ -4,6 +4,7 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import procedures.ArrayProcedure;
 import procedures.StringProcedure;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
@@ -141,12 +142,13 @@ public class PSName extends SimpleValue {
 
     @Override
     public void compile(PSObject obj) {
-        //Attribute attribute = obj.getAttribute();
+        Attribute attribute = obj.getAttribute();
+        Attribute.TreatAs treatAs = attribute.treatAs;
         //int attributeIndex = attribute.getAttributeTypeIndex();
 
 //        PSObject psObject = new PSObject(new PSName(strValue), Attribute.getAttributeByIndex(attributeIndex));
 //        runtime.pushToOperandStack(psObject);
-        if (obj.xcheck()) {
+        if (treatAs == EXECUTABLE) {
             executiveCompile(strValue);
         } else {
             literalCompile(strValue);

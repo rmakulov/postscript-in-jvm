@@ -387,6 +387,8 @@ public class Runtime {
         graphicStack.clear();
         dictionaryStack.clear();
         graphicStack.reset();
+        bcGenManager = new BytecodeGeneratorManager();
+        DynamicClassLoader.reset();
     }
 
     public CompositeValue getValueByLocalRef(LocalRef ref) {

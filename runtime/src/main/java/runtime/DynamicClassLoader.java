@@ -45,4 +45,8 @@ public class DynamicClassLoader extends ClassLoader {
         return suspectOperatorIndexes.get(new Pair<Integer, Integer>(className, methodName));
     }
 
+    public static void reset() {
+        instance = new DynamicClassLoader();
+    }
+
 }
