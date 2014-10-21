@@ -15,12 +15,5 @@
     <artifactId>parser</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>postscript-in-jvm</groupId>
-            <artifactId>runtime</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
 </project>

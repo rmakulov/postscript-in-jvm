@@ -1,4 +1,4 @@
-import scanner.Interpreter;
+import interpreter.Interpreter;
 
 import java.io.*;
 

@@ -3,12 +3,14 @@ package procedures;
 import psObjects.PSObject;
 import psObjects.values.simple.PSBoolean;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by Дмитрий on 28.03.14.
  */
 public class StoppedStringProcedure extends StringProcedure {
-    public StoppedStringProcedure(PSObject stringObj) {
-        super("StoppedStringProcedure", stringObj);
+    public StoppedStringProcedure(PSObject stringObj) throws UnsupportedEncodingException {
+        super(stringObj);
     }
 
     @Override

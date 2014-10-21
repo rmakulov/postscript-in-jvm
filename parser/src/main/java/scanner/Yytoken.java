@@ -3,7 +3,7 @@ package scanner;
 /**
  * The tokens returned by the scanner.
  */
-class Yytoken {
+public class Yytoken {
     public Tokens m_type;
     public String m_text;
     public int m_line;

@@ -8,6 +8,8 @@ import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
+import java.io.UnsupportedEncodingException;
+
 import static psObjects.Attribute.TreatAs;
 
 public class ExecOp extends Operator {
@@ -30,7 +32,11 @@ public class ExecOp extends Operator {
                 fail();
             }
         } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
-            runtime.pushToCallStack(new StringProcedure(psObject));
+            try {
+                runtime.pushToCallStack(new StringProcedure(psObject));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         } else {
             if (runtime.isCompiling) {
                 psObject.execute(0);

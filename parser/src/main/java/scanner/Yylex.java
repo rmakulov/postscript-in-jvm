@@ -8,7 +8,7 @@ package scanner;
  * <a href="http://www.jflex.de/">JFlex</a> 1.5.0-SNAPSHOT
  * from the specification file <tt>G:/Programming/Decompiler/postscript-in-jvm/parser/src/main/java/scanner/ps.flex</tt>
  */
-class Yylex {
+public class Yylex {
 
     /**
      * This character denotes the end of file
@@ -300,7 +300,7 @@ class Yylex {
      *
      * @param in the java.io.Reader to read input from.
      */
-    Yylex(java.io.Reader in) {
+    public Yylex(java.io.Reader in) {
         this.zzReader = in;
     }
 
@@ -757,8 +757,8 @@ class Yylex {
                 case 36:
                     break;
                 case 15:
-                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
-                    System.out.println("action [110] { string_depth++;" + ZZ_NL + "       curString = curString + \"(\"; }");
+//                    System.out.println("line: " + (yyline + 1) + " " + "match: --" + yytext() + "--");
+//                    System.out.println("action [110] { string_depth++;" + ZZ_NL + "       curString = curString + \"(\"; }");
                 {
                     string_depth++;
                     curString = curString + "(";

@@ -1,4 +1,4 @@
-package scanner;
+package procedures;
 
 import java.io.File;
 import java.io.FileInputStream;

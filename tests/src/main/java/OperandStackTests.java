@@ -1,6 +1,6 @@
+import interpreter.Interpreter;
 import org.junit.Assert;
 import org.junit.Test;
-import scanner.Interpreter;
 
 import java.io.File;
 import java.io.IOException;
@@ -520,6 +520,54 @@ public class OperandStackTests {
    /*check inner cvx for array */
     public void compile31Test() {
         int i = 31;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check string execution */
+    public void compile32Test() {
+        int i = 32;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check innner string execution */
+    public void compile33Test() {
+        int i = 33;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check  string execution in the procedure */
+    public void compile34Test() {
+        int i = 34;
         interpreter.clearRuntime();
         String expectedString = null;
         try {

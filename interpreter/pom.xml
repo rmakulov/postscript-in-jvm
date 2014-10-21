@@ -10,14 +10,15 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+
     <groupId>postscript-in-jvm</groupId>
-    <artifactId>tests</artifactId>
+    <artifactId>interpreter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>postscript-in-jvm</groupId>
-            <artifactId>interpreter</artifactId>
+            <artifactId>runtime</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

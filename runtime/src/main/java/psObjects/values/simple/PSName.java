@@ -8,9 +8,12 @@ import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
+import psObjects.values.composite.PSString;
 import runtime.BytecodeGeneratorManager;
 import runtime.DynamicClassLoader;
 import runtime.Runtime;
+
+import java.io.UnsupportedEncodingException;
 
 import static psObjects.Attribute.TreatAs.EXECUTABLE;
 
@@ -46,7 +49,11 @@ public class PSName extends SimpleValue {
             Operator operator = (Operator) value.getValue();
             return operator.interpret(null);
         } else if (value.getType() == Type.STRING && value.xcheck()) {
-            runtime.pushToCallStack(new StringProcedure(procName, value));
+            try {
+                runtime.pushToCallStack(new StringProcedure(((PSString) value.getValue()).getString()));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         } else {
             runtime.pushToOperandStack(value);
         }
@@ -144,29 +151,11 @@ public class PSName extends SimpleValue {
     public void compile(PSObject obj) {
         Attribute attribute = obj.getAttribute();
         Attribute.TreatAs treatAs = attribute.treatAs;
-        //int attributeIndex = attribute.getAttributeTypeIndex();
-
-//        PSObject psObject = new PSObject(new PSName(strValue), Attribute.getAttributeByIndex(attributeIndex));
-//        runtime.pushToOperandStack(psObject);
         if (treatAs == EXECUTABLE) {
             executiveCompile(strValue);
         } else {
             literalCompile(strValue);
         }
-//        String name = runtime.bcGenManager.bytecodeName;
-//        MethodVisitor mv = runtime.bcGenManager.mv;
-//
-//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-//        mv.visitTypeInsn(NEW, "psObjects/PSObject");
-//        mv.visitInsn(DUP);
-//        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
-//        mv.visitInsn(DUP);
-//        mv.visitLdcInsn(strValue);
-//        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
-//        mv.visitLdcInsn(attributeIndex);
-//        mv.visitMethodInsn(INVOKESTATIC, "psObjects/Attribute", "getAttributeByIndex", "(I)LpsObjects/Attribute;", false);
-//        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
-//        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 
     @Override

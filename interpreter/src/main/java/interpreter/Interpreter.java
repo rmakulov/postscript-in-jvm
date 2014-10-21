@@ -1,5 +1,6 @@
-package scanner;
+package interpreter;
 
+import procedures.MainProcedure;
 import runtime.Runtime;
 
 import java.io.File;

@@ -1,13 +1,17 @@
 package psObjects.values.composite;
 
 import procedures.StringProcedure;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.compareableInterfaces.PSComparable;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Random;
+
+import static psObjects.Attribute.TreatAs.EXECUTABLE;
 
 
 public class PSString extends CompositeValue implements PSComparable<PSString> {
@@ -74,8 +78,17 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
 
     @Override
     public boolean interpret(PSObject obj) {
-        runtime.pushToCallStack(new StringProcedure(obj));
-        runtime.pushToOperandStack(obj);
+        Attribute attribute = obj.getAttribute();
+        Attribute.TreatAs treatAs = attribute.treatAs;
+        if (treatAs == EXECUTABLE) {
+            try {
+                runtime.pushToCallStack(new StringProcedure(obj));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+            runtime.pushToOperandStack(obj);
+        }
         return true;
     }
 

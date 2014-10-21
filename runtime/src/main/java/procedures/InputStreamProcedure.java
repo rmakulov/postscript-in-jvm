@@ -1,4 +1,4 @@
-package scanner;
+package procedures;
 
 import operators.array.CloseSquareBracketOp;
 import operators.array.OpenSquareBracketOp;
@@ -6,13 +6,15 @@ import operators.common.CloseCurlyBraceOp;
 import operators.dictionary.CloseChevronOp;
 import operators.dictionary.OpenChevronOp;
 import org.objectweb.asm.Opcodes;
-import procedures.Procedure;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import scanner.Tokens;
+import scanner.Yylex;
+import scanner.Yytoken;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
