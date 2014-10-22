@@ -87,6 +87,7 @@ public class BindOp extends Operator {
         Iterator ite = insnList.iterator();
         int replacingInstrCount = 10;
         for (int i = 0; i < replacingInstrCount; i++) {
+
             AbstractInsnNode insn = (AbstractInsnNode) ite.next();
             if (i == (replacingInstrCount - 1)) {
                 InsnList tempList = new InsnList();
@@ -97,13 +98,12 @@ public class BindOp extends Operator {
                 tempList.add(new MethodInsnNode(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false));
                 tempList.add(new InsnNode(ICONST_0));
                 tempList.add(new MethodInsnNode(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false));
-//                tempList.add(new InsnNode(ACONST_NULL));
-//                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, suspectOperatorName, "interpret", "(LpsObjects/PSObject;)Z", false));
                 insnList.insert(insn, tempList);
                 method.maxStack += 2;
+//                System.out.println("replaced " + method.name);
             }
             insnList.remove(insn);
-
+            //insn.
         }
 
 

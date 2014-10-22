@@ -15,7 +15,8 @@ public class SpeedTests {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        final File folder = new File("tests/speedTestExamples");
+//        final File folder = new File("tests/speedTestExamples");
+        final File folder = new File("tests/speedTestExamples/hard");
         iterateExamples(folder);
         long ms = System.currentTimeMillis() - startTime;
         System.out.println("All tests have been finished in " + ((double) ms) / (1000 * 60 * 60) + " hours.");
@@ -51,12 +52,15 @@ public class SpeedTests {
             interpreter.setCompilingMode(false);
             for (i = 0; i < TEST_COUNTS; i++) {
                 interpreter.clearRuntime();
-                totalSum += interpreter.run(exampleFile);
+                if (i != 0) totalSum += interpreter.run(exampleFile);
+                else {
+                    interpreter.run(exampleFile);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Interpreter failed at " + i + " step from " + TEST_COUNTS);
+            System.out.println("Interpreter failed at " + i + " step from " + (TEST_COUNTS - 1));
         }
         return totalSum / TEST_COUNTS;
     }
@@ -69,12 +73,15 @@ public class SpeedTests {
             interpreter.setCompilingMode(true);
             for (i = 0; i < TEST_COUNTS; i++) {
                 interpreter.clearRuntime();
-                totalSum += interpreter.run(exampleFile);
+                if (i != 0) totalSum += interpreter.run(exampleFile);
+                else {
+                    interpreter.run(exampleFile);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Compiler failed at " + i + " step from " + TEST_COUNTS);
+            System.out.println("Compiler failed at " + i + " step from " + (TEST_COUNTS - 1));
         }
         return totalSum / TEST_COUNTS;
     }

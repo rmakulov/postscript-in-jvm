@@ -17,6 +17,7 @@ public class OperandStackTests {
 
     static {
         interpreter.setCompilingMode(true);
+//        interpreter.setCompilingMode(false);
     }
 
     @Test
@@ -568,6 +569,38 @@ public class OperandStackTests {
    /*check  string execution in the procedure */
     public void compile34Test() {
         int i = 34;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check  bindtest */
+    public void compile35Test() {
+        int i = 35;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+   /*check  compile pop */
+    public void compile36Test() {
+        int i = 36;
         interpreter.clearRuntime();
         String expectedString = null;
         try {

@@ -23,6 +23,7 @@ public class PSBytecode extends PSName {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
+            System.out.println("Bytecode# " + strValue + " is so wrong!");
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();

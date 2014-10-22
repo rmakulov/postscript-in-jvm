@@ -80,9 +80,11 @@ public class PSName extends SimpleValue {
         BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
 
         String className = bcGenManager.bytecodeName;
-        if (isOperator && !bcGenManager.lastMethodIsEmpty()) {
-            bcGenManager.endMethod();
-            bcGenManager.startMethod();
+        if (isOperator) {// && !bcGenManager.lastMethodIsEmpty()) {
+            if (!bcGenManager.lastMethodIsEmpty()) {
+                bcGenManager.endMethod();
+                bcGenManager.startMethod();
+            }
             saveSuspectOperatorIndex(obj, bcGenManager, className);
         }
 
@@ -121,7 +123,7 @@ public class PSName extends SimpleValue {
         DynamicClassLoader l = DynamicClassLoader.instance;
         String operatorPath = obj.getValue().getClass().getCanonicalName().replace(".", "/");
         int classNumber = Integer.parseInt(className);
-        int methodNumber = bcGenManager.blockNumber;
+        int methodNumber = bcGenManager.methodNumber;
         l.putSuspectOperatorIndex(classNumber, methodNumber, operatorPath);
     }
 

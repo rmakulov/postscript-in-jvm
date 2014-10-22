@@ -16,8 +16,8 @@ public class BytecodeGenerator implements Opcodes {
     private MethodVisitor mainMV;
     private MethodVisitor clinitMV;
     private FieldVisitor fv;
-    private int number;
-    private int blockNumber = 1;
+    private int classNumber;
+    private int methodNumber = 1;
     private String name;
     public ArrayList<Integer> operatorIndexes = new ArrayList<Integer>();
     public HashMap<Integer, String> operatorIndexesTest = new HashMap<Integer, String>();
@@ -26,13 +26,13 @@ public class BytecodeGenerator implements Opcodes {
     private boolean consoleOutput = false;
 
 
-    public BytecodeGenerator(int number) {
+    public BytecodeGenerator(int classNumber) {
         operatorIndexesTest.put(1, "one");
-        this.number = number;
-        name = number + "";
+        this.classNumber = classNumber;
+        name = classNumber + "";
 
         cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(number), null, "java/lang/Object", null);
+        cw.visit(V1_6, ACC_PUBLIC | ACC_SUPER, Integer.toString(classNumber), null, "java/lang/Object", null);
         mainMV = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run", "()Z", null, null);
 
         fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, "runtime", "Lruntime/Runtime;", null, null);
@@ -40,7 +40,7 @@ public class BytecodeGenerator implements Opcodes {
 
         mainMV.visitCode();
 
-        startClinitMethod(number);
+        startClinitMethod(classNumber);
         startMethod();
     }
 
@@ -54,33 +54,35 @@ public class BytecodeGenerator implements Opcodes {
 
     private void endClinitMethod() {
         clinitMV.visitInsn(RETURN);
-        clinitMV.visitMaxs(2, 0);
+        clinitMV.visitMaxs(0, 0);
         clinitMV.visitEnd();
     }
 
 
     public void endMethod() {
         if (consoleOutput) {
-            System.out.print("run_" + blockNumber + ": " + instrCounter + "| ");
+            System.out.print("run_" + methodNumber + ": " + instrCounter + "| ");
         }
         instrCounter = 0;
         mv.visitInsn(ICONST_1);
         mv.visitInsn(IRETURN);
         mv.visitMaxs(0, 0);
-        blockNumber++;
+        methodNumber++;
+
     }
 
     public void startMethod() {
-//        System.out.println("blockNum"+blockNumber);
-        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run_" + blockNumber, "()Z", null, null);
+//        System.out.println("blockNum"+methodNumber);
+        mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "run_" + methodNumber, "()Z", null, null);
         mv.visitCode();
+        instrCounter = 0;
     }
 
     public PSBytecode endBytecode() {
         endMethod();
         endClinitMethod();
-        Label[] l = new Label[blockNumber + 1];
-        for (int i = 1; i < blockNumber; i++) {
+        Label[] l = new Label[methodNumber + 1];
+        for (int i = 1; i < methodNumber; i++) {
             mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_" + i, "()Z", false);
             l[i] = new Label();
             mainMV.visitJumpInsn(IFNE, l[i]);
@@ -93,13 +95,13 @@ public class BytecodeGenerator implements Opcodes {
         mainMV.visitInsn(IRETURN);
         mainMV.visitMaxs(0, 0);
         mainMV.visitEnd();
-        DynamicClassLoader.instance.putClass(Integer.toString(number), cw.toByteArray());
+        DynamicClassLoader.instance.putClass(Integer.toString(classNumber), cw.toByteArray());
         cw = null;
         mainMV = null;
         if (consoleOutput) {
-            System.out.print("for " + number + "\n");
+            System.out.print("for " + classNumber + "\n");
         }
-        return new PSBytecode(Integer.toString(number));
+        return new PSBytecode(Integer.toString(classNumber));
 
     }
 
@@ -115,8 +117,8 @@ public class BytecodeGenerator implements Opcodes {
         return cw;
     }
 
-    public int getNumber() {
-        return number;
+    public int getClassNumber() {
+        return classNumber;
     }
 
     public String getBytecodeName() {
@@ -124,8 +126,8 @@ public class BytecodeGenerator implements Opcodes {
         return name;
     }
 
-    public int getBlockNumber() {
-        return blockNumber;
+    public int getMethodNumber() {
+        return methodNumber;
     }
 
     public static void printOperatorIndexes(ArrayList<Integer> arr) {

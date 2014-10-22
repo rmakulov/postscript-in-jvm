@@ -39,6 +39,7 @@ public class DynamicClassLoader extends ClassLoader {
 
     public void putSuspectOperatorIndex(int className, int methodName, String operatorPath) {
         suspectOperatorIndexes.put(new Pair<Integer, Integer>(className, methodName), operatorPath);
+//        System.out.println("\t\t\t\t\t\t\t\tput className" + className + " methodName " + methodName);
     }
 
     public String getSuspectOperatorName(int className, int methodName) {

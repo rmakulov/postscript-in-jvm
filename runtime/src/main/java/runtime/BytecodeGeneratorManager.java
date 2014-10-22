@@ -22,7 +22,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     private BytecodeGenerator bcGen;
 
     private int lastNumber = 0;
-    public int blockNumber = 0;
+    public int methodNumber = 0;
 
 
     public BytecodeGeneratorManager() {
@@ -43,16 +43,13 @@ public class BytecodeGeneratorManager implements Opcodes {
     public void startCodeGenerator() {
         bcGen = new BytecodeGenerator(lastNumber++);
         bytecodeGenerators.push(bcGen);
-        mv = bcGen.getMethodVisitor();
-        cw = bcGen.getClassWriter();
-        clinitMV = bcGen.getClinitMV();
-        bytecodeName = bcGen.getBytecodeName();
+        initEverything();
 
     }
 
     public void endBytecode() {
         cur = bcGen.endBytecode();
-        //bytecodes.put(bcGenManager.getNumber(), cur);
+        //bytecodes.put(bcGenManager.getClassNumber(), cur);
 
         popBytecodeGenerator();
     }
@@ -64,13 +61,19 @@ public class BytecodeGeneratorManager implements Opcodes {
             mv = null;
             cw = null;
             bytecodeName = null;
+            methodNumber = -1;
         } else {
             bcGen = bytecodeGenerators.peek();
-            mv = bcGen.getMethodVisitor();
-            cw = bcGen.getClassWriter();
-            clinitMV = bcGen.getClinitMV();
-            bytecodeName = bcGen.getBytecodeName();
+            initEverything();
         }
+    }
+
+    private void initEverything() {
+        mv = bcGen.getMethodVisitor();
+        cw = bcGen.getClassWriter();
+        clinitMV = bcGen.getClinitMV();
+        bytecodeName = bcGen.getBytecodeName();
+        methodNumber = bcGen.getMethodNumber();
     }
 
 
@@ -81,7 +84,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     public void startMethod() {
         bcGen.startMethod();
         mv = bcGen.getMethodVisitor();
-        blockNumber = bcGen.getBlockNumber();
+        methodNumber = bcGen.getMethodNumber();
 
     }
 

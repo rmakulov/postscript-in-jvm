@@ -99,6 +99,8 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 } else {
                     runtime.bcGenManager.endBytecode();
                     CloseCurlyBraceOp.compile();
+                    //it is needed only in inner bytecode but after finishing more inner bytecode
+                    runtime.bcGenManager.incInstrCounter();
                 }
                 procDepth--;
                 break;
@@ -129,8 +131,8 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             case OPEN_CHEVRON_BRACKET:
             case CLOSE_CHEVRON_BRACKET:
                 runtime.bcGenManager.incInstrCounter();
-            case OPEN_CURLY_BRACE:
             case CLOSE_CURLY_BRACE:
+            case OPEN_CURLY_BRACE:
             case COMMENTS:
             case STRING_TEXT:
                 break;
