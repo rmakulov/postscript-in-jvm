@@ -6,7 +6,7 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 
 /**
- * Created by user on 20.10.14.
+ * Created by User on 21/10/2014.
  */
 public class NullOp extends Operator {
 
@@ -26,3 +26,4 @@ public class NullOp extends Operator {
         return new PSName("null");
     }
 }
+

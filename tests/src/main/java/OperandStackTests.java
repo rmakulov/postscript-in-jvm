@@ -612,4 +612,39 @@ public class OperandStackTests {
         String real = interpreter.operandStackToString().trim();
         Assert.assertEquals(expectedString, real);
     }
+
+    @Test
+   /*check  exec string */
+    public void compile37Test() {
+        int i = 37;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+
+   /*check  exit in executable  string */
+    public void compile38Test() {
+        int i = 38;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+
 }

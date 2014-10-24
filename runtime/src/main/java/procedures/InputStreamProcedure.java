@@ -35,11 +35,12 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
     }
 
     @Override
-    public void execNext() {
+    public boolean execNext() {
         if (runtime.bcGenManager.isSleep()) {
-            super.execNext();
+            return super.execNext();
         } else {
             compileNext();
+            return true;
         }
     }
 

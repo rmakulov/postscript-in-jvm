@@ -130,7 +130,13 @@ public class PSArray extends CompositeValue implements Cloneable {
     @Override
     public boolean interpret(PSObject obj) {
         if (runtime.isCompiling) {
-            return array[0].getElementObject().execute(0);
+            try {
+                throw new Exception("Execution array in compiling mode");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //return array[0].getElementObject().execute(0);
+            return true;
         } else {
             runtime.pushToCallStack(new ArrayProcedure(obj));
             return true;

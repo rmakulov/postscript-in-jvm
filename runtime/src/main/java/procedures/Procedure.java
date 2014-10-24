@@ -21,20 +21,20 @@ public abstract class Procedure {
 
     public abstract boolean hasNext();
 
-    public void execNext() {
-        if (!hasNext()) return;
+    public boolean execNext() {
+        if (!hasNext()) return true;
         PSObject nextObject = next();
         if (nextObject == null) {
-            return;
+            return true;
         }
         if (nextObject.getValue().equals(PSMark.CLOSE_CURLY_BRACE)) {
             procDepth--;
         }
-        nextObject.execute(procDepth);
+        boolean isNotExited = nextObject.execute(procDepth);
         if (nextObject.getValue().equals(PSMark.OPEN_CURLY_BRACE)) {
             procDepth++;
         }
-
+        return isNotExited;
     }
 
     protected abstract PSObject next();

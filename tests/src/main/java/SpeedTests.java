@@ -15,8 +15,8 @@ public class SpeedTests {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-//        final File folder = new File("tests/speedTestExamples");
-        final File folder = new File("tests/speedTestExamples/hard");
+        final File folder = new File("tests/speedTestExamples");
+//        final File folder = new File("tests/speedTestExamples/hard");
         iterateExamples(folder);
         long ms = System.currentTimeMillis() - startTime;
         System.out.println("All tests have been finished in " + ((double) ms) / (1000 * 60 * 60) + " hours.");

@@ -62,17 +62,6 @@ public class PSName extends SimpleValue {
         return true;
     }
 
-/*    @Override
-    public void compile(PSObject obj) {
-//          begin  Runtime.getInstance().findValue(str).interpret(0);
-        runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        runtime.bcGenManager.mv.visitLdcInsn(strValue);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "findValue", "(Ljava/lang/String;)LpsObjects/PSObject;", false);
-        runtime.bcGenManager.mv.visitInsn(ICONST_0);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-//          end  Runtime.getInstance().findValue(str).interpret(0);
-    }*/
-
     public static void executiveCompile(String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
         PSObject obj = runtime.search(new PSObject(new PSName(strValue)));
