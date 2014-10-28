@@ -23,6 +23,7 @@ public class PSFrame extends JFrame {
     private PSFrame() {
         super();
         setVisible(true);
+        setAutoRequestFocus(false);
 //        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //        psHeight = screenSize.height;
 //        psWidth = psHeight *2/3;

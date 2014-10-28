@@ -545,4 +545,8 @@ public class Runtime {
     public boolean getALoading() {
         return ALoading;
     }
+
+    public int getDictStackVersion() {
+        return dictionaryStack.getVersion();
+    }
 }

@@ -11,6 +11,14 @@ import java.util.ArrayList;
 public class PSDictionary extends CompositeValue {
     private AvlTree tree = new AvlTree();
 
+    private int version = 0;
+
+    private static int lastVersion = 0;
+
+    public PSDictionary() {
+        version = getNextVersion();
+    }
+
     public PSDictionary(ArrayList<PSObject> list) {
         if (list.size() % 2 == 0) {
             for (int i = 0; i < list.size() - 1; i += 2) {
@@ -22,15 +30,17 @@ public class PSDictionary extends CompositeValue {
         }
     }
 
-    public PSDictionary() {
+    public PSDictionary(AvlTree tree) {
+        this.tree = tree;
+    }
+
+    public PSDictionary(AvlTree tree, int version) {
+        this.version = version;
+        this.tree = tree;
     }
 
     public boolean containsKey(PSObject psKey) {
         return tree.containKey(psKey);
-    }
-
-    public PSDictionary(AvlTree tree) {
-        this.tree = tree;
     }
 
     private PSObject checkHasString(PSObject key) {
@@ -39,7 +49,8 @@ public class PSDictionary extends CompositeValue {
 
     public PSDictionary put(PSObject key, PSObject value) {
         AvlTree newTree = tree.insert(checkHasString(key), value);
-        return new PSDictionary(newTree);
+//        System.out.println("DictStackVersion "+key+": "+runtime.getDictStackVersion());
+        return new PSDictionary(newTree, getNextVersion());
     }
 
 
@@ -47,9 +58,10 @@ public class PSDictionary extends CompositeValue {
         return tree.getValue(checkHasString(key));
     }
 
+    /*remove value from dict*/
     public PSDictionary undef(PSObject key) {
         AvlTree newTree = tree.remove(checkHasString(key));
-        return new PSDictionary(newTree);
+        return new PSDictionary(newTree, getNextVersion());
     }
 
     //public PSDictionary copy
@@ -65,18 +77,16 @@ public class PSDictionary extends CompositeValue {
         return new PSDictionary(list);
     }
 
-/*    public PSDictionary copy(PSDictionary dictDst) {
-        AvlTree newTree = AvlTree.copyTreeToAnother(dictDst.getTree(), tree);
-        return new PSDictionary(newTree);
-    }*/
-
-
     public AvlTree getTree() {
         return tree;
     }
 
     public PSDictionary copy(PSDictionary srcDict) {
-        return new PSDictionary(AvlTree.copyTreeToAnother(tree, srcDict.tree));
+        return new PSDictionary(AvlTree.copyTreeToAnother(tree, srcDict.tree), getNextVersion());
+    }
+
+    public int getVersion() {
+        return version;
     }
 
     @Override
@@ -94,5 +104,17 @@ public class PSDictionary extends CompositeValue {
     @Override
     public String toStringView() {
         return "--dict--";
+    }
+
+    public static int getLastVersion() {
+        return lastVersion;
+    }
+
+    public static int getNextVersion() {
+        return lastVersion++;
+    }
+
+    public static void clearLastVersion() {
+        lastVersion = 0;
     }
 }

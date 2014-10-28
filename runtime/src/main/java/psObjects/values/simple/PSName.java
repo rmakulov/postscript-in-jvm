@@ -35,6 +35,7 @@ public class PSName extends SimpleValue {
     @Override
     public boolean interpret(PSObject obj) {
         //operatorIndexes.add(2);
+        System.out.println("DictStackVersion in PSName " + strValue + ": " + runtime.getDictStackVersion());
         PSObject value = runtime.findValue(obj);
         String procName = ((PSName) obj.getValue()).getStrValue();
         while (value.getType() == Type.NAME && !(value.isBytecode()) && value.treatAs() == EXECUTABLE) {
