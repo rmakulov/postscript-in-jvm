@@ -55,6 +55,7 @@ public class DictionaryStack extends PSStack<PSObject> {
     @Override
     public void clear() {
         super.clear();
+        version = 0;
         PSDictionary.clearLastVersion();
     }
 }

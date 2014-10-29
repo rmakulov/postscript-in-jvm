@@ -19,6 +19,8 @@ public class Interpreter {
         runtime.pushToCallStack(mainProcedure);
         runtime.executeCallStack();
 //        System.out.println(runtime.operandStackToString());
+        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
+
         return (System.currentTimeMillis() - startTime);
 
 //        System.out.println("\nProgram lasted for " + ((System.currentTimeMillis() - startTime)) + " milliseconds");
@@ -58,7 +60,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/mandel.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/mandelbrotset.ps")));
+                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
@@ -89,7 +91,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/1dca.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/bubbles.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/plant2.ps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
 
 //                instance.run(new File("tests/otherExamples/cube6.ps"));
 //                                instance.run(new File("tests/operandStackExamples/36Step.ps"));

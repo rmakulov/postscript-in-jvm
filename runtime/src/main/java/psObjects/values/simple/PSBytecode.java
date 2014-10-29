@@ -2,7 +2,7 @@ package psObjects.values.simple;
 
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
-import runtime.DynamicClassLoader;
+import runtime.compiler.DynamicClassLoader;
 
 import java.lang.reflect.InvocationTargetException;
 

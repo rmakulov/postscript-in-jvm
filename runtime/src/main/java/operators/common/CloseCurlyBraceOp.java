@@ -4,9 +4,7 @@ import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.Value;
 import psObjects.values.composite.PSArray;
-import psObjects.values.simple.Operator;
-import psObjects.values.simple.PSMark;
-import psObjects.values.simple.PSName;
+import psObjects.values.simple.*;
 import runtime.Runtime;
 
 import java.util.ArrayList;
@@ -23,7 +21,9 @@ public class CloseCurlyBraceOp extends Operator {
 
         if (runtime.isCompiling && !runtime.bcGenManager.isSleep()) {
             runtime.bcGenManager.endBytecode();
-            runtime.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur()));
+            PSBytecode originBytecode = runtime.bcGenManager.getCur();
+            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
+            runtime.pushToOperandStack(new PSObject(bytecodeProc));
         } else {
             //runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
             ArrayList<PSObject> gatherArray = gatherArray();

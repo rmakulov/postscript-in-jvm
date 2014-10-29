@@ -1,4 +1,4 @@
-package runtime;
+package runtime.compiler;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -8,6 +8,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.PSArithmethicBytecode;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Runtime;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -64,7 +65,7 @@ public class ArithmethicBytecodeGenerator implements Opcodes {
 
     public void resetCodeGenerator() {
         if (sleep) return;
-        Runtime runtime = Runtime.getInstance();
+        runtime.Runtime runtime = Runtime.getInstance();
 
         String cg = getCurPattern().toString();
 //         Check if we collect smth, have some args and smth contains not only from numbers.

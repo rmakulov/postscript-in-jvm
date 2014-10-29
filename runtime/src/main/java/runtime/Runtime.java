@@ -18,6 +18,8 @@ import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import runtime.avl.Pair;
+import runtime.compiler.BytecodeGeneratorManager;
+import runtime.compiler.DynamicClassLoader;
 import runtime.graphics.GState;
 import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;

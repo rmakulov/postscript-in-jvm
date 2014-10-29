@@ -10,7 +10,7 @@ import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
-import runtime.DynamicClassLoader;
+import runtime.compiler.DynamicClassLoader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,9 +38,7 @@ public class BindOp extends Operator {
         if (o.isProc()) {
             procBind(o);
         } else {
-//            runtime.pushToOperandStack(o);
             bytecodeBind(o);
-
         }
     }
 

@@ -9,9 +9,9 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.PSString;
-import runtime.BytecodeGeneratorManager;
-import runtime.DynamicClassLoader;
 import runtime.Runtime;
+import runtime.compiler.BytecodeGeneratorManager;
+import runtime.compiler.DynamicClassLoader;
 
 import java.io.UnsupportedEncodingException;
 
@@ -35,7 +35,7 @@ public class PSName extends SimpleValue {
     @Override
     public boolean interpret(PSObject obj) {
         //operatorIndexes.add(2);
-        System.out.println("DictStackVersion in PSName " + strValue + ": " + runtime.getDictStackVersion());
+//        System.out.println("DictStackVersion in PSName " + strValue + ": " + runtime.getDictStackVersion());
         PSObject value = runtime.findValue(obj);
         String procName = ((PSName) obj.getValue()).getStrValue();
         while (value.getType() == Type.NAME && !(value.isBytecode()) && value.treatAs() == EXECUTABLE) {
@@ -191,5 +191,40 @@ public class PSName extends SimpleValue {
 
     public int length() {
         return strValue.length();
+    }
+
+    @Override
+    public void deepCompile(PSObject obj) {
+        //todo split into literal and executive
+        Attribute attribute = obj.getAttribute();
+        Attribute.TreatAs treatAs = attribute.treatAs;
+        if (treatAs == EXECUTABLE) {
+            PSObject realValue = runtime.findValue(obj);
+            while (realValue.getType() == Type.NAME && !(realValue.isBytecode()) && realValue.treatAs() == EXECUTABLE) {
+                realValue = runtime.findValue(realValue);
+            }
+//        String name = runtime.bcGenManager.bytecodeName;
+//        MethodVisitor mv = runtime.bcGenManager.mv;
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+            realValue.deepCompile();
+            MethodVisitor mv = runtime.bcGenManager.mv;
+            String name = runtime.bcGenManager.bytecodeName;
+            mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "popFromOperandStack", "()LpsObjects/PSObject;", false);
+            mv.visitInsn(ICONST_0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+
+            Label l8 = new Label();
+            mv.visitJumpInsn(IFNE, l8);
+            mv.visitInsn(ICONST_0);
+            mv.visitInsn(IRETURN);
+            mv.visitLabel(l8);
+        } else {
+            literalCompile(strValue);
+        }
+
+
+//        mv.visitInsn(ICONST_0);
+//        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "execute", "(I)Z", false);
     }
 }

@@ -1,4 +1,4 @@
-package runtime;
+package runtime.compiler;
 
 import org.objectweb.asm.*;
 import psObjects.values.simple.PSBytecode;
