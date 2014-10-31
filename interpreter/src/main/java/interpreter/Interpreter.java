@@ -19,7 +19,7 @@ public class Interpreter {
         runtime.pushToCallStack(mainProcedure);
         runtime.executeCallStack();
 //        System.out.println(runtime.operandStackToString());
-        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
+//        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
 
         return (System.currentTimeMillis() - startTime);
 

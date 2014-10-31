@@ -16,8 +16,8 @@ public class OperandStackTests {
     private String resSuffix = "Step.txt";
 
     static {
-        interpreter.setCompilingMode(true);
-//        interpreter.setCompilingMode(false);
+//        interpreter.setCompilingMode(true);
+        interpreter.setCompilingMode(false);
     }
 
     @Test
@@ -650,6 +650,22 @@ public class OperandStackTests {
     /*check  4 defs for dictstack version debug */
     public void compile39Test() {
         int i = 39;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+    /*check  save and restore */
+    public void compile40Test() {
+        int i = 40;
         interpreter.clearRuntime();
         String expectedString = null;
         try {

@@ -49,24 +49,56 @@ public class CloseCurlyBraceOp extends Operator {
         runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);*/
     }
 
+//    private ArrayList<PSObject> gatherArray() {
+//        if (runtime.getOperandStackSize() < 1) return null;
+//        PSObject psObject = runtime.popFromOperandStack();
+//        ArrayList<PSObject> array = new ArrayList<PSObject>();
+//        int procDepth = 1;
+//        Value psValue = psObject.getValue();
+//        if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
+//            procDepth--;
+//        } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
+//            procDepth++;
+//        }
+//        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue()) || procDepth > 0) {
+//            array.add(psObject);
+//            psObject = runtime.popFromOperandStack();
+//            if (psObject == null) {
+//                return null;
+//            }
+//            psValue = psObject.getValue();
+//            if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
+//                procDepth--;
+//            } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
+//                procDepth++;
+//            }
+//        }
+//        ArrayList<PSObject> result = new ArrayList<PSObject>();
+//        for (int i = 0; i < array.size(); i++) {
+//            result.add(array.get(array.size() - i - 1));
+//        }
+//        return result;
+//    }
+
     private ArrayList<PSObject> gatherArray() {
         if (runtime.getOperandStackSize() < 1) return null;
-        PSObject psObject = runtime.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
-        int procDepth = 1;
-        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue()) || procDepth > 0) {
-            array.add(psObject);
-            psObject = runtime.popFromOperandStack();
+        int procDepth = 0;
+        do {
+            PSObject psObject = runtime.popFromOperandStack();
             if (psObject == null) {
                 return null;
             }
+            if (PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue()) && procDepth == 0) break;
+            array.add(psObject);
+
             Value psValue = psObject.getValue();
             if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
                 procDepth--;
             } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
                 procDepth++;
             }
-        }
+        } while (true);
         ArrayList<PSObject> result = new ArrayList<PSObject>();
         for (int i = 0; i < array.size(); i++) {
             result.add(array.get(array.size() - i - 1));
