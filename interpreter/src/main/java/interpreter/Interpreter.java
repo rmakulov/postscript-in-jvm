@@ -34,6 +34,10 @@ public class Interpreter {
         runtime.setCompilingMode(compilingMode);
     }
 
+    public boolean isCompilingMode() {
+        return runtime.isCompiling;
+    }
+
     public static void main(String[] args) {
         instance.setCompilingMode(true);
 //        instance.setCompilingMode(false);
@@ -110,4 +114,6 @@ public class Interpreter {
     public String operandStackToString() {
         return runtime.operandStackToString();
     }
+
+
 }
