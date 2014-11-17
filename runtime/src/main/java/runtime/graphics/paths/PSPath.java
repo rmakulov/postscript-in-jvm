@@ -9,6 +9,7 @@ import runtime.graphics.figures.PSPoint;
 import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
 
 public class PSPath {
     private GeneralPath generalPath;
@@ -32,8 +33,16 @@ public class PSPath {
     }
 
     //absolute coordinates in postscript
+    //absolute coordinates in postscript
     public void addLine(PSPoint start, PSPoint end) {
-        generalPath.lineTo(end.getX(), end.getY());
+        Point2D point = generalPath.getCurrentPoint();
+        if (point.getX() - start.getX() == 0 && point.getY() - start.getY() == 0) {
+            generalPath.lineTo(end.getX(), end.getY());
+        } else {
+            generalPath.moveTo(start.getX(), start.getY());
+            generalPath.lineTo(end.getX(), end.getY());
+        }
+
     }
 
     //absolute coordinates in postscript

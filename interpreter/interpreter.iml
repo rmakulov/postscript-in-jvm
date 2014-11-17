@@ -13,6 +13,7 @@
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-all:5.0.3" level="project" />
     <orderEntry type="library" name="asm-all-5.0.3" level="project" />
     <orderEntry type="library" name="org.ow2.asm:asm-all:5.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-all:5.0.3" level="project" />
     <orderEntry type="module" module-name="runtime" />
     <orderEntry type="module" module-name="parser" />
     <orderEntry type="library" name="Maven: junit:junit:4.11" level="project" />

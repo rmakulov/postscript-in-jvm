@@ -1,5 +1,6 @@
 package runtime.graphics;
 
+import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.reference.LocalRef;
@@ -18,6 +19,7 @@ public class GState extends CompositeValue {
     public PSPath currentPath;
     public PSPath clippingPath;
     public TransformMatrix cTM;
+    public PSObject font;
     public GraphicsSettings graphicsSettings;
     private boolean madeByGSaveOp;//save call gsave with false arg
 

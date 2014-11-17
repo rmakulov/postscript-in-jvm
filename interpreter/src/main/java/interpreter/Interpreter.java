@@ -45,8 +45,18 @@ public class Interpreter {
             if (args.length == 0) {
                   /*main examples*/
 //                Interpreter.instance.run(new File("tests/operandStackExamples/5thStep.ps"));
-
+//                  instance.run(new File("tests/FontExamples/1.ps"));
+//                instance.run(new File("tests/FontExamples/2.ps"));
+//                instance.run(new File("tests/FontExamples/3.ps"));
+//                instance.run(new File("tests/FontExamples/4.ps"));
+//                instance.run(new File("tests/FontExamples/5.ps"));
+//                instance.run(new File("tests/FontExamples/6.ps"));
+//                instance.run(new File("tests/FontExamples/8.ps"));
+//                instance.run(new File("tests/otherExamples/Diagram.ps"));
+//                instance.run(new File("tests//simpleExample_0.eps"));
+//                instance.run(new File("tests/otherExamples/simpleExample.eps"));
 //                instance.run(new File("tests/operandStackExamples/0Step.ps"));
+//                instance.run(new File("tests/otherExamples/cells.ps"));
 //                instance.run(new File("Examples/рисунок.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));
 //                instance.run(new File("Examples/Ship_Demo.ps"));
@@ -64,8 +74,9 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/mandel.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
+
+//             System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
+                // System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/psRay.ps")));

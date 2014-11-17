@@ -1,8 +1,6 @@
 package operators;
 
-import operators.GlythAndFont.ShowOp;
-import operators.GlythAndFont.ShowPageOp;
-import operators.GlythAndFont.StringWidthOp;
+import operators.GlythAndFont.*;
 import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
 import operators.arithmetic.binary.*;
@@ -256,9 +254,12 @@ public class DefaultDicts {
     }
 
     private static void addGlythAndFontOperators() {
+        addOperator(FindFontOp.instance);
         addOperator(ShowOp.instance);
         addOperator(ShowPageOp.instance);
         addOperator(StringWidthOp.instance);
+        addOperator(ScaleFontOp.instance);
+        addOperator(SetFontOp.instance);
     }
 
     private static void addStringOperators() {

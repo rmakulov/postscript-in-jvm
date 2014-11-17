@@ -12,6 +12,8 @@ import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
 import runtime.graphics.figures.PSPoint;
 
+import java.awt.geom.AffineTransform;
+
 //todo check in methods if PSObject is array
 public class TransformMatrix implements Cloneable {
     private PSObject matrix = null;
@@ -49,7 +51,7 @@ public class TransformMatrix implements Cloneable {
         matrix = new PSObject(new PSArray(new PSObject[]{o1, o2, o3, o4, o5, o6}));
     }
 
-    private double[] getDoubleArray() {
+    public double[] getDoubleArray() {
         PSArray psArray = (PSArray) matrix.getValue();
 
         PSObject[] objArray = psArray.getArray();
@@ -182,5 +184,15 @@ public class TransformMatrix implements Cloneable {
         double y = -с / xScale;
         double x = a / xScale;
         return Math.atan2(y, x) * 180 / Math.PI;
+    }
+
+    public AffineTransform toAffineTransform() {
+        double[] arr = getDoubleArray();
+        return new AffineTransform(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+    }
+
+    public AffineTransform toAffineTransform1() {
+        double[] arr = getDoubleArray();
+        return new AffineTransform(arr[0], arr[2], arr[1], arr[3], arr[4], arr[5]);
     }
 }

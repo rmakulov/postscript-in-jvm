@@ -49,17 +49,17 @@ end
 /radius exch def
 /ycenter exch def /xcenter exch def
 /PieArray exch def
-%/labelps exch def /titleps exch def
-%/title exch def
+/labelps exch def /titleps exch def
+/title exch def
 
 gsave
 xcenter ycenter translate
 
-%/Helvetica findfont titleps scalefont setfont
-%title stringwidth pop 2 div neg radius neg
-%titleps 3 mul sub moveto
-%title show
-/%Helvetica findfont labelps scalefont setfont
+/Helvetica findfont titleps scalefont setfont
+title stringwidth pop 2 div neg radius neg
+titleps 3 mul sub moveto
+title show
+/Helvetica findfont labelps scalefont setfont
 /numslices PieArray length def
 /slicecnt 0 def
 /curangle 0 def
@@ -69,7 +69,7 @@ PieArray
 { /slicearray exch def
 slicearray aload pop 
 /percent exch def
-%/label exch def
+/label exch def
 /perangle percent 360 mul def 
 /slicecnt slicecnt 1 add def
 label curangle curangle perangle add
@@ -80,7 +80,7 @@ grestore
 end
 } def
 
-%(January Pie Sales) 24 12
+(January Pie Sales) 24 12
 [ .12 
  .30 
 .26 

@@ -351,6 +351,11 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         }
     }
 
+    public boolean isExecutable() {
+        return attribute.treatAs == Attribute.TreatAs.EXECUTABLE;
+    }
+
+
     @Override
     public String toString() {
         return "PSObject{" +
