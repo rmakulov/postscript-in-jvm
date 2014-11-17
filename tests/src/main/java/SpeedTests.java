@@ -47,7 +47,7 @@ public class SpeedTests {
     private static double performTestInInterpreter(File exampleFile) {
         int i = 0;
         double totalSum = 0;
-        interpreter = new Interpreter();
+        interpreter = Interpreter.instance;
         try {
             interpreter.setCompilingMode(false);
             for (i = 0; i < TEST_COUNTS; i++) {
@@ -68,7 +68,7 @@ public class SpeedTests {
     private static double performTestInCompiler(File exampleFile) {
         int i = 0;
         double totalSum = 0;
-        interpreter = new Interpreter();
+        interpreter = Interpreter.instance;
         try {
             interpreter.setCompilingMode(true);
             for (i = 0; i < TEST_COUNTS; i++) {
