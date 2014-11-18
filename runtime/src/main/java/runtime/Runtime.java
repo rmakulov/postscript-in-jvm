@@ -90,6 +90,7 @@ public class Runtime {
         pushToGraphicStack(gState);
     }
 
+
     /*
     * getting snapshot from top of operandStack
     */
@@ -142,8 +143,12 @@ public class Runtime {
         graphicStack.push(gsave);
     }
 
-    public GState popFromGraphicStack() {
-        return graphicStack.pop();
+    public void removeFromGraphicStack() {
+        if (graphicStack.size() == 1) {
+            graphicStack.reset();
+        } else {
+            graphicStack.pop();
+        }
     }
 
     public GState peekFromGraphicStack() {

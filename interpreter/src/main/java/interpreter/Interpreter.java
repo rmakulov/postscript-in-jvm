@@ -39,8 +39,8 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-        instance.setCompilingMode(true);
-//        instance.setCompilingMode(false);
+//        instance.setCompilingMode(true);
+        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -51,6 +51,7 @@ public class Interpreter {
 //                instance.run(new File("tests/FontExamples/4.ps"));
 //                instance.run(new File("tests/FontExamples/5.ps"));
 //                instance.run(new File("tests/FontExamples/6.ps"));
+                instance.run(new File("tests/FontExamples/7.ps"));
 //                instance.run(new File("tests/FontExamples/8.ps"));
 //                instance.run(new File("tests/otherExamples/Diagram.ps"));
 //                instance.run(new File("tests//simpleExample_0.eps"));

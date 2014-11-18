@@ -35,13 +35,14 @@ public class GState extends CompositeValue {
 //        PSFrame.reset();
     }
 
-    public GState(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, PSPoint curPoint) {
+    public GState(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, PSPoint curPoint, PSObject fontObj) {
         currentPath = curPath;
         clippingPath = clipPath;
         cTM = tM;
         graphicsSettings = gSettings;
         madeByGSaveOp = true; // for example
         currentPoint = curPoint;
+        font = fontObj;
     }
 //    public static GState getInstance() {
 //        return instance;
@@ -67,7 +68,7 @@ public class GState extends CompositeValue {
 //    }
 
     public GState getSnapshot() {
-        return new GState(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), currentPoint);
+        return new GState(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), currentPoint, font);
     }
 
     //---------------------Fonts

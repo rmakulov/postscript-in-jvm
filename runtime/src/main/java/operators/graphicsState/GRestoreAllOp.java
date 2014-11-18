@@ -28,7 +28,7 @@ public class GRestoreAllOp extends AbstractGraphicOperator {
 
         while (gState.isMadeByGSaveOp() && runtime.getGraphicStackSize() > 0) {
             GRestoreOp.instance.interpret();
-            runtime.popFromGraphicStack();
+            runtime.removeFromGraphicStack();
             gState = runtime.peekFromGraphicStack();
         }
     }
