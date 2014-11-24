@@ -26,7 +26,7 @@ public class ExecOp extends Operator {
             if (!runtime.isCompiling) {
                 runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
             } else {
-                fail();
+                return psObject.execute(0);
             }
         } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
             return psObject.interpret(0);

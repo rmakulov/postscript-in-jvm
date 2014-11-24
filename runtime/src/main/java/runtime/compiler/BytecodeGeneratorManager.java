@@ -12,7 +12,7 @@ import java.util.Stack;
  */
 public class BytecodeGeneratorManager implements Opcodes {
     private Stack<BytecodeGenerator> bytecodeGenerators = new Stack<BytecodeGenerator>();
-    private boolean sleep = true;
+//    private boolean sleep = true;
     //private Map<Integer, PSObject> bytecodes = new HashMap<Integer, PSObject>();
 
     public ClassWriter cw;

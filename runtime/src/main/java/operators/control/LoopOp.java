@@ -19,16 +19,24 @@ public class LoopOp extends Operator {
     public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject proc = runtime.popFromOperandStack();
-        if (proc.isProc() && !runtime.isCompiling) {
-            runtime.pushToCallStack(new LoopProcedure(proc));
-        } else if (proc.isBytecode() && runtime.isCompiling) {
+        if (wrongArgs(proc)) return;
+
+        if (runtime.isCompiling) {
             while (true) {
                 if (!proc.execute(0)) break;
             }
         } else {
+            runtime.pushToCallStack(new LoopProcedure(proc));
+        }
+    }
+
+    private boolean wrongArgs(PSObject proc) {
+        if (!proc.isProc()) {
             fail();
             runtime.pushToOperandStack(proc);
+            return true;
         }
+        return false;
     }
 
     @Override

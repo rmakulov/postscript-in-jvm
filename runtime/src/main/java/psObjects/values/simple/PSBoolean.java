@@ -77,12 +77,12 @@ public class PSBoolean extends SimpleValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return flag + "";
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
         MethodVisitor mv = runtime.bcGenManager.mv;
         String name = runtime.bcGenManager.bytecodeName;
         String fieldName = ("" + flag).toUpperCase();
@@ -93,7 +93,8 @@ public class PSBoolean extends SimpleValue {
         mv.visitFieldInsn(GETSTATIC, "psObjects/values/simple/PSBoolean", fieldName, "LpsObjects/values/simple/PSBoolean;");
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
 //        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
-        mv.visitInsn(ICONST_0);
+        mv.visitLdcInsn(procDepth);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
     }
 }

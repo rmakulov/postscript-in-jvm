@@ -2,8 +2,10 @@ package operators.coordinatSystemAndMatrix;
 
 import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
+import psObjects.Type;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.graphics.matrix.TransformMatrix;
 
 /**
  * Created by user on 15.03.14.
@@ -15,16 +17,39 @@ public class RotateOp extends AbstractGraphicOperator {
         super();
     }
 
+//    @Override
+//    public void interpret() {
+//        PSObject oAngle = runtime.popFromOperandStack();
+//        if (oAngle == null || !oAngle.isNumber()) {
+//            runtime.pushToOperandStack(oAngle);
+//            return;
+//        }
+//        double angle = ((PSNumber) oAngle.getValue()).getRealValue();
+//        double newAngle = angle * Math.PI / 180;
+//        runtime.getGState().cTM.rotate(newAngle);
+//    }
+
     @Override
     public void interpret() {
-        PSObject oAngle = runtime.popFromOperandStack();
-        if (oAngle == null || !oAngle.isNumber()) {
-            runtime.pushToOperandStack(oAngle);
+        if (runtime.getOperandStackSize() < 1) {
+            fail();
             return;
         }
-        double angle = ((PSNumber) oAngle.getValue()).getRealValue();
-        double newAngle = angle * Math.PI / 180;
-        runtime.getGState().cTM.rotate(newAngle);
+        PSObject first = runtime.popFromOperandStack();
+        if (first.getType() == Type.ARRAY && runtime.getOperandStackSize() > 0) {
+            PSObject second = runtime.popFromOperandStack();
+            double oAngle = ((PSNumber) (second.getValue())).getRealValue();
+            TransformMatrix m = new TransformMatrix(first);
+            double newAngle = oAngle * Math.PI / 180;
+            m.rotate(newAngle);
+            runtime.pushToOperandStack(m.getMatrix());
+        } else if (first.isNumber()) {
+            double oAngle = ((PSNumber) (first.getValue())).getRealValue();
+            double newAngle = oAngle * Math.PI / 180;
+            runtime.getGState().cTM.rotate(newAngle);
+        } else {
+            fail();
+        }
     }
 
     @Override

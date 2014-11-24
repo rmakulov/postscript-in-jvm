@@ -26,6 +26,10 @@ public class ForOp extends Operator {
         PSObject limit = runtime.popFromOperandStack();
         PSObject increment = runtime.popFromOperandStack();
         PSObject initial = runtime.popFromOperandStack();
+        if (!proc.isProc()) {
+            fail();
+            return;
+        }
         if (initial.getType().equals(Type.INTEGER) && increment.getType().equals(Type.INTEGER) && limit.isNumber()) {
             int start = ((PSInteger) (initial.getValue())).getIntValue();
             double end = ((PSNumber) (limit.getValue())).getRealValue();
@@ -45,30 +49,28 @@ public class ForOp extends Operator {
         }
     }
 
-
+    // real steps
     private void realInterpret(PSObject proc, double start, double end, double incr) {
-        if (!runtime.isCompiling && proc.isProc()) {
-            runtime.pushToCallStack(new ForProcedure(start, incr, end, proc));
-        } else if (runtime.isCompiling && proc.isBytecode()) {
+        if (runtime.isCompiling) {
             for (double i = start; i <= end; i += incr) {
                 runtime.pushToOperandStack(new PSObject(new PSReal(i)));
                 if (!proc.execute(0)) break;
             }
         } else {
-            fail();
+            runtime.pushToCallStack(new ForProcedure(start, incr, end, proc));
         }
     }
 
+    // integer step
     private void intInterpret(PSObject proc, int start, double end, int incr) {
-        if (!runtime.isCompiling && proc.isProc()) {
-            runtime.pushToCallStack(new IntForProcedure(start, incr, end, proc));
-        } else if (runtime.isCompiling && proc.isBytecode()) {
+        if (runtime.isCompiling) {
             for (int i = start; i <= end; i += incr) {
                 runtime.pushToOperandStack(new PSObject(new PSInteger(i)));
-                if (!proc.execute(0)) break;
+                boolean interrupted = !proc.execute(0);
+                if (interrupted) break;
             }
         } else {
-            fail();
+            runtime.pushToCallStack(new IntForProcedure(start, incr, end, proc));
         }
     }
 

@@ -1,14 +1,23 @@
 package psObjects.values.composite;
 
+
+import org.objectweb.asm.MethodVisitor;
 import procedures.ArrayProcedure;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
+import psObjects.values.simple.PSBytecode;
+import psObjects.values.simple.PSMark;
+import runtime.compiler.BytecodeGeneratorManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PSArray extends CompositeValue implements Cloneable {
     private ArrayElement[] array;
+
+    private PSBytecode bytecode = null;
+
 
     public PSArray() {
     }
@@ -127,20 +136,58 @@ public class PSArray extends CompositeValue implements Cloneable {
         return array.length;
     }
 
+//    public void clearBytecode() {
+//        bytecode = null;
+//    }
+
     @Override
     public boolean interpret(PSObject obj) {
         if (runtime.isCompiling) {
-            try {
-                throw new Exception("Execution array in compiling mode");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //return array[0].getElementObject().execute(0);
-            return true;
+            generateBytecodeIfAbsent();
+            return bytecode.interpret(null);
         } else {
             runtime.pushToCallStack(new ArrayProcedure(obj));
             return true;
         }
+    }
+
+    @Override
+    public void compile(PSObject obj, int procDepth) {
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        generateBytecodeIfAbsent();
+        int n = Integer.parseInt(bytecode.getStrValue());
+//        (new PSBytecode(n)).interpret(null);
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(n);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(I)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitLdcInsn(procDepth);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        // here they ends
+        checkExitCompile();
+    }
+
+    private void generateBytecodeIfAbsent() {
+        if (bytecode != null) return;
+        BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
+        bcGenManager.startCodeGenerator();
+        PSObject[] objects = getArray();
+        int procDepth = 0;
+        for (PSObject object : objects) {
+            if (object.getValue().equals(PSMark.CLOSE_CURLY_BRACE)) {
+                procDepth--;
+            }
+            object.compile(procDepth);
+            if (object.getValue().equals(PSMark.OPEN_CURLY_BRACE)) {
+                procDepth++;
+            }
+        }
+        bcGenManager.endBytecode();
+        bytecode = bcGenManager.getCur();
+        String bytecodename = bytecode.getStrValue();
     }
 
     @Override
@@ -151,12 +198,26 @@ public class PSArray extends CompositeValue implements Cloneable {
     }
 
     @Override
-    public String toStringView() {
-        StringBuilder sb = new StringBuilder().append("[");
+    public String toStringView(PSObject obj) {
+        String openBracket = "[", closeBracket = "]";
+        if (obj != null) {
+            Attribute.TreatAs treatAs = obj.getAttribute().treatAs;
+            switch (treatAs) {
+                case EXECUTABLE:
+                    openBracket = "{";
+                    closeBracket = "}";
+                    break;
+                default:
+                    openBracket = "[";
+                    closeBracket = "]";
+                    break;
+            }
+        }
+        StringBuilder sb = new StringBuilder().append(openBracket);
         for (ArrayElement arrayElement : array) {
             sb.append(arrayElement.getElementObject().toStringView()).append(" ");
         }
-        return sb.toString().trim() + "]";
+        return sb.toString().trim() + closeBracket;
     }
 
     @Override
@@ -169,15 +230,9 @@ public class PSArray extends CompositeValue implements Cloneable {
         return Type.ARRAY;
     }
 
-//    @Override
-//    public void compile(PSObject obj) {
-//        // we have only one element - it is bytecode, so just execute it
-//        array[0].getElementObject().compile();
-//    }
-
     @Override
     public String toString() {
-        return "PSArray{" + toStringView() +
+        return "PSArray{" + toStringView(null) +
                 '}';
     }
 }

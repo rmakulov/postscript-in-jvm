@@ -39,6 +39,7 @@ public class GetOp extends Operator {
                     int index = ((PSInteger) key.getValue()).getIntValue();
                     result = ((PSArray) src.getValue()).get(index);
                 } else {
+                    fail();
                     runtime.pushToOperandStack(src);
                     runtime.pushToOperandStack(key);
                     return;
@@ -50,6 +51,7 @@ public class GetOp extends Operator {
                     PSString psString = (PSString) src.getValue();
                     result = new PSObject(psString.get(index));
                 } else {
+                    fail();
                     runtime.pushToOperandStack(src);
                     runtime.pushToOperandStack(key);
                     return;
@@ -57,6 +59,7 @@ public class GetOp extends Operator {
                 break;
 
             default: {
+                fail();
                 runtime.pushToOperandStack(src);
                 runtime.pushToOperandStack(key);
                 return;

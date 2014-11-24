@@ -679,4 +679,52 @@ public class OperandStackTests {
         String real = interpreter.operandStackToString().trim();
         Assert.assertEquals(expectedString, real);
     }
+
+    @Test
+    /*check  the simplest test */
+    public void compile41Test() {
+        int i = 41;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+    /*check  ifne in psname // part of/from 8_cube.ps*/
+    public void compile42Test() {
+        int i = 42;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
+
+    @Test
+    /*check literal array definition and call*/
+    public void compile43Test() {
+        int i = 43;
+        interpreter.clearRuntime();
+        String expectedString = null;
+        try {
+            Interpreter.instance.run(new File(path + i + srcSuffix));
+            expectedString = new Scanner(new File(path + i + resSuffix)).nextLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String real = interpreter.operandStackToString().trim();
+        Assert.assertEquals(expectedString, real);
+    }
 }

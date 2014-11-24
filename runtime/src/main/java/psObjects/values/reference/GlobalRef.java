@@ -65,19 +65,24 @@ public class GlobalRef extends Reference {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
+        if (obj.isProc()) {
+            (obj.getValue()).compile(obj, procDepth);
+            return;
+        }
         runtime.putCvxGlobalObject(id, obj);
 //        runtime.pushToOperandStack(runtime.getCVXGlobalObject(id));
 
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
 
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitLdcInsn(id);
         mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getCVXGlobalObject", "(I)LpsObjects/PSObject;", false);
-        mv.visitInsn(ICONST_0);
+        mv.visitLdcInsn(procDepth);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
         //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

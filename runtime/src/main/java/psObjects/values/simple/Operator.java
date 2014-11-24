@@ -19,7 +19,7 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     public abstract void interpret();
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
         //todo make in runtime current bytecode, I think it is ready
         MethodVisitor mv = runtime.bcGenManager.mv;
         String clName = this.getClass().getCanonicalName().replace(".", "/");
@@ -27,8 +27,10 @@ public abstract class Operator extends SimpleValue implements Opcodes {
         mv.visitInsn(DUP);
         mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        mv.visitInsn(ICONST_0);
+        mv.visitLdcInsn(procDepth);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+
+        checkExitCompile();
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
     }
 
@@ -66,7 +68,7 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return toString();
     }
 }

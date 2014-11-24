@@ -22,18 +22,17 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private Runtime runtime = Runtime.getInstance();
 
     public boolean execute(int procDepth) {
-        if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
+//        if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
             return interpret(procDepth);
-        } else {
-            compile();
-            return true;
-        }
-
+//        } else {
+//            compile();
+//            return true;
+//        }
     }
 
     public boolean interpret(int procDepth) {
-        boolean aLoading = runtime.getALoading();
-        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
+        //boolean aLoading = runtime.getALoading();
+        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0)// || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
             runtime.pushToOperandStack(this);
             return true;
@@ -43,8 +42,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
 
-    public void compile() {
-        value.compile(this);
+    public void compile(int procDepth) {
+        value.compile(this, procDepth);
     }
 
     public Value getValue() {
@@ -367,7 +366,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     public String toStringView() {
 
-        return getValue().toStringView();
+        return getValue().toStringView(this);
     }
 
     public boolean isBytecodeProc() {
@@ -376,5 +375,9 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     public void deepCompile() {
         value.deepCompile(this);
+    }
+
+    public boolean isMatrix() {
+        return type == Type.ARRAY && ((PSArray) getValue()).length() == 6;
     }
 }

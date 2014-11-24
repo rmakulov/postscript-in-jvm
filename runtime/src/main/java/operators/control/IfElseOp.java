@@ -51,32 +51,25 @@ public class IfElseOp extends Operator {
     }
 
     private boolean falseBranch(PSObject proc) {
-        if (runtime.isCompiling && proc.isBytecode()) {
+        if (runtime.isCompiling) {
             return proc.execute(0);
-        } else if (!runtime.isCompiling && proc.isProc()) {
-            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (false)", proc));
         } else {
-            fail();
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (false)", proc));
         }
         return true;
     }
 
     private boolean trueBranch(PSObject proc) {
-        if (runtime.isCompiling && proc.isBytecode()) {
+        if (runtime.isCompiling) {
             return proc.execute(0);
-        } else if (!runtime.isCompiling && proc.isProc()) {
-            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (true)", proc));
         } else {
-            fail();
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (true)", proc));
         }
         return true;
     }
 
     private boolean wrongArgs(PSObject proc2, PSObject proc1, PSObject bool) {
-        if (!(proc1.isProc() || proc1.isBytecode())
-                || !(proc2.isProc()
-                || proc1.isBytecode())
-                || bool.getType() != Type.BOOLEAN) {
+        if (!proc1.isProc() || !proc2.isProc() || bool.getType() != Type.BOOLEAN) {
             fail();
             runtime.pushToOperandStack(bool);
             runtime.pushToOperandStack(proc1);

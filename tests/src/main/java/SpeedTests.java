@@ -10,13 +10,13 @@ import java.util.Arrays;
 public class SpeedTests {
 
     private static Interpreter interpreter;
-    static final int TEST_COUNTS = 10;
+    static final int TEST_COUNTS = 1;
 
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        final File folder = new File("tests/speedTestExamples");
-//        final File folder = new File("tests/speedTestExamples/hard");
+//        final File folder = new File("tests/speedTestExamples");
+        final File folder = new File("tests/speedTestExamples/hard");
         iterateExamples(folder);
         long ms = System.currentTimeMillis() - startTime;
         System.out.println("All tests have been finished in " + ((double) ms) / (1000 * 60 * 60) + " hours.");
@@ -26,6 +26,7 @@ public class SpeedTests {
         System.out.printf("%-20s%-20s%s\n", "Filename", "Interpreter", "Compiler");
 
         File[] fileList = folder.listFiles();
+        assert fileList != null;
         Arrays.sort(fileList);
 
         for (final File exampleFile : fileList) {
@@ -50,12 +51,10 @@ public class SpeedTests {
         interpreter = new Interpreter();
         try {
             interpreter.setCompilingMode(false);
+            interpreter.run(exampleFile);
             for (i = 0; i < TEST_COUNTS; i++) {
                 interpreter.clearRuntime();
-                if (i != 0) totalSum += interpreter.run(exampleFile);
-                else {
-                    interpreter.run(exampleFile);
-                }
+                totalSum += interpreter.run(exampleFile);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,12 +70,10 @@ public class SpeedTests {
         interpreter = new Interpreter();
         try {
             interpreter.setCompilingMode(true);
+            interpreter.run(exampleFile);
             for (i = 0; i < TEST_COUNTS; i++) {
                 interpreter.clearRuntime();
-                if (i != 0) totalSum += interpreter.run(exampleFile);
-                else {
-                    interpreter.run(exampleFile);
-                }
+                totalSum += interpreter.run(exampleFile);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -199,7 +199,7 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return "(" + getString() + ")";
     }
 

@@ -90,7 +90,7 @@ public class BytecodeProc extends SimpleValue {
 
     @Override
     public Type determineType() {
-        return Type.BYTECODE_PROC;
+        return Type.NULL;
     }
 
     @Override
@@ -100,7 +100,7 @@ public class BytecodeProc extends SimpleValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return "-BytecodeProc-";
     }
 
@@ -110,16 +110,16 @@ public class BytecodeProc extends SimpleValue {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
         if (bound != null && version == runtime.getDictStackVersion()) {
             System.out.println("compiling bound");
-            bound.compile(null);
+            bound.compile(null, procDepth);
         } else {
             if (boundCount < MAX_BOUND_COUNT) {
                 bindIfCan();
-                bound.compile(null);
+                bound.compile(null, procDepth);
             } else {
-                origin.compile(null);
+                origin.compile(null, procDepth);
             }
             MethodVisitor mv = runtime.bcGenManager.mv;
             String name = runtime.bcGenManager.bytecodeName;

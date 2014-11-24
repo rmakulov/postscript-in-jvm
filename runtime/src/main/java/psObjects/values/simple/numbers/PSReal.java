@@ -30,26 +30,24 @@ public class PSReal extends PSNumber {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
 
-//        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
         mv.visitInsn(DUP);
         mv.visitLdcInsn(value);
-        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(I)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(D)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-//        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
-        mv.visitInsn(ICONST_0);
+        mv.visitLdcInsn(procDepth);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return value + "";
     }
 

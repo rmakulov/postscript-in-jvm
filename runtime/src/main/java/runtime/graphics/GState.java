@@ -105,7 +105,7 @@ public class GState extends CompositeValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return "--gstate--";
     }
 

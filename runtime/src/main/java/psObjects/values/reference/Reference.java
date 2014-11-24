@@ -49,12 +49,12 @@ public abstract class Reference extends Value {
     }
 
     @Override
-    public void compile(PSObject obj) {
-        getValue().compile(obj);
+    public void compile(PSObject obj, int procDepth) {
+        getValue().compile(obj, procDepth);
     }
 
     @Override
-    public String toStringView() {
-        return getValue().toStringView();
+    public String toStringView(PSObject obj) {
+        return getValue().toStringView(obj);
     }
 }

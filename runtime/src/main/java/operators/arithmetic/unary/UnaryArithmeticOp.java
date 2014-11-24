@@ -1,6 +1,8 @@
 package operators.arithmetic.unary;
 
 import psObjects.PSObject;
+import psObjects.Type;
+import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
 import runtime.Runtime;
@@ -18,19 +20,33 @@ public class UnaryArithmeticOp {
         }
         PSNumber i = (PSNumber) o.getValue();
         double r = i.getRealValue();
-        double dRes;
+        double dRes = 0;
+        int iRes = 0;
+        boolean isInt = o.getType() == Type.INTEGER;
         switch (op) {
             case AbsOp.getSymbolicChar:
-                dRes = Math.abs(r);
+                if (isInt) {
+                    iRes = (int) Math.abs(r);
+                } else {
+                    dRes = Math.abs(r);
+                }
                 break;
             case CeilingOp.getSymbolicChar:
-                dRes = Math.ceil(r);
+                if (isInt) {
+                    iRes = (int) Math.ceil(r);
+                } else {
+                    dRes = Math.ceil(r);
+                }
                 break;
             case CosOp.getSymbolicChar:
                 dRes = Math.cos(r * Math.PI / 180);
                 break;
             case FloorOp.getSymbolicChar:
-                dRes = Math.floor(r);
+                if (isInt) {
+                    iRes = (int) Math.floor(r);
+                } else {
+                    dRes = Math.floor(r);
+                }
                 break;
             case LnOp.getSymbolicChar:
                 dRes = Math.log(r);
@@ -39,10 +55,18 @@ public class UnaryArithmeticOp {
                 dRes = Math.log10(r);
                 break;
             case NegOp.getSymbolicChar:
-                dRes = -r;
+                if (isInt) {
+                    iRes = (int) -r;
+                } else {
+                    dRes = -r;
+                }
                 break;
             case RoundOp.getSymbolicChar:
-                dRes = Math.round(r);
+                if (isInt) {
+                    iRes = (int) r;
+                } else {
+                    dRes = Math.round(r);
+                }
                 break;
             case SinOp.getSymbolicChar:
                 dRes = Math.sin(r * Math.PI / 180);
@@ -51,12 +75,20 @@ public class UnaryArithmeticOp {
                 dRes = Math.sqrt(r);
                 break;
             case TruncateOp.getSymbolicChar:
-                dRes = (int) r;
+                if (isInt) {
+                    iRes = (int) r;
+                } else {
+                    dRes = (int) r;
+                }
                 break;
             default:
                 runtime.pushToOperandStack(o);
                 return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSReal(dRes)));
+        if (isInt) {
+            runtime.pushToOperandStack(new PSObject(new PSInteger(iRes)));
+        } else {
+            runtime.pushToOperandStack(new PSObject(new PSReal(dRes)));
+        }
     }
 }

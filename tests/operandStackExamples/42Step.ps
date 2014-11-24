@@ -1,0 +1,37 @@
+/set-eye {
+4 dict begin
+aload pop
+/w0 exch def
+/z0 exch def
+/y0 exch def
+/x0 exch def
+gstack3d ght get
+2
+[ z0 0 x0 neg 0
+  0 z0 y0 neg 0
+  0 0 w0 neg z0]
+put
+end
+} def
+
+/gmax 3 def
+/ght 0 def
+
+/gstack3d gmax array def
+gstack3d 0 [
+  [ 1 0 0 0
+    0 1 0 0
+    0 0 1 0
+    0 0 0 1]
+  [ 1 0 0 0
+    0 1 0 0
+    0 0 1 0
+    0 0 0 1]
+  [ -1 0 0 0
+    0 -1 0 0
+    0 0 0 -1]
+] put
+
+[0 0 1 0]
+set-eye
+gstack3d

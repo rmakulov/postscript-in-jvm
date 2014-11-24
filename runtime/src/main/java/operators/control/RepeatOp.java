@@ -28,14 +28,12 @@ public class RepeatOp extends Operator {
         int count = psInteger.getIntValue();
         if (wrongCount(proc, iObj, count)) return;
 
-        if (runtime.isCompiling && proc.isBytecode()) {
+        if (runtime.isCompiling) {
             for (int i = 0; i < count; i++) {
                 if (!proc.execute(0)) break;
             }
-        } else if (!runtime.isCompiling && proc.isProc()) {
-            runtime.pushToCallStack(new RepeatProcedure(count, proc));
         } else {
-            fail();
+            runtime.pushToCallStack(new RepeatProcedure(count, proc));
         }
     }
 
@@ -50,7 +48,7 @@ public class RepeatOp extends Operator {
     }
 
     private boolean wrongArgs(PSObject proc, PSObject iObj) {
-        if (!(proc.isProc() || proc.isBytecode()) || iObj.getType() != Type.INTEGER) {
+        if (!(proc.isProc() || iObj.getType() != Type.INTEGER)) {
             fail();
             runtime.pushToOperandStack(iObj);
             runtime.pushToOperandStack(proc);

@@ -140,7 +140,10 @@ public class PSDrawer {
         PSPoint point2 = gState.cTM.transform(0, 0);
         double shiftX = point.getX() - point2.getX();
         double shiftY = point.getY() - point2.getY();
-        gState.currentPoint = new PSPoint(psX + shiftX, psY + shiftY);
+        double endPsX = psX + shiftX;
+        double endPsY = psY + shiftY;
+        gState.currentPoint = new PSPoint(endPsX, endPsY);
+        gState.currentPath.getGeneralPath().moveTo(endPsX, endPsY);
         repaintImage();
     }
 }

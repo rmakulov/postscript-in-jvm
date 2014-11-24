@@ -14,13 +14,15 @@ public class OpenCurlyBraceOp extends Operator {
 
     @Override
     public void interpret() {
-        if (runtime.isCompiling) {
-            runtime.bcGenManager.startCodeGenerator();
-        } else {
+//        if (runtime.isCompiling) {
+//
+//            runtime.bcGenManager.startCodeGenerator();
+//        } else {
             runtime.pushToOperandStack(new PSObject(PSMark.OPEN_CURLY_BRACE));
-        }
+//        }
         //runtime.pushToOperandStack(new PSObject(PSMark.OPEN_CURLY_BRACE));
     }
+
 
     @Override
     public PSName getDefaultKeyName() {

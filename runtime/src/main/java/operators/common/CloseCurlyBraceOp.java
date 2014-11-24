@@ -4,8 +4,9 @@ import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.Value;
 import psObjects.values.composite.PSArray;
-import psObjects.values.simple.*;
-import runtime.Runtime;
+import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSMark;
+import psObjects.values.simple.PSName;
 
 import java.util.ArrayList;
 
@@ -19,12 +20,12 @@ public class CloseCurlyBraceOp extends Operator {
     @Override
     public void interpret() {
 
-        if (runtime.isCompiling && !runtime.bcGenManager.isSleep()) {
-            runtime.bcGenManager.endBytecode();
-            PSBytecode originBytecode = runtime.bcGenManager.getCur();
-            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
-            runtime.pushToOperandStack(new PSObject(bytecodeProc));
-        } else {
+//        if (runtime.isCompiling && !runtime.bcGenManager.isSleep()) {
+//            runtime.bcGenManager.endBytecode();
+//            PSBytecode originBytecode = runtime.bcGenManager.getCur();
+//            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
+//            runtime.pushToOperandStack(new PSObject(bytecodeProc));
+//        } else {
             //runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
             ArrayList<PSObject> gatherArray = gatherArray();
             if (gatherArray == null) {
@@ -32,14 +33,21 @@ public class CloseCurlyBraceOp extends Operator {
             }
             PSArray result = new PSArray(gatherArray);
             runtime.pushToOperandStack(new PSObject(result, Attribute.TreatAs.EXECUTABLE));
-        }
+//        }
     }
 
 
     public static void compile() {
-        runtime.Runtime runtime = Runtime.getInstance();
-        //todo alright
-        (runtime.bcGenManager.getCur()).compile(null);
+        try {
+            throw new Exception("Warning! CloseCurlyBraceOp compilation attempt.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+////        CloseCurlyBraceOp.instance.interpret();
+//        runtime.Runtime runtime = Runtime.getInstance();
+//        MethodVisitor mv = runtime.bcGenManager.mv;
+//        mv.visitFieldInsn(GETSTATIC, "operators/common/CloseCurlyBraceOp", "instance", "Loperators/common/CloseCurlyBraceOp;");
+//        mv.visitMethodInsn(INVOKEVIRTUAL, "operators/common/CloseCurlyBraceOp", "interpret", "()V", false);
 
         //runtime.pushToOperandStack(runtime.bcGenManager.getCur());
        /* runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);

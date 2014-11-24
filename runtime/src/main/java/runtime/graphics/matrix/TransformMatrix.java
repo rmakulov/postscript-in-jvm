@@ -8,6 +8,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.ArrayElement;
 import psObjects.values.composite.PSArray;
+import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
 import runtime.graphics.figures.PSPoint;
@@ -35,8 +36,12 @@ public class TransformMatrix implements Cloneable {
     }
 
     public TransformMatrix(PSObject arrObj) {
-        if (arrObj.getType() != Type.ARRAY) {
-            return;
+        if (arrObj == null || arrObj.getType() != Type.ARRAY || arrObj.getValue() == null || ((PSArray) arrObj.getValue()).length() != 6) {
+            try {
+                throw new Exception("wrong args for transform matrix constructor");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         matrix = arrObj;
     }
@@ -194,5 +199,11 @@ public class TransformMatrix implements Cloneable {
     public AffineTransform toAffineTransform1() {
         double[] arr = getDoubleArray();
         return new AffineTransform(arr[0], arr[2], arr[1], arr[3], arr[4], arr[5]);
+    }
+
+    public static PSArray getIdentityMatrix() {
+        PSObject one = new PSObject(new PSInteger(1));
+        PSObject zero = new PSObject(new PSInteger(0));
+        return new PSArray(new PSObject[]{one, zero, zero, one, zero, zero});
     }
 }

@@ -273,6 +273,8 @@ public class DefaultDicts {
         addOperator(TransformOp.instance);
         addOperator(TranslateOp.instance);
         addOperator(ConcatOp.instance);
+        addOperator(ConcatMatrixOp.instance);
+        addOperator(MatrixOp.instance);
     }
 
     private static void addControlOperators() {

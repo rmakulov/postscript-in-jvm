@@ -26,12 +26,11 @@ public class IfOp extends Operator {
 
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {
-            if (runtime.isCompiling && proc.isBytecode()) {
-                return proc.execute(0);
-            } else if (!runtime.isCompiling && proc.isProc()) {
-                runtime.pushToCallStack(new ArrayProcedure("If", proc));
+            if (runtime.isCompiling) {
+                boolean execute = proc.execute(0);
+                return execute;
             } else {
-                fail();
+                runtime.pushToCallStack(new ArrayProcedure("If", proc));
             }
         }
         return true;
@@ -57,7 +56,7 @@ public class IfOp extends Operator {
     }
 
     private boolean wrongArgs(PSObject proc, PSObject bool) {
-        if (!(proc.isProc() || proc.isBytecode()) || bool.getType() != Type.BOOLEAN) {
+        if (!proc.isProc() || bool.getType() != Type.BOOLEAN) {
             fail();
             runtime.pushToOperandStack(bool);
             runtime.pushToOperandStack(proc);

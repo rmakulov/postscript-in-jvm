@@ -1,20 +1,29 @@
 package psObjects.values.composite;
 
+import psObjects.PSObject;
 import psObjects.Type;
 import runtime.LocalVM;
 import runtime.graphics.GState;
 
+import java.util.HashMap;
+
 public class Snapshot extends CompositeValue {
     private LocalVM table;
     private GState gState;
+    private HashMap<String, Integer> nameVersions;
 
     public Snapshot(LocalVM table) {
         this.table = table;
     }
 
-    public Snapshot(LocalVM table, GState gState) {
+    public Snapshot(LocalVM table, GState gState, HashMap<String, Integer> nameVersions) {
         this.table = table;
         this.gState = gState;
+        this.nameVersions = new HashMap<String, Integer>(nameVersions);
+    }
+
+    public HashMap<String, Integer> getNameVersions() {
+        return nameVersions;
     }
 
     public LocalVM getLocalVM() {
@@ -38,7 +47,7 @@ public class Snapshot extends CompositeValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return "--snapshot--";
     }
 

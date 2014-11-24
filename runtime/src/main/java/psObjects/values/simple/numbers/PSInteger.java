@@ -39,7 +39,7 @@ public class PSInteger extends PSNumber {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return value + "";
     }
 
@@ -76,7 +76,7 @@ public class PSInteger extends PSNumber {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
 //        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         //(new PSObject(new PSInteger(5))).interpret(0);
@@ -90,9 +90,11 @@ public class PSInteger extends PSNumber {
         mv.visitLdcInsn(value);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
-        mv.visitInsn(ICONST_0);
+        mv.visitLdcInsn(procDepth);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+//        mv.visitInsn(POP);
+
+        checkExitCompile();
 
     }
 

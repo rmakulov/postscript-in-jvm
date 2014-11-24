@@ -1,6 +1,8 @@
 package psObjects.values;
 
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import psObjects.PSObject;
 import psObjects.Type;
@@ -30,7 +32,7 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
         return true;
     }
 
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
         try {
             throw new Exception("try to call common compile method instead of specific one");
         } catch (Exception e) {
@@ -49,6 +51,15 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 //        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/Value", "interpret", "(LpsObjects/PSObject;)V", false);
     }
 
+    protected void checkExitCompile() {
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        Label l7 = new Label();
+        mv.visitJumpInsn(IFNE, l7);
+        mv.visitInsn(ICONST_0);
+        mv.visitInsn(IRETURN);
+        mv.visitLabel(l7);
+    }
+
     public Integer compareTo(Value o) {
         return o.compareGrade() == -1 || compareGrade() == -1 ? null : compareGrade() - o.compareGrade();
     }
@@ -60,9 +71,9 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 
     public abstract boolean equals(Object o);
 
-    public abstract String toStringView();
+    public abstract String toStringView(PSObject obj);
 
     public void deepCompile(PSObject psObject) {
-        compile(psObject); //different for PSName
+        compile(psObject, 0); //different for PSName
     }
 }

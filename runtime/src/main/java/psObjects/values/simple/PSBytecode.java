@@ -15,6 +15,10 @@ public class PSBytecode extends PSName {
         super(strValue);
     }
 
+    public PSBytecode(int name) {
+        super(name + "");
+    }
+
     @Override
     public boolean interpret(PSObject obj) {
         try {
@@ -34,9 +38,9 @@ public class PSBytecode extends PSName {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(PSObject obj, int procDepth) {
+        //procDepth probably not need here
         //runtime.pushToOperandStack(new PSObject(new PSBytecode(this.strValue)));
-        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
         mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
@@ -59,7 +63,7 @@ public class PSBytecode extends PSName {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return "bytecode{#" + strValue + "}";
     }
 
