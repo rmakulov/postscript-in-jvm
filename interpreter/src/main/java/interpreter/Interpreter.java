@@ -60,8 +60,8 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/mandel.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
+                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/psRay.ps")));
