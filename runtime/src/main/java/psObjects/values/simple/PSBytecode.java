@@ -9,7 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Created by User on 13/08/2014.
  */
-public class PSBytecode extends PSName {
+public class
+        PSBytecode extends PSName {
 
     public PSBytecode(String strValue) {
         super(strValue);

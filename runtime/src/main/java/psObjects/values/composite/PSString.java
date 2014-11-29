@@ -83,13 +83,15 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
         if (treatAs == EXECUTABLE) {
             try {
                 StringProcedure stringProcedure = new StringProcedure(obj);
+                runtime.pushToCallStack(stringProcedure);
                 if (runtime.isCompiling) {
                     while (stringProcedure.hasNext()) {
                         if (!stringProcedure.execNext()) return false;
                     }
-                } else {
+                    runtime.popFromCallStack();
+                } /*else {
                     runtime.pushToCallStack(stringProcedure);
-                }
+                }*/
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

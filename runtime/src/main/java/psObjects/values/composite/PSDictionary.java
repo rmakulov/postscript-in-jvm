@@ -19,6 +19,10 @@ public class PSDictionary extends CompositeValue {
         version = getNextVersion();
     }
 
+    public PSDictionary(int version) {
+        this.version = version;
+    }
+
     public PSDictionary(ArrayList<PSObject> list) {
         if (list.size() % 2 == 0) {
             for (int i = 0; i < list.size() - 1; i += 2) {
@@ -111,7 +115,8 @@ public class PSDictionary extends CompositeValue {
     }
 
     public static int getNextVersion() {
-        return lastVersion++;
+        lastVersion++;
+        return lastVersion;
     }
 
     public static void clearLastVersion() {

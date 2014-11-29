@@ -23,21 +23,23 @@ public class IfOp extends Operator {
         PSObject proc = runtime.popFromOperandStack();
         PSObject bool = runtime.popFromOperandStack();
         if (wrongArgs(proc, bool)) return true;
-
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {
+            runtime.pushToCallStack(new ArrayProcedure("If", proc));
             if (runtime.isCompiling) {
                 boolean execute = proc.execute(0);
+                runtime.popFromCallStack();
                 return execute;
-            } else {
+            } /*else {
                 runtime.pushToCallStack(new ArrayProcedure("If", proc));
-            }
+            }*/
         }
         return true;
     }
 
     @Override
     public void interpret() {
+        System.out.println("lol");
 //        if (runtime.getOperandStackSize() < 2) return;
 //        PSObject proc = runtime.popFromOperandStack();
 //        PSObject bool = runtime.popFromOperandStack();

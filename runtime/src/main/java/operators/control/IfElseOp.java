@@ -26,11 +26,12 @@ public class IfElseOp extends Operator {
         if (wrongArgs(proc2, proc1, bool)) return true;
 
         PSBoolean cond = (PSBoolean) bool.getValue();
-        if (cond.getFlag()) {
+        return execBranch(proc1, proc2, cond.getFlag());
+/*        if (cond.getFlag()) {
             return trueBranch(proc1);
         } else {
             return falseBranch(proc2);
-        }
+        }*/
     }
 
     @Override
@@ -50,7 +51,7 @@ public class IfElseOp extends Operator {
 //        }
     }
 
-    private boolean falseBranch(PSObject proc) {
+/*    private boolean falseBranch(PSObject proc) {
         if (runtime.isCompiling) {
             return proc.execute(0);
         } else {
@@ -65,6 +66,20 @@ public class IfElseOp extends Operator {
         } else {
             runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (true)", proc));
         }
+        return true;
+    }*/
+
+    private boolean execBranch(PSObject proc1, PSObject proc2, boolean condition) {
+        String name = condition ? "true" : "false";
+        PSObject proc = condition ? proc1 : proc2;
+        runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure (" + name + ")", proc));
+        if (runtime.isCompiling) {
+            boolean execute = proc.execute(0);
+            runtime.popFromCallStack();
+            return execute;
+        } /*else {
+            runtime.pushToCallStack(new ArrayProcedure("IfElse Procedure ("+name+")", proc));
+        }*/
         return true;
     }
 

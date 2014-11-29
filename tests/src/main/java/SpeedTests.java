@@ -15,8 +15,8 @@ public class SpeedTests {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-//        final File folder = new File("tests/speedTestExamples");
-        final File folder = new File("tests/speedTestExamples/hard");
+        final File folder = new File("tests/speedTestExamples");
+//        final File folder = new File("tests/speedTestExamples/hard");
         iterateExamples(folder);
         long ms = System.currentTimeMillis() - startTime;
         System.out.println("All tests have been finished in " + ((double) ms) / (1000 * 60 * 60) + " hours.");
@@ -34,8 +34,8 @@ public class SpeedTests {
                 System.out.println(exampleFile.getName());
             } else {
                 if (!exampleFile.isDirectory()) {
-                    double v1 = performTestInInterpreter(exampleFile);
-                    double v2 = performTestInCompiler(exampleFile);
+                    double v1 = performTest(false, exampleFile);
+                    double v2 = performTest(true, exampleFile);
                     System.out.printf("%-30s%-20.3f%.3f\n", exampleFile.getName(), v1, v2);
                 } else {
                     System.out.println(" is directory");
@@ -45,13 +45,53 @@ public class SpeedTests {
     }
 
 
-    private static double performTestInInterpreter(File exampleFile) {
+//    private static double performTestInInterpreter(File exampleFile) {
+//        int i = 0;
+//        double totalSum = 0;
+//        interpreter = new Interpreter();
+//        try {
+//            interpreter.setCompilingMode(false);
+//            interpreter.clearRuntime();
+//            interpreter.run(exampleFile);
+//            for (i = 0; i < TEST_COUNTS; i++) {
+//                interpreter.clearRuntime();
+//                totalSum += interpreter.run(exampleFile);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            System.out.println("Interpreter (" + exampleFile.getName() + ") failed at " + i + " step from " + (TEST_COUNTS - 1));
+//        }
+//        return totalSum / TEST_COUNTS;
+//    }
+//
+//    private static double performTestInCompiler(File exampleFile) {
+//        int i = 0;
+//        double totalSum = 0;
+//        interpreter = new Interpreter();
+//        try {
+//            interpreter.setCompilingMode(true);
+//            interpreter.clearRuntime();
+//            interpreter.run(exampleFile);
+//            for (i = 0; i < TEST_COUNTS; i++) {
+//                interpreter.clearRuntime();
+//                totalSum += interpreter.run(exampleFile);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            System.out.println("Compiler (" + exampleFile.getName() + ") failed at " + i + " step from " + (TEST_COUNTS - 1));
+//        }
+//        return totalSum / TEST_COUNTS;
+//    }
+
+    private static double performTest(boolean isCompiling, File exampleFile) {
         int i = 0;
         double totalSum = 0;
         interpreter = new Interpreter();
         try {
-            interpreter.setCompilingMode(false);
-            interpreter.run(exampleFile);
+            interpreter.setCompilingMode(isCompiling);
+            prepareJavaVM(exampleFile);
             for (i = 0; i < TEST_COUNTS; i++) {
                 interpreter.clearRuntime();
                 totalSum += interpreter.run(exampleFile);
@@ -59,27 +99,14 @@ public class SpeedTests {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Interpreter failed at " + i + " step from " + (TEST_COUNTS - 1));
+            String executor = isCompiling ? "Compiler" : "Interpreter";
+            System.out.println(executor + " (" + exampleFile.getName() + ") failed at " + i + " step from " + (TEST_COUNTS - 1));
         }
         return totalSum / TEST_COUNTS;
     }
 
-    private static double performTestInCompiler(File exampleFile) {
-        int i = 0;
-        double totalSum = 0;
-        interpreter = new Interpreter();
-        try {
-            interpreter.setCompilingMode(true);
-            interpreter.run(exampleFile);
-            for (i = 0; i < TEST_COUNTS; i++) {
-                interpreter.clearRuntime();
-                totalSum += interpreter.run(exampleFile);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println("Compiler failed at " + i + " step from " + (TEST_COUNTS - 1));
-        }
-        return totalSum / TEST_COUNTS;
+    private static void prepareJavaVM(File exampleFile) throws IOException {
+        interpreter.clearRuntime();
+        interpreter.run(exampleFile);
     }
 }

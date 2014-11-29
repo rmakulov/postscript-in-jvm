@@ -76,14 +76,14 @@ public class DefaultDicts {
 
     public static PSDictionary getUserDict() {
         if (userDict == null) {
-            userDict = new PSDictionary();
+            userDict = new PSDictionary(0);
         }
         return userDict;
     }
 
     public static PSDictionary getGlobalDict() {
         if (globalDict == null) {
-            globalDict = new PSDictionary();
+            globalDict = new PSDictionary(0);
         }
         return globalDict;
     }

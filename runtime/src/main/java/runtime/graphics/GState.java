@@ -6,6 +6,7 @@ import psObjects.values.composite.CompositeValue;
 import psObjects.values.reference.LocalRef;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.frame.PSDrawer;
+import runtime.graphics.frame.PSFrame;
 import runtime.graphics.frame.PSImage;
 import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
@@ -32,7 +33,7 @@ public class GState extends CompositeValue {
         graphicsSettings = new GraphicsSettings();
         PSDrawer.reset();
         PSImage.reset();
-//        PSFrame.reset();
+        PSFrame.reset();
     }
 
     public GState(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, PSPoint curPoint, PSObject fontObj) {

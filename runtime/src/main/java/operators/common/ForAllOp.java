@@ -30,16 +30,16 @@ public class ForAllOp extends Operator {
             fail();
             return;
         }
-
+        runtime.pushToCallStack(new ForAllProcedure(beforeArray, proc));
         if (runtime.isCompiling) {
             for (PSObject psObj : beforeArray) {
                 runtime.pushToOperandStack(psObj);
                 if (!proc.execute(0)) break;
-//                ((PSArray) proc.getValue()).get(0).execute(0);
             }
-        } else {
+            runtime.popFromCallStack();
+        }/* else {
             runtime.pushToCallStack(new ForAllProcedure(beforeArray, proc));
-        }
+        }*/
     }
 
     private PSObject[] getBeforeArray(PSObject elems) {

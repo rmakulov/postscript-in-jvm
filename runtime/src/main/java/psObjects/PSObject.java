@@ -21,9 +21,16 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private Attribute attribute;
     private Runtime runtime = Runtime.getInstance();
 
+    private static int objExecutionCounter = 0;
+    private int executionsBeforeGarbageCleaning = 10000;
+    private int maxLocalVMSize = 500;
+    ;
+    //    private int executionsBeforeGarbageCleaning = 100;
+
+
     public boolean execute(int procDepth) {
 //        if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
-            return interpret(procDepth);
+        return interpret(procDepth);
 //        } else {
 //            compile();
 //            return true;
@@ -31,13 +38,35 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean interpret(int procDepth) {
-        //boolean aLoading = runtime.getALoading();
-        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0)// || aLoading)
-                /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
+//        cleanGarbageByExecutionCounter();
+        cleanGarbageByLocalVMSize();
+        boolean result = true;
+        if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0)) {
             runtime.pushToOperandStack(this);
-            return true;
         } else {
-            return value.interpret(this);
+            result = value.interpret(this);
+        }
+//        cleanGarbageByExecutionCounter();
+        return result;
+    }
+
+    private void cleanGarbageByExecutionCounter() {
+        objExecutionCounter++;
+        if (objExecutionCounter % executionsBeforeGarbageCleaning == 0) {
+            System.out.println("Local vm argsCount before gc " + runtime.getLocalVMSize());
+            runtime.cleanGarbage();
+            System.out.println("Local vm argsCount after gc " + runtime.getLocalVMSize());
+
+        }
+    }
+
+    private void cleanGarbageByLocalVMSize() {
+        int size = runtime.getLocalVMSize();
+        if (size % maxLocalVMSize == 0) {
+//            System.out.println("Local vm argsCount before gc " + size);
+            runtime.cleanGarbage();
+//            System.out.println("Local vm argsCount after gc " + runtime.getLocalVMSize());
+
         }
     }
 
@@ -379,5 +408,9 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     public boolean isMatrix() {
         return type == Type.ARRAY && ((PSArray) getValue()).length() == 6;
+    }
+
+    public static void resetExecutionCounts() {
+        objExecutionCounter = 0;
     }
 }

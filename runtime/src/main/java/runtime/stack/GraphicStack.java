@@ -21,8 +21,8 @@ public class GraphicStack extends PSStack<GState> {
 
     }
 
-    public void reset() {
-        clear();
+    public void clear() {
+        super.clear();
         init();
     }
 

@@ -22,21 +22,26 @@ public class ExecOp extends Operator {
         if (psObject == null) {
             return true;
         }
-        if (psObject.isProc()) {
-            if (!runtime.isCompiling) {
-                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
-            } else {
-                return psObject.execute(0);
-            }
-        } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
+        if (psObject.isProc() || psObject.getType() == Type.STRING && psObject.xcheck()) {
+//            runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
+//            if (runtime.isCompiling) {
+//                boolean execute = psObject.execute(0);
+//                runtime.popFromCallStack();
+//                return execute;
+//            }/* else {
+//                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
+//            }*/
+//        } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
             return psObject.interpret(0);
         } else {
+            PSObject[] singleArray = new PSObject[]{psObject};
+            PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);
+            runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
+
             if (runtime.isCompiling) {
-                return psObject.execute(0);
-            } else {
-                PSObject[] singleArray = new PSObject[]{psObject};
-                PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);
-                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
+                boolean execute = psObject.execute(0);
+                runtime.popFromCallStack();
+                return execute;
             }
         }
         return true;

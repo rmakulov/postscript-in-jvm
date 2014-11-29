@@ -17,17 +17,23 @@ public class LoopOp extends Operator {
 
     @Override
     public void interpret() {
+        /* for both modes:
+         for interpret - procedure is executed by execNext
+         for compile - procedure only not to be removed by gc
+        */
         if (runtime.getOperandStackSize() < 1) return;
         PSObject proc = runtime.popFromOperandStack();
+        runtime.pushToCallStack(new LoopProcedure(proc));
         if (wrongArgs(proc)) return;
 
         if (runtime.isCompiling) {
             while (true) {
                 if (!proc.execute(0)) break;
             }
-        } else {
+            runtime.popFromCallStack();
+        } /*else {
             runtime.pushToCallStack(new LoopProcedure(proc));
-        }
+        }*/
     }
 
     private boolean wrongArgs(PSObject proc) {

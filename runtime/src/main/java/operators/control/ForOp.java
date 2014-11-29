@@ -51,27 +51,39 @@ public class ForOp extends Operator {
 
     // real steps
     private void realInterpret(PSObject proc, double start, double end, double incr) {
+        /* for both modes:
+         for interpret - procedure is executed by execNext
+         for compile - procedure only not to be removed by gc
+        */
+        runtime.pushToCallStack(new ForProcedure(start, incr, end, proc));
         if (runtime.isCompiling) {
             for (double i = start; i <= end; i += incr) {
                 runtime.pushToOperandStack(new PSObject(new PSReal(i)));
                 if (!proc.execute(0)) break;
             }
-        } else {
+            runtime.popFromCallStack();
+        } /*else {
             runtime.pushToCallStack(new ForProcedure(start, incr, end, proc));
-        }
+        }*/
     }
 
     // integer step
     private void intInterpret(PSObject proc, int start, double end, int incr) {
+        /* for both modes:
+         for interpret - procedure is executed by execNext
+         for compile - procedure only not to be removed by gc
+        */
+        runtime.pushToCallStack(new IntForProcedure(start, incr, end, proc));
         if (runtime.isCompiling) {
             for (int i = start; i <= end; i += incr) {
                 runtime.pushToOperandStack(new PSObject(new PSInteger(i)));
                 boolean interrupted = !proc.execute(0);
                 if (interrupted) break;
             }
-        } else {
+            runtime.popFromCallStack();
+        } /*else {
             runtime.pushToCallStack(new IntForProcedure(start, incr, end, proc));
-        }
+        }*/
     }
 
 

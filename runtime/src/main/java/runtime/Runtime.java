@@ -147,7 +147,7 @@ public class Runtime {
 
     public void removeFromGraphicStack() {
         if (graphicStack.size() == 1) {
-            graphicStack.reset();
+            graphicStack.clear();
         } else {
             graphicStack.pop();
         }
@@ -183,7 +183,7 @@ public class Runtime {
                 topProcedure.execNext();
                 if (executionCount % executionsBeforeGarbageCleaning == 0) {
 //                    System.out.println("Local vm argsCount before gc " + localVM.argsCount());
-                    localVM.clearGarbage(getRootSet());
+                    cleanGarbage();
 //                    System.out.println("Local vm argsCount after gc " + localVM.argsCount());
                 }
             } else {
@@ -191,6 +191,10 @@ public class Runtime {
                 popFromCallStack();
             }
         }
+    }
+
+    public void cleanGarbage() {
+        localVM.clearGarbage(getRootSet());
     }
 
     public Set<Integer> getRootSet() {
@@ -395,9 +399,22 @@ public class Runtime {
         localVM.clear();
         graphicStack.clear();
         dictionaryStack.clear();
-        graphicStack.reset();
+
+        isGlobal = false;
+
+/*todo remove*/
+        userDict = null;
+        systemDict = null;
+        globalDict = null;
+/*todo*/
+
         bcGenManager = new BytecodeGeneratorManager();
         DynamicClassLoader.reset();
+
+
+        PSObject.resetExecutionCounts();
+        executionCount = 0;
+
         nameVersions.clear();
     }
 
@@ -576,5 +593,14 @@ public class Runtime {
     public void updateNameVersions(String name) {
         int version = getNameVersion(name);
         nameVersions.put(name, version + 1);
+    }
+
+    public int getExecutionCount() {
+        return executionCount;
+    }
+
+
+    public int getLocalVMSize() {
+        return localVM.size();
     }
 }

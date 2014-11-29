@@ -31,7 +31,6 @@ public class DictionaryStack extends PSStack<PSObject> {
 
     public int getVersion() {
         updateVersion();
-
         return version;
     }
 

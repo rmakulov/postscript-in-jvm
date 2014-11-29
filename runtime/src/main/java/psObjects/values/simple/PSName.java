@@ -30,7 +30,6 @@ public class PSName extends SimpleValue {
 
     @Override
     public boolean interpret(PSObject obj) {
-        //operatorIndexes.add(2);
 //        System.out.println("DictStackVersion in PSName " + strValue + ": " + runtime.getDictStackVersion());
         PSObject value = runtime.findValue(obj);
         String procName = ((PSName) obj.getValue()).getStrValue();
@@ -39,45 +38,21 @@ public class PSName extends SimpleValue {
             value = runtime.findValue(value);
         }
         return value.execute(0);
-//        if (value.isProc()) {
-//            if(runtime.isCompiling){
-//                return value.execute(0);
-//            }else {
-//                runtime.pushToCallStack(new ArrayProcedure(procName, value));
-//            }
-//        }  else if (value.getType() == Type.OPERATOR) {
-//            Operator operator = (Operator) value.getValue();
-//            return operator.interpret(null);
-//        } else if (value.getType() == Type.STRING && value.xcheck()) {
-//            try {
-//                runtime.pushToCallStack(new StringProcedure(((PSString) value.getValue()).getString()));
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            runtime.pushToOperandStack(value);
-//        }
-        //value cannot be a Mark
-//        todo error handler
-        //return true;
     }
 
     public void executiveCompile(String strValue) {
-        runtime.Runtime runtime = Runtime.getInstance();
-        BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
-        //int version = runtime.getNameVersion(strValue);
-        int version = runtime.getDictStackVersion();
-
-
-        String className = bcGenManager.bytecodeName;
 
         PSObject object = runtime.search(strValue);
-        MethodVisitor mv = bcGenManager.mv;
         if (object != null) {
+            BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
+            String className = bcGenManager.bytecodeName;
+            MethodVisitor mv = bcGenManager.mv;
+//            int version = runtime.getNameVersion(strValue);
+            int version = runtime.getDictStackVersion();
 //       java: if (runtime.getNameVersion(strValue) - version == 0) {
             mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
 //            mv.visitLdcInsn(strValue);
-            //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getNameVersion", "(Ljava/lang/String;)I", false);
+//            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getNameVersion", "(Ljava/lang/String;)I", false);
             mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getDictStackVersion", "()I", false);
             mv.visitLdcInsn(version);
             mv.visitInsn(ISUB);
@@ -138,7 +113,7 @@ public class PSName extends SimpleValue {
 //    }
 
     private void writeExecutiveBytecode(String strValue) {
-        MethodVisitor mv = Runtime.getInstance().bcGenManager.mv;
+        MethodVisitor mv = runtime.bcGenManager.mv;
         // for bindOP operator: next 10 replacing instructions
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
@@ -260,38 +235,4 @@ public class PSName extends SimpleValue {
         return strValue.length();
     }
 
-//    @Override
-//    public void deepCompile(PSObject obj) {
-//        //todo split into literal and executive
-//        Attribute attribute = obj.getAttribute();
-//        Attribute.TreatAs treatAs = attribute.treatAs;
-//        if (treatAs == EXECUTABLE) {
-//            PSObject realValue = runtime.findValue(obj);
-//            while (realValue.getType() == Type.NAME && !(realValue.isBytecode()) && realValue.treatAs() == EXECUTABLE) {
-//                realValue = runtime.findValue(realValue);
-//            }
-////        String name = runtime.bcGenManager.bytecodeName;
-////        MethodVisitor mv = runtime.bcGenManager.mv;
-////        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-//            realValue.deepCompile();
-//            MethodVisitor mv = runtime.bcGenManager.mv;
-//            String name = runtime.bcGenManager.bytecodeName;
-//            mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-//            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "popFromOperandStack", "()LpsObjects/PSObject;", false);
-//            mv.visitInsn(ICONST_0);
-//            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-//
-//            Label l8 = new Label();
-//            mv.visitJumpInsn(IFNE, l8);
-//            mv.visitInsn(ICONST_0);
-//            mv.visitInsn(IRETURN);
-//            mv.visitLabel(l8);
-//        } else {
-//            literalCompile(strValue);
-//        }
-//
-//
-////        mv.visitInsn(ICONST_0);
-////        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "execute", "(I)Z", false);
-//    }
 }

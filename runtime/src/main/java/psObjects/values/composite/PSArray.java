@@ -142,11 +142,14 @@ public class PSArray extends CompositeValue implements Cloneable {
 
     @Override
     public boolean interpret(PSObject obj) {
+        runtime.pushToCallStack(new ArrayProcedure(obj));
         if (runtime.isCompiling) {
             generateBytecodeIfAbsent();
-            return bytecode.interpret(null);
+            boolean interpret = bytecode.interpret(null);
+            runtime.popFromCallStack();
+            return interpret;
         } else {
-            runtime.pushToCallStack(new ArrayProcedure(obj));
+//            runtime.pushToCallStack(new ArrayProcedure(obj));
             return true;
         }
     }
@@ -187,7 +190,6 @@ public class PSArray extends CompositeValue implements Cloneable {
         }
         bcGenManager.endBytecode();
         bytecode = bcGenManager.getCur();
-        String bytecodename = bytecode.getStrValue();
     }
 
     @Override

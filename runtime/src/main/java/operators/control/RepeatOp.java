@@ -28,13 +28,15 @@ public class RepeatOp extends Operator {
         int count = psInteger.getIntValue();
         if (wrongCount(proc, iObj, count)) return;
 
+        runtime.pushToCallStack(new RepeatProcedure(count, proc));
         if (runtime.isCompiling) {
             for (int i = 0; i < count; i++) {
                 if (!proc.execute(0)) break;
             }
-        } else {
+            runtime.popFromCallStack();
+        } /*else {
             runtime.pushToCallStack(new RepeatProcedure(count, proc));
-        }
+        }*/
     }
 
     private boolean wrongCount(PSObject proc, PSObject iObj, int count) {
