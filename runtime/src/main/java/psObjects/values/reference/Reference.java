@@ -54,7 +54,7 @@ public abstract class Reference extends Value {
     }
 
     @Override
-    public String toStringView() {
-        return getValue().toStringView();
+    public String toStringView(PSObject object) {
+        return getValue().toStringView(object);
     }
 }

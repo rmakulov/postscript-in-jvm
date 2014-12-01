@@ -39,6 +39,7 @@ public class Runtime {
 
     public boolean isCompiling;
     public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
+    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
 
     private int executionCount = 0;
     private int executionsBeforeGarbageCleaning = 10000;
@@ -78,7 +79,7 @@ public class Runtime {
     public void save() {
         //localVM.clearGarbage(getRootSet());
 
-        Snapshot snapshot = new Snapshot(localVM.clone(), getGState());
+        Snapshot snapshot = new Snapshot(localVM.clone(), getGState(), nameVersions);
         gsave(false);
         localVM.initDefaultKeys();
         operandStack.push(new PSObject(snapshot));
@@ -109,6 +110,7 @@ public class Runtime {
         }
         savedLocalVM.updateStringValues(localVM); //string values don't restores
         localVM = savedLocalVM;
+        nameVersions = snapshot.getNameVersions();
 
         GRestoreAllOp.instance.interpret();
         graphicStack.setGState(snapshot);
@@ -550,5 +552,19 @@ public class Runtime {
 
     public int getDictStackVersion() {
         return dictionaryStack.getVersion();
+    }
+
+    public int getNameVersion(String name) {
+        Integer version = nameVersions.get(name);
+        if (version == null) {
+            version = -1;
+            nameVersions.put(name, version);
+        }
+        return version;
+    }
+
+    public void updateNameVersions(String name) {
+        int version = getNameVersion(name);
+        nameVersions.put(name, version + 1);
     }
 }

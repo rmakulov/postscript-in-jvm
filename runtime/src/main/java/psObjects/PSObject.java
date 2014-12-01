@@ -9,11 +9,12 @@ import psObjects.values.composite.PSString;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
-import psObjects.values.simple.BytecodeProc;
 import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
+
+//import psObjects.values.simple.BytecodeProc;
 
 public class PSObject implements Comparable<PSObject>, Opcodes {
     private Value value;
@@ -337,8 +338,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean isBytecode() {
-        return value instanceof PSBytecode || value instanceof BytecodeProc;
-    }
+        return value instanceof PSBytecode;
+    }//|| value instanceof BytecodeProc;}
 
     public boolean isDictKey() {
         switch (type) {
@@ -360,16 +361,15 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
                 '}';
     }
 
-    public String toStringView() {
-
-        return getValue().toStringView();
-    }
-
-    public boolean isBytecodeProc() {
+    /*public boolean isBytecodeProc() {
         return value instanceof BytecodeProc;
-    }
+    }*/
 
     public void deepCompile() {
         value.deepCompile(this);
+    }
+
+    public String toStringView() {
+        return getValue().toStringView(this);
     }
 }

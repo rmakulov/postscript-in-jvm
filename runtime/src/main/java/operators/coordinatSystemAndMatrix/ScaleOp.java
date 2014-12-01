@@ -2,8 +2,10 @@ package operators.coordinatSystemAndMatrix;
 
 import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
+import psObjects.Type;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.graphics.matrix.TransformMatrix;
 
 /**
  * Created by user on 15.03.14.
@@ -17,17 +19,27 @@ public class ScaleOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret() {// s_x s_y scale --
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject oSY = runtime.popFromOperandStack();
-        PSObject oSX = runtime.popFromOperandStack();
-        if (!(oSY.isNumber() && oSX.isNumber())) {
-            runtime.pushToOperandStack(oSX);
-            runtime.pushToOperandStack(oSY);
+        if (runtime.getOperandStackSize() < 2) {
+            fail();
             return;
         }
-        double sY = ((PSNumber) (oSY.getValue())).getRealValue();
-        double sX = ((PSNumber) (oSX.getValue())).getRealValue();
-        runtime.getGState().cTM.scale(sX, sY);
+        PSObject first = runtime.popFromOperandStack();
+        PSObject second = runtime.popFromOperandStack();
+
+        if (first.getType() == Type.ARRAY && runtime.getOperandStackSize() > 0) {
+            PSObject third = runtime.popFromOperandStack();
+            double t_y = ((PSNumber) (second.getValue())).getRealValue();
+            double t_x = ((PSNumber) (third.getValue())).getRealValue();
+            TransformMatrix m = new TransformMatrix(first);
+            m.scale(t_x, t_y);
+            runtime.pushToOperandStack(m.getMatrix());
+        } else if (second.isNumber() && first.isNumber()) {
+            double t_y = ((PSNumber) (first.getValue())).getRealValue();
+            double t_x = ((PSNumber) (second.getValue())).getRealValue();
+            runtime.getGState().cTM.scale(t_x, t_y);
+        } else {
+            fail();
+        }
     }
 
     @Override

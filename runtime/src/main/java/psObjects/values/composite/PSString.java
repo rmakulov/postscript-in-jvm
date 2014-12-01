@@ -199,13 +199,12 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return "(" + getString() + ")";
     }
 
     public static void compile(String s) {
         runtime.Runtime runtime = Runtime.getInstance();
-        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
         runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");

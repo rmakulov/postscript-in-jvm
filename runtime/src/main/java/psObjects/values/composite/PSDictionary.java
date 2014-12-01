@@ -102,7 +102,7 @@ public class PSDictionary extends CompositeValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return "--dict--";
     }
 

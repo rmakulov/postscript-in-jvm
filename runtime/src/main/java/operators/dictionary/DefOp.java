@@ -1,6 +1,7 @@
 package operators.dictionary;
 
 import psObjects.PSObject;
+import psObjects.Type;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
@@ -30,6 +31,10 @@ public class DefOp extends Operator {
 
         PSDictionary newDict = dict.put(psKey, psValue);
         dictObj.setValue(newDict);
+        if (psKey.getType() == Type.NAME) {
+            String name = ((PSName) psKey.getValue()).getStrValue();
+            runtime.updateNameVersions(name);
+        }
     }
 
     @Override

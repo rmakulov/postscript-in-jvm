@@ -1,5 +1,6 @@
 package psObjects.values.simple;
 
+import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import psObjects.Attribute;
@@ -29,6 +30,11 @@ public abstract class Operator extends SimpleValue implements Opcodes {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        Label l8 = new Label();
+        mv.visitJumpInsn(IFNE, l8);
+        mv.visitInsn(ICONST_0);
+        mv.visitInsn(IRETURN);
+        mv.visitLabel(l8);
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
     }
 
@@ -66,7 +72,7 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return toString();
     }
 }

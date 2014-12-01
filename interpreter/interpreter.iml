@@ -10,7 +10,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-all:5.0.3" level="project" />
     <orderEntry type="library" name="asm-all-5.0.3" level="project" />
     <orderEntry type="library" name="org.ow2.asm:asm-all:5.0.3" level="project" />
     <orderEntry type="module" module-name="runtime" />
@@ -20,4 +19,3 @@
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-all:5.0.3" level="project" />
   </component>
 </module>
-

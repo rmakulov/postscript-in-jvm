@@ -78,6 +78,6 @@ public class GlobalRef extends Reference {
         mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getCVXGlobalObject", "(I)LpsObjects/PSObject;", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        checkExitCompile();
     }
 }

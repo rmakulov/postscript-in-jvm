@@ -98,7 +98,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 if (procDepth == 1) {
                     CloseCurlyBraceOp.instance.interpret();
                 } else {
-                    runtime.bcGenManager.endBytecode();
+
                     CloseCurlyBraceOp.compile();
                     //it is needed only in inner bytecode but after finishing more inner bytecode
                     runtime.bcGenManager.incInstrCounter();
