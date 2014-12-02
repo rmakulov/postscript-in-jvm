@@ -372,4 +372,12 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     public String toStringView() {
         return getValue().toStringView(this);
     }
+
+    public boolean isMatrix() {
+        return type == Type.ARRAY && ((PSArray) getValue()).length() == 6;
+    }
+
+    public boolean isExecutable() {
+        return attribute.treatAs == Attribute.TreatAs.EXECUTABLE;
+    }
 }

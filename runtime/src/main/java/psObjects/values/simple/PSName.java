@@ -92,18 +92,18 @@ public class PSName extends SimpleValue {
             mv.visitInsn(ISUB);
 
 //            mv.visitInsn(ICONST_1);
-//            mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
-//            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getALoading", "()Z", false);
+            mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getALoading", "()Z", false);
 //            mv.visitInsn(ISUB);
-//            mv.visitInsn(IMUL);
+            mv.visitInsn(IADD);
 
             Label l1 = new Label();
-            mv.visitJumpInsn(IFNE, l1);
+            mv.visitJumpInsn(IFEQ, l1);
 
+            //start else block
+            writeExecutiveBytecode(strValue);
+            //end else block
 
-            //start then block
-            object.compile();
-            //end then block
 
             //java:  } else {
             Label l2 = new Label();
@@ -111,10 +111,10 @@ public class PSName extends SimpleValue {
             mv.visitLabel(l1);
             mv.visitFrame(F_SAME, 0, null, 0, null);
 
-            //start else block
-            writeExecutiveBytecode(strValue);
-            //end else block
 
+            //start then block
+            object.compile();
+            //end then block
             // java :}
             mv.visitLabel(l2);
             mv.visitFrame(F_SAME, 0, null, 0, null);

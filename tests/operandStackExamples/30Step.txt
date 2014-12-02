@@ -1,1 +1,1 @@
-bytecode{#1} /add 3 2 bytecode{#2}
+bytecode{#1} add 3 2 bytecode{#2}

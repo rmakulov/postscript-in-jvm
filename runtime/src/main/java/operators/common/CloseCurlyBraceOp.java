@@ -44,9 +44,6 @@ public class CloseCurlyBraceOp extends Operator {
 
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
-        //todo alright
-//        (runtime.bcGenManager.getCur()).compile(null);
-
 //        runtime.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur()));
         runtime.bcGenManager.endBytecode();
         PSBytecode bytecode = runtime.bcGenManager.getCur();

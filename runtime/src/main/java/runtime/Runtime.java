@@ -144,8 +144,12 @@ public class Runtime {
         graphicStack.push(gsave);
     }
 
-    public GState popFromGraphicStack() {
-        return graphicStack.pop();
+    public void removeFromGraphicStack() {
+        if (graphicStack.size() == 1) {
+            graphicStack.clear();
+        } else {
+            graphicStack.pop();
+        }
     }
 
     public GState peekFromGraphicStack() {
@@ -390,9 +394,23 @@ public class Runtime {
         localVM.clear();
         graphicStack.clear();
         dictionaryStack.clear();
-        graphicStack.reset();
+
+        isGlobal = false;
+
+/*todo remove*/
+        userDict = null;
+        systemDict = null;
+        globalDict = null;
+/*todo*/
+
         bcGenManager = new BytecodeGeneratorManager();
         DynamicClassLoader.reset();
+
+
+        //PSObject.resetExecutionCounts();
+        executionCount = 0;
+
+        nameVersions.clear();
     }
 
     public CompositeValue getValueByLocalRef(LocalRef ref) {
@@ -567,4 +585,6 @@ public class Runtime {
         int version = getNameVersion(name);
         nameVersions.put(name, version + 1);
     }
+
+
 }
