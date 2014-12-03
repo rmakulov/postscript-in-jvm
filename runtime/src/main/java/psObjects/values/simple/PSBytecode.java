@@ -1,6 +1,5 @@
 package psObjects.values.simple;
 
-import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import runtime.compiler.DynamicClassLoader;
@@ -51,11 +50,7 @@ public class PSBytecode extends PSName {
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
 
-        Label l8 = new Label();
-        mv.visitJumpInsn(IFNE, l8);
-        mv.visitInsn(ICONST_0);
-        mv.visitInsn(IRETURN);
-        mv.visitLabel(l8);
+        checkExitCompile();
 //        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
     }

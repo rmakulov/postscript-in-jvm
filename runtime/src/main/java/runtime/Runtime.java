@@ -182,7 +182,7 @@ public class Runtime {
                 topProcedure.execNext();
                 if (executionCount % executionsBeforeGarbageCleaning == 0) {
 //                    System.out.println("Local vm argsCount before gc " + localVM.argsCount());
-                    localVM.clearGarbage(getRootSet());
+                    cleanGarbage();
 //                    System.out.println("Local vm argsCount after gc " + localVM.argsCount());
                 }
             } else {
@@ -190,6 +190,10 @@ public class Runtime {
                 popFromCallStack();
             }
         }
+    }
+
+    public void cleanGarbage() {
+        localVM.clearGarbage(getRootSet());
     }
 
     public Set<Integer> getRootSet() {
@@ -407,8 +411,8 @@ public class Runtime {
         DynamicClassLoader.reset();
 
 
-        //PSObject.resetExecutionCounts();
-        executionCount = 0;
+        PSObject.resetExecutionCounts();
+//        executionCount = 0;
 
         nameVersions.clear();
     }
@@ -586,5 +590,7 @@ public class Runtime {
         nameVersions.put(name, version + 1);
     }
 
-
+    public int getLocalVMSize() {
+        return localVM.size();
+    }
 }

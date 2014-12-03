@@ -27,6 +27,7 @@ public class Interpreter {
 //        System.out.println(runtime.operandStackToString());
 //        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
 
+//        System.out.println("DynamicClassLoader size is "+DynamicClassLoader.instance.getSize());
         return (System.currentTimeMillis() - startTime);
 
 //        System.out.println("\nProgram lasted for " + ((System.currentTimeMillis() - startTime)) + " milliseconds");
@@ -52,7 +53,7 @@ public class Interpreter {
                   /*main examples*/
 //                Interpreter.instance.run(new File("tests/operandStackExamples/5thStep.ps"));
 //                  instance.run(new File("tests/FontExamples/1.ps"));
-                instance.run(new File("tests/FontExamples/2.ps"));
+//                instance.run(new File("tests/FontExamples/2.ps"));
 //                instance.run(new File("tests/FontExamples/3.ps"));
 //                instance.run(new File("tests/FontExamples/4.ps"));
 //                instance.run(new File("tests/FontExamples/5.ps"));
@@ -66,8 +67,6 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));
 //                instance.run(new File("Examples/plant2.ps"));
-//                instance.run(new File("Examples/FractalByAlunJones.ps"));
-//                instance.run(new File("FractalByAlunJones2.ps"));
 //                instance.run(new File("Examples/chupcko.ps"));
 //                instance.run(new File("Examples/snowflak.ps"));
 
@@ -76,9 +75,11 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/chupcko.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandel.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/escher.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube2.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
+                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
@@ -98,7 +99,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/colorcir/.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/2_trapezoid.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/FractalByAlunJones.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/hard/FractalByAlunJones.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/bytecode.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/doretree.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/snowflak.ps")));

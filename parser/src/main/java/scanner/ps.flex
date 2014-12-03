@@ -96,6 +96,12 @@ return (new Yytoken(Tokens.HEX,text,yyline,yychar,yychar+yylength())); }
            String text =yytext().substring(1);
           return (new Yytoken(Tokens.LIT_NAME,text,yyline,yychar+1,yychar+yylength()));
     }
+    \/\/{NAME} {
+            String text = yytext().substring(2);
+            return (new Yytoken(Tokens.OPERATOR,text,yyline,yychar+2,yychar+yylength()));
+    }
+
+
 }
 
 

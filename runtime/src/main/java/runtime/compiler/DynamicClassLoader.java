@@ -50,4 +50,8 @@ public class DynamicClassLoader extends ClassLoader {
         instance = new DynamicClassLoader();
     }
 
+    public int getSize() {
+        return bytecodes.size();
+    }
+
 }

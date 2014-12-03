@@ -91,10 +91,8 @@ public class PSName extends SimpleValue {
             mv.visitLdcInsn(version);
             mv.visitInsn(ISUB);
 
-//            mv.visitInsn(ICONST_1);
             mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
             mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getALoading", "()Z", false);
-//            mv.visitInsn(ISUB);
             mv.visitInsn(IADD);
 
             Label l1 = new Label();
@@ -125,14 +123,10 @@ public class PSName extends SimpleValue {
             bcGenManager.endMethod();
             bcGenManager.startMethod();
         }
-
-
     }
 
     private static void writeExecutiveBytecode(String strValue) {
         MethodVisitor mv = Runtime.getInstance().bcGenManager.mv;
-
-//        mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
@@ -148,6 +142,8 @@ public class PSName extends SimpleValue {
         mv.visitInsn(ICONST_0);
         mv.visitInsn(IRETURN);
         mv.visitLabel(l8);
+        mv.visitFrame(F_SAME, 0, null, 0, null);
+
     }
 
     private static void saveSuspectOperatorIndex(PSObject obj, BytecodeGeneratorManager bcGenManager, String className) {
@@ -176,8 +172,12 @@ public class PSName extends SimpleValue {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
-//
+
+        Label l8 = new Label();
+        mv.visitJumpInsn(IFNE, l8);
+        mv.visitInsn(ICONST_0);
+        mv.visitInsn(IRETURN);
+        mv.visitLabel(l8);
     }
 
     @Override
@@ -238,40 +238,5 @@ public class PSName extends SimpleValue {
 
     public int length() {
         return strValue.length();
-    }
-
-    @Override
-    public void deepCompile(PSObject obj) {
-        //todo split into literal and executive
-        Attribute attribute = obj.getAttribute();
-        Attribute.TreatAs treatAs = attribute.treatAs;
-        if (treatAs == EXECUTABLE) {
-            PSObject realValue = runtime.findValue(obj);
-            while (realValue.getType() == Type.NAME && !(realValue.isBytecode()) && realValue.treatAs() == EXECUTABLE) {
-                realValue = runtime.findValue(realValue);
-            }
-//        String name = runtime.bcGenManager.bytecodeName;
-//        MethodVisitor mv = runtime.bcGenManager.mv;
-//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-            realValue.deepCompile();
-            MethodVisitor mv = runtime.bcGenManager.mv;
-            String name = runtime.bcGenManager.bytecodeName;
-            mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "popFromOperandStack", "()LpsObjects/PSObject;", false);
-            mv.visitInsn(ICONST_0);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-
-            Label l8 = new Label();
-            mv.visitJumpInsn(IFNE, l8);
-            mv.visitInsn(ICONST_0);
-            mv.visitInsn(IRETURN);
-            mv.visitLabel(l8);
-        } else {
-            literalCompile(strValue);
-        }
-
-
-//        mv.visitInsn(ICONST_0);
-//        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "execute", "(I)Z", false);
     }
 }

@@ -22,6 +22,10 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private Attribute attribute;
     private Runtime runtime = Runtime.getInstance();
 
+    private static int objExecutionCounter = 0;
+    private int executionsBeforeGarbageCleaning = 10000;
+    private int maxLocalVMSize = 200;
+
     public boolean execute(int procDepth) {
         if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
             return interpret(procDepth);
@@ -33,6 +37,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean interpret(int procDepth) {
+        cleanGarbageByExecutionCounter();
+//        cleanGarbageByLocalVMSize();
         boolean aLoading = runtime.getALoading();
         if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
@@ -43,6 +49,25 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         }
     }
 
+    private void cleanGarbageByExecutionCounter() {
+        objExecutionCounter++;
+        if (objExecutionCounter % executionsBeforeGarbageCleaning == 0) {
+//            System.out.println("Local vm argsCount before gc " + runtime.getLocalVMSize());
+            runtime.cleanGarbage();
+//            System.out.println("Local vm argsCount after gc " + runtime.getLocalVMSize());
+
+        }
+    }
+
+    private void cleanGarbageByLocalVMSize() {
+        int size = runtime.getLocalVMSize();
+        if (size % maxLocalVMSize == 0) {
+//            System.out.println("Local vm argsCount before gc " + size);
+            runtime.cleanGarbage();
+//            System.out.println("Local vm argsCount after gc " + runtime.getLocalVMSize());
+
+        }
+    }
 
     public void compile() {
         value.compile(this);
@@ -365,9 +390,9 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         return value instanceof BytecodeProc;
     }*/
 
-    public void deepCompile() {
-        value.deepCompile(this);
-    }
+//    public void deepCompile() {
+//        value.deepCompile(this);
+//    }
 
     public String toStringView() {
         return getValue().toStringView(this);
@@ -379,5 +404,9 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     public boolean isExecutable() {
         return attribute.treatAs == Attribute.TreatAs.EXECUTABLE;
+    }
+
+    public static void resetExecutionCounts() {
+        objExecutionCounter = 0;
     }
 }

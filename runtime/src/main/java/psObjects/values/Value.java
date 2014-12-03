@@ -64,9 +64,9 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 
     public abstract String toStringView(PSObject object);
 
-    public void deepCompile(PSObject psObject) {
-        compile(psObject); //different for PSName
-    }
+//    public void deepCompile(PSObject psObject) {
+//        compile(psObject); //different for PSName
+//    }
 
     protected void checkExitCompile() {
         MethodVisitor mv = runtime.bcGenManager.mv;
@@ -75,5 +75,6 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
         mv.visitInsn(ICONST_0);
         mv.visitInsn(IRETURN);
         mv.visitLabel(l7);
+        mv.visitFrame(F_SAME, 0, null, 0, null);
     }
 }

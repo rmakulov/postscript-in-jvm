@@ -73,7 +73,7 @@ public class LocalRef extends Reference {
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
 
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/reference/LocalRef");

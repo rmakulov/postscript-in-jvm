@@ -4,6 +4,7 @@ package runtime.graphics.matrix;
  * Created by user on 15.03.14.
  */
 
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.ArrayElement;
@@ -32,7 +33,7 @@ public class TransformMatrix implements Cloneable {
                 new ArrayElement(new PSObject(new PSReal(scale))),
                 new ArrayElement(new PSObject(new PSReal(0.0))),
                 new ArrayElement(new PSObject(new PSReal(0.0)))};
-        matrix = new PSObject(new PSArray(arr));
+        matrix = new PSObject(new PSArray(arr), Attribute.TreatAs.LITERAL);
     }
 
     public TransformMatrix(PSObject arrObj) {
@@ -53,7 +54,7 @@ public class TransformMatrix implements Cloneable {
         PSObject o4 = new PSObject(new PSReal(arr[3]));
         PSObject o5 = new PSObject(new PSReal(arr[4]));
         PSObject o6 = new PSObject(new PSReal(arr[5]));
-        matrix = new PSObject(new PSArray(new PSObject[]{o1, o2, o3, o4, o5, o6}));
+        matrix = new PSObject(new PSArray(new PSObject[]{o1, o2, o3, o4, o5, o6}), Attribute.TreatAs.LITERAL);
     }
 
     public double[] getDoubleArray() {

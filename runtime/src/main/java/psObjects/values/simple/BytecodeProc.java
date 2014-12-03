@@ -81,7 +81,7 @@ public class BytecodeProc extends SimpleValue {
 //            } else {
 //                o.deepCompile();
 //            }
-            o.deepCompile();
+//            o.deepCompile();
         }
         runtime.bcGenManager.endBytecode();
         boundCount++;

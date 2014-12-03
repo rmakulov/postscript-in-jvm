@@ -73,7 +73,6 @@ public class GlobalRef extends Reference {
         MethodVisitor mv = runtime.bcGenManager.mv;
 
         mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitLdcInsn(id);
         mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getCVXGlobalObject", "(I)LpsObjects/PSObject;", false);
         mv.visitInsn(ICONST_0);
