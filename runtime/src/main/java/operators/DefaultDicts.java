@@ -1,8 +1,6 @@
 package operators;
 
-import operators.GlythAndFont.ShowOp;
-import operators.GlythAndFont.ShowPageOp;
-import operators.GlythAndFont.StringWidthOp;
+import operators.GlythAndFont.*;
 import operators.arithmetic.RandOp;
 import operators.arithmetic.RrandOp;
 import operators.arithmetic.binary.*;
@@ -78,14 +76,14 @@ public class DefaultDicts {
 
     public static PSDictionary getUserDict() {
         if (userDict == null) {
-            userDict = new PSDictionary();
+            userDict = new PSDictionary(0);
         }
         return userDict;
     }
 
     public static PSDictionary getGlobalDict() {
         if (globalDict == null) {
-            globalDict = new PSDictionary();
+            globalDict = new PSDictionary(0);
         }
         return globalDict;
     }
@@ -256,9 +254,12 @@ public class DefaultDicts {
     }
 
     private static void addGlythAndFontOperators() {
+        addOperator(FindFontOp.instance);
         addOperator(ShowOp.instance);
         addOperator(ShowPageOp.instance);
         addOperator(StringWidthOp.instance);
+        addOperator(ScaleFontOp.instance);
+        addOperator(SetFontOp.instance);
     }
 
     private static void addStringOperators() {
@@ -272,6 +273,8 @@ public class DefaultDicts {
         addOperator(TransformOp.instance);
         addOperator(TranslateOp.instance);
         addOperator(ConcatOp.instance);
+        addOperator(ConcatMatrixOp.instance);
+        addOperator(MatrixOp.instance);
     }
 
     private static void addControlOperators() {

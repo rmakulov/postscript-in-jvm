@@ -1,5 +1,6 @@
 package runtime.graphics;
 
+import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.reference.LocalRef;
@@ -18,6 +19,7 @@ public class GState extends CompositeValue {
     public PSPath currentPath;
     public PSPath clippingPath;
     public TransformMatrix cTM;
+    public PSObject font;
     public GraphicsSettings graphicsSettings;
     private boolean madeByGSaveOp;//save call gsave with false arg
 
@@ -30,16 +32,17 @@ public class GState extends CompositeValue {
         graphicsSettings = new GraphicsSettings();
         PSDrawer.reset();
         PSImage.reset();
-//        PSFrame.reset();
+        //PSFrame.reset();
     }
 
-    public GState(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, PSPoint curPoint) {
+    public GState(PSPath curPath, PSPath clipPath, TransformMatrix tM, GraphicsSettings gSettings, PSPoint curPoint, PSObject fontObj) {
         currentPath = curPath;
         clippingPath = clipPath;
         cTM = tM;
         graphicsSettings = gSettings;
         madeByGSaveOp = true; // for example
         currentPoint = curPoint;
+        font = fontObj;
     }
 //    public static GState getInstance() {
 //        return instance;
@@ -65,7 +68,7 @@ public class GState extends CompositeValue {
 //    }
 
     public GState getSnapshot() {
-        return new GState(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), currentPoint);
+        return new GState(currentPath.clone(), clippingPath.clone(), cTM.clone(), cloneGraphicsSettings(), currentPoint, font);
     }
 
     //---------------------Fonts
@@ -102,7 +105,7 @@ public class GState extends CompositeValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject obj) {
         return "--gstate--";
     }
 

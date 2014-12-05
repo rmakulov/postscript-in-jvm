@@ -1,10 +1,14 @@
 package operators.common;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.Value;
 import psObjects.values.composite.PSArray;
-import psObjects.values.simple.*;
+import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSBytecode;
+import psObjects.values.simple.PSMark;
+import psObjects.values.simple.PSName;
 import runtime.Runtime;
 
 import java.util.ArrayList;
@@ -22,8 +26,10 @@ public class CloseCurlyBraceOp extends Operator {
         if (runtime.isCompiling && !runtime.bcGenManager.isSleep()) {
             runtime.bcGenManager.endBytecode();
             PSBytecode originBytecode = runtime.bcGenManager.getCur();
-            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
-            runtime.pushToOperandStack(new PSObject(bytecodeProc));
+//            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
+
+//            runtime.pushToOperandStack(new PSObject(bytecodeProc));
+            runtime.pushToOperandStack(new PSObject(originBytecode));
         } else {
             //runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
             ArrayList<PSObject> gatherArray = gatherArray();
@@ -38,47 +44,25 @@ public class CloseCurlyBraceOp extends Operator {
 
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
-        //todo alright
-        (runtime.bcGenManager.getCur()).compile(null);
+//        runtime.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur()));
+        runtime.bcGenManager.endBytecode();
+        PSBytecode bytecode = runtime.bcGenManager.getCur();
+        String bytecodeName = bytecode.getStrValue();
 
-        //runtime.pushToOperandStack(runtime.bcGenManager.getCur());
-       /* runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        runtime.bcGenManager.mv.visitFieldInsn(GETFIELD, "runtime/Runtime", "bcGenManager", "Lruntime/BytecodeGeneratorManager;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/BytecodeGeneratorManager", "getCur", "()LpsObjects/PSObject;", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);*/
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = runtime.bcGenManager.bytecodeName;
+        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(bytecodeName);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+
     }
 
-//    private ArrayList<PSObject> gatherArray() {
-//        if (runtime.getOperandStackSize() < 1) return null;
-//        PSObject psObject = runtime.popFromOperandStack();
-//        ArrayList<PSObject> array = new ArrayList<PSObject>();
-//        int procDepth = 1;
-//        Value psValue = psObject.getValue();
-//        if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
-//            procDepth--;
-//        } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
-//            procDepth++;
-//        }
-//        while (!PSMark.OPEN_CURLY_BRACE.equals(psObject.getValue()) || procDepth > 0) {
-//            array.add(psObject);
-//            psObject = runtime.popFromOperandStack();
-//            if (psObject == null) {
-//                return null;
-//            }
-//            psValue = psObject.getValue();
-//            if (PSMark.OPEN_CURLY_BRACE.equals(psValue)) {
-//                procDepth--;
-//            } else if (PSMark.CLOSE_CURLY_BRACE.equals(psValue)) {
-//                procDepth++;
-//            }
-//        }
-//        ArrayList<PSObject> result = new ArrayList<PSObject>();
-//        for (int i = 0; i < array.size(); i++) {
-//            result.add(array.get(array.size() - i - 1));
-//        }
-//        return result;
-//    }
 
     private ArrayList<PSObject> gatherArray() {
         if (runtime.getOperandStackSize() < 1) return null;

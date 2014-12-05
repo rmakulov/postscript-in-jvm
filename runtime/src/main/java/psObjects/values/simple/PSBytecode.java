@@ -39,7 +39,7 @@ public class PSBytecode extends PSName {
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
@@ -47,9 +47,11 @@ public class PSBytecode extends PSName {
         mv.visitLdcInsn(this.strValue);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-//        mv.visitInsn(ICONST_0);
-//        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        mv.visitInsn(ICONST_0);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+
+        checkExitCompile();
+//        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
     }
 
@@ -59,7 +61,7 @@ public class PSBytecode extends PSName {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return "bytecode{#" + strValue + "}";
     }
 

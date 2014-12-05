@@ -73,7 +73,7 @@ public class LocalRef extends Reference {
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
 
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/reference/LocalRef");
@@ -85,6 +85,7 @@ public class LocalRef extends Reference {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
 //        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 

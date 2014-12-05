@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class BindOp extends Operator {
     public static final BindOp instance = new BindOp();
+    private int replacingInstrCount;
 
     protected BindOp() {
         super();
@@ -83,7 +84,8 @@ public class BindOp extends Operator {
     private void transformMethod(MethodNode method, String suspectOperatorName) {
         InsnList insnList = method.instructions;
         Iterator ite = insnList.iterator();
-        int replacingInstrCount = 10;
+        int numberOfMethodEndingInstructions = 3;
+        replacingInstrCount = insnList.size() - numberOfMethodEndingInstructions;
         for (int i = 0; i < replacingInstrCount; i++) {
 
             AbstractInsnNode insn = (AbstractInsnNode) ite.next();
@@ -96,6 +98,15 @@ public class BindOp extends Operator {
                 tempList.add(new MethodInsnNode(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false));
                 tempList.add(new InsnNode(ICONST_0));
                 tempList.add(new MethodInsnNode(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false));
+                LabelNode l8 = new LabelNode();
+                tempList.add(new JumpInsnNode(IFNE, l8));
+//                mv.visitJumpInsn(IFNE, l8);
+                tempList.add(new InsnNode(ICONST_0));
+//                mv.visitInsn(ICONST_0);
+                tempList.add(new InsnNode(IRETURN));
+//                mv.visitInsn(IRETURN);
+                tempList.add(l8);
+//                mv.visitLabel(l8);
                 insnList.insert(insn, tempList);
                 method.maxStack += 2;
 //                System.out.println("replaced " + method.name);

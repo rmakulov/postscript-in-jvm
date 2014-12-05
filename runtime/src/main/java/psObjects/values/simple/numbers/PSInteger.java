@@ -39,7 +39,7 @@ public class PSInteger extends PSNumber {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return value + "";
     }
 
@@ -78,7 +78,6 @@ public class PSInteger extends PSNumber {
     @Override
     public void compile(PSObject obj) {
 //        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
-        //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         //(new PSObject(new PSInteger(5))).interpret(0);
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
@@ -93,6 +92,7 @@ public class PSInteger extends PSNumber {
         //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
 
     }
 

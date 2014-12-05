@@ -17,7 +17,7 @@ public class GRestoreOp extends AbstractGraphicOperator {
     * if last gstate was made by save*/
     @Override
     public void interpret() {
-        runtime.popFromGraphicStack();
+        runtime.removeFromGraphicStack();
         if (!runtime.getGState().isMadeByGSaveOp()) {
             runtime.gsave(false);
         }

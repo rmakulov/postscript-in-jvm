@@ -81,7 +81,7 @@ public class BytecodeProc extends SimpleValue {
 //            } else {
 //                o.deepCompile();
 //            }
-            o.deepCompile();
+//            o.deepCompile();
         }
         runtime.bcGenManager.endBytecode();
         boundCount++;
@@ -100,7 +100,7 @@ public class BytecodeProc extends SimpleValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return "-BytecodeProc-";
     }
 

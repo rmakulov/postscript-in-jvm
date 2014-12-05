@@ -1,6 +1,8 @@
 package psObjects.values;
 
 
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import psObjects.PSObject;
 import psObjects.Type;
@@ -60,9 +62,19 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 
     public abstract boolean equals(Object o);
 
-    public abstract String toStringView();
+    public abstract String toStringView(PSObject object);
 
-    public void deepCompile(PSObject psObject) {
-        compile(psObject); //different for PSName
+//    public void deepCompile(PSObject psObject) {
+//        compile(psObject); //different for PSName
+//    }
+
+    protected void checkExitCompile() {
+        MethodVisitor mv = runtime.bcGenManager.mv;
+        Label l7 = new Label();
+        mv.visitJumpInsn(IFNE, l7);
+        mv.visitInsn(ICONST_0);
+        mv.visitInsn(IRETURN);
+        mv.visitLabel(l7);
+        mv.visitFrame(F_SAME, 0, null, 0, null);
     }
 }

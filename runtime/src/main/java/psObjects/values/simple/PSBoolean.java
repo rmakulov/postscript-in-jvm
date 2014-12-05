@@ -77,7 +77,7 @@ public class PSBoolean extends SimpleValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return flag + "";
     }
 
@@ -95,5 +95,6 @@ public class PSBoolean extends SimpleValue {
 //        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
     }
 }

@@ -16,8 +16,8 @@ public class OperandStackTests {
     private String resSuffix = "Step.txt";
 
     static {
-//        interpreter.setCompilingMode(true);
-        interpreter.setCompilingMode(false);
+        interpreter.setCompilingMode(true);
+//        interpreter.setCompilingMode(false);
     }
 
     @Test

@@ -4,13 +4,17 @@ package runtime.graphics.matrix;
  * Created by user on 15.03.14.
  */
 
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.ArrayElement;
 import psObjects.values.composite.PSArray;
+import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
 import runtime.graphics.figures.PSPoint;
+
+import java.awt.geom.AffineTransform;
 
 //todo check in methods if PSObject is array
 public class TransformMatrix implements Cloneable {
@@ -29,12 +33,16 @@ public class TransformMatrix implements Cloneable {
                 new ArrayElement(new PSObject(new PSReal(scale))),
                 new ArrayElement(new PSObject(new PSReal(0.0))),
                 new ArrayElement(new PSObject(new PSReal(0.0)))};
-        matrix = new PSObject(new PSArray(arr));
+        matrix = new PSObject(new PSArray(arr), Attribute.TreatAs.LITERAL);
     }
 
     public TransformMatrix(PSObject arrObj) {
-        if (arrObj.getType() != Type.ARRAY) {
-            return;
+        if (arrObj == null || arrObj.getType() != Type.ARRAY || arrObj.getValue() == null || ((PSArray) arrObj.getValue()).length() != 6) {
+            try {
+                throw new Exception("wrong args for transform matrix constructor");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         matrix = arrObj;
     }
@@ -46,10 +54,10 @@ public class TransformMatrix implements Cloneable {
         PSObject o4 = new PSObject(new PSReal(arr[3]));
         PSObject o5 = new PSObject(new PSReal(arr[4]));
         PSObject o6 = new PSObject(new PSReal(arr[5]));
-        matrix = new PSObject(new PSArray(new PSObject[]{o1, o2, o3, o4, o5, o6}));
+        matrix = new PSObject(new PSArray(new PSObject[]{o1, o2, o3, o4, o5, o6}), Attribute.TreatAs.LITERAL);
     }
 
-    private double[] getDoubleArray() {
+    public double[] getDoubleArray() {
         PSArray psArray = (PSArray) matrix.getValue();
 
         PSObject[] objArray = psArray.getArray();
@@ -182,5 +190,21 @@ public class TransformMatrix implements Cloneable {
         double y = -с / xScale;
         double x = a / xScale;
         return Math.atan2(y, x) * 180 / Math.PI;
+    }
+
+    public AffineTransform toAffineTransform() {
+        double[] arr = getDoubleArray();
+        return new AffineTransform(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
+    }
+
+    public AffineTransform toAffineTransform1() {
+        double[] arr = getDoubleArray();
+        return new AffineTransform(arr[0], arr[2], arr[1], arr[3], arr[4], arr[5]);
+    }
+
+    public static PSArray getIdentityMatrix() {
+        PSObject one = new PSObject(new PSInteger(1));
+        PSObject zero = new PSObject(new PSInteger(0));
+        return new PSArray(new PSObject[]{one, zero, zero, one, zero, zero});
     }
 }

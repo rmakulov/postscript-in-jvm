@@ -38,6 +38,10 @@ public class PSImage {
         return image;
     }
 
+    public static Graphics getDefaultGraphics() {
+        return getInstanceImage().getGraphics();
+    }
+
     public static Graphics getGraphics() {
         Graphics2D graphics = (Graphics2D) getInstanceImage().getGraphics();
         graphics.setTransform(new AffineTransform(getJavaTransformMatrix()));

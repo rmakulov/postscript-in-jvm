@@ -29,6 +29,7 @@ public abstract class Operator extends SimpleValue implements Opcodes {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
     }
 
@@ -66,7 +67,7 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return toString();
     }
 }

@@ -9,17 +9,22 @@ import psObjects.values.composite.PSString;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
-import psObjects.values.simple.BytecodeProc;
 import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
+
+//import psObjects.values.simple.BytecodeProc;
 
 public class PSObject implements Comparable<PSObject>, Opcodes {
     private Value value;
     private Type type;
     private Attribute attribute;
     private Runtime runtime = Runtime.getInstance();
+
+    private static int objExecutionCounter = 0;
+    private int executionsBeforeGarbageCleaning = 10000;
+    private int maxLocalVMSize = 200;
 
     public boolean execute(int procDepth) {
         if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
@@ -32,6 +37,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean interpret(int procDepth) {
+        cleanGarbageByExecutionCounter();
+//        cleanGarbageByLocalVMSize();
         boolean aLoading = runtime.getALoading();
         if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
@@ -42,6 +49,25 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         }
     }
 
+    private void cleanGarbageByExecutionCounter() {
+        objExecutionCounter++;
+        if (objExecutionCounter % executionsBeforeGarbageCleaning == 0) {
+//            System.out.println("Local vm argsCount before gc " + runtime.getLocalVMSize());
+            runtime.cleanGarbage();
+//            System.out.println("Local vm argsCount after gc " + runtime.getLocalVMSize());
+
+        }
+    }
+
+    private void cleanGarbageByLocalVMSize() {
+        int size = runtime.getLocalVMSize();
+        if (size % maxLocalVMSize == 0) {
+//            System.out.println("Local vm argsCount before gc " + size);
+            runtime.cleanGarbage();
+//            System.out.println("Local vm argsCount after gc " + runtime.getLocalVMSize());
+
+        }
+    }
 
     public void compile() {
         value.compile(this);
@@ -337,8 +363,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean isBytecode() {
-        return value instanceof PSBytecode || value instanceof BytecodeProc;
-    }
+        return value instanceof PSBytecode;
+    }//|| value instanceof BytecodeProc;}
 
     public boolean isDictKey() {
         switch (type) {
@@ -360,16 +386,27 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
                 '}';
     }
 
-    public String toStringView() {
-
-        return getValue().toStringView();
-    }
-
-    public boolean isBytecodeProc() {
+    /*public boolean isBytecodeProc() {
         return value instanceof BytecodeProc;
+    }*/
+
+//    public void deepCompile() {
+//        value.deepCompile(this);
+//    }
+
+    public String toStringView() {
+        return getValue().toStringView(this);
     }
 
-    public void deepCompile() {
-        value.deepCompile(this);
+    public boolean isMatrix() {
+        return type == Type.ARRAY && ((PSArray) getValue()).length() == 6;
+    }
+
+    public boolean isExecutable() {
+        return attribute.treatAs == Attribute.TreatAs.EXECUTABLE;
+    }
+
+    public static void resetExecutionCounts() {
+        objExecutionCounter = 0;
     }
 }

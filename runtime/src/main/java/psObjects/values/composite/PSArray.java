@@ -1,6 +1,7 @@
 package psObjects.values.composite;
 
 import procedures.ArrayProcedure;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 
@@ -151,12 +152,26 @@ public class PSArray extends CompositeValue implements Cloneable {
     }
 
     @Override
-    public String toStringView() {
-        StringBuilder sb = new StringBuilder().append("[");
+    public String toStringView(PSObject obj) {
+        String openBracket = "[", closeBracket = "]";
+        if (obj != null) {
+            Attribute.TreatAs treatAs = obj.getAttribute().treatAs;
+            switch (treatAs) {
+                case EXECUTABLE:
+                    openBracket = "{";
+                    closeBracket = "}";
+                    break;
+                default:
+                    openBracket = "[";
+                    closeBracket = "]";
+                    break;
+            }
+        }
+        StringBuilder sb = new StringBuilder().append(openBracket);
         for (ArrayElement arrayElement : array) {
             sb.append(arrayElement.getElementObject().toStringView()).append(" ");
         }
-        return sb.toString().trim() + "]";
+        return sb.toString().trim() + closeBracket;
     }
 
     @Override
@@ -177,7 +192,7 @@ public class PSArray extends CompositeValue implements Cloneable {
 
     @Override
     public String toString() {
-        return "PSArray{" + toStringView() +
+        return "PSArray{" + toStringView(null) +
                 '}';
     }
 }

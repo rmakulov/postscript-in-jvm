@@ -1,5 +1,6 @@
 package psObjects.values.composite;
 
+import psObjects.PSObject;
 import psObjects.Type;
 
 /**
@@ -21,7 +22,7 @@ public class PSGState extends CompositeValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return "--gstate--";
     }
 }

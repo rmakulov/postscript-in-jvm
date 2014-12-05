@@ -7,6 +7,7 @@ import operators.dictionary.CloseChevronOp;
 import operators.dictionary.OpenChevronOp;
 import org.objectweb.asm.Opcodes;
 import psObjects.PSObject;
+import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
@@ -51,8 +52,52 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
         nextYytoken = null;
 
         switch (m_type) {
+            case EXEC_NAME:
+                // name without "/". it is executable by default
+                PSName.executiveCompile(text);
+                break;
+            case LIT_NAME:
+                // name with "/". it is executable by default
+                PSName.literalCompile(text);
+                break;
             case INTEGER:
                 PSInteger.compile(Integer.parseInt(text));
+                break;
+            case OPEN_CURLY_BRACE:
+                runtime.bcGenManager.startCodeGenerator();
+                procDepth++;
+                break;
+            case CLOSE_CURLY_BRACE:
+                if (procDepth == 1) {
+                    CloseCurlyBraceOp.instance.interpret();
+                } else {
+
+                    CloseCurlyBraceOp.compile();
+                    //it is needed only in inner bytecode but after finishing more inner bytecode
+                    runtime.bcGenManager.incInstrCounter();
+                }
+                procDepth--;
+                break;
+            case OPEN_SQUARE_BRACKET:
+                // array
+                OpenSquareBracketOp.instance.compile();
+//                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
+                break;
+            case CLOSE_SQUARE_BRACKET:
+                CloseSquareBracketOp.instance.compile();
+//                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
+                break;
+            case STRINGS:
+                // strings
+                String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
+                PSString.compile(s);
+                break;
+            case OPEN_CHEVRON_BRACKET:
+                OpenChevronOp.instance.compile();
+                break;
+            case CLOSE_CHEVRON_BRACKET:
+                CloseChevronOp.instance.compile();
+//                return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
                 break;
             case REAL:
                 PSReal.compile(Double.parseDouble(text));
@@ -67,51 +112,10 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 int radix = Integer.parseInt(args[0]);
                 PSInteger.compile(Integer.parseInt(args[1], radix));
                 break;
-            case EXEC_NAME:
-                // name without "/". it is executable by default
-                PSName.executiveCompile(text);
-                break;
-            case LIT_NAME:
-                // name with "/". it is executable by default
-                PSName.literalCompile(text);
-                break;
-            case STRINGS:
-                // strings
-                String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
-                PSString.compile(s);
-                break;
-
-            case OPEN_SQUARE_BRACKET:
-                // array
-                OpenSquareBracketOp.instance.compile();
-//                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
-                break;
-            case CLOSE_SQUARE_BRACKET:
-                CloseSquareBracketOp.instance.compile();
-//                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
-                break;
-            case OPEN_CURLY_BRACE:
-                runtime.bcGenManager.startCodeGenerator();
-                procDepth++;
-                break;
-            case CLOSE_CURLY_BRACE:
-                if (procDepth == 1) {
-                    CloseCurlyBraceOp.instance.interpret();
-                } else {
-                    runtime.bcGenManager.endBytecode();
-                    CloseCurlyBraceOp.compile();
-                    //it is needed only in inner bytecode but after finishing more inner bytecode
-                    runtime.bcGenManager.incInstrCounter();
-                }
-                procDepth--;
-                break;
-            case OPEN_CHEVRON_BRACKET:
-                OpenChevronOp.instance.compile();
-                break;
-            case CLOSE_CHEVRON_BRACKET:
-                CloseChevronOp.instance.compile();
-//                return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
-                break;
+            case OPERATOR:
+                PSDictionary dict = (PSDictionary) runtime.getSystemDict().getValue();
+                PSObject operatorName = new PSObject(new PSName(text));
+                dict.get(operatorName).compile();
             case COMMENTS:
                 break;
             default:
@@ -159,8 +163,27 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
         Tokens m_type = nextYytoken.m_type;
         nextYytoken = null;
         switch (m_type) {
+            case EXEC_NAME:
+                // name without "/". it is executable by default
+                return new PSObject(new PSName(text), EXECUTABLE);
+            case LIT_NAME:
+                // name with "/". it is executable by default
+                return new PSObject(new PSName(text), LITERAL);
+            case OPEN_CURLY_BRACE:
+                return new PSObject(PSMark.OPEN_CURLY_BRACE);
+            case CLOSE_CURLY_BRACE:
+                return new PSObject(PSMark.CLOSE_CURLY_BRACE);
             case INTEGER:
                 return new PSObject(new PSInteger(Integer.parseInt(text)));
+            case OPEN_SQUARE_BRACKET:
+                // array
+                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
+            case CLOSE_SQUARE_BRACKET:
+                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
+            case STRINGS:
+                // strings
+                String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
+                return new PSObject(new PSString(s), LITERAL);
             case REAL:
                 return new PSObject(new PSReal(Double.parseDouble(text)));
             case HEX:
@@ -171,29 +194,14 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 String[] args = text.split("#");
                 int radix = Integer.parseInt(args[0]);
                 return new PSObject(new PSInteger(Integer.parseInt(args[1], radix)));
-            case EXEC_NAME:
-                // name without "/". it is executable by default
-                return new PSObject(new PSName(text), EXECUTABLE);
-            case LIT_NAME:
-                // name with "/". it is executable by default
-                return new PSObject(new PSName(text), LITERAL);
-            case STRINGS:
-                // strings
-                String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
-                return new PSObject(new PSString(s), LITERAL);
-            case OPEN_SQUARE_BRACKET:
-                // array
-                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
-            case CLOSE_SQUARE_BRACKET:
-                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
-            case OPEN_CURLY_BRACE:
-                return new PSObject(PSMark.OPEN_CURLY_BRACE);
-            case CLOSE_CURLY_BRACE:
-                return new PSObject(PSMark.CLOSE_CURLY_BRACE);
             case OPEN_CHEVRON_BRACKET:
                 return new PSObject(PSMark.OPEN_CHEVRON_BRACKET);
             case CLOSE_CHEVRON_BRACKET:
                 return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
+            case OPERATOR:
+                PSDictionary dict = (PSDictionary) runtime.getSystemDict().getValue();
+                PSObject operatorName = new PSObject(new PSName(text));
+                return dict.get(operatorName);
             case COMMENTS:
                 break;
             default:

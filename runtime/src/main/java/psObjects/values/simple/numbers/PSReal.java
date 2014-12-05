@@ -41,15 +41,16 @@ public class PSReal extends PSNumber {
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
         mv.visitInsn(DUP);
         mv.visitLdcInsn(value);
-        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(I)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(D)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
 //        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        checkExitCompile();
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return value + "";
     }
 

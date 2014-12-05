@@ -85,7 +85,7 @@ public class PSMark extends SimpleValue {
     }
 
     @Override
-    public String toStringView() {
+    public String toStringView(PSObject object) {
         return "--mark--";
     }
 
