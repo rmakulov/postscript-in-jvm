@@ -48,6 +48,7 @@ public class Interpreter {
     public static void main(String[] args) {
         instance.setCompilingMode(true);
 //        instance.setCompilingMode(false);
+
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -79,7 +80,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube2.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
@@ -97,7 +98,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/gingerbread.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/julia.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/colorcir/.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
+                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/2_trapezoid.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/FractalByAlunJones.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/bytecode.ps")));
@@ -119,7 +120,14 @@ public class Interpreter {
 
 
             } else {
-                Interpreter.instance.run(new File(args[0]));
+                String fileName = args[0];
+                String mode = args[1];
+                if (mode.equals("-i")) {
+                    instance.setCompilingMode(false);
+                } else if (mode.equals("-c")) {
+                    instance.setCompilingMode(false);
+                }
+                System.out.println(Interpreter.instance.run(new File(fileName)));
             }
         } catch (IOException e) {
             System.out.println("File not found.");
