@@ -19,6 +19,7 @@ import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
 import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
 import operators.graphicsState.*;
 import operators.miscellaneous.BindOp;
+import operators.miscellaneous.LanguageLevelOp;
 import operators.miscellaneous.NullOp;
 import operators.miscellaneous.UserTimeOp;
 import operators.operandStackManipulation.*;
@@ -131,6 +132,7 @@ public class DefaultDicts {
         addOperator(BindOp.instance);
         addOperator(UserTimeOp.instance);
         addOperator(NullOp.instance);
+        addOperator(LanguageLevelOp.instance);
     }
 
     private static void addDictionaryOperators() {

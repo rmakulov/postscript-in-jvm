@@ -63,7 +63,7 @@ public class Interpreter {
 //                instance.run(new File("tests/operandStackExamples/0Step.ps"));
 //                instance.run(new File("Examples/рисунок.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));
-//                instance.run(new File("Examples/Ship_Demo.ps"));
+                instance.run(new File("tests/speedTestExamples/Ship_Demo.ps"));
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));
 //                instance.run(new File("Examples/plant2.ps"));
@@ -80,7 +80,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube2.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/6_arcs.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandelbrotset.ps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/flower.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/simpleGraphicsTest1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/4_circles.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/psRay.ps")));
@@ -119,7 +119,14 @@ public class Interpreter {
 
 
             } else {
-                Interpreter.instance.run(new File(args[0]));
+                String fileName = args[0];
+                String mode = args[1];
+                if (mode.equals("-i")) {
+                    instance.setCompilingMode(false);
+                } else if (mode.equals("-c")) {
+                    instance.setCompilingMode(false);
+                }
+                System.out.println(Interpreter.instance.run(new File(fileName)));
             }
         } catch (IOException e) {
             System.out.println("File not found.");
