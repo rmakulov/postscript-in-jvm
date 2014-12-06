@@ -9,7 +9,7 @@ package scanner;
  * from the specification file <tt>/home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/parser/src/main/java/scanner/ps.flex</tt>
  */
 public class Yylex {
-    private boolean need_garbage = false;
+    private final boolean need_garbage = false;
 
     /**
      * This character denotes the end of file
