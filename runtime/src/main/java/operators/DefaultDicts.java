@@ -277,6 +277,7 @@ public class DefaultDicts {
         addOperator(ConcatOp.instance);
         addOperator(ConcatMatrixOp.instance);
         addOperator(MatrixOp.instance);
+        addOperator(InvertMatrixOp.instance);
     }
 
     private static void addControlOperators() {
