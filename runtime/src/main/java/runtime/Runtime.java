@@ -178,13 +178,13 @@ public class Runtime {
         while (!callStack.isEmpty()) {
             Procedure topProcedure = callStack.peek();
             if (topProcedure.hasNext()) {
-                executionCount++;
+//                executionCount++;
                 topProcedure.execNext();
-                if (executionCount % executionsBeforeGarbageCleaning == 0) {
-//                    System.out.println("Local vm argsCount before gc " + localVM.argsCount());
-                    cleanGarbage();
-//                    System.out.println("Local vm argsCount after gc " + localVM.argsCount());
-                }
+//                if (executionCount % executionsBeforeGarbageCleaning == 0) {
+////                    System.out.println("Local vm argsCount before gc " + localVM.argsCount());
+//                    cleanGarbage();
+////                    System.out.println("Local vm argsCount after gc " + localVM.argsCount());
+//                }
             } else {
                 topProcedure.procTerminate();
                 popFromCallStack();
@@ -208,11 +208,18 @@ public class Runtime {
 
         //graphicStack
         for (GState gState : graphicStack) {
-            PSObject o = gState.cTM.getMatrix();
-            PSArray arr = (PSArray) o.getValue();
-            if (!(o.getDirectValue() instanceof LocalRef)) continue;
-            LocalRef ref = (LocalRef) o.getDirectValue();
-            getUsingLocalVMIndexesByRef(indexes, ref);
+            PSObject oMatrix = gState.cTM.getMatrix();
+            PSObject oFont = gState.getFont();
+            //PSArray arr = (PSArray) oMatrix.getValue();
+            if ((oMatrix.getDirectValue() instanceof LocalRef)) {
+                LocalRef ref = (LocalRef) oMatrix.getDirectValue();
+                getUsingLocalVMIndexesByRef(indexes, ref);
+            }
+
+            if (oFont != null && (oFont.getDirectValue() instanceof LocalRef)) {
+                LocalRef ref = (LocalRef) oFont.getDirectValue();
+                getUsingLocalVMIndexesByRef(indexes, ref);
+            }
         }
         LocalRef locRefCTM = getGState().getLocalRefCTM();
         //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;

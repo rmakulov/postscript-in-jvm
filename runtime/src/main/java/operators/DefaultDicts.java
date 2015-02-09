@@ -262,6 +262,8 @@ public class DefaultDicts {
         addOperator(StringWidthOp.instance);
         addOperator(ScaleFontOp.instance);
         addOperator(SetFontOp.instance);
+        addOperator(MakeFontOp.instance);
+        addOperator(SelectFontOp.instance);
     }
 
     private static void addStringOperators() {

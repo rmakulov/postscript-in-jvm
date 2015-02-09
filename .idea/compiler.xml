@@ -24,6 +24,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="graphicsEngine" />
         <module name="interpreter" />
         <module name="parser" />
         <module name="runtime" />
@@ -32,4 +33,3 @@
     </annotationProcessing>
   </component>
 </project>
-

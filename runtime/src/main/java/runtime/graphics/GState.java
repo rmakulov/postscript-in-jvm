@@ -19,7 +19,16 @@ public class GState extends CompositeValue {
     public PSPath currentPath;
     public PSPath clippingPath;
     public TransformMatrix cTM;
-    public PSObject font;
+
+    public PSObject getFont() {
+        return font;
+    }
+
+    public void setFont(PSObject font) {
+        this.font = font;
+    }
+
+    private PSObject font;
     public GraphicsSettings graphicsSettings;
     private boolean madeByGSaveOp;//save call gsave with false arg
 

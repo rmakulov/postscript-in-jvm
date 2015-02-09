@@ -1,6 +1,7 @@
 package operators.common;
 
 import procedures.ForAllProcedure;
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.composite.PSDictionary;
@@ -65,7 +66,7 @@ public class ForAllOp extends Operator {
                 String s = ((PSString) elems.getValue()).getString();
                 beforeArray = new PSObject[s.length()];
                 for (int j = 0; j < s.length(); j++) {
-                    beforeArray[j] = new PSObject(new PSString(s.charAt(j) + ""));
+                    beforeArray[j] = new PSObject(new PSString(s.charAt(j) + ""), Attribute.TreatAs.LITERAL);
                 }
                 break;
             default:

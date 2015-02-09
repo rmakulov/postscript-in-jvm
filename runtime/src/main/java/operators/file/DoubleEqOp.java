@@ -14,7 +14,7 @@ public class DoubleEqOp extends Operator {
 
     @Override
     public void interpret() {
-        runtime.popFromOperandStack();
+        System.out.println(runtime.popFromOperandStack().toStringView());
     }
 
     @Override

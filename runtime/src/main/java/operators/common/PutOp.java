@@ -69,14 +69,22 @@ public class PutOp extends Operator {
     }
 
     private void putString(PSObject src, PSObject key, PSObject value) {
-        if (key.getType() != Type.INTEGER || value.getType() != Type.INTEGER) {
+
+        boolean isChar = value.getType() == Type.STRING && ((PSString) value.getValue()).length() == 1;
+        if (key.getType() != Type.INTEGER || !(value.getType() == Type.INTEGER || isChar)) {
             runtime.pushToOperandStack(src);
             runtime.pushToOperandStack(key);
             runtime.pushToOperandStack(value);
             return;
         }
         int iIndex = ((PSInteger) key.getValue()).getIntValue();
-        byte character = (byte) ((PSInteger) value.getValue()).getIntValue();
+        byte character;
+        if (isChar) {
+            character = ((byte) (((PSString) value.getValue()).get(0)).getIntValue());
+        } else {
+            character = (byte) ((PSInteger) value.getValue()).getIntValue();
+        }
+
         PSString string = (PSString) src.getValue();
         src.setValue(string.put(iIndex, character));
     }

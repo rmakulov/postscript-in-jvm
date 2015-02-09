@@ -3,11 +3,13 @@ package runtime.graphics.frame;
 import psObjects.PSObject;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.PSName;
+import psObjects.values.simple.PSNull;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
 import runtime.graphics.GState;
 import runtime.graphics.GraphicsSettings;
 import runtime.graphics.figures.PSPoint;
+import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
 
 import java.awt.*;
@@ -119,10 +121,16 @@ public class PSDrawer {
     public void show(String str) {
         Graphics2D g2 = (Graphics2D) PSImage.getDefaultGraphics();
         GState gState = runtime.getGState();
-        PSDictionary fontDictionary = (PSDictionary) gState.font.getValue();
+        PSDictionary fontDictionary = (PSDictionary) gState.getFont().getValue();
         String nameFont = ((PSName) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getStrValue();
         int scaleFont = ((PSInteger) fontDictionary.get(new PSObject(new PSName("scale"))).getValue()).getIntValue();
+        PSObject matrix = fontDictionary.get(new PSObject(new PSName("matrix")));
         Font font = new Font(nameFont, Font.PLAIN, scaleFont);
+        if (!matrix.getValue().equals(PSNull.NULL)) {
+            AffineTransform trans = new TransformMatrix(matrix).toAffineTransform();
+            font = new Font(nameFont, Font.PLAIN, 40);
+            font.deriveFont(trans);
+        }
         g2.setFont(font);
         int psX = (int) gState.currentPoint.getX();
         int psY = (int) gState.currentPoint.getY();
@@ -147,3 +155,4 @@ public class PSDrawer {
         repaintImage();
     }
 }
+

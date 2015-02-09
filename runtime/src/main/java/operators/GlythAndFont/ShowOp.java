@@ -20,7 +20,7 @@ public class ShowOp extends AbstractGraphicOperator {
     @Override
     public void interpret() { // string show --
         PSObject oStr = runtime.popFromOperandStack();
-        if (oStr == null || !(oStr.getType() == Type.STRING) || runtime.getGState().font == null) {
+        if (oStr == null || !(oStr.getType() == Type.STRING) || runtime.getGState().getFont() == null) {
             runtime.pushToOperandStack(oStr);
             return;
         }

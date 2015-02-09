@@ -1,5 +1,6 @@
 package operators.string;
 
+import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSString;
@@ -21,7 +22,7 @@ public class StringOp extends Operator {
     public void interpret() {
         if (runtime.getOperandStackSize() < 1) return;
         PSObject o = runtime.popFromOperandStack();
-        if (o.getType() == Type.INTEGER) {
+        if (o.getType() != Type.INTEGER) {
             runtime.pushToOperandStack(o);
             return;
         }
@@ -31,7 +32,7 @@ public class StringOp extends Operator {
             runtime.pushToOperandStack(o);
             return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSString(size)));
+        runtime.pushToOperandStack(new PSObject(new PSString(size), Attribute.TreatAs.LITERAL));
     }
 
     @Override

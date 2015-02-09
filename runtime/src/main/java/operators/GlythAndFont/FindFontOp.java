@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.PSName;
+import psObjects.values.simple.PSNull;
 import psObjects.values.simple.numbers.PSInteger;
 
 import java.util.ArrayList;
@@ -27,13 +28,14 @@ public class FindFontOp extends AbstractGraphicOperator {
             runtime.pushToOperandStack(oName);
             return;
         }
-        String str = ((PSName) oName.getValue()).getStrValue();
         ArrayList<PSObject> arr = new ArrayList<PSObject>();
         // {name : namefont, scale: scalefont}
         arr.add(new PSObject(new PSName("name")));
         arr.add(oName);
         arr.add(new PSObject(new PSName("scale")));
         arr.add(new PSObject(new PSInteger(0)));
+        arr.add(new PSObject(new PSName("matrix")));
+        arr.add(new PSObject(PSNull.NULL));
 
         PSObject oDict = new PSObject(new PSDictionary(arr));
         runtime.pushToOperandStack(oDict);

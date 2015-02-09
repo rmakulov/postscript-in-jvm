@@ -21,7 +21,7 @@ public class SetFontOp extends AbstractGraphicOperator {
         if (oDict == null || oDict.getType() != Type.DICTIONARY) {
             runtime.pushToOperandStack(oDict);
         }
-        runtime.getGState().font = oDict;
+        runtime.getGState().setFont(oDict);
     }
 
     @Override
