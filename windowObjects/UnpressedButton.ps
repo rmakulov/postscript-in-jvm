@@ -1,0 +1,32 @@
+/q { gsave } bind def
+/Q { grestore } bind def
+/cm { 6 array astore concat } bind def
+/w { setlinewidth } bind def
+/J { setlinecap } bind def
+/j { setlinejoin } bind def
+/M { setmiterlimit } bind def
+/d { setdash } bind def
+/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
+      0 exch rlineto 0 rlineto closepath } bind def
+/S { stroke } bind def
+/f { fill } bind def
+/g { setgray } bind def
+%%EndProlog
+0.5 0.5 scale
+q 0 0 418 108 rectclip q
+0.901961 g
+0.395 107.265 417.141 -106.859 re f
+0.501961 g
+0.8 w
+0 J
+0 j
+[] 0.0 d
+4 M q 1 0 0 -1 0 107.675003 cm
+0.395 0.41 417.141 106.859 re S
+Q
+
+/Times-Roman findfont 64 scalefont setfont
+150 30 translate 0 0 moveto 1 0 0 setrgbcolor (Red) show 
+Q Q
+showpage
+%%EOF

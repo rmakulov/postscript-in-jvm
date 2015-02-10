@@ -1,0 +1,149 @@
+%! 
+%grad3.ps 
+%a spinning gradient animation 
+%run with -dNOPAUSE 
+%and adjust these sleep arguments if necessary 
+/smallpause { 50 sleep } def 
+/pagepause { 500 sleep } def 
+
+/vmreclaim where{pop -2 vmreclaim}if 
+/sleep { 
+    usertime add { 
+        10 { 
+            1 100000 div pop %busy 
+            .1 sin 257 cos atan pop %busy busy 
+        } repeat 
+        dup usertime le {exit}if 
+    } loop pop 
+} def 
+
+/fix 1.5 def 
+/matrix1 matrix def 
+/matrix2 matrix def 
+/matrix3 matrix def 
+/mats [ 
+    {1 exch div neg 1 add  1 matrix1 scale} %horz 
+    {1 exch div neg 1 add  1 exch matrix1 scale} %vert 
+    {1 exch div neg 1 add  dup matrix1 scale} %pyramid 
+    {2 index exch 2 exch div neg 1 add  dup matrix1 scale 
+        %exch 360 mul 360 exch sub 
+        %exch dup atan fix mul 
+        %exch fix 180 mul mul 
+        %exch 1 sub neg 90 mul fix mul 
+        exch 360 exch div fix mul 
+        matrix2 rotate 
+        exch 
+        matrix3 concatmatrix } %spiral? 
+    ] def 
+
+% n type  makematrix  n matrix 
+/makematrix { 
+    exch dup 3 2 roll % n n type 
+    mats exch get exec 
+} def 
+
+
+% da  polyangle n get exec  - 
+%produce a special-effect rotation angle and its inverse 
+/polyangle [ 
+    {dup -2 div 90 add dup neg} %da 90-da/2 da/2-90%flat bottom 
+    {-90 90} % da -90 90  %pointy top 
+    ] def 
+
+% angletype n  poly  - 
+/poly { 
+    360 1 index div % pa n da 
+    polyangle 4 -1 roll get exec % n da -angle angle 
+    rotate 3 1 roll % -angle n da 
+    1 0 moveto { ?? rotate 1 0 lineto } % -angle n da {...} 
+    dup 0 4 -1 roll put % -angle n {da...} 
+    repeat % -angle 
+    closepath % -angle 
+    rotate % 
+} def 
+
+% n  shape  - 
+/shape { 
+    dup 0 eq { pop 0 0 1 0 360 arc fill }{ %zero==infinity 
+        dup 2 mod 1 eq { %odd 
+            dup 1 eq { pop 0 1 moveto 0 -1 lineto %one==vertical line 
+                gsave matrix defaultmatrix setmatrix stroke grestore 
+            }{ %odd&!=1 
+                1 exch poly fill %pointy 
+            } ifelse 
+        }{ %even 
+            dup 2 eq { pop 1 0 moveto -1 0 lineto %two==horiz line 
+                gsave matrix defaultmatrix setmatrix stroke grestore 
+            }{ %even&!=2 
+                0 exch poly fill %flat 
+            } ifelse 
+        } ifelse 
+    } ifelse 
+} def 
+%0 1 20 { 300 400 translate 100 100 scale shape showpage } for 
+
+% n  makeshape  {shape} 
+/makeshape { 
+    [ exch /shape cvx ] cvx 
+} def 
+
+
+% n ? ? g0 gF  makegray  grayproc 
+/makegray { 
+    1 index sub %n ? ? g0 gF-g0 
+    4 index 1 sub div %n ? ? g0 dg/(n-1) 
+    exch setgray %n ? ? dg/(n-1) 
+    %[ exch /add cvx {dup 1 gt{pop 0}if} /exec cvx ] cvx 
+    { ?? add dup 1 gt {1 sub} if } dup 0 4 -1 roll put 
+} def 
+
+% n matrix shape grayproc  agrad  - 
+/agrad { 3 dict begin 
+    /gray exch def /shape exch def /mat exch def 
+    gsave 
+    ({ //shape exec smallpause //mat concat 
+     currentgray //gray exec setgray }) 
+    token pop exch pop end repeat 
+    grestore 
+} def 
+
+/newpage { 
+    initgraphics 
+    300 390 translate 
+    290 350 scale 
+} def 
+
+[   { 5 2 makematrix 3 makeshape .3 .7 makegray agrad } 
+    { 1.4 dup scale 50 2 makematrix 
+        .9 dup 3 2 roll scale 4 makeshape 1 0 makegray agrad } 
+    { 20 0 makematrix 0 makeshape .2 1 makegray agrad } 
+    { 20 0 makematrix { 0 .5 .5 90 -90 arc fill } 0 1 makegray agrad 
+      20 0 makematrix { 0 -.5 .5 90 -90 arcn fill } 0 1 makegray 
+agrad } 
+    { 45 rotate 30 2 makematrix 
+        .8 dup 3 2 roll scale 4 makeshape 1 0 makegray agrad } 
+] { 
+    newpage 
+    exec 
+    showpage 
+} clear%forall %some silly gradient "letters" 
+
+newpage 
+3 1 20 { % sh   %select a shape 0..inf 
+    3 1 3 { % sh m   %select a matrix 0..3 
+        2 copy % sh m sh m 
+        0 .10 1 % sh m sh m st inc max %select a rotation adjustment 
+        { /fix exch def 
+            20 exch makematrix % sh m sh m mat 
+            3 -1 roll makeshape % sh m m mat shape 
+            .1 .9 makegray % sh m m mat shape gray 
+            agrad % sh m 
+            pagepause 
+            showpage newpage 
+            2 copy % sh m sh m 
+        } for % sh m sh m 
+    } for % sh m sh m 
+    pop pop pop pop 
+} for 
+
+%eof 
