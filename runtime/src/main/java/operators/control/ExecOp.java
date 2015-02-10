@@ -2,7 +2,6 @@ package operators.control;
 
 import procedures.ArrayProcedure;
 import psObjects.PSObject;
-import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
@@ -28,8 +27,11 @@ public class ExecOp extends Operator {
             } else {
                 fail();
             }
-        } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
+        } else if (psObject.isExecutableString()) {
             return psObject.interpret(0);
+        } else if (psObject.isFile()) {
+            // do nothing
+            runtime.pushToOperandStack(psObject);
         } else {
             if (runtime.isCompiling) {
                 return psObject.execute(0);

@@ -377,6 +377,14 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         }
     }
 
+    public boolean isExecutableString() {
+        return type == Type.STRING && xcheck();
+    }
+
+    public boolean isFile() {
+        return type == Type.FILE;
+    }
+
     @Override
     public String toString() {
         return "PSObject{" +
