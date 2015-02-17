@@ -20,6 +20,8 @@ import psObjects.values.simple.PSNull;
 import runtime.avl.Pair;
 import runtime.compiler.BytecodeGeneratorManager;
 import runtime.compiler.DynamicClassLoader;
+import runtime.events.Event;
+import runtime.events.EventQueue;
 import runtime.graphics.GState;
 import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;
@@ -49,6 +51,7 @@ public class Runtime {
     private DictionaryStack dictionaryStack = new DictionaryStack();
     private GraphicStack graphicStack = new GraphicStack();
     private CallStack callStack = new CallStack();
+    private EventQueue eventQueue = new EventQueue();
     private boolean isGlobal = false;
     private PSObject userDict, globalDict, systemDict;
 
@@ -600,4 +603,17 @@ public class Runtime {
     public int getLocalVMSize() {
         return localVM.size();
     }
+
+    public void addEvent(Event event) {
+        eventQueue.add(event);
+    }
+
+/*    public Event getEvent(){
+        return eventQueue.poll();
+    }
+
+    public boolean eventQueueIsEmpty(){
+//        System.out.print("isEmpty ");
+        return eventQueue.isEmpty();
+    }*/
 }

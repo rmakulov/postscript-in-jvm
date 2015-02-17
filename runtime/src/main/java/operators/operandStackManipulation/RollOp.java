@@ -24,6 +24,7 @@ public class RollOp extends Operator {
         if (!(oJ.getType() == Type.INTEGER && oN.getType() == Type.INTEGER)) {
             runtime.pushToOperandStack(oN);
             runtime.pushToOperandStack(oJ);
+            fail();
             return;
         }
         PSInteger psN = (PSInteger) oN.getValue();

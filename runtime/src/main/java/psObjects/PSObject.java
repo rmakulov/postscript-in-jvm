@@ -417,4 +417,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     public static void resetExecutionCounts() {
         objExecutionCounter = 0;
     }
+
+    public boolean isString() {
+        return type == Type.STRING;
+    }
 }

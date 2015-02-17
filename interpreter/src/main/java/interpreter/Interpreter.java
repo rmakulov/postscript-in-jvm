@@ -65,7 +65,8 @@ public class Interpreter {
 //                instance.run(new File("Examples/masterpiece.ps"));
 //                System.out.println(instance.run(new File("tests/otherExamples/affineIfs.ps")));
 //                System.out.println(instance.run(new File("tests/otherExamples/invertStr.ps")));
-                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
+//                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
+                System.out.println(instance.run(new File("C:/Users/User/Dropbox/postscript_in_jvm/graphicsEngine/basics/drawButton.ps")));
 //                instance.run(new File("tests/speedTestExamples/Ship_Demo.ps"));
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));

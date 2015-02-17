@@ -15,8 +15,8 @@ public class QuitOp extends Operator {
 
     @Override
     public void interpret() {
-//        System.out.println("Interpreter quited");
-//        System.exit(0);
+        System.out.println("Interpreter quited");
+        System.exit(0);
     }
 
     @Override

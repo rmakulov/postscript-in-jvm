@@ -1,0 +1,25 @@
+%PROLOG
+/window <</x 0 /y 0 /height 843 /width 651 /proc {} /parent null /children null /eType null>> def
+/addElement {gelements maxElementNumber 3 2 roll put  /maxElementNumber maxElementNumber 1 add def } def
+/maxElementNumber 0 def
+/button {
+    /proc exch def
+    /parent exch def
+    /label exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paintProc {(C:\\Users\\User\\Dropbox\\postscript_in_jvm\\graphicsEngine\\basics\\UnpressedButton.ps) (r) file run} def
+    /buttonDict <</x x /y y /h h /w w /proc {proc}  /parent parent /children null  /paint {paintProc} /eType /CLICK >> def
+    buttonDict addElement
+    parent /children [buttonDict parent /children get] put
+    x y h w label paintProc
+} def
+%END_PROLOG
+
+/gelements 1 dict def
+window addElement
+
+
+

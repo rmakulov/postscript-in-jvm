@@ -1,7 +1,12 @@
 package runtime.graphics.frame;
 
+import runtime.events.Event;
+import runtime.events.EventType;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Created by Дмитрий on 24.03.14.
@@ -12,6 +17,7 @@ public class PSFrame extends JFrame {
     public int psHeight = 1085;
     //    public int psWidth = 500;
     public int psWidth = 815;
+    private final JPanel panel;
 
     public static PSFrame getInstance() {
         if (ourInstance == null) {
@@ -31,7 +37,7 @@ public class PSFrame extends JFrame {
         setLocation(0, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBackground(Color.GRAY);
-        JPanel panel = new JPanel() {
+        panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -40,6 +46,15 @@ public class PSFrame extends JFrame {
                 g2.drawImage(PSImage.getInstanceImage(), null, 0, 0);
             }
         };
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                synchronized (this) {
+                    //System.out.println(e);
+                    runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.CLICK));
+                }
+            }
+        });
 //        panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         add(new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
@@ -50,5 +65,9 @@ public class PSFrame extends JFrame {
 //        ourInstance.setVisible(false);
 //        ourInstance.repaint();
         ourInstance = new PSFrame();
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 }

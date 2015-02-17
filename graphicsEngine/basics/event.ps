@@ -1,0 +1,26 @@
+/snapshot save def
+/evType exch def
+/evX exch def
+/evY exch def
+/checkElement {
+    /element exch def
+    /tType element /eType get  def
+    tType evType eq {
+
+        /x element /x get def
+        /y element /y get def
+        /w element /w get def
+        /h element /h get def
+
+        evX x ge evY y ge and
+        %pstack
+        x w add evX ge y h add evY ge and
+        %pstack
+        and
+        {element /proc get exec exit}
+        if
+    } if
+} def
+/search {maxElementNumber 1 sub -1 0 {gelements exch get checkElement} for} def
+search
+snapshot restore
