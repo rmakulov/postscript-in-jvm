@@ -21,6 +21,6 @@
         if
     } if
 } def
-/search {maxElementNumber 1 sub -1 0 {gelements exch get checkElement} for} def
+/search {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get checkElement} for} def
 search
 snapshot restore

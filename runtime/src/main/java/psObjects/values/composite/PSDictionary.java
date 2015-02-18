@@ -4,8 +4,10 @@ import psObjects.PSObject;
 import psObjects.Type;
 import runtime.avl.AvlNode;
 import runtime.avl.AvlTree;
+import runtime.avl.Pair;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class PSDictionary extends CompositeValue {
@@ -108,6 +110,27 @@ public class PSDictionary extends CompositeValue {
     @Override
     public String toStringView(PSObject object) {
         return "--dict--";
+    }
+
+    @Override
+    public String toString() {
+        Iterator<Pair<PSObject, PSObject>> iterator = tree.iterator();
+        StringBuilder sb = new StringBuilder("PSDictionary{ ");
+        while (iterator.hasNext()) {
+            Pair<PSObject, PSObject> next = iterator.next();
+            PSObject key = next.getKey();
+            PSObject value = next.getValue();
+//            if(key.getType() ==Type.NAME && ((PSName) key.getValue()).getStrValue().equals("parent")){
+//                continue;
+//            }
+            sb.append("(").append(key).append(", ").append(value).append(") \n");
+
+        }
+
+        return sb.append("}").
+
+                toString();
+
     }
 
     public static int getLastVersion() {

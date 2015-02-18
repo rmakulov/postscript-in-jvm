@@ -50,7 +50,7 @@ public class PSFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 synchronized (this) {
-                    //System.out.println(e);
+//                    System.out.println(e);
                     runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.CLICK));
                 }
             }

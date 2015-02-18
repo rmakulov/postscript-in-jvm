@@ -38,6 +38,9 @@ public class PSName extends SimpleValue {
 //        System.out.println("DictStackVersion in PSName " + strValue + ": " + runtime.getDictStackVersion());
         PSObject value = runtime.findValue(obj);
         String procName = ((PSName) obj.getValue()).getStrValue();
+//        if (procName.equals("search")){
+//            PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
+//            System.out.println(dict);        }
         while (value.getType() == Type.NAME && !(value.isBytecode()) && value.treatAs() == EXECUTABLE) {
             procName = procName + " -> " + ((PSName) value.getValue()).getStrValue();
             value = runtime.findValue(value);

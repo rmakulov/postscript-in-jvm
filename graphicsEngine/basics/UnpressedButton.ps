@@ -1,3 +1,5 @@
+gsave
+
 /q { gsave } bind def
 /Q { grestore } bind def
 /cm { 6 array astore concat } bind def
@@ -12,6 +14,7 @@
 /f { fill } bind def
 /g { setgray } bind def
 %%EndProlog
+
 
 %/proc exch def
 /label exch def
@@ -41,3 +44,5 @@ Q
 w 3 div w 3 div translate 0 0 moveto 1 0 0 setrgbcolor label show
 Q Q
 %%EOF
+
+grestore

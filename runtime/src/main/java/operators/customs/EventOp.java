@@ -23,7 +23,7 @@ public class EventOp extends Operator {
             fail();
             return;
         }
-        new PSObject(new PSString("(C:\\Users\\User\\Dropbox\\postscript_in_jvm\\graphicsEngine\\basics\\event.ps) (r) file run")).interpret(0);
+        new PSObject(new PSString("(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps) (r) file run")).interpret(0);
         if (!runtime.isCompiling) {
             runtime.executeCallStack();
         }
