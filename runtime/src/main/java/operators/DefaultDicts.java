@@ -246,6 +246,7 @@ public class DefaultDicts {
         addOperator(GRestoreOp.instance);
         addOperator(GRestoreAllOp.instance);
         addOperator(GSaveOp.instance);
+        addOperator(InitGraphicsOp.instance);
         addOperator(SetGrayOp.instance);
         addOperator(SetHsbColorOp.instance);
         addOperator(SetLineCapOp.instance);

@@ -608,7 +608,11 @@ public class Runtime {
         eventQueue.add(event);
     }
 
-/*    public Event getEvent(){
+    public GraphicStack getGraphicStack() {
+        return graphicStack;
+    }
+
+    /*    public Event getEvent(){
         return eventQueue.poll();
     }
 
