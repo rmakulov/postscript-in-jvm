@@ -1,4 +1,4 @@
-/snapshot save def
+%/snapshot save def
 /evType exch def
 /evX exch def
 /evY exch def
@@ -13,9 +13,7 @@
         /h element /h get def
 
         evX x ge evY y ge and
-        %pstack
         x w add evX ge y h add evY ge and
-        %pstack
         and
         {element /proc get exec exit}
         if
@@ -23,4 +21,4 @@
 } def
 /search {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get checkElement} for} def
 search
-snapshot restore
+%snapshot restore

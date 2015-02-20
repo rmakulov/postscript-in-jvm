@@ -2,6 +2,7 @@ package psObjects.values.composite;
 
 import psObjects.PSObject;
 import psObjects.Type;
+import psObjects.values.simple.PSName;
 import runtime.avl.AvlNode;
 import runtime.avl.AvlTree;
 import runtime.avl.Pair;
@@ -120,9 +121,9 @@ public class PSDictionary extends CompositeValue {
             Pair<PSObject, PSObject> next = iterator.next();
             PSObject key = next.getKey();
             PSObject value = next.getValue();
-//            if(key.getType() ==Type.NAME && ((PSName) key.getValue()).getStrValue().equals("parent")){
-//                continue;
-//            }
+            if (key.getType() == Type.NAME && ((PSName) key.getValue()).getStrValue().equals("parent")) {
+                continue;
+            }
             sb.append("(").append(key).append(", ").append(value).append(") \n");
 
         }

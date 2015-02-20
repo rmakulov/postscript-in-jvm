@@ -1,0 +1,5 @@
+/array {1 2 3 4 5} def
+/array /array load def
+/a 6 def
+/b { /array load exec a /a a 1 add def a add} def
+b

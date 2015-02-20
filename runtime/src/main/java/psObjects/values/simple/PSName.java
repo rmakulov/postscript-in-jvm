@@ -97,6 +97,7 @@ public class PSName extends SimpleValue {
             mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
             mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getALoading", "()Z", false);
             mv.visitInsn(IADD);
+            //Если версии совпадают и aloading==true, то то на стеке останется 1 (=0+1) и происходит вызов имени, и оно просто кладется на стек
 
             Label l1 = new Label();
             mv.visitJumpInsn(IFEQ, l1);
@@ -164,7 +165,7 @@ public class PSName extends SimpleValue {
 //        runtime.pushToOperandStack(psObject);
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
@@ -181,6 +182,8 @@ public class PSName extends SimpleValue {
         mv.visitInsn(ICONST_0);
         mv.visitInsn(IRETURN);
         mv.visitLabel(l8);
+        mv.visitFrame(F_SAME, 0, null, 0, null);
+
     }
 
     @Override

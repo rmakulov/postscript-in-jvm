@@ -46,8 +46,8 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-//        instance.setCompilingMode(true);
-        instance.setCompilingMode(false);
+        instance.setCompilingMode(true);
+//        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -68,6 +68,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
 //                System.out.println(instance.run(new File("C:/Users/User/Dropbox/postscript_in_jvm/graphicsEngine/basics/drawButton.ps")));
                 System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton1.ps")));
 //                instance.run(new File("tests/speedTestExamples/Ship_Demo.ps"));
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));

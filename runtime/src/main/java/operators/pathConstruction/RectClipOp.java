@@ -61,8 +61,14 @@ public class RectClipOp extends AbstractGraphicOperator {
                 new PSObject(ClipOp.instance),
                 new PSObject(GRestoreOp.instance)
         });
-        runtime.pushToCallStack(new ArrayProcedure("RectClip", new PSObject(procArr, Attribute.TreatAs.EXECUTABLE)));
-
+        ArrayProcedure rectClip = new ArrayProcedure("RectClip", new PSObject(procArr, Attribute.TreatAs.EXECUTABLE));
+        if (!runtime.isCompiling) {
+            runtime.pushToCallStack(rectClip);
+        } else {
+            while (rectClip.hasNext()) {
+                rectClip.execNext();
+            }
+        }
 
     }
 

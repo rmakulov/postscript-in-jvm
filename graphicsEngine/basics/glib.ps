@@ -1,7 +1,9 @@
 %PROLOG
-/window <</label (window) /x 0 /y 0 /height 843 /width 651 /proc {} /parent null /children null /eType null>> def
+%---
+/window <</label (window) /x 0 /y 0 /height 843 /width 651 /proc {} /parent null /children null /paint {pop} /eType null>> def
+%---
 /addElement {gelements gelements /maxElementNumber get 3 2 roll put  gelements /maxElementNumber gelements /maxElementNumber get 1 add put } def
-%/maxElementNumber 0 def
+%---
 /button {
     /proc exch def
     /parent exch def
@@ -10,12 +12,47 @@
     /w exch def
     /y exch def
     /x exch def
-    /paintProc {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps) (r) file run} def
-    /buttonDict <</label label /x x /y y /h h /w w /proc {proc}  /parent parent /children null  /paint {paintProc} /eType /CLICK >> def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /h get
+                bd /w get
+                bd /label get
+        (/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps) (r) file run
+        } def
+    /buttonDict <</label label /x x /y y /h h /w w /proc /proc load /parent parent /children null  /paint /paint load /eType /CLICK >> def
     buttonDict addElement
     parent /children [buttonDict parent /children get] put
-    x y h w label paintProc
+    %x y h w label paint
+    buttonDict paint
 } def
+%---
+/invertString {
+    dup
+    /len exch length def
+    /outStr len string def
+    /i len 1 sub def
+    {outStr i  3 2 roll put /i i 1 sub def} forall
+    outStr
+} def
+%---
+/repaintAll {
+      init
+      0 1 gelements /maxElementNumber get 1 sub {gelements exch get dup /paint get exec} for
+    } def
+%---
+/invertLabels {
+    0 1 gelements /maxElementNumber get 1 sub
+    {
+        gelements exch get
+        dup
+            /label get
+        invertString
+        /label exch put
+    } for
+} def
+
+
 %END_PROLOG
 
 /gelements 1 dict def

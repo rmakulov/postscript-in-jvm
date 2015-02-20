@@ -50,7 +50,8 @@ public class ForOp extends Operator {
         if (!runtime.isCompiling && proc.isProc()) {
             runtime.pushToCallStack(new ForProcedure(start, incr, end, proc));
         } else if (runtime.isCompiling && proc.isBytecode()) {
-            for (double i = start; i <= end; i += incr) {
+            double signum = Math.signum(incr);
+            for (double i = start; signum > 0 ? i <= end : i >= end; i += incr) {
                 runtime.pushToOperandStack(new PSObject(new PSReal(i)));
                 if (!proc.execute(0)) break;
             }
@@ -63,7 +64,9 @@ public class ForOp extends Operator {
         if (!runtime.isCompiling && proc.isProc()) {
             runtime.pushToCallStack(new IntForProcedure(start, incr, end, proc));
         } else if (runtime.isCompiling && proc.isBytecode()) {
-            for (int i = start; i <= end; i += incr) {
+            float signum = Math.signum(incr);
+            /*(i <= end) && (signum >0) || (i >= end)  && (signum <0)*/
+            for (int i = start; signum > 0 ? i <= end : i >= end; i += incr) {
                 runtime.pushToOperandStack(new PSObject(new PSInteger(i)));
                 if (!proc.execute(0)) break;
             }
