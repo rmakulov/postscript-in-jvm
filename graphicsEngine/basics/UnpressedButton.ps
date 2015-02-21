@@ -24,29 +24,28 @@ gsave
 /x exch def
 %/x 50 def
 %/y 50 def
-%/h 400 def
-%/w 300 def
+%/h 100 def
+%/w 400 def
 %/label (Button) def
 x y translate
-q % 0 0 h 1 add w 1 add rectclip
+q % 0 0 w 1 add h 1 add rectclip
 q
 0.901961 g
-1 w h w neg re f
+1 h w h neg re f
 0.501961 g
-0.8 w
+0.8 setlinewidth
 0 J
 0 j
 [] 0.0 d
-4 M q 1 0 0 -1 0 w cm
-0 0 h w re S
+4 M q 1 0 0 -1 0 h cm
+0 0 w h re S
 Q
 
 /Times-Roman findfont 64 scalefont setfont
-w 3 div w 3 div translate 0 0 moveto 1 0 0 setrgbcolor label show
+w 3 div h 3 div translate 0 0 moveto 1 0 0 setrgbcolor label show
 Q Q
 %%EOF
 
 grestore
-pop pop pop pop
 
 
