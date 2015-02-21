@@ -4,8 +4,14 @@
 /evY exch def
 /checkElement {
     /element exch def
-    /tType element /eType get  def
-    tType evType eq {
+    /eventProcs element /eventProcs get def
+    eventProcs evType known
+
+
+    %/tType element /eType get  def
+    %tType evType eq
+
+    {
 
         /x element /x get def
         /y element /y get def
@@ -15,7 +21,8 @@
         evX x ge evY y ge and
         x w add evX ge y h add evY ge and
         and
-        {element /proc get exec exit}
+        %{element /proc get exec exit}
+        {element eventProcs evType get exec exit}
         if
     } if
 } def

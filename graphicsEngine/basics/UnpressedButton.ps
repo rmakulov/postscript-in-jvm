@@ -1,5 +1,4 @@
 gsave
-
 /q { gsave } bind def
 /Q { grestore } bind def
 /cm { 6 array astore concat } bind def
@@ -13,6 +12,7 @@ gsave
 /S { stroke } bind def
 /f { fill } bind def
 /g { setgray } bind def
+/rg { setrgbcolor } bind def
 %%EndProlog
 
 
@@ -24,28 +24,43 @@ gsave
 /x exch def
 %/x 50 def
 %/y 50 def
-%/h 100 def
 %/w 400 def
+%/h 100 def
 %/label (Button) def
+
+
 x y translate
-q % 0 0 w 1 add h 1 add rectclip
-q
-0.901961 g
-1 h w h neg re f
-0.501961 g
+
+q q
+%fill all the button
+0.801961 g
+0 h w  h neg re f
+
+%main frame of button
+0.501961 0.45098 0.501961 rg
 0.8 setlinewidth
 0 J
 0 j
 [] 0.0 d
-4 M q 1 0 0 -1 0 h cm
-0 0 w h re S
+0 0 w h re S Q
+
+%two shadows
+%/shadowwidth h w add 200  idiv  def
+/shadowwidth 4  def
+/shift 2 def
+0.301961 g
+shift 0 w shadowwidth neg re f
+w h shift sub shadowwidth h neg re f
+
+%showing
+/Times-Roman findfont 40 scalefont setfont
+w 3 div h 3 div translate
+0 0 moveto 1 0 0 setrgbcolor
+label show
+
 Q
-
-/Times-Roman findfont 64 scalefont setfont
-w 3 div h 3 div translate 0 0 moveto 1 0 0 setrgbcolor label show
-Q Q
+%%Trailer
 %%EOF
-
 grestore
 
 

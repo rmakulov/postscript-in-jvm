@@ -54,7 +54,24 @@ public class PSFrame extends JFrame {
                     runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.CLICK));
                 }
             }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                synchronized (this) {
+//                    System.out.println(e);
+                    runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.PRESS));
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                synchronized (this) {
+//                    System.out.println(e);
+                    runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.RELEASE));
+                }
+            }
         });
+
 //        panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         add(new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
