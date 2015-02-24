@@ -16,7 +16,6 @@ gsave
 %%EndProlog
 
 
-%/proc exch def
 /label exch def
 /h exch def
 /w exch def
@@ -33,7 +32,8 @@ x y translate
 
 q q
 %fill all the button
-0.801961 g
+0.901961 g
+%0.801961 g
 0 h w  h neg re f
 
 %main frame of button
@@ -48,13 +48,16 @@ q q
 %/shadowwidth h w add 200  idiv  def
 /shadowwidth 4  def
 /shift 2 def
+
 0.301961 g
 shift 0 w shadowwidth neg re f
 w h shift sub shadowwidth h neg re f
 
+
+/kegel h 3 idiv def
 %showing
-/Times-Roman findfont 40 scalefont setfont
-w 3 div h 3 div translate
+/Times-Roman findfont kegel scalefont setfont
+shift h kegel sub translate
 0 0 moveto 1 0 0 setrgbcolor
 label show
 

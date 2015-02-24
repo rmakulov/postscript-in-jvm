@@ -21,7 +21,7 @@
 
                 bd /isPressed get
                 {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps) (r) file run}
-                {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps) (r) file run}
+                    {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps) (r) file run}
                 ifelse
         } def
         %eventProcs - procedures for each type of events
@@ -35,9 +35,6 @@
 
     buttonDict addElement
 
-    %buttonDict /eventProcs get /RELEASE {buttonDict /isPressed false put repaintAll} put
-    %buttonDict /eventProcs get /PRESS {buttonDict /isPressed true put repaintAll} put
-
     %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем buttonDict
     buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} put
     buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} put
@@ -45,6 +42,41 @@
     parent /children [buttonDict parent /children get] put
     %x y h w label paint
     buttonDict paint
+} def
+%---
+/checkBox {
+    /proc exch def
+    /parent exch def
+    /label exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /label get
+                bd /isPressed get
+                {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedCheckbox.ps) (r) file run}
+                    {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps) (r) file run}
+                ifelse
+        } def
+        %eventProcs - procedures for each type of events
+    /checkboxDict <</label label /x x /y y /parent parent /children null
+                        /paint /paint load
+                        /eventProcs <</CLICK /proc load>>
+                        /isPressed false
+    >> def
+
+
+
+    checkboxDict addElement
+
+    %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
+    checkboxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} put
+    %checkboxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} put
+
+    parent /children [checkboxDict parent /children get] put
+    %x y h w label paint
+    checkboxDict paint
 } def
 %---
 /invertString {

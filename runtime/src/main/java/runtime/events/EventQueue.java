@@ -75,8 +75,8 @@ public class EventQueue {
             PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
 
             runtime.Runtime runtime = Runtime.getInstance();
-            runtime.pushToOperandStack(y);
             runtime.pushToOperandStack(x);
+            runtime.pushToOperandStack(y);
             runtime.pushToOperandStack(type);
             EventOp.instance.interpret();
         }
