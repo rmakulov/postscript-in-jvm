@@ -38,7 +38,7 @@
     %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем buttonDict
     buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} put
     buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} put
-
+%
     parent /children [buttonDict parent /children get] put
     %x y h w label paint
     buttonDict paint
@@ -48,11 +48,13 @@
     /proc exch def
     /parent exch def
     /label exch def
+    /h exch def
     /y exch def
     /x exch def
     /paint {/bd exch def
                 bd /x get
                 bd /y get
+                bd /h get
                 bd /label get
                 bd /isPressed get
                 {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedCheckbox.ps) (r) file run}
@@ -60,7 +62,7 @@
                 ifelse
         } def
         %eventProcs - procedures for each type of events
-    /checkboxDict <</label label /x x /y y /parent parent /children null
+    /checkboxDict <</label label /x x /y y /w h /h h /parent parent /children null
                         /paint /paint load
                         /eventProcs <</CLICK /proc load>>
                         /isPressed false
@@ -102,6 +104,26 @@
         invertString
         /label exch put
     } for
+} def
+%---
+/getGelement {
+       transform
+       /pointY exch def
+       /pointX exch def
+       gelements /maxElementNumber get 1 sub -1 0 {
+                gelements exch get
+                /element exch def
+                /x element /x get def
+                /y element /y get def
+                /w element /w get def
+                /h element /h get def
+
+                pointX x ge pointY y ge and
+                x w add pointX ge y h add pointY ge and
+                and
+                {element exit}
+                if
+       } for
 } def
 
 

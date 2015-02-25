@@ -5,7 +5,6 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.PSName;
-import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSNumber;
 
 /**
@@ -24,9 +23,10 @@ public class SetDashOp extends AbstractGraphicOperator {
         PSObject offsetObj = runtime.popFromOperandStack();
         PSObject arrayObj = runtime.popFromOperandStack();
 
-        if (offsetObj.getType() != Type.INTEGER || arrayObj.getType() != Type.ARRAY) {
+        if (!offsetObj.isNumber() || arrayObj.getType() != Type.ARRAY) {
             runtime.pushToOperandStack(arrayObj);
             runtime.pushToOperandStack(offsetObj);
+            fail();
             return;
         }
         PSArray psArray = (PSArray) arrayObj.getValue();
@@ -48,8 +48,8 @@ public class SetDashOp extends AbstractGraphicOperator {
         //gState.graphicsSettings.setDash(dashArr);
         runtime.getGState().graphicsSettings.dash = dashArr;
 
-        PSInteger psDashPhase = (PSInteger) offsetObj.getValue();
-        runtime.getGState().graphicsSettings.dashPhase = psDashPhase.getIntValue();
+        PSNumber psDashPhase = (PSNumber) offsetObj.getValue();
+        runtime.getGState().graphicsSettings.dashPhase = (float) psDashPhase.getRealValue();
     }
 
     @Override

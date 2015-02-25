@@ -421,4 +421,12 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     public boolean isString() {
         return type == Type.STRING;
     }
+
+    public boolean isInteger() {
+        return type == Type.INTEGER;
+    }
+
+    public boolean isName() {
+        return type == Type.NAME;
+    }
 }

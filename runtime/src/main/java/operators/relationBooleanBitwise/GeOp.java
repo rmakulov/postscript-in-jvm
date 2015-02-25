@@ -27,7 +27,8 @@ public class GeOp extends Operator {
         if (o2.isNumber() && o1.isNumber()) {
             PSNumber i1 = (PSNumber) o1.getValue();
             PSNumber i2 = (PSNumber) o2.getValue();
-            runtime.pushToOperandStack(new PSObject(PSBoolean.get(i1.psCompareTo(i2) >= 0)));
+            PSObject psObject = new PSObject(PSBoolean.get(i1.psCompareTo(i2) >= 0));
+            runtime.pushToOperandStack(psObject);
         } else if (o1.getType() == Type.STRING && o2.getType() == Type.STRING) {
             PSString s1 = (PSString) o1.getValue();
             PSString s2 = (PSString) o2.getValue();
