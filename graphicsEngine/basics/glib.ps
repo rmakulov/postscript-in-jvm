@@ -1,11 +1,12 @@
+(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps) (r) file run
 %PROLOG
 %---
-/window <</label (window) /x 0 /y 0 /height 843 /width 651  /parent null /children null /paint {pop} /eventProcs <<>> >> def
+/window <</label (window) /x 0 /y 0 /h 843 /w 651  /parent null /children null /paint {pop} /eventProcs <</RIGHT_CLICK [{pop evX evY wave}[]]>> >> def
 %---
 /addElement {gelements gelements /maxElementNumber get 3 2 roll put  gelements /maxElementNumber gelements /maxElementNumber get 1 add put } def
 %---
 /button {
-    /proc exch def
+    /eventProcDict exch def
     /parent exch def
     /label exch def
     /h exch def
@@ -27,7 +28,7 @@
         %eventProcs - procedures for each type of events
     /buttonDict <</label label /x x /y y /h h /w w  /parent parent /children null
                         /paint /paint load
-                        /eventProcs <</CLICK /proc load>>
+                        /eventProcs eventProcDict
                         /isPressed false
     >> def
 
@@ -35,9 +36,12 @@
 
     buttonDict addElement
 
+
     %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем buttonDict
-    buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} put
-    buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} put
+    buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+    buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
+
+
 %
     parent /children [buttonDict parent /children get] put
     %x y h w label paint
@@ -45,7 +49,7 @@
 } def
 %---
 /checkBox {
-    /proc exch def
+     /eventProcDict exch def
     /parent exch def
     /label exch def
     /h exch def
@@ -64,7 +68,7 @@
         %eventProcs - procedures for each type of events
     /checkboxDict <</label label /x x /y y /w h /h h /parent parent /children null
                         /paint /paint load
-                        /eventProcs <</CLICK /proc load>>
+                        /eventProcs eventProcDict
                         /isPressed false
     >> def
 
@@ -73,8 +77,8 @@
     checkboxDict addElement
 
     %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
-    checkboxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} put
-    %checkboxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} put
+    checkboxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+    %checkboxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} addListToDict
 
     parent /children [checkboxDict parent /children get] put
     %x y h w label paint
@@ -125,13 +129,83 @@
                 if
        } for
 } def
+%--- param: sleepInterval set sleep duration
+/sleep
+{
+        /snapshot save def
+        % Single arg off stack - seconds to sleep
+        /sleepInterval exch def
+        % Get our starting time
+        usertime 1000 idiv /starttime exch def
+        {
+                % Seconds since start
+                usertime 1000 idiv starttime sub
+                % Exit if interval is exceeded
+                sleepInterval ge { exit } if
+        } loop
+        snapshot restore
+} def
+%---
+/milliSleep
+{
+        % Single arg off stack - milliseconds to sleep
+        /sleepInterval exch def
+        % Get our starting time
+        usertime /starttime exch def
+        {
+                % Seconds since start
+                usertime  starttime sub
+                % Exit if interval is exceeded
+                sleepInterval ge { exit } if
+        } loop
+} def
+%---
+% params: x y set center of circles
+/wave {
+    %   transform
+    /y exch def
+    /x exch def
+    /r 20 def
+    /deltaR 10 def
+    0.5 setgray
 
+    %debug
+     3 {
+        x y r 0 360 arc closepath fill
+        100 milliSleep
+        %repaintAll
+        /r r deltaR add def
+        %debug
+     } repeat
 
+} def
+
+%---
+% param: [a] - array
+/toList{
+    /arr exch def
+    /len arr length
+    /res null def
+    len 1 sub -1 0 {
+        arr exch get
+        % a /res [      --->     /res [ a
+        /res  [ 3 2 roll res ] def
+    } for
+} def
+%---
+%params: dict, key, value
+% key associated with list of values
+/addListToDict{
+    /value exch def
+    /key exch def
+    /dict exch def
+    dict key known
+    {        dict key get /value load addToList  }
+    {        dict key [/value load  []] put    }
+    ifelse
+} def
 %END_PROLOG
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
 window addElement
-
-
-

@@ -15,6 +15,10 @@ public class PopOp extends Operator {
 
     @Override
     public void interpret() {
+        if (runtime.getOperandStackSize() < 1) {
+            fail();
+            return;
+        }
         runtime.popFromOperandStack();
     }
 

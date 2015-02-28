@@ -12,8 +12,7 @@ import operators.array.OpenSquareBracketOp;
 import operators.common.*;
 import operators.control.*;
 import operators.coordinatSystemAndMatrix.*;
-import operators.customs.EventOp;
-import operators.customs.InitOp;
+import operators.customs.*;
 import operators.dictionary.*;
 import operators.file.DoubleEqOp;
 import operators.file.FileOp;
@@ -330,6 +329,9 @@ public class DefaultDicts {
     private static void addCustomsOperators() {
         addOperator(EventOp.instance);
         addOperator(InitOp.instance);
+        addOperator(GetColorOp.instance);
+        addOperator(DebugOp.instance);
+        addOperator(PrintOp.instance);
 
     }
 }

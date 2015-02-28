@@ -3,30 +3,53 @@
 transform
 /evY exch def
 /evX exch def
+
+%---
+%params: dict - gelement
+%        name - evType
+%        int  - x
+%        int  - y
 /checkElement {
+
+    /evY exch def
+    /evX exch def
+    /evType exch def
+    /element exch def
+
+    /x element /x get def
+    /y element /y get def
+    /w element /w get def
+    /h element /h get def
+
+    evX x ge evY y ge and
+    x w add evX ge y h add evY ge and
+    and
+    {element evType findAncestorWithEventType}
+    if
+} def
+
+%---
+%params: dict - gelement
+%        name - evType
+/findAncestorWithEventType{
+
+    /evType exch def
     /element exch def
     /eventProcs element /eventProcs get def
     eventProcs evType known
-
-
-    %/tType element /eType get  def
-    %tType evType eq
-
+    
+    {element eventProcs evType get execList exit}
     {
+        /parent element /parent get def
 
-        /x element /x get def
-        /y element /y get def
-        /w element /w get def
-        /h element /h get def
+        parent null eq
+        {exit}
+        {parent evType findAncestorWithEventType}
+        ifelse
+    }
+    ifelse
 
-        evX x ge evY y ge and
-        x w add evX ge y h add evY ge and
-        and
-        %{element /proc get exec exit}
-        {element eventProcs evType get exec exit}
-        if
-    } if
 } def
-/search {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get checkElement} for} def
+/search {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
 search
 %snapshot restore

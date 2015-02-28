@@ -20,6 +20,9 @@ public class EventQueue {
     }
 
     public boolean add(Event event) {
+        if (runtime.Runtime.getInstance().search(new PSObject(new PSName("gelements"))) == null) {
+            return false;
+        }
         if (first == null) {
             first = new EventQueueItem(event);
             last = first;

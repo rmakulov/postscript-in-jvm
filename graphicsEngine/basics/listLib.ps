@@ -1,0 +1,50 @@
+/println {pstack} def
+%--- param: a - array, returns list
+/toList{
+    /array exch def
+    /len array length def
+    /res [] def
+    0 1 len 1 sub {
+        array exch get
+        /res  [ 3 2 roll res ] def
+    } for
+    res
+} def
+%--- params: list, element; void
+/addToList{
+    /a exch def
+    /list exch def
+    /list [a list] def
+
+} def
+%--- param: list, returns first elem
+/head{
+    dup length 0 eq
+    {pop null}
+    {0 get}
+    ifelse
+} def
+%--- param: list, returns list without first element
+/tail{
+    dup length 0 eq
+    {pop null}
+    {1 get}
+    ifelse
+} def
+%--- param: list, execute all list elements
+/execList{
+
+    /list exch def
+    list length 0 ne{
+        list head exec
+        list tail execList
+        }
+        if
+} def
+%--- test
+%[1 2 3 4 5] toList 6 addToList
+%[{2 3 add} {3 4 mul} {4 5 sub}] toList execList
+%<</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> /CLICK get head
+
+<</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> /RELEASE {/isPressed false put}
+

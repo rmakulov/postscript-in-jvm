@@ -78,11 +78,12 @@ public class PSDrawer {
 
     public void stroke() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = runtime.getGState().currentPath;
-        setGraphicsSettings(g2, runtime.getGState().graphicsSettings);
-        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
+        GState gState = runtime.getGState();
+        PSPath path = gState.currentPath;
+        setGraphicsSettings(g2, gState.graphicsSettings);
+        g2.clip(gState.clippingPath.getGeneralPath());
         g2.draw(path.getGeneralPath());
-        runtime.getGState().newCurrentPath();
+        gState.newCurrentPath();
         repaintImage();
     }
 
@@ -136,10 +137,11 @@ public class PSDrawer {
         int psY = (int) gState.currentPoint.getY();
         setGraphicsSettings(g2, gState.graphicsSettings);
         double[] arr = gState.cTM.getDoubleArray();
-        double translateY = PSImage.height - psY; //- arr[5];
-        double TranslateX = psX;// + arr[4];
-        AffineTransform affineTransform = new AffineTransform(arr[0], -arr[1], -arr[2], arr[3], TranslateX, translateY);
+        double translateY = PSImage.height - psY;
+        double translateX = psX;
+        AffineTransform affineTransform = new AffineTransform(arr[0], -arr[1], -arr[2], arr[3], translateX, translateY);
         g2.setTransform(affineTransform);
+//        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
         g2.drawString(str, 0, 0);
 
         Rectangle2D rect = font.getStringBounds(str, g2.getFontRenderContext());

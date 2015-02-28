@@ -1,8 +1,5 @@
 package runtime.graphics.frame;
 
-import operators.customs.GetColorOp;
-import psObjects.PSObject;
-import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
 import runtime.events.Event;
 import runtime.events.EventType;
@@ -60,11 +57,13 @@ public class PSFrame extends JFrame {
                         runtime.addEvent(new Event(e.getX(), e.getY(), EventType.CLICK));
                     }
                     if (SwingUtilities.isRightMouseButton(e)) {
-                        runtime.pushToOperandStack(new PSObject(new PSInteger(e.getX())));
-                        runtime.pushToOperandStack(new PSObject(new PSInteger(843 - e.getY())));
+                        runtime.addEvent(new Event(e.getX(), e.getY(), EventType.RIGHT_CLICK));
+//                        runtime.pushToOperandStack(new PSObject(new PSInteger(e.getX())));
+//                        runtime.pushToOperandStack(new PSObject(new PSInteger(843 - e.getY())));
                         //runtime.addEvent(new Event(e.getX(), e.getY(), EventType.RIGHT_CLICK));
-                        GetColorOp.instance.interpret();
+//                        GetColorOp.instance.interpret();
                     }
+
 
                 }
             }
@@ -73,7 +72,9 @@ public class PSFrame extends JFrame {
             public void mousePressed(MouseEvent e) {
                 synchronized (this) {
 //                    System.out.println(e);
-                    runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.PRESS));
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.PRESS));
+                    }
                 }
             }
 
@@ -81,7 +82,9 @@ public class PSFrame extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 synchronized (this) {
 //                    System.out.println(e);
-                    runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.RELEASE));
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        runtime.Runtime.getInstance().addEvent(new Event(e.getX(), e.getY(), EventType.RELEASE));
+                    }
                 }
             }
 

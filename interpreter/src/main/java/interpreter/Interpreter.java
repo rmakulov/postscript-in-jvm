@@ -68,6 +68,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
 //                System.out.println(instance.run(new File("C:/Users/User/Dropbox/postscript_in_jvm/graphicsEngine/basics/drawButton.ps")));
                 System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawing.ps")));
 //                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton1.ps")));
 //                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps")));
 //                instance.run(new File("tests/speedTestExamples/Ship_Demo.ps"));
