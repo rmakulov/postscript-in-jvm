@@ -1,8 +1,11 @@
 package runtime.events;
 
-import operators.customs.EventOp;
+import operators.customs.KeyEventOp;
+import operators.customs.MouseEventOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
+import psObjects.values.composite.PSString;
+import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
@@ -72,16 +75,32 @@ public class EventQueue {
         isAwake = true;
         while (!isEmpty()) {
             Event event = poll();
-            PSObject x = new PSObject(new PSInteger(event.getX()));
-            PSObject y = new PSObject(new PSInteger(event.getY()));
-            String s = event.getType().toString();
-            PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
-
             runtime.Runtime runtime = Runtime.getInstance();
-            runtime.pushToOperandStack(x);
-            runtime.pushToOperandStack(y);
-            runtime.pushToOperandStack(type);
-            EventOp.instance.interpret();
+
+            if (event.getType() == EventType.KEYBOARD) {
+                PSKeyEvent keyEvent = (PSKeyEvent) event;
+                String aChar = keyEvent.getChar() + "";
+                PSObject symbol = new PSObject(new PSString(aChar), Attribute.TreatAs.LITERAL);
+                String s = event.getType().toString();
+                PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
+
+                runtime.pushToOperandStack(symbol);
+                runtime.pushToOperandStack(new PSObject(PSBoolean.FALSE));
+                runtime.pushToOperandStack(type);
+                KeyEventOp.instance.interpret();
+            } else {
+                PSMouseEvent mouseEvent = (PSMouseEvent) event;
+                PSObject x = new PSObject(new PSInteger(mouseEvent.getX()));
+                PSObject y = new PSObject(new PSInteger(mouseEvent.getY()));
+                String s = event.getType().toString();
+                PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
+
+                runtime.pushToOperandStack(x);
+                runtime.pushToOperandStack(y);
+                runtime.pushToOperandStack(type);
+                MouseEventOp.instance.interpret();
+            }
+
         }
         isAwake = false;
     }

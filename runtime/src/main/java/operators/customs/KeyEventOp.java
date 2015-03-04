@@ -6,26 +6,24 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 
 /**
- * Created by User on 16/2/2015.
+ * Created by user on 03.03.15.
  */
-public class EventOp extends Operator {
+public class KeyEventOp extends Operator {
+    public static final KeyEventOp instance = new KeyEventOp();
 
-    public static final EventOp instance = new EventOp();
-
-    protected EventOp() {
+    protected KeyEventOp() {
         super();
     }
 
     @Override
     public void interpret() {
-
         if (runtime.getOperandStackSize() < 3) {
             fail();
             return;
         }
 //        PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
 
-        new PSObject(new PSString("(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps) (r) file run")).interpret(0);
+        new PSObject(new PSString("(graphicsEngine/basics/keyEvent.ps) (r) file run")).interpret(0);
         if (!runtime.isCompiling) {
             runtime.executeCallStack();
         }
@@ -33,6 +31,6 @@ public class EventOp extends Operator {
 
     @Override
     public PSName getDefaultKeyName() {
-        return new PSName("event");
+        return new PSName("keyEvent");
     }
 }

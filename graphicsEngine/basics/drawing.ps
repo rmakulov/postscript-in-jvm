@@ -1,20 +1,6 @@
-%!PS-Adobe-3.0
-%%Creator: cairo 1.11.2 (http://cairographics.org)
-%%CreationDate: Fri Jan 30 11:25:09 2015
-%%Pages: 1
-%%DocumentData: Clean7Bit
-%%LanguageLevel: 2
-%%DocumentMedia: 160x147mm 455 416 0 () ()
-%%BoundingBox: 0 0 455 417
-%%EndComments
-%%BeginProlog
-/languagelevel where
-{ pop languagelevel } { 1 } ifelse
-2 lt { /Serif findfont 12 scalefont setfont 50 500 moveto
-  (This print job requires a PostScript Language Level 2 printer.) show
-  showpage quit } if
-/show {invertString //show} def
+(graphicsEngine/basics/glib.ps) (r) file run
 
+/show {invertString show} bind def
 /q { gsave } bind def
 /Q { grestore } bind def
 /cm { 6 array astore concat } bind def
@@ -168,6 +154,10 @@ BT
 
 [(#graphic_engine)]TJ
 ET
+
+300 300 moveto
+300 300 wave
+
 Q Q
 %eoclip
 showpage

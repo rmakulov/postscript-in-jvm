@@ -327,7 +327,8 @@ public class DefaultDicts {
     }
 
     private static void addCustomsOperators() {
-        addOperator(EventOp.instance);
+        addOperator(MouseEventOp.instance);
+        addOperator(KeyEventOp.instance);
         addOperator(InitOp.instance);
         addOperator(GetColorOp.instance);
         addOperator(DebugOp.instance);

@@ -1,4 +1,5 @@
-(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps) (r) file run
+%(graphicsEngine/basics/listLib.ps) (r) file run
+(graphicsEngine/basics/listLib.ps) (r) file run
 %PROLOG
 %---
 /window <</label (window) /x 0 /y 0 /h 843 /w 651  /parent null /children null /paint {pop} /eventProcs <</RIGHT_CLICK [{pop evX evY wave}[]]>> >> def
@@ -21,8 +22,8 @@
                 bd /label get
 
                 bd /isPressed get
-                {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps) (r) file run}
-                    {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps) (r) file run}
+                {(graphicsEngine/basics/PressedButton.ps) (r) file run}
+                    {(graphicsEngine/basics/UnpressedButton.ps) (r) file run}
                 ifelse
         } def
         %eventProcs - procedures for each type of events
@@ -49,7 +50,7 @@
 } def
 %---
 /checkBox {
-     /eventProcDict exch def
+    /eventProcDict exch def
     /parent exch def
     /label exch def
     /h exch def
@@ -61,8 +62,8 @@
                 bd /h get
                 bd /label get
                 bd /isPressed get
-                {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedCheckbox.ps) (r) file run}
-                    {(/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps) (r) file run}
+                {(graphicsEngine/basics/PressedCheckbox.ps) (r) file run}
+                    {(graphicsEngine/basics/UnpressedCheckbox.ps) (r) file run}
                 ifelse
         } def
         %eventProcs - procedures for each type of events
@@ -83,6 +84,48 @@
     parent /children [checkboxDict parent /children get] put
     %x y h w label paint
     checkboxDict paint
+} def
+%---
+/textField {
+              /eventProcDict exch def
+              /parent exch def
+              /label exch def
+              /h exch def
+              /w exch def
+              /y exch def
+              /x exch def
+              /paint {/bd exch def
+                          bd /x get
+                          bd /y get
+                          bd /w get
+                          bd /h get
+                          bd /label get
+                          bd /text get
+                          bd /inFocus get
+                          (graphicsEngine/basics/textField.ps) (r) file run
+                  } def
+                  %eventProcs - procedures for each type of events
+              /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false
+                                  /paint /paint load
+                                  /eventProcs eventProcDict
+              >> def
+
+
+
+              textFieldDict addElement
+
+              %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
+              textFieldDict /eventProcs get /RELEASE { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
+              textFieldDict /eventProcs get /KEYBOARD {
+                   /char exch def
+                   /textField exch def
+                   textField dup /text get char concatStrings /text exch put
+                   repaintAll
+              } addListToDict
+
+              parent /children [textFieldDict parent /children get] put
+              textFieldDict paint
+
 } def
 %---
 /invertString {
@@ -171,8 +214,9 @@
 
     %debug
      3 {
-        x y r 0 360 arc closepath fill
-        100 milliSleep
+        x r add y moveto
+        x y r 0 360 arc closepath stroke
+        500 milliSleep
         %repaintAll
         /r r deltaR add def
         %debug
@@ -204,8 +248,22 @@
     {        dict key [/value load  []] put    }
     ifelse
 } def
+
+%---
+%params : s1, s2 : strings to concatenate
+% result : s1+s2
+/concatStrings{
+    /s2 exch def
+    /s1 exch def
+    s1 length
+    s2 length
+    add
+    string dup dup 0 s1 putinterval s1 length s2 putinterval
+
+} def
 %END_PROLOG
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
+gelements /focusedElement window put
 window addElement

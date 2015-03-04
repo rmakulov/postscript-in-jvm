@@ -66,11 +66,12 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/affineIfs.ps")));
 //                System.out.println(instance.run(new File("tests/otherExamples/invertStr.ps")));
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
-//                System.out.println(instance.run(new File("C:/Users/User/Dropbox/postscript_in_jvm/graphicsEngine/basics/drawButton.ps")));
-                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps")));
-//                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawing.ps")));
-//                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton1.ps")));
-//                System.out.println(instance.run(new File("/home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
+                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/drawing.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/UnpressedButton1.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/UnpressedCheckbox.ps")));
 //                instance.run(new File("tests/speedTestExamples/Ship_Demo.ps"));
 //                System.out.println(instance.run(new File("Examples/tiger.eps")));
 //                System.out.println(Interpreter.instance.run(new File("Examples/flower.ps")));

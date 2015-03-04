@@ -1,0 +1,14 @@
+%/snapshot save def
+/evType exch def
+dup /isControl exch def
+{/control exch def}
+{/char exch def
+
+    /element gelements /focusedElement get def
+    /eventProcs element /eventProcs get def
+     eventProcs evType known
+    {
+        element char eventProcs evType get  execList
+    }if
+}
+ifelse
