@@ -7,12 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="asm-5.0.31" level="project" />
     <orderEntry type="library" name="asm-all-5.0.3" level="project" />
     <orderEntry type="library" name="org.ow2.asm:asm-all:5.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-all:5.0.3" level="project" />
     <orderEntry type="module" module-name="interpreter" />
     <orderEntry type="module" module-name="runtime" />
     <orderEntry type="module" module-name="parser" />
@@ -21,3 +20,4 @@
     <orderEntry type="library" name="Maven: org.ow2.asm:asm-all:5.0.3" level="project" />
   </component>
 </module>
+

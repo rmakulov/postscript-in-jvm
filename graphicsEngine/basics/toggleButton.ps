@@ -1,0 +1,83 @@
+% ------------PROLOG------------%
+/drawRect{
+
+    0 0 moveto
+    w 0 rlineto
+    0 h rlineto
+    w neg 0 rlineto
+    closepath
+    stroke
+
+} def
+
+/fillLeftRect {
+    0 0  moveto
+    w 2 idiv 0 rlineto
+    0 h rlineto
+    w 2 idiv neg 0 rlineto
+
+    closepath
+    fill
+
+} def
+
+/fillRightRect {
+    w 2 idiv 0  moveto
+    w 2 idiv 0 rlineto
+    0 h rlineto
+    w 2 idiv neg 0 rlineto
+
+    closepath
+    fill
+
+} def
+
+/printTextOff{
+
+    0 w 2 idiv add shift 3 mul moveto
+    0 0 0 setrgbcolor
+    textOff show
+
+} def
+
+/printTextOn{
+
+    0 shift 3 mul moveto
+    1 0 0 setrgbcolor
+    textOn show
+
+} def
+
+
+% ------------BEGIN------------%
+gsave
+    /isPressed exch def
+    /textOff  exch def
+    /textOn exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+
+    x y translate
+    /shift 5 def
+
+
+    /kegel h shift 3 mul sub def
+    /Rekha findfont kegel scalefont setfont
+
+    drawRect
+
+    isPressed
+    {fillLeftRect
+     printTextOff
+    }
+        {fillRightRect
+        printTextOn
+        }
+    ifelse
+
+    x neg y neg translate
+
+grestore
+% ------------END------------%

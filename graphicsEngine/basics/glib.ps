@@ -49,6 +49,116 @@
     buttonDict paint
 } def
 %---
+%-----------------------------------------------------------------------------------------------------------------------
+/labelField {
+
+
+              /eventProcDict exch def
+              /parent exch def
+              /text exch def
+              /h exch def
+              /w exch def
+              /y exch def
+              /x exch def
+              /paint {/bd exch def
+                          bd /x get
+                          bd /y get
+                          bd /w get
+                          bd /h get
+                          bd /text get
+                          bd /inFocus get
+                          (graphicsEngine/basics/labelField.ps) (r) file run
+                  } def
+
+              /labelFieldDict <</label label /text (Hello, World!) /x x /y y /w w /h h /parent parent /children null
+                                  /inFocus false
+                                  /paint /paint load
+                                  /eventProcs eventProcDict
+                         >> def
+
+              labelFieldDict addElement
+
+              labelFieldDict /eventProcs get /CLICK {  dup /inFocus get /inFocus exch not put repaintAll} addListToDict
+
+              parent /children [labelFieldDict parent /children get] put
+              labelFieldDict paint
+
+} def
+%---
+/toggleButton {
+    /eventProcDict exch def
+    /parent exch def
+    /textOff  exch def
+    /textOn exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /textOn  get
+                bd /textOff get
+                bd /isPressed get
+
+                (graphicsEngine/basics/toggleButton.ps) (r) file run
+        } def
+
+    /toggleButtonDict <</x x /y y /h h /w w /textOn textOn
+                        /textOff textOff /parent parent /children null
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /isPressed false
+                      >> def
+
+    toggleButtonDict addElement
+
+   % toggleButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+    toggleButtonDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+
+    parent /children [toggleButtonDict parent /children get] put
+    toggleButtonDict paint
+} def
+%---
+/comboBox {
+    /eventProcDict exch def
+    /parent exch def
+    /labels  exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /labels  get
+                bd /isPressed get
+
+                (graphicsEngine/basics/comboBox.ps) (r) file run
+        } def
+
+    /comboBoxDict <</x x /y y /h h /w w /labels labels
+                        /parent parent /children null
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /isPressed false
+                      >> def
+
+    comboBoxDict addElement
+
+   % toggleButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+    comboBoxDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+
+    parent /children [comboBoxDict parent /children get] put
+    comboBoxDict paint
+} def
+%---
+%-----------------------------------------------------------------------------------------------------------------------
+
 /checkBox {
     /eventProcDict exch def
     /parent exch def

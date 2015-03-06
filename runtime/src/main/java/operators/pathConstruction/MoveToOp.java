@@ -24,7 +24,7 @@ public class MoveToOp extends AbstractGraphicOperator {
         if (!(o1.isNumber() && o2.isNumber())) {
             runtime.pushToOperandStack(o2);
             runtime.pushToOperandStack(o1);
-            return;
+            fail();
         }
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
