@@ -242,6 +242,7 @@ public class DefaultDicts {
         addOperator(RollOp.instance);
         addOperator(CountOp.instance);
         addOperator(ClearToMarkOp.instance);
+        addOperator(PstackOp.instance);
     }
 
     private static void addGraphicsStateOperators() {

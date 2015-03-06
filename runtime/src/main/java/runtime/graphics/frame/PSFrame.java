@@ -37,11 +37,18 @@ public class PSFrame extends JFrame {
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Runtime.getInstance().addEvent(new PSKeyEvent(e.getKeyChar(), EventType.KEYBOARD));
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
+
+                String s = e.getKeyChar() + "";
+//                if (!e.isActionKey()) {
+                if (s.matches("[а-яА-Яa-zA-Z0-9 ,.:;<>?!\"\'\\\\!@#$%^&*~/{}()`\\[\\]]")) {
+                    Runtime.getInstance().addEvent(new PSKeyEvent(e.getKeyChar(), e.getKeyCode(), EventType.KEYBOARD_CHAR));
+                } else {
+                    Runtime.getInstance().addEvent(new PSKeyEvent(e.getKeyChar(), e.getKeyCode(), EventType.KEYBOARD_CONTROL));
+                }
             }
 
             @Override

@@ -1,4 +1,3 @@
-%(graphicsEngine/basics/listLib.ps) (r) file run
 (graphicsEngine/basics/listLib.ps) (r) file run
 %PROLOG
 %---
@@ -212,10 +211,11 @@
                           bd /label get
                           bd /text get
                           bd /inFocus get
+                          bd /position get
                           (graphicsEngine/basics/textField.ps) (r) file run
                   } def
                   %eventProcs - procedures for each type of events
-              /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false
+              /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false /position 0
                                   /paint /paint load
                                   /eventProcs eventProcDict
               >> def
@@ -226,12 +226,24 @@
 
               %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
               textFieldDict /eventProcs get /RELEASE { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
-              textFieldDict /eventProcs get /KEYBOARD {
+              textFieldDict /eventProcs get /KEYBOARD_CHAR {
                    /char exch def
                    /textField exch def
-                   textField dup /text get char concatStrings /text exch put
+                   textField dup /text get char textField /position get insertChar /text exch put
+                   textField dup /position  get 1 add /position exch put
                    repaintAll
               } addListToDict
+              textFieldDict /eventProcs get /KEYBOARD_CONTROL{
+                                 /code exch def
+                                 /textField exch def
+                                 /pos textField /position get def
+                                 /text textField /text get def
+                                 code backspaceKey eq pos 0 gt and {
+                                     textField /text text pos removeLeftChar  put
+                                     textField /position pos 1 sub put
+                                 } if
+                                 repaintAll
+                            } addListToDict
 
               parent /children [textFieldDict parent /children get] put
               textFieldDict paint
@@ -370,6 +382,55 @@
     add
     string dup dup 0 s1 putinterval s1 length s2 putinterval
 
+} def
+
+%---
+%params : string, char, position : put char on position in the string
+% result : new string
+/insertChar{
+    /p exch def
+    /c exch def
+    /s exch def
+
+    /s3 s 0 p getinterval def
+    /s4_len s length p sub def
+    /s4 s p s4_len getinterval def
+
+    s3 c concatStrings
+    s4 concatStrings
+} def
+%---
+%params : string, position : remove char on the left from the position in the string
+% result : new string
+/removeLeftChar{
+    /p exch def
+    /s exch def
+
+    /s6_len s length p sub def
+    /s6 s p s6_len getinterval def
+
+    p 1 gt
+    {
+        /s5 s 0 p 1 sub getinterval def
+
+        s5  s6 concatStrings
+    }{
+        s6
+    } ifelse
+} def
+
+%---
+%params : string, position : remove char on the right from the position in the string
+% result : new string
+/removeRightChar{
+    /p exch def
+    /s exch def
+
+    /s7 s 0 p getinterval def
+    /s8_len s length p sub 1 sub def
+    /s8 s p s6_len getinterval def
+
+    s7 s8 concatStrings
 } def
 %END_PROLOG
 

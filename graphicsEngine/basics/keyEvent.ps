@@ -1,14 +1,11 @@
+(graphicsEngine/basics/keyCodes.ps) (r) file run
 %/snapshot save def
 /evType exch def
-dup /isControl exch def
-{/control exch def}
-{/char exch def
+/value exch def
 
-    /element gelements /focusedElement get def
-    /eventProcs element /eventProcs get def
-     eventProcs evType known
-    {
-        element char eventProcs evType get  execList
-    }if
-}
-ifelse
+/element gelements /focusedElement get def
+/eventProcs element /eventProcs get def
+ eventProcs evType known
+{
+    element value eventProcs evType get  execList
+}if

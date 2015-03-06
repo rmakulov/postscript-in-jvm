@@ -5,7 +5,6 @@ import operators.customs.MouseEventOp;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
-import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Runtime;
@@ -76,29 +75,40 @@ public class EventQueue {
         while (!isEmpty()) {
             Event event = poll();
             runtime.Runtime runtime = Runtime.getInstance();
+            EventType evType = event.getType();
+            String s = evType.toString();
+            PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
+            switch (evType) {
+                case KEYBOARD_CHAR:
+                    PSKeyEvent charKeyEvent = (PSKeyEvent) event;
+                    String aChar = charKeyEvent.getChar() + "";
+                    PSObject symbol = new PSObject(new PSString(aChar), Attribute.TreatAs.LITERAL);
+                    runtime.pushToOperandStack(symbol);
+                    runtime.pushToOperandStack(type);
+                    KeyEventOp.instance.interpret();
+                    break;
+                case KEYBOARD_CONTROL:
+                    PSKeyEvent controlKeyEvent = (PSKeyEvent) event;
+                    runtime.pushToOperandStack(new PSObject(new PSInteger(controlKeyEvent.getCode())));
+                    runtime.pushToOperandStack(type);
+                    KeyEventOp.instance.interpret();
+                    break;
+                default:
+                    PSMouseEvent mouseEvent = (PSMouseEvent) event;
+                    PSObject x = new PSObject(new PSInteger(mouseEvent.getX()));
+                    PSObject y = new PSObject(new PSInteger(mouseEvent.getY()));
 
-            if (event.getType() == EventType.KEYBOARD) {
-                PSKeyEvent keyEvent = (PSKeyEvent) event;
-                String aChar = keyEvent.getChar() + "";
-                PSObject symbol = new PSObject(new PSString(aChar), Attribute.TreatAs.LITERAL);
-                String s = event.getType().toString();
-                PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
+                    runtime.pushToOperandStack(x);
+                    runtime.pushToOperandStack(y);
+                    runtime.pushToOperandStack(type);
+                    MouseEventOp.instance.interpret();
+                    break;
+            }
 
-                runtime.pushToOperandStack(symbol);
-                runtime.pushToOperandStack(new PSObject(PSBoolean.FALSE));
-                runtime.pushToOperandStack(type);
-                KeyEventOp.instance.interpret();
+            if (event.getType() == EventType.KEYBOARD_CHAR) {
+
             } else {
-                PSMouseEvent mouseEvent = (PSMouseEvent) event;
-                PSObject x = new PSObject(new PSInteger(mouseEvent.getX()));
-                PSObject y = new PSObject(new PSInteger(mouseEvent.getY()));
-                String s = event.getType().toString();
-                PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
 
-                runtime.pushToOperandStack(x);
-                runtime.pushToOperandStack(y);
-                runtime.pushToOperandStack(type);
-                MouseEventOp.instance.interpret();
             }
 
         }

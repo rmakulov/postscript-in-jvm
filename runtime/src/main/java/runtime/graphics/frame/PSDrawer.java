@@ -121,17 +121,8 @@ public class PSDrawer {
 
     public void show(String str) {
         Graphics2D g2 = (Graphics2D) PSImage.getDefaultGraphics();
+        Font font = getFont();
         GState gState = runtime.getGState();
-        PSDictionary fontDictionary = (PSDictionary) gState.getFont().getValue();
-        String nameFont = ((PSName) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getStrValue();
-        int scaleFont = ((PSInteger) fontDictionary.get(new PSObject(new PSName("scale"))).getValue()).getIntValue();
-        PSObject matrix = fontDictionary.get(new PSObject(new PSName("matrix")));
-        Font font = new Font(nameFont, Font.PLAIN, scaleFont);
-        if (!matrix.getValue().equals(PSNull.NULL)) {
-            AffineTransform trans = new TransformMatrix(matrix).toAffineTransform();
-            font = new Font(nameFont, Font.PLAIN, 40);
-            font.deriveFont(trans);
-        }
         g2.setFont(font);
         int psX = (int) gState.currentPoint.getX();
         int psY = (int) gState.currentPoint.getY();
@@ -155,6 +146,22 @@ public class PSDrawer {
         gState.currentPoint = new PSPoint(endPsX, endPsY);
         gState.currentPath.getGeneralPath().moveTo(endPsX, endPsY);
         repaintImage();
+    }
+
+    public Font getFont() {
+        GState gState = Runtime.getInstance().getGState();
+        PSDictionary fontDictionary = (PSDictionary) gState.getFont().getValue();
+//        System.out.println(fontDictionary);
+        String nameFont = ((PSName) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getStrValue();
+        int scaleFont = ((PSInteger) fontDictionary.get(new PSObject(new PSName("scale"))).getValue()).getIntValue();
+        PSObject matrix = fontDictionary.get(new PSObject(new PSName("matrix")));
+        Font font = new Font(nameFont, Font.PLAIN, scaleFont);
+        if (!matrix.getValue().equals(PSNull.NULL)) {
+            AffineTransform trans = new TransformMatrix(matrix).toAffineTransform();
+            font = new Font(nameFont, Font.PLAIN, 40);
+            font.deriveFont(trans);
+        }
+        return font;
     }
 }
 

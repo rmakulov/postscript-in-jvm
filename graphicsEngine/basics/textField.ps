@@ -16,6 +16,7 @@ gsave
 /rg { setrgbcolor } bind def
 %%EndProlog
 
+/position exch def
 /inFocus exch def
 /text exch def
 /label exch def
@@ -51,13 +52,19 @@ q q
 %0.501961 0.45098 0.501961 rg
 
 /kegel h 2 idiv def
+/Rekha findfont kegel scalefont setfont
+%/stringW kegel 2.5 div def
 
 inFocus {
+    /subText text 0 position getinterval def
+    /stringW subText stringwidth pop def
     2 setlinewidth
-    shift 2 mul shift moveto 0 h shift 2 mul sub rlineto stroke
+    shift 2 mul stringW add
+            shift moveto
+             0 h shift 2 mul sub rlineto stroke
     } if
 
-/Rekha findfont kegel scalefont setfont
+
 gsave
 0 h shift add translate
 % shift h kegel sub translate

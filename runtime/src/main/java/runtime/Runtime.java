@@ -612,6 +612,10 @@ public class Runtime {
         return graphicStack;
     }
 
+    public OperandStack getOperandStack() {
+        return operandStack;
+    }
+
     /*    public Event getEvent(){
         return eventQueue.poll();
     }
