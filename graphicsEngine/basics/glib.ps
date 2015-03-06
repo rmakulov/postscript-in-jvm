@@ -238,9 +238,25 @@
                                  /textField exch def
                                  /pos textField /position get def
                                  /text textField /text get def
+                                 /tLength text length def
                                  code backspaceKey eq pos 0 gt and {
-                                     textField /text text pos removeLeftChar  put
+                                     textField /text text pos removeLeftChar put
                                      textField /position pos 1 sub put
+                                 } if
+                                 code deleteKey eq pos tLength lt and {
+                                     textField /text text pos removeRightChar put
+                                 } if
+                                 code leftKey eq pos 0 gt and {
+                                      textField /position pos 1 sub put
+                                 } if
+                                 code rightKey eq tLength pos gt and {
+                                     textField /position pos 1 add put
+                                 } if
+                                 code homeKey eq pos 0 ne and {
+                                      textField /position 0 put
+                                 } if
+                                 code endKey eq pos tLength ne and {
+                                      textField /position tLength put
                                  } if
                                  repaintAll
                             } addListToDict
@@ -403,6 +419,7 @@
 %params : string, position : remove char on the left from the position in the string
 % result : new string
 /removeLeftChar{
+
     /p exch def
     /s exch def
 
@@ -423,14 +440,20 @@
 %params : string, position : remove char on the right from the position in the string
 % result : new string
 /removeRightChar{
+
     /p exch def
     /s exch def
 
-    /s7 s 0 p getinterval def
-    /s8_len s length p sub 1 sub def
-    /s8 s p s6_len getinterval def
+    /s7 s 0 p getinterval  def
 
-    s7 s8 concatStrings
+    p s length 1 sub lt
+    {
+        /s8_len s length p sub 1 sub def
+        /s8 s p 1 add s8_len getinterval def
+        s7 s8  concatStrings
+    }{
+        s7
+    } ifelse
 } def
 %END_PROLOG
 
