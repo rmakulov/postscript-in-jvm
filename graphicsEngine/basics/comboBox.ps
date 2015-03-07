@@ -1,21 +1,28 @@
 % ------------PROLOG------------%
-/drawRect{
+%params : x y w h
+/rect{
+    /hR exch def
+    /wR exch def
+    /yR exch def
+    /xR exch def
 
-    0 0 moveto
-    w 0 rlineto
-    0 h rlineto
-    w neg 0 rlineto
+    xR yR moveto
+    wR 0 rlineto
+    0 hR rlineto
+    wR neg 0 rlineto
     closepath
+} def
+
+/drawRect{
+    0 0 w h rect
     stroke
 } def
 
-/fillExtendedRect{
 
-    0 h moveto
-    w 0 rlineto
-    0 labels length 1 add h mul neg rlineto
-    w neg 0 rlineto
-    closepath
+/fillExtendedRect{
+    /extH labels length h mul def
+
+    0 extH neg w extH rect
 
     1 1 1 setrgbcolor
     fill
@@ -25,21 +32,34 @@
 
 % ----- params: string
 /drawString{
+    /str exch def
+    /yS exch def
+    /xS exch def
 
-    shift shift moveto
-    show
+    xS yS moveto
+    str show
 
 } def
-%-----   prarms: labels
+%-----
 /drawOptions{
-    dup length
-    1 1
-    3 2 roll
-    { dup
-      h mul neg /curH exch def
-      shift curH shift add moveto
-      get
-      show
+    /len labels length def
+
+
+
+
+
+
+
+
+
+
+
+
+        /incr exch def
+        incr h mul /curH exch def
+
+        0 curH neg w h rect stroke
+        shift curH neg shift add labels incr 1 sub get drawString
     }
     for
 
@@ -63,11 +83,11 @@ gsave
     drawRect
     isPressed
     {
-        labels drawOptions
         fillExtendedRect
-        %(None) drawString
+        labels drawOptions
+        shift shift (None) drawString
     }
-    { (None) drawString }
+    { shift shift (None) drawString }
     ifelse
 
 grestore
