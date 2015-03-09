@@ -17,7 +17,7 @@ public class KeyEventOp extends Operator {
 
     @Override
     public void interpret() {
-        if (runtime.getOperandStackSize() < 3) {
+        if (runtime.getOperandStackSize() < 2) {
             fail();
             return;
         }

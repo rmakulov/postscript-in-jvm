@@ -1,18 +1,19 @@
 (graphicsEngine/basics/glib.ps) (r) file run
 
 
-50 50 200 100   (close)         window <</CLICK [{pop quit}[]] >>  button
-150 500 400 200 (noth)          window <</CLICK [{pop}[]] >> button
-50 750 100 50   (mirror)        window <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button
-50 200 16       (horizontal)    window <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox
-200 200 16      (vertical)      window <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox
-50 350 100 50   (invert)        window <</CLICK [{pop invertLabels  repaintAll}[]] >> button
-200 250 400 100 (TextField)     window <<>>    textField
+50 50 200 100   (close)         window <</CLICK [{pop quit}[]] >>  button pop
+150 500 400 200 (noth)          window <</CLICK [{pop}[]] >> button pop
+50 750 100 50   (mirror)        window <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
+50 200 16       (horizontal)    window <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
+200 200 16      (vertical)      window <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
+50 350 100 50   (invert)        window <</CLICK [{pop invertLabels  repaintAll}[]] >> button pop
+200 250 400 100 (TextField)     window <<>>    textField pop
 
-350 50 250 50 (Hello, World!)  window << >>    labelField
-400 125 100 50 (On) (Off)  window <<  >> toggleButton
+350 50 250 50 (Hello, World!)  window << >>    labelField pop
+400 125 100 50 (On) (Off)  window <<  >> toggleButton pop
 
-400 200 200 30 [ (Table) (Mouse) (Screen) ]  window <<  >> comboBox
+400 200 200 30 [ (Table) (Mouse) (Screen) ]  window <<  >> comboBox pop
 
+debug
 
 showpage

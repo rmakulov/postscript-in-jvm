@@ -1,7 +1,8 @@
 (graphicsEngine/basics/listLib.ps) (r) file run
 %PROLOG
 %---
-/window <</label (window) /x 0 /y 0 /h 843 /w 651  /parent null /children null /paint {pop} /eventProcs <</RIGHT_CLICK [{pop evX evY wave}[]]>> >> def
+/window <</label (window) /x 0 /y 0 /h 843 /w 651  /parent null /children null
+            /inFocus false  /paint {pop} /eventProcs <</RIGHT_CLICK [{pop evX evY wave}[]]>> >> def
 %---
 /addElement {gelements gelements /maxElementNumber get 3 2 roll put  gelements /maxElementNumber gelements /maxElementNumber get 1 add put } def
 %---
@@ -27,6 +28,7 @@
         } def
         %eventProcs - procedures for each type of events
     /buttonDict <</label label /x x /y y /h h /w w  /parent parent /children null
+                        /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
@@ -46,6 +48,7 @@
     parent /children [buttonDict parent /children get] put
     %x y h w label paint
     buttonDict paint
+    buttonDict
 } def
 %---
 %-----------------------------------------------------------------------------------------------------------------------
@@ -54,7 +57,7 @@
 
               /eventProcDict exch def
               /parent exch def
-              /text exch def
+              /label exch def
               /h exch def
               /w exch def
               /y exch def
@@ -64,12 +67,12 @@
                           bd /y get
                           bd /w get
                           bd /h get
-                          bd /text get
+                          bd /label get
                           bd /inFocus get
                           (graphicsEngine/basics/labelField.ps) (r) file run
                   } def
 
-              /labelFieldDict <</label label /text (Hello, World!) /x x /y y /w w /h h /parent parent /children null
+              /labelFieldDict <</label label /label (Hello, World!) /x x /y y /w w /h h /parent parent /children null
                                   /inFocus false
                                   /paint /paint load
                                   /eventProcs eventProcDict
@@ -81,7 +84,7 @@
 
               parent /children [labelFieldDict parent /children get] put
               labelFieldDict paint
-
+              labelFieldDict
 } def
 %---
 /toggleButton {
@@ -107,6 +110,7 @@
 
     /toggleButtonDict <</x x /y y /h h /w w /textOn textOn
                         /textOff textOff /parent parent /children null
+                        /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
@@ -119,6 +123,7 @@
 
     parent /children [toggleButtonDict parent /children get] put
     toggleButtonDict paint
+    toggleButtonDict
 } def
 %---
 /comboBox {
@@ -145,6 +150,7 @@
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
+                        /inFocus false
                       >> def
 
     comboBoxDict addElement
@@ -154,6 +160,7 @@
 
     parent /children [comboBoxDict parent /children get] put
     comboBoxDict paint
+    comboBoxDict
 } def
 %---
 %-----------------------------------------------------------------------------------------------------------------------
@@ -177,6 +184,7 @@
         } def
         %eventProcs - procedures for each type of events
     /checkboxDict <</label label /x x /y y /w h /h h /parent parent /children null
+                        /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
@@ -193,6 +201,7 @@
     parent /children [checkboxDict parent /children get] put
     %x y h w label paint
     checkboxDict paint
+    checkboxDict
 } def
 %---
 /textField {
@@ -216,6 +225,7 @@
                   } def
                   %eventProcs - procedures for each type of events
               /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false /position 0
+                                  /inFocus false
                                   /paint /paint load
                                   /eventProcs eventProcDict
               >> def
@@ -263,6 +273,7 @@
 
               parent /children [textFieldDict parent /children get] put
               textFieldDict paint
+              textFieldDict
 
 } def
 %---
@@ -284,10 +295,12 @@
     0 1 gelements /maxElementNumber get 1 sub
     {
         gelements exch get
-        dup
-            /label get
-        invertString
-        /label exch put
+        dup /label known
+           {dup /label get
+            invertString
+            /label exch put}
+            {pop}
+            ifelse
     } for
 } def
 %---
@@ -455,9 +468,22 @@
         s7
     } ifelse
 } def
+%--- param: gelement
+/setFocusedElement {
+    /elem exch def
+    gelements /focusedElement get
+    dup /inFocus get
+         {
+          /inFocus false put
+          elem /inFoucs true put
+          gelements /focusedElement elem put
+         }{
+          pop
+         } ifelse
+} def
 %END_PROLOG
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
-gelements /focusedElement window put
+% gelements /focusedElement window put
 window addElement

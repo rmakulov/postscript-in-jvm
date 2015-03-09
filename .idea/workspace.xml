@@ -10,12 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aee70ed2-afb3-4573-8bef-da6152f30f6f" name="Procedure|Bytecode" comment="TextField gui primitive, relative and absolute paths supported in file operator, psLibs use relative paths. &#10;All events divided into key and mouse.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/BinaryArithmeticOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/arithmetic/binary/BinaryArithmeticOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/basics/drawButtons.ps" afterPath="$PROJECT_DIR$/graphicsEngine/basics/drawButtons.ps" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/basics/glib.ps" afterPath="$PROJECT_DIR$/graphicsEngine/basics/glib.ps" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/graphicsEngine.iml" afterPath="$PROJECT_DIR$/graphicsEngine/graphicsEngine.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interpreter/interpreter.iml" afterPath="$PROJECT_DIR$/interpreter/interpreter.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/basics/labelField.ps" afterPath="$PROJECT_DIR$/graphicsEngine/basics/labelField.ps" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/basics/listLib.ps" afterPath="$PROJECT_DIR$/graphicsEngine/basics/listLib.ps" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/runtime.iml" afterPath="$PROJECT_DIR$/runtime/runtime.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/tests.iml" afterPath="$PROJECT_DIR$/tests/tests.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="postscript-in-jvm.iws" />
@@ -28,7 +33,9 @@
     <ignored path="$PROJECT_DIR$/runtime/target/" />
     <ignored path="$PROJECT_DIR$/tests/target/" />
     <ignored path="$PROJECT_DIR$/graphicsEngine/target/" />
-    <file path="/Dummy.txt" changelist="aee70ed2-afb3-4573-8bef-da6152f30f6f" time="1425683100711" ignored="false" />
+    <file path="/Dummy.txt" changelist="aee70ed2-afb3-4573-8bef-da6152f30f6f" time="1425896374469" ignored="false" />
+    <file path="/fragment.java" changelist="aee70ed2-afb3-4573-8bef-da6152f30f6f" time="1425897024697" ignored="false" />
+    <file path="/a.dummy" changelist="aee70ed2-afb3-4573-8bef-da6152f30f6f" time="1425914599583" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,56 +55,8 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
-      <breakpoint url="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java" line="46" class="runtime.graphics.frame.PSDrawer" package="runtime.graphics.frame">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcOp.java" line="60" class="operators.pathConstruction.ArcOp" package="operators.pathConstruction">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
@@ -154,7 +113,55 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/runtime/src/main/java/operators/common/ForAllOp.java" line="24" class="operators.common.ForAllOp" package="operators.common">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
     </line_breakpoints>
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -168,16 +175,90 @@
       <file leaf-file-name="glib.ps" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="452" column="14" selection-start="13892" selection-end="13892" vertical-scroll-proportion="0.0">
+            <state line="9" column="43" selection-start="432" selection-end="432" vertical-scroll-proportion="-5.4">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="keyCodes.ps" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/keyCodes.ps">
+      <file leaf-file-name="KeyEventOp.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="50" selection-start="102" selection-end="102" vertical-scroll-proportion="0.2293578">
+            <state line="19" column="0" selection-start="425" selection-end="425" vertical-scroll-proportion="0.33207548">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventQueue.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="0" selection-start="986" selection-end="986" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PSFrame.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="0" selection-start="1210" selection-end="1210" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Runtime.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="607" column="0" selection-start="19031" selection-end="19031" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="keyEvent.ps" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/keyEvent.ps">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mouseEvent.ps" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/mouseEvent.ps">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="0" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PSObject.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="40" selection-start="1247" selection-end="1277" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ForAllOp.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/common/ForAllOp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="0" selection-start="640" selection-end="640" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MouseEventOp.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="0" selection-start="673" selection-end="673" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -207,7 +288,13 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/graphicsEngine/basics/labelField.ps" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java" />
+        <option value="$PROJECT_DIR$/graphicsEngine/basics/listLib.ps" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java" />
+        <option value="$PROJECT_DIR$/graphicsEngine/basics/drawButtons.ps" />
         <option value="$PROJECT_DIR$/graphicsEngine/basics/glib.ps" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java" />
       </list>
     </option>
   </component>
@@ -231,10 +318,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="714" />
+    <option name="x" value="65" />
     <option name="y" value="24" />
-    <option name="width" value="652" />
-    <option name="height" value="745" />
+    <option name="width" value="1301" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -293,6 +380,128 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runtime" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runtime" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runtime" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="operators" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="runtime" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="operators" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="customs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graphicsEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graphicsEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="basics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Procedure|Bytecode">
           <PATH>
@@ -303,6 +512,7 @@
           </PATH>
         </subPane>
         <subPane subId="Problems" />
+        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -311,7 +521,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -399,40 +608,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="graphicsEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="graphicsEngine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="basics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -454,11 +629,11 @@
     <property name="options.splitter.details.proportions" value="0.34225354" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.18479307" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="extract.method.default.visibility" value="private" />
     <property name="SearchEverywhereHistoryKey" value="gli&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;gl&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;keyE&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/keyEvent.ps&#10;dra&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;draw&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;tex&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;psdra&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java&#10;string&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/operators/GlythAndFont/StringWidthOp.java&#10;textF&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;glib&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;check&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedCheckbox.ps&#10;li&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;keyev&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/keyEvent.ps&#10;eve&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/runtime/events/EventType.java&#10;text&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;key&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/operators/customs/KeyEventOp.java&#10;concat&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/concat.ps&#10;Con&#9;PSI&#9;JAVA://operators.coordinatSystemAndMatrix.ConcatOp&#10;un&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;drawButto&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;drawbutton&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;press&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps&#10;event&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;lis&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;list&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;glib.&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;drawbut&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;drawing&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawing.ps&#10;even&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;dr&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;IntFor&#9;PSI&#9;JAVA://procedures.IntForProcedure&#10;event.ps&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;unpress&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;pressed&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps&#10;presse&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;unpre&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;unpres&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;UNPRE&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;41&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/operandStackExamples/41Step.txt&#10;invert&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/otherExamples/invertStr.ps&#10;drawin&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/otherExamples/drawing.ps&#10;def&#9;PSI&#9;JAVA://operators.DefaultDicts&#10;findFo&#9;PSI&#9;JAVA://operators.GlythAndFont.FindFontOp&#10;colo&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/colorcir.ps&#10;fra&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/hard/FractalByAlunJones.ps&#10;shi&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/Ship_Demo.ps&#10;.mf&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/interpreter/src/main/java/META-INF/MANIFEST.MF&#10;tiger&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/speedTestExamples/tiger.eps&#10;es&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/speedTestExamples/escher.ps&#10;29&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/operandStackExamples/29Step.ps" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
@@ -484,8 +659,8 @@
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
@@ -652,6 +827,23 @@
       <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -673,29 +865,25 @@
       </MavenSettings>
       <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -724,19 +912,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1088,24 +1263,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="714" y="24" width="652" height="745" extended-state="4" />
-    <editor active="true" />
+    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45797923" sideWeight="0.5229167" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4576" sideWeight="0.5229167" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4528" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24986118" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.50141644" sideWeight="0.4997239" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5008" sideWeight="0.4997239" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5155807" sideWeight="0.17614578" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947916" sideWeight="0.50095236" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6515581" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3152" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32672334" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24903369" sideWeight="0.49714285" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2864" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24860558" sideWeight="0.6432" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14230557" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36754966" sideWeight="0.63986015" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36013985" sideWeight="0.8238542" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17609562" sideWeight="0.4992" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3568" sideWeight="0.8238542" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1119,7 +1295,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32890996" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4532578" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1226,44 +1401,104 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/GlythAndFont/StringWidthOp.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/procedures/Procedure.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="33" column="0" selection-start="804" selection-end="804" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/procedures/InputStreamProcedure.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/keyEvent.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="40" column="0" selection-start="1198" selection-end="1198" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="51" column="111" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.5944056">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/textField.ps">
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/labelField.ps">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="29" column="9" selection-start="367" selection-end="372" vertical-scroll-proportion="-2.8">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueue.java">
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/listLib.ps">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="47" column="92" selection-start="1005" selection-end="1008" vertical-scroll-proportion="-9.24">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/drawButtons.ps">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="69" selection-start="243" selection-end="258" vertical-scroll-proportion="0.12975779" />
+        <state line="0" column="115" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="jar:///usr/lib/jvm/java-7-oracle/src.zip!/java/awt/event/KeyEvent.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="673" selection-end="673" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/common/ForAllOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="640" selection-end="640" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="40" selection-start="1247" selection-end="1277" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/mouseEvent.ps">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="0" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="43" selection-start="432" selection-end="432" vertical-scroll-proportion="-5.4">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="607" column="0" selection-start="19031" selection-end="19031" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="0" selection-start="986" selection-end="986" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/keyEvent.ps">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -1272,56 +1507,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="47" column="0" selection-start="1210" selection-end="1210" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/PSKeyEvent.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="35" selection-start="434" selection-end="434" vertical-scroll-proportion="0.52587646">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/DebugOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/common/PutIntervalOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="38" selection-start="128" selection-end="128" vertical-scroll-proportion="0.15025042">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="452" column="14" selection-start="13892" selection-end="13892" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/keyCodes.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="50" selection-start="102" selection-end="102" vertical-scroll-proportion="0.2293578">
+        <state line="19" column="0" selection-start="425" selection-end="425" vertical-scroll-proportion="0.33207548">
           <folding />
         </state>
       </provider>
