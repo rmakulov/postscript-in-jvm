@@ -38,7 +38,7 @@ transform
     /eventProcs element /eventProcs get def
     eventProcs evType known
     
-    {element eventProcs evType get execList exit}
+    {element dup setFocusedElement eventProcs evType get execList  exit}
     {
         /parent element /parent get def
 
