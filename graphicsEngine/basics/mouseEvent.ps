@@ -16,19 +16,12 @@ transform
     /evType exch def
     /element exch def
 
-    /x element /x get def
-    /y element /y get def
-    /w element /w get def
-    /h element /h get def
-
-    evX x ge evY y ge and
-    x w add evX ge y h add evY ge and
-    and
+    element evX evY element /checkBelonging get exec
     {
         gelements /mouseX evX put
         gelements /mouseY evY put
-        element evType findAncestorWithEventType}
-    if
+        element evType findAncestorWithEventType
+    } if
 } def
 
 %---
@@ -39,9 +32,12 @@ transform
     /evType exch def
     /element exch def
     /eventProcs element /eventProcs get def
+
     eventProcs evType known
     
-    {element dup setFocusedElement eventProcs evType get execList  exit}
+    {element dup setFocusedElement
+        eventProcs evType get execList  exit
+    }
     {
         /parent element /parent get def
 

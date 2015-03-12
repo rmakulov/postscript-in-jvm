@@ -71,7 +71,8 @@
 
 % --------------------------------------BEGIN-----------------------------------------%
 gsave
-    /isPressed exch def
+    /inFocus exch def
+    /isOpened exch def
     /curLabel exch def
     /labels  exch def
     /sH exch def
@@ -88,7 +89,7 @@ gsave
     /Rekha findfont kegel scalefont setfont
 
     drawRect
-    isPressed
+    isOpened inFocus and
     {
         fillExtendedRect
         labels drawOptions

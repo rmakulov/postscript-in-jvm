@@ -2,7 +2,23 @@
 %PROLOG
 %---
 /window <</label (window) /x 0 /y 0 /h 843 /w 651  /parent null /children null
-            /inFocus false  /paint {pop} /eventProcs <</RIGHT_CLICK [{pop evX evY wave}[]]>> >> def
+            /inFocus false  /paint {pop} /eventProcs << /CLICK [{pop repaintAll }[]] /RIGHT_CLICK [{pop evX evY wave}[]] >>
+             /checkBelonging
+                 {
+                     /evY exch def
+                     /evX exch def
+                     /element exch def
+
+                     /x element /x get def
+                     /y element /y get def
+                     /w element /w get def
+                     /h element /h get def
+
+                     evX x ge evY y ge and
+                     x w add evX ge y h add evY ge and
+                     and
+                 }
+             >> def
 %---
 /addElement {gelements gelements /maxElementNumber get 3 2 roll put  gelements /maxElementNumber gelements /maxElementNumber get 1 add put } def
 %---
@@ -32,6 +48,21 @@
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
+                        /checkBelonging
+                        {
+                            /evY exch def
+                            /evX exch def
+                            /element exch def
+
+                            /x element /x get def
+                            /y element /y get def
+                            /w element /w get def
+                            /h element /h get def
+
+                            evX x ge evY y ge and
+                            x w add evX ge y h add evY ge and
+                            and
+                        }
     >> def
 
 
@@ -51,7 +82,6 @@
     buttonDict
 } def
 %---
-%-----------------------------------------------------------------------------------------------------------------------
 /labelField {
 
 
@@ -76,11 +106,26 @@
                                   /inFocus false
                                   /paint /paint load
                                   /eventProcs eventProcDict
+                                  /checkBelonging
+                                      {
+                                          /evY exch def
+                                          /evX exch def
+                                          /element exch def
+
+                                          /x element /x get def
+                                          /y element /y get def
+                                          /w element /w get def
+                                          /h element /h get def
+
+                                          evX x ge evY y ge and
+                                          x w add evX ge y h add evY ge and
+                                          and
+                                      }
                          >> def
 
               labelFieldDict addElement
 
-              labelFieldDict /eventProcs get /CLICK {  dup /inFocus get /inFocus exch not put repaintAll} addListToDict
+              labelFieldDict /eventProcs get /CLICK {  pop repaintAll} addListToDict
 
               parent /children [labelFieldDict parent /children get] put
               labelFieldDict paint
@@ -114,6 +159,21 @@
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
+                        /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /y element /y get def
+                                /w element /w get def
+                                /h element /h get def
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
                       >> def
 
     toggleButtonDict addElement
@@ -140,57 +200,89 @@
                 bd /y get
                 bd /w get
                 bd /h get
-                bd /origY get
-                bd /smallH get
+
+                bd /oldY get
+                bd /oldH get
                 bd /labels  get
                 bd /curLabel get
-                bd /isPressed get
+                bd /isOpened get
+                bd /inFocus get
 
                 (graphicsEngine/basics/comboBox.ps) (r) file run
         } def
 
     /comboBoxDict <</x x /y y /h h /w w /labels labels
-                        /smallH h /bigH h labels length 1 add mul
-                        /origY y  /newY y h labels length mul sub
+                        /oldH h  /extH h labels length 1 add mul
+                        /oldY y  /extY y h labels length mul sub
+
                         /curLabel curLabel
                         /parent parent /children null
                         /paint /paint load
                         /eventProcs eventProcDict
-                        /isPressed false
+                        /isOpened false
                         /inFocus false
+
+                         /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /w element /w get def
+
+                                element /isOpened get
+                                {
+                                    /y element /extY get def
+                                    /h element /extH get def
+                                }
+                                {
+                                    /y element /oldY get def
+                                    /h element /oldH get def
+
+                                }
+                                ifelse
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
+
                       >> def
     comboBoxDict addElement
 
-   % toggleButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+   % toggleButtonDict /eventProcs get /RELEASE { /isOpened false put repaintAll} addListToDict
 
     comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
     comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
 
 
 
-    comboBoxDict /eventProcs get /CLICK { dup /cDict exch def
-                cDict cDict /isPressed get /isPressed exch not put
+    comboBoxDict /eventProcs get /CLICK {
 
-                cDict /isPressed get %%%% if( isPressed)
+                dup /cDict exch def
+                cDict cDict /isOpened get /isOpened exch not put
+
+                cDict /isOpened get %%%% if( isOpened)
                 {
                   cDict cDict /newY get /y exch put
                   cDict cDict /bigH get /h exch put
+
                 }
                 {
-
                   gelements /mouseY get /mouseY exch def
-                  cDict /origY get /origY exch def
-                  cDict /smallH get /smallH exch def
+                  cDict /oldY get /oldY exch def
+                  cDict /oldH get /oldH exch def
 
-                  origY mouseY ge
+                  oldY mouseY ge
                   {
-                    /shiftY origY mouseY sub def
-                    cDict /curLabel shiftY smallH div cvi put
+                    /shiftY oldY mouseY sub def
+                    cDict /curLabel shiftY oldH div cvi put
 
                   }
                   if
 
-                  dup origY /y exch put  dup /smallH get /h exch put
+                  dup oldY /y exch put  dup /oldH get /h exch put
                 }
                 ifelse
                 repaintAll} addListToDict
@@ -225,6 +317,22 @@
                         /parent parent /children null
                         /paint /paint load
                         /eventProcs eventProcDict
+                        /inFocus false
+                        /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /y element /y get def
+                                /w element /w get def
+                                /h element /h get def
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
                       >> def
     listBoxDict addElement
 
@@ -234,10 +342,10 @@
                 gelements /mouseY get /mouseY exch def
 
 
-                /smallH cDict /h get cDict /labels get length idiv def
+                /oldH cDict /h get cDict /labels get length idiv def
 
                 /shiftY cDict /y get cDict /h get add mouseY sub def
-                cDict /curLabel shiftY smallH div cvi put
+                cDict /curLabel shiftY oldH div cvi put
 
                 repaintAll} addListToDict
 
@@ -245,7 +353,6 @@
     listBoxDict paint
 } def
 %---
-%-----------------------------------------------------------------------------------------------------------------------
 
 /checkBox {
     /eventProcDict exch def
@@ -270,6 +377,21 @@
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
+                        /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /y element /y get def
+                                /h element /h get def
+
+                                evX x ge evY y ge and
+                                x h add evX ge y h add evY ge and
+                                and
+                            }
+
     >> def
 
 
@@ -310,6 +432,21 @@
                                   /inFocus false
                                   /paint /paint load
                                   /eventProcs eventProcDict
+                                  /checkBelonging
+                                      {
+                                          /evY exch def
+                                          /evX exch def
+                                          /element exch def
+
+                                          /x element /x get def
+                                          /y element /y get def
+                                          /w element /w get def
+                                          /h element /h get def
+
+                                          evX x ge evY y ge and
+                                          x w add evX ge y h add evY ge and
+                                          and
+                                      }
               >> def
 
 
@@ -317,7 +454,7 @@
               textFieldDict addElement
 
               %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
-              textFieldDict /eventProcs get /RELEASE { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
+              textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
               textFieldDict /eventProcs get /KEYBOARD_CHAR {
                    /char exch def
                    /textField exch def
@@ -530,7 +667,6 @@
         s6
     } ifelse
 } def
-
 %---
 %params : string, position : remove char on the right from the position in the string
 % result : new string
@@ -552,16 +688,17 @@
 } def
 %--- param: gelement
 /setFocusedElement {
-    /elem exch def
-    gelements /focusedElement get
-    dup /inFocus get
+
+    /nElem exch def
+    nElem /inFocus get not
          {
-          /inFocus false put
-          elem /inFoucs true put
-          gelements /focusedElement elem put
-         }{
-          pop
-         } ifelse
+          /oElem gelements /focusedElement get def
+          oElem /inFocus false put
+          oElem /isOpened known
+          {oElem /isOpened false put} if
+          nElem /inFocus true put
+          gelements /focusedElement nElem put
+         } if
 } def
 %END_PROLOG
 

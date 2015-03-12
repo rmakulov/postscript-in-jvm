@@ -59,6 +59,7 @@ public class GetOp extends Operator {
             default: {
                 runtime.pushToOperandStack(src);
                 runtime.pushToOperandStack(key);
+                fail();
                 return;
             }
 
