@@ -14,24 +14,8 @@
 } def
 
 /drawRect{
-    0 0 w sH rect
+    0 0 w h rect
     stroke
-} def
-
-
-/fillExtendedRect{
-    /extH labels length sH mul def
-
-    0 extH neg w extH rect
-
-    1 1 1 setrgbcolor
-    fill
-    0 0 1 setrgbcolor
-
-    0 sH curLabel 1 add mul neg w sH rect
-
-    fill
-    0 0 0 setrgbcolor
 } def
 
 % ----- params: string
@@ -48,21 +32,23 @@
 /drawOptions{
     /len labels length def
 
-
     1 1 len
     {
         /incr exch def
-        incr sH mul /curH exch def
+        /invIncr len incr sub def
 
-        0 curH neg w sH rect stroke
+        /curH invIncr sH mul def
+
         gsave
         curLabel incr 1 sub eq
         {
+            0 0 1 setrgbcolor
+            0 curH w sH rect fill
             1 1 1 setrgbcolor
         }
         if
 
-        shift curH neg shift add labels incr 1 sub get drawString
+        shift curH shift add labels invIncr get drawString
         grestore
     }
     for
@@ -71,31 +57,26 @@
 
 % --------------------------------------BEGIN-----------------------------------------%
 gsave
-    /isPressed exch def
+
     /curLabel exch def
     /labels  exch def
-    /sH exch def
-    /oY exch def
     /h exch def
     /w exch def
     /y exch def
     /x exch def
 
-    x oY translate
+    %/curLabel -2 def
+    /sH h labels length idiv def
+
+    x y translate
     /shift 5 def
 
     /kegel sH shift sub def
     /Rekha findfont kegel scalefont setfont
 
     drawRect
-    isPressed
-    {
-        fillExtendedRect
-        labels drawOptions
-        shift shift labels curLabel get drawString
-    }
-    { shift shift labels curLabel get drawString }
-    ifelse
+    labels drawOptions
+    x neg y neg translate
 
 grestore
 % ------------END------------%

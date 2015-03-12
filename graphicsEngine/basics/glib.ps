@@ -129,6 +129,81 @@
 /comboBox {
     /eventProcDict exch def
     /parent exch def
+    /curLabel exch def
+    /labels  exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /origY get
+                bd /smallH get
+                bd /labels  get
+                bd /curLabel get
+                bd /isPressed get
+
+                (graphicsEngine/basics/comboBox.ps) (r) file run
+        } def
+
+    /comboBoxDict <</x x /y y /h h /w w /labels labels
+                        /smallH h /bigH h labels length 1 add mul
+                        /origY y  /newY y h labels length mul sub
+                        /curLabel curLabel
+                        /parent parent /children null
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /isPressed false
+                        /inFocus false
+                      >> def
+    comboBoxDict addElement
+
+   % toggleButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+
+    comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
+    comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
+
+
+
+    comboBoxDict /eventProcs get /CLICK { dup /cDict exch def
+                cDict cDict /isPressed get /isPressed exch not put
+
+                cDict /isPressed get %%%% if( isPressed)
+                {
+                  cDict cDict /newY get /y exch put
+                  cDict cDict /bigH get /h exch put
+                }
+                {
+
+                  gelements /mouseY get /mouseY exch def
+                  cDict /origY get /origY exch def
+                  cDict /smallH get /smallH exch def
+
+                  origY mouseY ge
+                  {
+                    /shiftY origY mouseY sub def
+                    cDict /curLabel shiftY smallH div cvi put
+
+                  }
+                  if
+
+                  dup origY /y exch put  dup /smallH get /h exch put
+                }
+                ifelse
+                repaintAll} addListToDict
+
+    parent /children [comboBoxDict parent /children get] put
+    comboBoxDict paint
+    comboBoxDict
+} def
+%---
+/listBox {
+    /eventProcDict exch def
+    /parent exch def
+    /curLabel exch def
     /labels  exch def
     /h exch def
     /w exch def
@@ -140,27 +215,34 @@
                 bd /w get
                 bd /h get
                 bd /labels  get
-                bd /isPressed get
+                bd /curLabel get
 
-                (graphicsEngine/basics/comboBox.ps) (r) file run
+                (graphicsEngine/basics/listBox.ps) (r) file run
         } def
 
-    /comboBoxDict <</x x /y y /h h /w w /labels labels
+    /listBoxDict <</x x /y y /h h /w w /labels labels
+                        /curLabel curLabel
                         /parent parent /children null
                         /paint /paint load
                         /eventProcs eventProcDict
-                        /isPressed false
-                        /inFocus false
                       >> def
+    listBoxDict addElement
 
-    comboBoxDict addElement
+    listBoxDict /eventProcs get /CLICK {
 
-   % toggleButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
-    comboBoxDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+                /cDict exch def
+                gelements /mouseY get /mouseY exch def
 
-    parent /children [comboBoxDict parent /children get] put
-    comboBoxDict paint
-    comboBoxDict
+
+                /smallH cDict /h get cDict /labels get length idiv def
+
+                /shiftY cDict /y get cDict /h get add mouseY sub def
+                cDict /curLabel shiftY smallH div cvi put
+
+                repaintAll} addListToDict
+
+    parent /children [listBoxDict parent /children get] put
+    listBoxDict paint
 } def
 %---
 %-----------------------------------------------------------------------------------------------------------------------
@@ -486,4 +568,6 @@
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
 gelements /focusedElement window put
+gelements /mouseX 0 put
+gelements /mouseY 0 put
 window addElement
