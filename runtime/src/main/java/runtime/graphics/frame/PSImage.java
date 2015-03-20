@@ -56,7 +56,7 @@ public class PSImage {
         return height;
     }
 
-    private static double[] getJavaTransformMatrix() {
+    public static double[] getJavaTransformMatrix() {
         double scale = 1;
         return new double[]{scale * 1., 0., 0., scale * (-1.), 0, height};
     }

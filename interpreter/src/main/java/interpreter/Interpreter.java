@@ -52,7 +52,8 @@ public class Interpreter {
             if (args.length == 0) {
                   /*main examples*/
 //                Interpreter.instance.run(new File("tests/operandStackExamples/5thStep.ps"));
-//                  instance.run(new File("tests/FontExamples/1.ps"));
+//                  instance.run(new File("tests/FontExamples/0.ps"));
+//                instance.run(new File("tests/FontExamples/1.ps"));
 //                instance.run(new File("tests/FontExamples/2.ps"));
 //                instance.run(new File("tests/FontExamples/3.ps"));
 //                instance.run(new File("tests/FontExamples/4.ps"));
@@ -60,6 +61,8 @@ public class Interpreter {
 //                instance.run(new File("tests/FontExamples/6.ps"));
 //                instance.run(new File("tests/FontExamples/7.ps"));
 //                instance.run(new File("tests/FontExamples/8.ps"));
+//                instance.run(new File("tests/FontExamples/9_clip.ps"));
+//                instance.run(new File("tests/FontExamples/10.ps"));
 //                instance.run(new File("tests/operandStackExamples/0Step.ps"));
 //                instance.run(new File("Examples/рисунок.ps"));
 //                instance.run(new File("Examples/masterpiece.ps"));
@@ -68,6 +71,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
                 System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawing.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/UnpressedButton1.ps")));

@@ -1,7 +1,7 @@
 (graphicsEngine/basics/listLib.ps) (r) file run
 %PROLOG
 %---
-/window <</label (window) /x 0 /y 0 /h 843 /w 651  /parent null /children null
+/scene <</label (scene) /x 0 /y 0 /h 843 /w 651  /parent null /children null
             /inFocus false  /paint {pop} /eventProcs << /CLICK [{pop repaintAll }[]] /RIGHT_CLICK [{pop evX evY wave}[]] >>
              /checkBelonging
                  {
@@ -251,7 +251,6 @@
                       >> def
     comboBoxDict addElement
 
-   % toggleButtonDict /eventProcs get /RELEASE { /isOpened false put repaintAll} addListToDict
 
     comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
     comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
@@ -351,9 +350,58 @@
 
     parent /children [listBoxDict parent /children get] put
     listBoxDict paint
+    listBoxDict
 } def
 %---
+/window {
+    /eventProcDict exch def
+    /parent exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /inFocus get
 
+                (graphicsEngine/basics/window.ps) (r) file run
+        } def
+
+    /windowDict <</x x /y y /h h /w w
+                        /parent parent /children null
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /inFocus false
+                        /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /y element /y get def
+                                /w element /w get def
+                                /h element /h get def
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
+                      >> def
+    windowDict addElement
+
+    windowDict /eventProcs get /CLICK {
+                /cDict exch def
+                repaintAll} addListToDict
+
+    parent /children [windowDict parent /children get] put
+    windowDict paint
+    windowDict
+} def
+%---
 /checkBox {
     /eventProcDict exch def
     /parent exch def
@@ -648,6 +696,7 @@
     s4 concatStrings
 } def
 %---
+
 %params : string, position : remove char on the left from the position in the string
 % result : new string
 /removeLeftChar{
@@ -704,7 +753,7 @@
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
-gelements /focusedElement window put
+gelements /focusedElement scene put
 gelements /mouseX 0 put
 gelements /mouseY 0 put
-window addElement
+scene addElement

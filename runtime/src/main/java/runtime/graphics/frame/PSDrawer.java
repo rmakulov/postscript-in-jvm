@@ -13,6 +13,7 @@ import runtime.graphics.matrix.TransformMatrix;
 import runtime.graphics.paths.PSPath;
 
 import java.awt.*;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
@@ -76,17 +77,6 @@ public class PSDrawer {
         repaintImage();
     }
 
-    public void stroke() {
-        Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        GState gState = runtime.getGState();
-        PSPath path = gState.currentPath;
-        setGraphicsSettings(g2, gState.graphicsSettings);
-        g2.clip(gState.clippingPath.getGeneralPath());
-        g2.draw(path.getGeneralPath());
-        gState.newCurrentPath();
-        repaintImage();
-    }
-
     public void clip() {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         PSPath path = runtime.getGState().currentPath;
@@ -114,27 +104,96 @@ public class PSDrawer {
         instance = new PSDrawer();
     }
 
+
+    public static Shape generateShapeFromText(Graphics2D g2, Font font, String string, float x, float y) {
+
+        try {
+            GlyphVector gv = font.createGlyphVector(g2.getFontRenderContext(), string);
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            Shape shape = gv.getOutline(x, y);
+            return shape;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void stroke() {
+        Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
+        GState gState = runtime.getGState();
+        PSPath path = gState.currentPath;
+        setGraphicsSettings(g2, gState.graphicsSettings);
+        g2.clip(gState.clippingPath.getGeneralPath());
+        g2.draw(path.getGeneralPath());
+        gState.newCurrentPath();
+        repaintImage();
+    }
+
     /*
     * getGraphics => psY = y
     * getDefaultGraphics => psY = 843 - y
     * */
 
     public void show(String str) {
+
         Graphics2D g2 = (Graphics2D) PSImage.getDefaultGraphics();
-        Font font = getFont();
         GState gState = runtime.getGState();
+        Font font = getFont();
         g2.setFont(font);
+        setGraphicsSettings(g2, gState.graphicsSettings);
+        try {
+            g2.setTransform(new AffineTransform(PSImage.getJavaTransformMatrix()));
+            g2.clip(gState.clippingPath.getGeneralPath());
+            g2.setTransform(new AffineTransform(PSImage.getJavaTransformMatrix()).createInverse());
+        } catch (Exception e) {
+        }
+
         int psX = (int) gState.currentPoint.getX();
         int psY = (int) gState.currentPoint.getY();
-        setGraphicsSettings(g2, gState.graphicsSettings);
+
+
         double[] arr = gState.cTM.getDoubleArray();
         double translateY = PSImage.height - psY;
         double translateX = psX;
+
         AffineTransform affineTransform = new AffineTransform(arr[0], -arr[1], -arr[2], arr[3], translateX, translateY);
         g2.setTransform(affineTransform);
-//        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
-        g2.drawString(str, 0, 0);
 
+        Shape s = generateShapeFromText(g2, font, str, 0, 0);
+        g2.draw(s);
+        g2.fill(s);
+
+        Rectangle2D rect = font.getStringBounds(str, g2.getFontRenderContext());
+        double w = rect.getWidth();
+        PSPoint point = gState.cTM.transform(w, 0);
+        PSPoint point2 = gState.cTM.transform(0, 0);
+        double shiftX = point.getX() - point2.getX();
+        double shiftY = point.getY() - point2.getY();
+        double endPsX = psX + shiftX;
+        double endPsY = psY + shiftY;
+        gState.currentPoint = new PSPoint(endPsX, endPsY);
+        gState.currentPath.getGeneralPath().moveTo(endPsX, endPsY);
+        repaintImage();
+    }
+
+    public void showOld(String str) {
+        Graphics2D g2 = (Graphics2D) PSImage.getDefaultGraphics();
+        GState gState = runtime.getGState();
+
+        Font font = getFont();
+        g2.setFont(font);
+        int psX = (int) gState.currentPoint.getX();
+        int psY = (int) gState.currentPoint.getY();
+
+        setGraphicsSettings(g2, gState.graphicsSettings);
+
+        double[] arr = gState.cTM.getDoubleArray();
+        double translateY = PSImage.height - psY;
+        double translateX = psX;
+
+        AffineTransform affineTransform = new AffineTransform(arr[0], -arr[1], -arr[2], arr[3], translateX, translateY);
+        g2.setTransform(affineTransform);
+
+        g2.drawString(str, 0, 0);
         Rectangle2D rect = font.getStringBounds(str, g2.getFontRenderContext());
         double w = rect.getWidth();
         PSPoint point = gState.cTM.transform(w, 0);
