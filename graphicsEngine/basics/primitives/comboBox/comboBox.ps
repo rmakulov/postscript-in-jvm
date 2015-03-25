@@ -1,0 +1,105 @@
+/comboBox {
+    /eventProcDict exch def
+    /parent exch def
+    /curLabel exch def
+    /labels  exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+
+                bd /oldY get
+                bd /oldH get
+                bd /labels  get
+                bd /curLabel get
+                bd /isOpened get
+                bd /inFocus get
+
+                (graphicsEngine/basics/primitives/comboBox/paintComboBox.ps) (r) file run
+        } def
+
+    /comboBoxDict <</x x /y y /h h /w w /labels labels
+                        /oldH h  /extH h labels length 1 add mul
+                        /oldY y  /extY y h labels length mul sub
+
+                        /curLabel curLabel
+                        /parent parent /children null
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /isOpened false
+                        /inFocus false
+
+                         /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /w element /w get def
+
+                                element /isOpened get
+                                {
+                                    /y element /extY get def
+                                    /h element /extH get def
+                                }
+                                {
+                                    /y element /oldY get def
+                                    /h element /oldH get def
+
+                                }
+                                ifelse
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
+
+                      >> def
+    comboBoxDict addElement
+
+
+    comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
+    comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
+
+
+
+    comboBoxDict /eventProcs get /CLICK {
+
+                dup /cDict exch def
+                cDict cDict /isOpened get /isOpened exch not put
+
+                cDict /isOpened get %%%% if( isOpened)
+                {
+                  cDict cDict /newY get /y exch put
+                  cDict cDict /bigH get /h exch put
+
+                }
+                {
+                  gelements /mouseY get /mouseY exch def
+                  cDict /oldY get /oldY exch def
+                  cDict /oldH get /oldH exch def
+
+                  oldY mouseY ge
+                  {
+                    /shiftY oldY mouseY sub def
+                    cDict /curLabel shiftY oldH div cvi put
+
+                  }
+                  if
+
+                  dup oldY /y exch put  dup /oldH get /h exch put
+                }
+                ifelse
+                repaintAll} addListToDict
+
+    parent /children [comboBoxDict parent /children get] put
+    comboBoxDict paint
+    comboBoxDict
+} def
+%---

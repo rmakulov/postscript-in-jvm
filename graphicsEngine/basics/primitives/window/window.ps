@@ -1,0 +1,98 @@
+%---
+/window {
+    /eventProcDict exch def
+    /parent exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /inFocus get
+
+                (graphicsEngine/basics/primitives/window/paintWindow.ps) (r) file run
+        } def
+
+    /windowDict <</x x /y y /h h /w w
+                        /parent parent /children null
+                        /paint      /paint load
+                        /eventProcs eventProcDict
+                        /inFocus    false
+                        %/isPressed  false
+                        /lastX      0
+                        /lastY      0
+                        /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /y element /y get def
+                                /w element /w get def
+                                /h element /h get def
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
+                      >> def
+    windowDict addElement
+
+    windowDict /eventProcs get /CLICK {
+                /cDict exch def
+                repaintAll} addListToDict
+
+
+    windowDict /eventProcs get /PRESS {
+                /cDict exch def
+
+                gelements /mouseX get
+                gelements /mouseY get
+                cDict /x get
+                cDict /y get h add 20 sub
+                cDict /w get
+                20
+                isInRect
+                {gelements /draggedElement cDict put
+                  (move) cursor
+                }
+                if
+                repaintAll} addListToDict
+
+
+    windowDict /eventProcs get /RELEASE {
+                    /cDict exch def
+                    gelements /draggedElement null put
+                    (default) cursor
+                    repaintAll} addListToDict
+
+
+    windowDict /eventProcs get /DRAG {
+
+                   /cDict exch def
+                   %gelements /mouseY get /mouseY exch def
+                   %gelements /mouseX get /mouseX exch def
+%
+                   %cDict /lastY get /lastY exch def
+                   %cDict /lastX get /lastX exch def
+%
+                   %cDict /x cDict /x get mouseX lastX sub add put
+                   %cDict /y cDict /y get mouseY lastY sub add put
+%
+                   %cDict /lastX mouseX put
+                   %cDict /lastY mouseY put
+%
+                   %%lastX print
+                   repaintAll
+                   } addListToDict
+
+
+    parent /children [windowDict parent /children get] put
+    windowDict paint
+    windowDict
+} def
+%---

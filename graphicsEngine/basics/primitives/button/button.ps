@@ -1,0 +1,57 @@
+/button {
+    /eventProcDict exch def
+    /parent exch def
+    /label exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /label get
+
+                bd /isPressed get
+                {(graphicsEngine/basics/primitives/button/paintPressedButton.ps) (r) file run}
+                    {(graphicsEngine/basics/primitives/button/paintUnpressedButton.ps) (r) file run}
+                ifelse
+        } def
+        %eventProcs - procedures for each type of events
+    /buttonDict <</label label /x x /y y /h h /w w  /parent parent /children null
+                        /inFocus false
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /isPressed false
+                        /checkBelonging
+                        {
+                            /evY exch def
+                            /evX exch def
+                            /element exch def
+
+                            /x element /x get def
+                            /y element /y get def
+                            /w element /w get def
+                            /h element /h get def
+
+                            evX x ge evY y ge and
+                            x w add evX ge y h add evY ge and
+                            and
+                        }
+    >> def
+
+
+
+    buttonDict addElement
+
+
+    %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем buttonDict
+    buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+    buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
+
+
+    parent /children [buttonDict parent /children get] put
+    buttonDict paint
+    buttonDict
+} def

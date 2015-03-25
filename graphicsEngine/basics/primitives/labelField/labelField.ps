@@ -1,0 +1,49 @@
+/labelField {
+
+
+              /eventProcDict exch def
+              /parent exch def
+              /label exch def
+              /h exch def
+              /w exch def
+              /y exch def
+              /x exch def
+              /paint {/bd exch def
+                          bd /x get
+                          bd /y get
+                          bd /w get
+                          bd /h get
+                          bd /label get
+                          bd /inFocus get
+                          (graphicsEngine/basics/primitives/labelField/paintLabelField.ps) (r) file run
+                  } def
+
+              /labelFieldDict <</label label /label (Hello, World!) /x x /y y /w w /h h /parent parent /children null
+                                  /inFocus false
+                                  /paint /paint load
+                                  /eventProcs eventProcDict
+                                  /checkBelonging
+                                      {
+                                          /evY exch def
+                                          /evX exch def
+                                          /element exch def
+
+                                          /x element /x get def
+                                          /y element /y get def
+                                          /w element /w get def
+                                          /h element /h get def
+
+                                          evX x ge evY y ge and
+                                          x w add evX ge y h add evY ge and
+                                          and
+                                      }
+                         >> def
+
+              labelFieldDict addElement
+
+              labelFieldDict /eventProcs get /CLICK {  pop repaintAll} addListToDict
+
+              parent /children [labelFieldDict parent /children get] put
+              labelFieldDict paint
+              labelFieldDict
+} def

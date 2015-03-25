@@ -87,6 +87,7 @@ public class PSFrame extends JFrame {
                 synchronized (this) {
                     if (SwingUtilities.isLeftMouseButton(e)) {
                         Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.PRESS));
+//                        PSFrame.getInstance().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                     }
                 }
             }
@@ -96,6 +97,27 @@ public class PSFrame extends JFrame {
                 synchronized (this) {
                     if (SwingUtilities.isLeftMouseButton(e)) {
                         Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.RELEASE));
+                    }
+                }
+            }
+
+
+        });
+        panel.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                synchronized (this) {
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.DRAG));
+                    }
+                }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                synchronized (this) {
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
                     }
                 }
             }

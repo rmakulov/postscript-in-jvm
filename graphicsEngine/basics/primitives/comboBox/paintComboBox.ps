@@ -1,0 +1,72 @@
+% ------------PROLOG------------%
+
+/fillExtendedRect{
+    /extH labels length sH mul def
+
+    0 extH neg w extH rect
+
+    1 1 1 setrgbcolor
+    fill
+    0 0 1 setrgbcolor
+
+    0 sH curLabel 1 add mul neg w sH rect
+
+    fill
+    0 0 0 setrgbcolor
+} def
+%-----
+/drawOptions{
+    /len labels length def
+
+
+    1 1 len
+    {
+        /incr exch def
+        incr sH mul /curH exch def
+
+        0 curH neg w sH rect stroke
+        gsave
+        curLabel incr 1 sub eq
+        {
+            1 1 1 setrgbcolor
+        }
+        if
+
+        shift curH neg shift add labels incr 1 sub get drawString
+        grestore
+    }
+    for
+
+} def
+
+% --------------------------------------BEGIN-----------------------------------------%
+gsave
+    /inFocus exch def
+    /isOpened exch def
+    /curLabel exch def
+    /labels  exch def
+    /sH exch def
+    /oY exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+
+    x oY translate
+    /shift 5 def
+
+    /kegel sH shift sub def
+    /Rekha findfont kegel scalefont setfont
+
+    drawRect
+    isOpened inFocus and
+    {
+        fillExtendedRect
+        labels drawOptions
+        shift shift labels curLabel get drawString
+    }
+    { shift shift labels curLabel get drawString }
+    ifelse
+
+grestore
+% ------------END------------%

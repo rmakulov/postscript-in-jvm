@@ -1,0 +1,50 @@
+% ------------PROLOG------------%
+%params : x y w h
+/rect{
+    /hR exch def
+    /wR exch def
+    /yR exch def
+    /xR exch def
+
+    xR yR moveto
+    wR 0 rlineto
+    0 hR rlineto
+    wR neg 0 rlineto
+    closepath
+} def
+
+
+% ----- params: x y string
+/drawString{
+    /str exch def
+    /yS exch def
+    /xS exch def
+
+    xS yS moveto
+    str show
+
+} def
+%-------------------------
+/drawRect{
+    0 0 w h rect
+    stroke
+} def
+%---------params: x y rX rY rW rH----------------
+/isInRect {
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
+
+    /pY exch def
+    /pX exch def
+
+    rX pX le
+    pX rX rW add le
+    and
+
+    rY pY le
+    pY rY rH add le
+    and
+    and
+} def

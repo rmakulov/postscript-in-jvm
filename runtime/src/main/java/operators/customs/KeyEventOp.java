@@ -23,7 +23,7 @@ public class KeyEventOp extends Operator {
         }
 //        PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
 
-        new PSObject(new PSString("(graphicsEngine/basics/keyEvent.ps) (r) file run")).interpret(0);
+        new PSObject(new PSString("(graphicsEngine/basics/events/keyEvent.ps) (r) file run")).interpret(0);
         if (!runtime.isCompiling) {
             runtime.executeCallStack();
         }

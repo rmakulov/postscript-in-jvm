@@ -334,6 +334,7 @@ public class DefaultDicts {
         addOperator(GetColorOp.instance);
         addOperator(DebugOp.instance);
         addOperator(PrintOp.instance);
+        addOperator(CursorOp.instance);
 
     }
 }

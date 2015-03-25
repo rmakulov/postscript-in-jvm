@@ -1,0 +1,63 @@
+%---
+/listBox {
+    /eventProcDict exch def
+    /parent exch def
+    /curLabel exch def
+    /labels  exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /paint {/bd exch def
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /labels  get
+                bd /curLabel get
+
+                (graphicsEngine/basics/primitives/listBox/paintListBox.ps) (r) file run
+        } def
+
+    /listBoxDict <</x x /y y /h h /w w /labels labels
+                        /curLabel curLabel
+                        /parent parent /children null
+                        /paint /paint load
+                        /eventProcs eventProcDict
+                        /inFocus false
+                        /checkBelonging
+                            {
+                                /evY exch def
+                                /evX exch def
+                                /element exch def
+
+                                /x element /x get def
+                                /y element /y get def
+                                /w element /w get def
+                                /h element /h get def
+
+                                evX x ge evY y ge and
+                                x w add evX ge y h add evY ge and
+                                and
+                            }
+                      >> def
+    listBoxDict addElement
+
+    listBoxDict /eventProcs get /CLICK {
+
+                /cDict exch def
+                gelements /mouseY get /mouseY exch def
+
+
+                /oldH cDict /h get cDict /labels get length idiv def
+
+                /shiftY cDict /y get cDict /h get add mouseY sub def
+                cDict /curLabel shiftY oldH div cvi put
+
+                repaintAll} addListToDict
+
+    parent /children [listBoxDict parent /children get] put
+    listBoxDict paint
+    listBoxDict
+} def
+%---

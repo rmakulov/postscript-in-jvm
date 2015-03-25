@@ -22,7 +22,7 @@ public class MouseEventOp extends Operator {
             fail();
             return;
         }
-        new PSObject(new PSString("(graphicsEngine/basics/mouseEvent.ps) (r) file run")).interpret(0);
+        new PSObject(new PSString("(graphicsEngine/basics/events/mouseEvent.ps) (r) file run")).interpret(0);
         if (!runtime.isCompiling) {
             runtime.executeCallStack();
         }

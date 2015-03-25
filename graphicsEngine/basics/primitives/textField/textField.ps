@@ -1,0 +1,89 @@
+%---
+/textField {
+              /eventProcDict exch def
+              /parent exch def
+              /label exch def
+              /h exch def
+              /w exch def
+              /y exch def
+              /x exch def
+              /paint {/bd exch def
+                          bd /x get
+                          bd /y get
+                          bd /w get
+                          bd /h get
+                          bd /label get
+                          bd /text get
+                          bd /inFocus get
+                          bd /position get
+                          (graphicsEngine/basics/primitives/textField/paintTextField.ps) (r) file run
+                  } def
+                  %eventProcs - procedures for each type of events
+              /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false /position 0
+                                  /inFocus false
+                                  /paint /paint load
+                                  /eventProcs eventProcDict
+                                  /checkBelonging
+                                      {
+                                          /evY exch def
+                                          /evX exch def
+                                          /element exch def
+
+                                          /x element /x get def
+                                          /y element /y get def
+                                          /w element /w get def
+                                          /h element /h get def
+
+                                          evX x ge evY y ge and
+                                          x w add evX ge y h add evY ge and
+                                          and
+                                      }
+              >> def
+
+
+
+              textFieldDict addElement
+
+              %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
+              textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
+              textFieldDict /eventProcs get /KEYBOARD_CHAR {
+                   /char exch def
+                   /textField exch def
+                   textField dup /text get char textField /position get insertChar /text exch put
+                   textField dup /position  get 1 add /position exch put
+                   repaintAll
+              } addListToDict
+              textFieldDict /eventProcs get /KEYBOARD_CONTROL{
+                                 /code exch def
+                                 /textField exch def
+                                 /pos textField /position get def
+                                 /text textField /text get def
+                                 /tLength text length def
+                                 code backspaceKey eq pos 0 gt and {
+                                     textField /text text pos removeLeftChar put
+                                     textField /position pos 1 sub put
+                                 } if
+                                 code deleteKey eq pos tLength lt and {
+                                     textField /text text pos removeRightChar put
+                                 } if
+                                 code leftKey eq pos 0 gt and {
+                                      textField /position pos 1 sub put
+                                 } if
+                                 code rightKey eq tLength pos gt and {
+                                     textField /position pos 1 add put
+                                 } if
+                                 code homeKey eq pos 0 ne and {
+                                      textField /position 0 put
+                                 } if
+                                 code endKey eq pos tLength ne and {
+                                      textField /position tLength put
+                                 } if
+                                 repaintAll
+                            } addListToDict
+
+              parent /children [textFieldDict parent /children get] put
+              textFieldDict paint
+              textFieldDict
+
+} def
+%---

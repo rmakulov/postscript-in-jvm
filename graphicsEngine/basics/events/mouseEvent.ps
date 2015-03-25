@@ -49,6 +49,25 @@ transform
     ifelse
 
 } def
+
+
 /search {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
-search
+
+evType (DRAG) cvn eq
+{         gelements /mouseX evX put
+          gelements /mouseY evY put
+          dragElement
+
+}
+{
+    evType (PRESS) cvn eq
+    {
+        gelements /lastX evX put
+        gelements /lastY evY put}
+    if
+
+    search }
+ifelse
+
+
 %snapshot restore

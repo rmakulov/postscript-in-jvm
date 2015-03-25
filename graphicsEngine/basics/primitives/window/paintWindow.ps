@@ -1,0 +1,32 @@
+% ------------PROLOG------------%
+
+% --------------------------------------BEGIN-----------------------------------------%
+gsave
+    /inFocus exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+
+    x y translate
+    /shift 5 def
+
+    inFocus
+    {2 setlinewidth }
+    if
+
+    0.1 0.1 0.1 setrgbcolor
+
+    drawRect
+
+    0.909 setgray
+    0 0 w h rect fill
+
+    0.301 0.301 0.309 setrgbcolor
+    0 h 20 sub w 20 rect fill
+
+    1 setlinewidth
+   0.901 0.37 0.19 setrgbcolor
+   w 10 sub h 10 sub 7 0 360 arc fill
+grestore
+% ------------END------------%
