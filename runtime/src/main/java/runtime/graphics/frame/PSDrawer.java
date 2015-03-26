@@ -5,6 +5,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 import runtime.Runtime;
 import runtime.graphics.GState;
 import runtime.graphics.GraphicsSettings;
@@ -44,15 +45,15 @@ public class PSDrawer {
         frame.repaint();
     }
 
-    public void fill() {
+    public void fill(Context context) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = runtime.getGState().currentPath;
-        setGraphicsSettings(g2, runtime.getGState().graphicsSettings);
+        PSPath path = context.getGState().currentPath;
+        setGraphicsSettings(context, g2, context.getGState().graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_NON_ZERO);
-        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
+        g2.clip(context.getGState().clippingPath.getGeneralPath());
         g2.fill(generalPath);
-        runtime.getGState().newCurrentPath();
+        context.getGState().newCurrentPath();
         repaintImage();
     }
 
@@ -65,33 +66,33 @@ public class PSDrawer {
 
     }
 
-    public void eofill() {
+    public void eofill(Context context) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = runtime.getGState().currentPath;
-        setGraphicsSettings(g2, runtime.getGState().graphicsSettings);
+        PSPath path = context.getGState().currentPath;
+        setGraphicsSettings(context, g2, context.getGState().graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_EVEN_ODD);
-        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
+        g2.clip(context.getGState().clippingPath.getGeneralPath());
         g2.fill(generalPath);
-        runtime.getGState().newCurrentPath();
+        context.getGState().newCurrentPath();
         repaintImage();
     }
 
-    public void clip() {
+    public void clip(Context context) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = runtime.getGState().currentPath;
-        g2.clip(runtime.getGState().clippingPath.getGeneralPath());
+        PSPath path = context.getGState().currentPath;
+        g2.clip(context.getGState().clippingPath.getGeneralPath());
         g2.clip(path.getGeneralPath());
         Shape clip = g2.getClip();
-        runtime.getGState().clippingPath = new PSPath(new GeneralPath(clip));
-        runtime.getGState().newCurrentPath();
+        context.getGState().clippingPath = new PSPath(new GeneralPath(clip));
+        context.getGState().newCurrentPath();
         repaintImage();
     }
 
-    public void setGraphicsSettings(Graphics2D g, GraphicsSettings settings) {
+    public void setGraphicsSettings(Context context, Graphics2D g, GraphicsSettings settings) {
         if (settings == null) return;
         g.setColor(settings.color);
-        g.setStroke(new BasicStroke((float) runtime.getGState().getLineWidthInPixels(),
+        g.setStroke(new BasicStroke((float) context.getGState().getLineWidthInPixels(),
                 settings.lineCap,
                 settings.lineJoin,
                 (float) settings.miterLimit,
@@ -117,11 +118,11 @@ public class PSDrawer {
         }
     }
 
-    public void stroke() {
+    public void stroke(Context context) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        GState gState = runtime.getGState();
+        GState gState = context.getGState();
         PSPath path = gState.currentPath;
-        setGraphicsSettings(g2, gState.graphicsSettings);
+        setGraphicsSettings(context, g2, gState.graphicsSettings);
         g2.clip(gState.clippingPath.getGeneralPath());
         g2.draw(path.getGeneralPath());
         gState.newCurrentPath();
@@ -133,13 +134,12 @@ public class PSDrawer {
     * getDefaultGraphics => psY = 843 - y
     * */
 
-    public void show(String str) {
-
+    public void show(Context context, String str) {
         Graphics2D g2 = (Graphics2D) PSImage.getDefaultGraphics();
-        GState gState = runtime.getGState();
-        Font font = getFont();
+        GState gState = context.getGState();
+        Font font = getFont(context);
         g2.setFont(font);
-        setGraphicsSettings(g2, gState.graphicsSettings);
+        setGraphicsSettings(context, g2, gState.graphicsSettings);
         try {
             g2.setTransform(new AffineTransform(PSImage.getJavaTransformMatrix()));
             g2.clip(gState.clippingPath.getGeneralPath());
@@ -175,16 +175,16 @@ public class PSDrawer {
         repaintImage();
     }
 
-    public void showOld(String str) {
+    public void showOld(Context context, String str) {
         Graphics2D g2 = (Graphics2D) PSImage.getDefaultGraphics();
-        GState gState = runtime.getGState();
+        GState gState = context.getGState();
 
-        Font font = getFont();
+        Font font = getFont(context);
         g2.setFont(font);
         int psX = (int) gState.currentPoint.getX();
         int psY = (int) gState.currentPoint.getY();
 
-        setGraphicsSettings(g2, gState.graphicsSettings);
+        setGraphicsSettings(context, g2, gState.graphicsSettings);
 
         double[] arr = gState.cTM.getDoubleArray();
         double translateY = PSImage.height - psY;
@@ -207,8 +207,8 @@ public class PSDrawer {
         repaintImage();
     }
 
-    public Font getFont() {
-        GState gState = Runtime.getInstance().getGState();
+    public Font getFont(Context context) {
+        GState gState = context.getGState();
         PSDictionary fontDictionary = (PSDictionary) gState.getFont().getValue();
 //        System.out.println(fontDictionary);
         String nameFont = ((PSName) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getStrValue();

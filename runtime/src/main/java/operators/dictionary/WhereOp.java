@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 25.03.14.
@@ -16,15 +17,15 @@ public class WhereOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject oKey = runtime.popFromOperandStack();
-        PSObject dictObj = runtime.findDict(oKey);
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject oKey = context.popFromOperandStack();
+        PSObject dictObj = context.findDict(oKey);
         if (dictObj == null) {
-            runtime.pushToOperandStack(new PSObject(PSBoolean.FALSE));
+            context.pushToOperandStack(new PSObject(PSBoolean.FALSE));
         } else {
-            runtime.pushToOperandStack(dictObj);
-            runtime.pushToOperandStack(new PSObject(PSBoolean.TRUE));
+            context.pushToOperandStack(dictObj);
+            context.pushToOperandStack(new PSObject(PSBoolean.TRUE));
         }
     }
 

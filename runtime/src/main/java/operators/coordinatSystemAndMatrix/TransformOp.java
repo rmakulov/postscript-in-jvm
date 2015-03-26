@@ -7,6 +7,7 @@ import psObjects.values.composite.PSArray;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 
@@ -21,36 +22,36 @@ public class TransformOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // x y
-        PSObject first = runtime.popFromOperandStack();
+    public void interpret(Context context) { // x y
+        PSObject first = context.popFromOperandStack();
         PSObject s;
         //s.getType() == Type.ARRAY
         if (first == null) {
             return;
         }
         if (first.isNumber()) {
-            PSObject oX = runtime.popFromOperandStack();
+            PSObject oX = context.popFromOperandStack();
             if (oX == null || !oX.isNumber()) {
-                runtime.pushToOperandStack(oX);
-                runtime.pushToOperandStack(first);
+                context.pushToOperandStack(oX);
+                context.pushToOperandStack(first);
                 return;
             }
             double y = ((PSNumber) first.getValue()).getRealValue();
             double x = ((PSNumber) oX.getValue()).getRealValue();
-            PSPoint res = runtime.getGState().cTM.transform(x, y);
-            runtime.pushToOperandStack(new PSObject(new PSReal(res.getX())));
-            runtime.pushToOperandStack(new PSObject(new PSReal(res.getY())));
+            PSPoint res = context.getGState().cTM.transform(x, y);
+            context.pushToOperandStack(new PSObject(new PSReal(res.getX())));
+            context.pushToOperandStack(new PSObject(new PSReal(res.getY())));
         } else if (first.getType() == Type.ARRAY && ((PSArray) first.getValue()).getArray().length == 6) {//x y matrix transform x' y'
             PSObject[] matrix = ((PSArray) first.getValue()).getArray();
             PSObject obj0 = matrix[0], obj1 = matrix[1], obj2 = matrix[2], obj3 = matrix[3], obj4 = matrix[4], obj5 = matrix[5];
-            PSObject oY = runtime.popFromOperandStack();
-            PSObject oX = runtime.popFromOperandStack();
+            PSObject oY = context.popFromOperandStack();
+            PSObject oX = context.popFromOperandStack();
 
             if (!(obj0.isNumber() && obj1.isNumber() && obj2.isNumber() && obj3.isNumber() && obj4.isNumber() && obj5.isNumber()
                     && oX.isNumber() && oY.isNumber())) {
-                runtime.pushToOperandStack(oX);
-                runtime.pushToOperandStack(oY);
-                runtime.pushToOperandStack(first);
+                context.pushToOperandStack(oX);
+                context.pushToOperandStack(oY);
+                context.pushToOperandStack(first);
                 return;
             }
             double nX = ((PSNumber) oX.getValue()).getRealValue();
@@ -61,10 +62,10 @@ public class TransformOp extends AbstractGraphicOperator {
             TransformMatrix tM = new TransformMatrix(newMatrix);
 
             PSPoint res = tM.transform(nX, nY);
-            runtime.pushToOperandStack(new PSObject(new PSReal(res.getX())));
-            runtime.pushToOperandStack(new PSObject(new PSReal(res.getY())));
+            context.pushToOperandStack(new PSObject(new PSReal(res.getX())));
+            context.pushToOperandStack(new PSObject(new PSReal(res.getY())));
         } else {
-            runtime.pushToOperandStack(first);
+            context.pushToOperandStack(first);
         }
     }
 

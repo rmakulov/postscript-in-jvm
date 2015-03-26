@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -17,17 +18,17 @@ public class SetFlatOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {//todo check errors with stack and type
-        if (runtime.getOperandStackSize() < 1) {
+    public void interpret(Context context) {//todo check errors with stack and type
+        if (context.getOperandStackSize() < 1) {
             return;
         }
-        PSObject o = runtime.popFromOperandStack();
+        PSObject o = context.popFromOperandStack();
         if (o.getType() != Type.INTEGER) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
         PSInteger psInteger = (PSInteger) o.getValue();
-        runtime.getGState().graphicsSettings.flatness = psInteger.getIntValue();
+        context.getGState().graphicsSettings.flatness = psInteger.getIntValue();
     }
 
     @Override

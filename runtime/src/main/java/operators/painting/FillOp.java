@@ -2,6 +2,7 @@ package operators.painting;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.frame.PSDrawer;
 
 
@@ -16,8 +17,8 @@ public class FillOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // Fill current path with current color
-        PSDrawer.getInstance().fill();
+    public void interpret(Context context) { // Fill current path with current color
+        PSDrawer.getInstance().fill(context);
     }
 
 

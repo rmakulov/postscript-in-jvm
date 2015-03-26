@@ -2,6 +2,7 @@ package psObjects.values.simple;
 
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
+import runtime.Context;
 import runtime.compiler.DynamicClassLoader;
 
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +17,7 @@ public class PSBytecode extends PSName {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
+    public boolean interpret(Context context, PSObject obj) {
         try {
             Class c = DynamicClassLoader.instance.loadClass(strValue);
             return (Boolean) c.getMethod("run").invoke(null);
@@ -34,7 +35,7 @@ public class PSBytecode extends PSName {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         //runtime.pushToOperandStack(new PSObject(new PSBytecode(this.strValue)));
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;

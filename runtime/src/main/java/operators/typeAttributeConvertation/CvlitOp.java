@@ -3,6 +3,7 @@ package operators.typeAttributeConvertation;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 
 public class CvlitOp extends Operator {
@@ -14,15 +15,15 @@ public class CvlitOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
         PSObject psObject = o.cvlit();
         if (psObject == null) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
-        runtime.pushToOperandStack(psObject);
+        context.pushToOperandStack(psObject);
     }
 
     @Override

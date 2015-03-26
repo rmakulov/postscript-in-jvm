@@ -4,6 +4,7 @@ import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
+import runtime.Context;
 
 public class PSBoolean extends SimpleValue {
     private boolean flag;
@@ -82,7 +83,7 @@ public class PSBoolean extends SimpleValue {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         MethodVisitor mv = runtime.bcGenManager.mv;
         String name = runtime.bcGenManager.bytecodeName;
         String fieldName = ("" + flag).toUpperCase();

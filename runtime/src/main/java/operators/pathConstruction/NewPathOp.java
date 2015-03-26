@@ -2,6 +2,7 @@ package operators.pathConstruction;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.paths.PSPath;
 
 /**
@@ -15,8 +16,8 @@ public class NewPathOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        runtime.getGState().currentPath = new PSPath();
+    public void interpret(Context context) {
+        context.getGState().currentPath = new PSPath();
     }
 
     @Override

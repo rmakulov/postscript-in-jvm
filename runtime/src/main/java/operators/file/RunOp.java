@@ -1,10 +1,12 @@
 package operators.file;
 
+
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSFile;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by User on 9/2/2015.
@@ -17,18 +19,18 @@ public class RunOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) {
             fail();
             return;
         }
-        PSObject fileObject = runtime.popFromOperandStack();
+        PSObject fileObject = context.popFromOperandStack();
         if (fileObject.getType() != Type.FILE) {
             fail();
             return;
         }
         PSFile psFile = (PSFile) fileObject.getValue();
-        psFile.interpret(fileObject);
+        psFile.interpret(context, fileObject);
     }
 
     @Override

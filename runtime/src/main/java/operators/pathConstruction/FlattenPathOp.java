@@ -2,6 +2,7 @@ package operators.pathConstruction;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 26.03.14.
@@ -14,7 +15,7 @@ public class FlattenPathOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         //do nothing
     }
 

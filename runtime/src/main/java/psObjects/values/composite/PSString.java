@@ -6,6 +6,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.compareableInterfaces.PSComparable;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.io.UnsupportedEncodingException;
@@ -77,24 +78,24 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
+    public boolean interpret(Context context, PSObject obj) {
         Attribute attribute = obj.getAttribute();
         Attribute.TreatAs treatAs = attribute.treatAs;
         if (treatAs == EXECUTABLE) {
             try {
-                StringProcedure stringProcedure = new StringProcedure(obj);
+                StringProcedure stringProcedure = new StringProcedure(context, obj);
                 if (runtime.isCompiling) {
                     while (stringProcedure.hasNext()) {
                         if (!stringProcedure.execNext()) return false;
                     }
                 } else {
-                    runtime.pushToCallStack(stringProcedure);
+                    context.pushToCallStack(stringProcedure);
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         } else {
-            runtime.pushToOperandStack(obj);
+            context.pushToOperandStack(obj);
         }
         return true;
     }

@@ -14,6 +14,7 @@ import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 01.04.14.
@@ -26,20 +27,20 @@ public class RectFillOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // Fill current path with current color
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject o = runtime.peekFromOperandStack();
+    public void interpret(Context context) { // Fill current path with current color
+        if (context.getOperandStackSize() < 1) return;
+        PSObject o = context.peekFromOperandStack();
         if (o.isNumber()) {
-            if (runtime.getOperandStackSize() < 4) return;
-            PSObject hObj = runtime.popFromOperandStack();
-            PSObject wObj = runtime.popFromOperandStack();
-            PSObject yObj = runtime.popFromOperandStack();
-            PSObject xObj = runtime.popFromOperandStack();
+            if (context.getOperandStackSize() < 4) return;
+            PSObject hObj = context.popFromOperandStack();
+            PSObject wObj = context.popFromOperandStack();
+            PSObject yObj = context.popFromOperandStack();
+            PSObject xObj = context.popFromOperandStack();
             if (!hObj.isNumber() || !wObj.isNumber() || !yObj.isNumber() || !xObj.isNumber()) {
-                runtime.pushToOperandStack(xObj);
-                runtime.pushToOperandStack(yObj);
-                runtime.pushToOperandStack(wObj);
-                runtime.pushToOperandStack(hObj);
+                context.pushToOperandStack(xObj);
+                context.pushToOperandStack(yObj);
+                context.pushToOperandStack(wObj);
+                context.pushToOperandStack(hObj);
                 return;
             }
             PSArray procArr = new PSArray(new PSObject[]{
@@ -53,7 +54,7 @@ public class RectFillOp extends AbstractGraphicOperator {
                     new PSObject(FillOp.instance),
                     new PSObject(GRestoreOp.instance)
             });
-            runtime.pushToCallStack(new ArrayProcedure("RectFill", new PSObject(procArr, Attribute.TreatAs.EXECUTABLE)));
+            context.pushToCallStack(new ArrayProcedure(context, "RectFill", new PSObject(procArr, Attribute.TreatAs.EXECUTABLE)));
         } else {
             //todo maybe another arguments
         }

@@ -6,6 +6,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -18,20 +19,20 @@ public class KnownOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject key = runtime.popFromOperandStack();
-        PSObject dict = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) return;
+        PSObject key = context.popFromOperandStack();
+        PSObject dict = context.popFromOperandStack();
         if (!key.isDictKey() || dict.getType() != Type.DICTIONARY) {
-            runtime.pushToOperandStack(dict);
-            runtime.pushToOperandStack(key);
+            context.pushToOperandStack(dict);
+            context.pushToOperandStack(key);
             return;
         }
         PSDictionary psDictionary = (PSDictionary) dict.getValue();
         if (psDictionary.get(key) == null) {
-            runtime.pushToOperandStack(new PSObject(PSBoolean.FALSE));
+            context.pushToOperandStack(new PSObject(PSBoolean.FALSE));
         } else {
-            runtime.pushToOperandStack(new PSObject(PSBoolean.TRUE));
+            context.pushToOperandStack(new PSObject(PSBoolean.TRUE));
         }
     }
 

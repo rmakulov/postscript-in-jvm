@@ -2,6 +2,7 @@ package procedures;
 
 import psObjects.PSObject;
 import psObjects.values.simple.PSMark;
+import runtime.Context;
 import runtime.Runtime;
 
 /**
@@ -11,9 +12,11 @@ public abstract class Procedure {
     private String name = "Unnamed";
     protected int procDepth = 0;
     protected Runtime runtime = Runtime.getInstance();
+    Context context;
 
-    protected Procedure(String name) {
+    protected Procedure(Context context, String name) {
         this.name = name;
+        this.context = context;
     }
 
     protected Procedure() {
@@ -30,7 +33,7 @@ public abstract class Procedure {
         if (nextObject.getValue().equals(PSMark.CLOSE_CURLY_BRACE)) {
             procDepth--;
         }
-        boolean isNotExited = nextObject.execute(procDepth);
+        boolean isNotExited = nextObject.execute(context, procDepth);
         if (nextObject.getValue().equals(PSMark.OPEN_CURLY_BRACE)) {
             procDepth++;
         }

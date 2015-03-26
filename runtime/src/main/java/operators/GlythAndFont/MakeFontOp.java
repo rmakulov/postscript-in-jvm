@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by User on 30/1/2015.
@@ -17,19 +18,19 @@ public class MakeFontOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject oMatrix = runtime.popFromOperandStack();
-        PSObject oDict = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject oMatrix = context.popFromOperandStack();
+        PSObject oDict = context.popFromOperandStack();
 
         if (oMatrix == null || oDict == null || !oMatrix.isMatrix()
                 || oDict.getType() != Type.DICTIONARY) {
-            runtime.pushToOperandStack(oDict);
-            runtime.pushToOperandStack(oMatrix);
+            context.pushToOperandStack(oDict);
+            context.pushToOperandStack(oMatrix);
             fail();
         }
 
         PSObject key = new PSObject(new PSName("matrix"));
-        runtime.pushToOperandStack(new PSObject(((PSDictionary) oDict.getValue()).put(key, oMatrix)));
+        context.pushToOperandStack(new PSObject(((PSDictionary) oDict.getValue()).put(key, oMatrix)));
     }
 
     @Override

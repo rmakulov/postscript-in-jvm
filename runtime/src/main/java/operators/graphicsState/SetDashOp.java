@@ -6,6 +6,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 27.03.14.
@@ -18,14 +19,14 @@ public class SetDashOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // -- gsave --
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject offsetObj = runtime.popFromOperandStack();
-        PSObject arrayObj = runtime.popFromOperandStack();
+    public void interpret(Context context) { // -- gsave --
+        if (context.getOperandStackSize() < 2) return;
+        PSObject offsetObj = context.popFromOperandStack();
+        PSObject arrayObj = context.popFromOperandStack();
 
         if (!offsetObj.isNumber() || arrayObj.getType() != Type.ARRAY) {
-            runtime.pushToOperandStack(arrayObj);
-            runtime.pushToOperandStack(offsetObj);
+            context.pushToOperandStack(arrayObj);
+            context.pushToOperandStack(offsetObj);
             fail();
             return;
         }
@@ -34,8 +35,8 @@ public class SetDashOp extends AbstractGraphicOperator {
         float[] dashArr = new float[psDashArr.length];
         for (int i = 0; i < dashArr.length; i++) {
             if (!psDashArr[i].isNumber()) {
-                runtime.pushToOperandStack(arrayObj);
-                runtime.pushToOperandStack(offsetObj);
+                context.pushToOperandStack(arrayObj);
+                context.pushToOperandStack(offsetObj);
                 return;
             }
             PSNumber num = (PSNumber) psDashArr[i].getValue();
@@ -46,10 +47,10 @@ public class SetDashOp extends AbstractGraphicOperator {
             dashArr = null;
         }
         //gState.graphicsSettings.setDash(dashArr);
-        runtime.getGState().graphicsSettings.dash = dashArr;
+        context.getGState().graphicsSettings.dash = dashArr;
 
         PSNumber psDashPhase = (PSNumber) offsetObj.getValue();
-        runtime.getGState().graphicsSettings.dashPhase = (float) psDashPhase.getRealValue();
+        context.getGState().graphicsSettings.dashPhase = (float) psDashPhase.getRealValue();
     }
 
     @Override

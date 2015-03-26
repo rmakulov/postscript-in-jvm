@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 
@@ -18,21 +19,21 @@ public class ArcOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {//x y r angle1 angle2 arc ---
+    public void interpret(Context context) {//x y r angle1 angle2 arc ---
         //todo
-        if (runtime.getOperandStackSize() < 5) return;
-        PSObject oAngle2 = runtime.popFromOperandStack();
-        PSObject oAngle1 = runtime.popFromOperandStack();
-        PSObject oR = runtime.popFromOperandStack();
-        PSObject oY = runtime.popFromOperandStack();
-        PSObject oX = runtime.popFromOperandStack();
+        if (context.getOperandStackSize() < 5) return;
+        PSObject oAngle2 = context.popFromOperandStack();
+        PSObject oAngle1 = context.popFromOperandStack();
+        PSObject oR = context.popFromOperandStack();
+        PSObject oY = context.popFromOperandStack();
+        PSObject oX = context.popFromOperandStack();
 
         if (!(oAngle2.isNumber() && oAngle1.isNumber() && oR.isNumber() && oY.isNumber() && oX.isNumber())) {
-            runtime.pushToOperandStack(oX);
-            runtime.pushToOperandStack(oY);
-            runtime.pushToOperandStack(oR);
-            runtime.pushToOperandStack(oAngle1);
-            runtime.pushToOperandStack(oAngle2);
+            context.pushToOperandStack(oX);
+            context.pushToOperandStack(oY);
+            context.pushToOperandStack(oR);
+            context.pushToOperandStack(oAngle1);
+            context.pushToOperandStack(oAngle2);
             return;
         }
         double nAngle2 = ((PSNumber) oAngle2.getValue()).getRealValue();
@@ -41,7 +42,7 @@ public class ArcOp extends AbstractGraphicOperator {
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
-        TransformMatrix cTM = runtime.getGState().cTM;
+        TransformMatrix cTM = context.getGState().cTM;
         PSPoint absCent = cTM.transform(nX, nY);
         double xScale = cTM.getXScale();
         double yScale = cTM.getYScale();
@@ -57,11 +58,11 @@ public class ArcOp extends AbstractGraphicOperator {
 
         PSPoint absBegin = new PSPoint(xBegin, yBegin);
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
-        boolean connect = runtime.getGState().currentPoint != null;
+        boolean connect = context.getGState().currentPoint != null;
 
-        runtime.getGState().currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
+        context.getGState().currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
                 nAngle1, nAngle2, false, connect);
-        runtime.getGState().currentPoint = absEnd;
+        context.getGState().currentPoint = absEnd;
     }
 
     @Override

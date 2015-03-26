@@ -2,6 +2,7 @@ package operators.control;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
@@ -14,7 +15,7 @@ public class QuitOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         System.out.println("Interpreter quited");
         System.exit(0);
     }

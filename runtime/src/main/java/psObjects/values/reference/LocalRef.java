@@ -7,6 +7,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
+import runtime.Context;
 
 public class LocalRef extends Reference {
     private int tableIndex;
@@ -63,7 +64,7 @@ public class LocalRef extends Reference {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         Attribute attribute = obj.getAttribute();
         int attributeIndex = attribute.getAttributeTypeIndex();
 

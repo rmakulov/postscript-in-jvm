@@ -15,31 +15,28 @@ import psObjects.values.composite.Snapshot;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
-import psObjects.values.simple.PSName;
-import psObjects.values.simple.PSNull;
 import runtime.avl.Pair;
 import runtime.compiler.BytecodeGeneratorManager;
 import runtime.compiler.DynamicClassLoader;
 import runtime.events.Event;
 import runtime.events.EventQueue;
 import runtime.graphics.GState;
-import runtime.stack.CallStack;
-import runtime.stack.DictionaryStack;
-import runtime.stack.GraphicStack;
-import runtime.stack.OperandStack;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import static psObjects.Type.*;
+import static psObjects.Type.SAVE;
 
 
 public class Runtime {
 
     private static Runtime ourInstance = new Runtime();
 
-    public boolean isCompiling;
+    public boolean isCompiling = false;
     public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
     private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
 
@@ -47,62 +44,89 @@ public class Runtime {
     private int executionsBeforeGarbageCleaning = 10000;
 
     private LocalVM localVM = new LocalVM();
-    private OperandStack operandStack = new OperandStack();
-    private DictionaryStack dictionaryStack = new DictionaryStack();
-    private GraphicStack graphicStack = new GraphicStack();
-    private CallStack callStack = new CallStack();
+    //    private OperandStack operandStack = new OperandStack();
+//    private DictionaryStack dictionaryStack = new DictionaryStack();
+//    private GraphicStack graphicStack = new GraphicStack();
+//    private CallStack callStack = new CallStack();
     private EventQueue eventQueue = new EventQueue();
     private boolean isGlobal = false;
-    private PSObject userDict, globalDict, systemDict;
+    private PSObject systemDict;
+    private Context mainContext;
 
-    //costyl#1
-    private HashMap<Integer, PSObject> cvxGlobalObjectMap = new HashMap<Integer, PSObject>();
-    private boolean ALoading = false;
+    private ExecutorService service = Executors.newFixedThreadPool(10);
 
+    //        private Runtime() {
+//        isCompiling = false;
+////        isCompiling = true;
+//    }
     private Runtime() {
         isCompiling = false;
 //        isCompiling = true;
     }
 
-    public void setCompilingMode(boolean compilingMode) {
-        ourInstance.isCompiling = compilingMode;
+    public void startNewTask(Context context, Procedure procedure) {
+        PSThread thread = new PSThread(context, procedure);
+        service.execute(thread);
     }
+
+    public void startMainTask(Context context, Procedure procedure) {
+        mainContext = context;
+        context.initDictionaries(systemDict);
+        PSThread thread = new PSThread(context, procedure);
+        thread.run();
+//        service.execute(thread);
+    }
+
+    public Context getMainContext() {
+        return mainContext;
+    }
+
+    public void setCompilingMode(boolean compilingMode) {
+        isCompiling = compilingMode;
+    }
+//    public void setCompilingMode(boolean compilingMode) {
+//        ourInstance.isCompiling = compilingMode;
+//    }
 
     public Runtime(boolean isCompiling) {
         this.isCompiling = isCompiling;
     }
 
+    /**
+     * @return Runtime instance
+     */
     public static Runtime getInstance() {
         return ourInstance;
     }
 
+
     /*
     * save snapshot to operandStack
     */
-    public void save() {
+    public void save(Context context) {
         //localVM.clearGarbage(getRootSet());
 
-        Snapshot snapshot = new Snapshot(localVM.clone(), getGState(), nameVersions);
-        gsave(false);
+        Snapshot snapshot = new Snapshot(localVM.clone(), context.getGState(), nameVersions);
+        gsave(context, false);
         localVM.initDefaultKeys();
-        operandStack.push(new PSObject(snapshot));
+        context.pushToOperandStack(new PSObject(snapshot));
     }
 
-    public void gsave(boolean isMadeByGsave) {
-        getGState().setMadeByGSaveOp(isMadeByGsave);
-        GState gState = getGState().getSnapshot();
-        pushToGraphicStack(gState);
+    public void gsave(Context context, boolean isMadeByGsave) {
+        context.getGState().setMadeByGSaveOp(isMadeByGsave);
+        GState gState = context.getGState().getSnapshot();
+        context.pushToGraphicStack(gState);
     }
 
     /*
     * getting snapshot from top of operandStack
     */
-    public boolean restore() {
-        PSObject object = popFromOperandStack();
+    public boolean restore(Context context) {
+        PSObject object = context.popFromOperandStack();
         if (object.getType() != SAVE) return false;
         Snapshot snapshot = (Snapshot) object.getValue();
         LocalVM savedLocalVM = snapshot.getLocalVM();
-        for (PSObject current : operandStack) {
+        for (PSObject current : context.getOperandStack()) {
             Value curValue = current.getValue();
             //if operand stack contains reference to composite object which was created after saving, we can't restore
             if (current.isComposite() && localVM.contains(curValue) && !savedLocalVM.contains(curValue)) {
@@ -115,8 +139,8 @@ public class Runtime {
         localVM = savedLocalVM;
         nameVersions = snapshot.getNameVersions();
 
-        GRestoreAllOp.instance.interpret();
-        graphicStack.setGState(snapshot);
+        GRestoreAllOp.instance.interpret(context);
+        context.getGraphicStack().setGState(snapshot);
         return true;
     }
 
@@ -129,88 +153,25 @@ public class Runtime {
         return index;
     }
 
-    public void pushToOperandStack(PSObject psObject) {
-        //System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
-        if (!(psObject == null)) {
-            operandStack.push(psObject);
-        }
-    }
-
-    public PSObject popFromOperandStack() {
-        PSObject object = operandStack.peek();
-        if (object == null)
-            return null;
-        return operandStack.pop();
-    }
-
-    public void pushToGraphicStack(GState gsave) {
-        graphicStack.push(gsave);
-    }
-
-    public void removeFromGraphicStack() {
-        if (graphicStack.size() == 1) {
-            graphicStack.clear();
-        } else {
-            graphicStack.pop();
-        }
-    }
-
-    public GState peekFromGraphicStack() {
-        return graphicStack.peek();
-    }
-
-    public PSObject peekFromOperandStack() {
-        return operandStack.peek();
-    }
-
-    public Procedure popFromCallStack() {
-//        Procedure procedure = callStack.peek();
-//        callStack = callStack.pop();
-        return callStack.pop();
-    }
-
-    public Procedure peekFromCallStack() {
-        return callStack.peek();
-    }
-
-    public int getCallStackSize() {
-        return callStack.size();
-    }
-
-    public void executeCallStack() {
-        while (!callStack.isEmpty()) {
-            Procedure topProcedure = callStack.peek();
-            if (topProcedure.hasNext()) {
-//                executionCount++;
-                topProcedure.execNext();
-//                if (executionCount % executionsBeforeGarbageCleaning == 0) {
-////                    System.out.println("Local vm argsCount before gc " + localVM.argsCount());
-//                    cleanGarbage();
-////                    System.out.println("Local vm argsCount after gc " + localVM.argsCount());
-//                }
-            } else {
-                topProcedure.procTerminate();
-                popFromCallStack();
-            }
-        }
-    }
 
     public void cleanGarbage() {
-        localVM.clearGarbage(getRootSet());
+        //todo run at all contexts
+        System.err.println("clean garbage error. It is not finished");
+        //localVM.clearGarbage(getRootSet(context));
     }
 
-    public Set<Integer> getRootSet() {
+    public Set<Integer> getRootSet(Context context) {
         Set<Integer> indexes = new HashSet<Integer>();
         //todo analyse combining global and local refs together
         //operandStack
-        for (PSObject o : operandStack) {
+        for (PSObject o : context.getOperandStack()) {
             if (!(o.getDirectValue() instanceof LocalRef)) continue;
             LocalRef ref = (LocalRef) o.getDirectValue();
             getUsingLocalVMIndexesByRef(indexes, ref);
         }
 
         //graphicStack
-        for (GState gState : graphicStack) {
+        for (GState gState : context.getGraphicStack()) {
             PSObject oMatrix = gState.cTM.getMatrix();
             PSObject oFont = gState.getFont();
             //PSArray arr = (PSArray) oMatrix.getValue();
@@ -224,7 +185,7 @@ public class Runtime {
                 getUsingLocalVMIndexesByRef(indexes, ref);
             }
         }
-        LocalRef locRefCTM = getGState().getLocalRefCTM();
+        LocalRef locRefCTM = context.getGState().getLocalRefCTM();
         //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
         if (locRefCTM != null) {
             getUsingLocalVMIndexesByRef(indexes, locRefCTM);
@@ -234,7 +195,7 @@ public class Runtime {
         //}
 
         //dictStack
-        for (PSObject o : dictionaryStack) {
+        for (PSObject o : context.getDictionaryStack()) {
 
             if (!(o.getDirectValue() instanceof LocalRef)) continue;
             LocalRef ref = (LocalRef) o.getDirectValue();
@@ -246,7 +207,7 @@ public class Runtime {
             }
         }
         //callStack
-        for (Procedure proc : callStack) {
+        for (Procedure proc : context.getCallStack()) {
             if (!(proc instanceof ArrayProcedure)) continue;
             PSObject array = ((ArrayProcedure) proc).getArrayObject();
             if (!(array.getDirectValue() instanceof LocalRef)) continue;
@@ -292,33 +253,6 @@ public class Runtime {
         }
     }
 
-
-    public void pushToCallStack(Procedure procedure) {
-        callStack.push(procedure);
-    }
-
-
-    public void pushToDictionaryStack(PSObject dict) {
-        dictionaryStack.push(dict);
-    }
-
-    public PSObject peekFromDictionaryStack() {
-        return dictionaryStack.peek();
-    }
-
-    public boolean removeFromDictionaryStack() {
-        if (dictionaryStack.size() > 3) {
-            dictionaryStack.pop();
-            return true;
-        }
-        return false;
-    }
-
-
-/*    public Value getPSObjectFromLocalVM(int index) {
-        return localVM.get(index);
-    }*/
-
     /*
     * Find array in Local VM by LocalRef and change value by index = valueIndex
      */
@@ -326,95 +260,15 @@ public class Runtime {
         return new LocalRef(addToLocalVM(value));
     }
 
-    @Deprecated
-    public PSObject setValueArrayAtIndex(PSObject arrayObject, int valueIndex, PSObject value) {
-        if (arrayObject.getType() != ARRAY) {
-            //todo throw type exception
-            return null;
-        }
-        PSArray psArray = (PSArray) arrayObject.getValue();
-        PSArray newValue = psArray.setValue(valueIndex, value);
-        return arrayObject.setValue(newValue);
-    }
-
-    /*
-   * Find array in Local VM by LocalRef and get interval by startIndex and length
-    */
-    @Deprecated
-    public PSObject getArrayInterval(PSObject arrayObject, int startIndex, int length) {
-        if (arrayObject.getType() != ARRAY) {
-            //todo throw type exception
-            return null;
-        }
-        PSArray psArray = (PSArray) arrayObject.getValue();
-        Type type = arrayObject.getType();
-        Attribute attr = arrayObject.getAttribute();
-        return new PSObject(psArray.getInterval(startIndex, length), type, attr);
-    }
-
-    //dict key value put – Associate key with value in dict
-    @Deprecated
-    public PSObject putValueAtDictionaryKey(PSObject dictObject, PSObject key, PSObject value) {
-        if (dictObject.getType() != DICTIONARY) {
-            return dictObject;
-        }
-        PSDictionary dict = (PSDictionary) dictObject.getValue();
-        PSDictionary newDict = dict.put(key, value);
-        dictObject.setValue(newDict);
-        return dictObject;
-    }
-
-    //dict key undef – Remove key and its value from dict
-    @Deprecated
-    public PSObject undefValueAtDictionaryKey(PSObject dictObject, PSObject key) {
-        //todo check
-        if (dictObject.getType() != Type.DICTIONARY) return dictObject;
-        PSDictionary dict = (PSDictionary) dictObject.getValue();
-        PSDictionary newDict = dict.undef(key);
-        dictObject.setValue(newDict);
-        return dictObject;
-
-    }
-
-    @Deprecated
-    public PSObject copy(PSObject srcDictRef, PSObject dstDictRef) {
-        //todo check
-        if (srcDictRef.getType() != Type.DICTIONARY) return dstDictRef;
-        PSDictionary srcDict = (PSDictionary) srcDictRef.getValue();
-        PSDictionary dstDict = (PSDictionary) dstDictRef.getValue();
-        PSDictionary resDict = dstDict.copy(srcDict);
-        return new PSObject(resDict);
-    }
-
-
-    //    dict key get any Return value associated with key in dict
-    public PSObject getValueAtDictionary(PSObject dictObject, PSObject key) {
-        return ((PSDictionary) dictObject.getValue()).get(key);
-    }
-
-    //clearOperandStack operandStack;
-    public void clearOperandStack() {
-        operandStack.clear();
-    }
-
-    public void clearDictionaryStack() {
-        while (removeFromDictionaryStack()) {
-            //removing done in condition automatically
-        }
-    }
-
     public void clearAll() {
-        operandStack.clear();
+        List<Runnable> runnables = service.shutdownNow();
+        for (Runnable runnable : runnables) {
+            ((PSThread) runnable).getContext().clearAll();
+        }
         localVM.clear();
-        graphicStack.clear();
-        dictionaryStack.clear();
-
         isGlobal = false;
-
 /*todo remove*/
-        userDict = null;
         systemDict = null;
-        globalDict = null;
 /*todo*/
 
         bcGenManager = new BytecodeGeneratorManager();
@@ -449,61 +303,7 @@ public class Runtime {
         else return createLocalRef(object);
     }
 
-    public PSObject findDict(PSObject key) {
-        PSObject found;
-        for (PSObject dictObj : dictionaryStack) {
-            found = getValueAtDictionary(dictObj, key);
-            if (found != null) return dictObj;
-        }
-        return null;
-    }
-
-    public PSObject findValue(PSObject key) {
-        PSObject found = search(key);
-        //if(key.equals(new PSObject(new PSName("xd"))) && key.xcheck())
-        if (found != null) {
-            return found;
-        }
-        try {
-            throw new Exception(key + " is not found");
-        } catch (Exception e) {
-//            e.printStackTrace();
-            System.err.println(e);
-        }
-        return new PSObject(PSNull.NULL);
-    }
-
-    public PSObject search(PSObject key) {
-        PSObject found;
-        for (PSObject dictObj : dictionaryStack) {
-            found = getValueAtDictionary(dictObj, key);
-            if (found != null) {
-                return found;
-            }
-        }
-        return null;
-    }
-
-    /*called through bytecode*/
-    public PSObject findValue(String str) {
-        return findValue(new PSObject(new PSName(str)));
-    }
-
-    public boolean checkIsOperator(String str) {
-        PSObject obj = search(new PSObject(new PSName(str)));
-        return (obj != null && obj.getType() == Type.OPERATOR);
-    }
-
-    public int getOperandStackSize() {
-        return operandStack.size();
-    }
-
-    public int getDictionaryStackSize() {
-        return dictionaryStack.size();
-    }
-
-
-    public void initDefaultDictionaries() {
+   /* public void initDefaultDictionaries() {
         systemDict = new PSObject(DefaultDicts.getSystemDict(),
                 Type.DICTIONARY,
                 new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
@@ -512,79 +312,19 @@ public class Runtime {
         pushToDictionaryStack(globalDict);
         userDict = new PSObject(DefaultDicts.getUserDict());
         pushToDictionaryStack(userDict);
-    }
+    }*/
 
-    public void initRuntime() {
-        initDefaultDictionaries();
-        graphicStack.init();
-
-    }
-
-    public PSObject currentDict() {
-        return dictionaryStack.peek();
-    }
-
-    public int getGraphicStackSize() {
-        return graphicStack.size();
-    }
-
-    public PSObject getUserDict() {
-        return userDict;
-    }
-
-    public PSObject getGlobalDict() {
-        return globalDict;
-    }
-
-    public PSObject getSystemDict() {
-        return systemDict;
-    }
-
-    public GState getGState() {
-        if (graphicStack.isEmpty()) {
-            graphicStack.init();
-        }
-        return graphicStack.peek();
-    }
-
-    public String operandStackToString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (PSObject psObject : operandStack) {
-            stringBuilder.append(psObject.toStringView()).append(" ");
-        }
-        return stringBuilder.toString().trim().concat("\n");
+    public void initSystemDict() {
+        if (systemDict != null) return;
+        systemDict = new PSObject(DefaultDicts.getSystemDict(),
+                Type.DICTIONARY,
+                new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
     }
 
     public CompositeValue getValueByTableIndex(int tableIndex) {
         return localVM.get(tableIndex);
     }
 
-    public PSObject getCVXGlobalObject(int id) {
-        return cvxGlobalObjectMap.get(id);
-    }
-
-    public void putCvxGlobalObject(int id, PSObject obj) {
-        if (!(obj.getDirectValue() instanceof GlobalRef)) {
-            try {
-                throw new Exception("attempt put not global object");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        cvxGlobalObjectMap.put(id, obj);
-    }
-
-    public void setALoading(boolean ALoading) {
-        this.ALoading = ALoading;
-    }
-
-    public boolean getALoading() {
-        return ALoading;
-    }
-
-    public int getDictStackVersion() {
-        return dictionaryStack.getVersion();
-    }
 
     public int getNameVersion(String name) {
         Integer version = nameVersions.get(name);
@@ -608,13 +348,14 @@ public class Runtime {
         eventQueue.add(event);
     }
 
-    public GraphicStack getGraphicStack() {
-        return graphicStack;
+    public PSObject getSystemDict() {
+        if (systemDict == null) {
+            initSystemDict();
+        }
+        return systemDict;
     }
 
-    public OperandStack getOperandStack() {
-        return operandStack;
-    }
+
 
     /*    public Event getEvent(){
         return eventQueue.poll();

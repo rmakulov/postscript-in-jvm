@@ -9,6 +9,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 public class PutOp extends Operator {
 
@@ -19,19 +20,19 @@ public class PutOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject value = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject value = context.popFromOperandStack();
         if (value == null)
             return;
-        PSObject key = runtime.popFromOperandStack();
+        PSObject key = context.popFromOperandStack();
         if (key == null) {
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(value);
             return;
         }
-        PSObject src = runtime.popFromOperandStack();
+        PSObject src = context.popFromOperandStack();
         if (src == null) {
-            runtime.pushToOperandStack(key);
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(key);
+            context.pushToOperandStack(value);
             return;
         }
         CompositeValue result;
@@ -41,40 +42,40 @@ public class PutOp extends Operator {
                 break;
             case ARRAY:
             case PACKEDARRAY:
-                copyArray(value, key, src);
+                copyArray(context, value, key, src);
                 break;
             case STRING:
-                putString(src, key, value);
+                putString(context, src, key, value);
                 break;
             default: {
-                runtime.pushToOperandStack(src);
-                runtime.pushToOperandStack(key);
-                runtime.pushToOperandStack(value);
+                context.pushToOperandStack(src);
+                context.pushToOperandStack(key);
+                context.pushToOperandStack(value);
                 return;
             }
         }
 
     }
 
-    private void copyArray(PSObject value, PSObject key, PSObject src) {
+    private void copyArray(Context context, PSObject value, PSObject key, PSObject src) {
         if (key.getType() == Type.INTEGER) {
             int index = ((PSInteger) key.getValue()).getIntValue();
             src.setValue(((PSArray) src.getValue()).setValue(index, value));
         } else {
-            runtime.pushToOperandStack(src);
-            runtime.pushToOperandStack(key);
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(src);
+            context.pushToOperandStack(key);
+            context.pushToOperandStack(value);
             return;
         }
     }
 
-    private void putString(PSObject src, PSObject key, PSObject value) {
+    private void putString(Context context, PSObject src, PSObject key, PSObject value) {
 
         boolean isChar = value.getType() == Type.STRING && ((PSString) value.getValue()).length() == 1;
         if (key.getType() != Type.INTEGER || !(value.getType() == Type.INTEGER || isChar)) {
-            runtime.pushToOperandStack(src);
-            runtime.pushToOperandStack(key);
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(src);
+            context.pushToOperandStack(key);
+            context.pushToOperandStack(value);
             return;
         }
         int iIndex = ((PSInteger) key.getValue()).getIntValue();

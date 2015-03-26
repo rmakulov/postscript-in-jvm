@@ -5,6 +5,7 @@ import psObjects.values.Value;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.Runtime;
 
 /**
@@ -19,19 +20,19 @@ public class NeOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) return;
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) return;
         Runtime runtime = Runtime.getInstance();
-        PSObject o2 = runtime.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
         if (o2 == null) return;
-        PSObject o1 = runtime.popFromOperandStack();
+        PSObject o1 = context.popFromOperandStack();
         if (o1 == null) {
-            runtime.pushToOperandStack(o2);
+            context.pushToOperandStack(o2);
             return;
         }
         Value v1 = o1.getValue();
         Value v2 = o2.getValue();
-        runtime.pushToOperandStack(new PSObject(PSBoolean.get(!v1.equals(v2))));
+        context.pushToOperandStack(new PSObject(PSBoolean.get(!v1.equals(v2))));
     }
 
     @Override

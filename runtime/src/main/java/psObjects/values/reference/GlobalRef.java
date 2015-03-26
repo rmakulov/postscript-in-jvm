@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
+import runtime.Context;
 
 
 public class GlobalRef extends Reference {
@@ -65,8 +66,8 @@ public class GlobalRef extends Reference {
     }
 
     @Override
-    public void compile(PSObject obj) {
-        runtime.putCvxGlobalObject(id, obj);
+    public void compile(Context context, PSObject obj) {
+        context.putCvxGlobalObject(id, obj);
 //        runtime.pushToOperandStack(runtime.getCVXGlobalObject(id));
 
         String name = runtime.bcGenManager.bytecodeName;

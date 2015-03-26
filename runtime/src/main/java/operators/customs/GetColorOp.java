@@ -5,6 +5,7 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 import runtime.graphics.frame.PSImage;
 
 import java.awt.*;
@@ -21,27 +22,27 @@ public class GetColorOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
 
-        if (runtime.getOperandStackSize() < 2) {
+        if (context.getOperandStackSize() < 2) {
             fail();
             return;
         }
-        PSObject oY = runtime.popFromOperandStack();
-        PSObject oX = runtime.popFromOperandStack();
+        PSObject oY = context.popFromOperandStack();
+        PSObject oX = context.popFromOperandStack();
         if (!(oY.isInteger() && oX.isInteger())) {
-            runtime.pushToOperandStack(oX);
-            runtime.pushToOperandStack(oY);
+            context.pushToOperandStack(oX);
+            context.pushToOperandStack(oY);
             fail();
         }
         int y = ((PSInteger) oY.getValue()).getIntValue();
         int x = ((PSInteger) oX.getValue()).getIntValue();
 
-/*        runtime.pushToOperandStack(oX);
-        runtime.pushToOperandStack(oY);
+/*        context.pushToOperandStack(oX);
+        context.pushToOperandStack(oY);
         runtime.findValue("getGelement").interpret(0);
         runtime.executeCallStack();
-        System.out.print(runtime.popFromOperandStack());*/
+        System.out.print(context.popFromOperandStack());*/
 
         BufferedImage image = PSImage.getInstanceImage();
 
@@ -51,9 +52,9 @@ public class GetColorOp extends Operator {
         double red = rgb.getRed();
         double blue = rgb.getBlue();
 
-        runtime.pushToOperandStack(new PSObject(new PSReal(red / 255)));
-        runtime.pushToOperandStack(new PSObject(new PSReal(green / 255)));
-        runtime.pushToOperandStack(new PSObject(new PSReal(blue / 255)));
+        context.pushToOperandStack(new PSObject(new PSReal(red / 255)));
+        context.pushToOperandStack(new PSObject(new PSReal(green / 255)));
+        context.pushToOperandStack(new PSObject(new PSReal(blue / 255)));
 
 /*        Color lastColor =Color.WHITE;
         for (int i = 0; i < 650; i++) {

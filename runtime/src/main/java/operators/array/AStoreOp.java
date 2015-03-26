@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
@@ -18,26 +19,26 @@ public class AStoreOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject o = context.popFromOperandStack();
         if (o.getType() != Type.ARRAY) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
         PSArray psArray = (PSArray) o.getValue();
         int n = psArray.getArray().length;
-        if (runtime.getOperandStackSize() < n) {
-            runtime.pushToOperandStack(o);
+        if (context.getOperandStackSize() < n) {
+            context.pushToOperandStack(o);
             return;
         }
         PSObject[] array = new PSObject[n];
         for (int i = 0; i < n; i++) {
-            array[n - i - 1] = runtime.popFromOperandStack();
+            array[n - i - 1] = context.popFromOperandStack();
         }
         PSArray newPSArray = new PSArray(array);
         o.setValue(newPSArray);
-        runtime.pushToOperandStack(o);
+        context.pushToOperandStack(o);
     }
 
     @Override

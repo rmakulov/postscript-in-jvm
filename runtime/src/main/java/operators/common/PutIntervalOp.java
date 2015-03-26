@@ -8,6 +8,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 public class PutIntervalOp extends Operator {
 
@@ -18,21 +19,21 @@ public class PutIntervalOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject src = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject src = context.popFromOperandStack();
         if (src == null)
             return;
 
-        PSObject index = runtime.popFromOperandStack();
+        PSObject index = context.popFromOperandStack();
         if (index == null) {
-            runtime.pushToOperandStack(src);
+            context.pushToOperandStack(src);
             return;
         }
 
-        PSObject dst = runtime.popFromOperandStack();
+        PSObject dst = context.popFromOperandStack();
         if (dst == null || index.getType() != Type.INTEGER) {
-            runtime.pushToOperandStack(index);
-            runtime.pushToOperandStack(src);
+            context.pushToOperandStack(index);
+            context.pushToOperandStack(src);
             return;
         }
 
@@ -47,9 +48,9 @@ public class PutIntervalOp extends Operator {
             PSString srcString = (PSString) src.getValue();
             dst.setValue(dstString.putInterval(start, srcString));
         } else {
-            runtime.pushToOperandStack(dst);
-            runtime.pushToOperandStack(index);
-            runtime.pushToOperandStack(src);
+            context.pushToOperandStack(dst);
+            context.pushToOperandStack(index);
+            context.pushToOperandStack(src);
             return;
         }
     }

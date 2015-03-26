@@ -2,6 +2,7 @@ package operators.graphicsState;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.GState;
 
 /**
@@ -20,15 +21,15 @@ public class GRestoreAllOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {//todo check errors with stack and type
-        if (runtime.getGraphicStackSize() == 0) {
+    public void interpret(Context context) {//todo check errors with stack and type
+        if (context.getGraphicStackSize() == 0) {
             return;
         }
-        GState gState = runtime.peekFromGraphicStack();
-        while (runtime.getGraphicStackSize() > 0 && gState.isMadeByGSaveOp()) {
+        GState gState = context.peekFromGraphicStack();
+        while (context.getGraphicStackSize() > 0 && gState.isMadeByGSaveOp()) {
 //            GRestoreOp.instance.interpret();
-            runtime.removeFromGraphicStack();
-            gState = runtime.peekFromGraphicStack();
+            context.removeFromGraphicStack();
+            gState = context.peekFromGraphicStack();
         }
 
     }

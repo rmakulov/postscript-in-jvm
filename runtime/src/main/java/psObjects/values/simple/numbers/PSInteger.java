@@ -3,6 +3,7 @@ package psObjects.values.simple.numbers;
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.util.Random;
@@ -76,7 +77,7 @@ public class PSInteger extends PSNumber {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
 //        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
         //(new PSObject(new PSInteger(5))).interpret(0);
         String name = runtime.bcGenManager.bytecodeName;

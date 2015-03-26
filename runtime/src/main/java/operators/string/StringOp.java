@@ -7,6 +7,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 25.03.14.
@@ -19,20 +20,20 @@ public class StringOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject o = context.popFromOperandStack();
         if (o.getType() != Type.INTEGER) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
         PSInteger psInteger = (PSInteger) o.getValue();
         int size = psInteger.getIntValue();
         if (size <= 0) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSString(size), Attribute.TreatAs.LITERAL));
+        context.pushToOperandStack(new PSObject(new PSString(size), Attribute.TreatAs.LITERAL));
     }
 
     @Override

@@ -3,6 +3,7 @@ package operators.typeAttributeConvertation;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 public class TypeOp extends Operator {
 
@@ -13,12 +14,12 @@ public class TypeOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
         String objTypeStr = o.type();
         PSObject nameObj = new PSObject(new PSName(objTypeStr), EXECUTABLE);
-        runtime.pushToOperandStack(nameObj);
+        context.pushToOperandStack(nameObj);
     }
 
     @Override

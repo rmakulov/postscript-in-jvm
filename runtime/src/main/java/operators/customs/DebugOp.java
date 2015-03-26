@@ -2,6 +2,7 @@ package operators.customs;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 27.02.15.
@@ -15,10 +16,10 @@ public class DebugOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         //doNothing
-        System.out.println("Operand stack size " + runtime.getOperandStackSize());
-        System.out.println("Call stack size " + runtime.getCallStackSize() + "\n");
+        System.out.println("Operand stack size " + context.getOperandStackSize());
+        System.out.println("Call stack size " + context.getCallStackSize() + "\n");
     }
 
     @Override

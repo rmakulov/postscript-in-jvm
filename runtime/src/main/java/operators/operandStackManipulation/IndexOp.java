@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by user on 26.03.14.
@@ -17,28 +18,28 @@ public class IndexOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject oN = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject oN = context.popFromOperandStack();
         if (!(oN.getType() == Type.INTEGER)) {
-            runtime.pushToOperandStack(oN);
+            context.pushToOperandStack(oN);
             return;
         }
         PSInteger psN = (PSInteger) oN.getValue();
         int n = psN.getIntValue();
-        if (runtime.getOperandStackSize() <= n) {
-            runtime.pushToOperandStack(oN);
+        if (context.getOperandStackSize() <= n) {
+            context.pushToOperandStack(oN);
             return;
         }
         PSObject[] arr = new PSObject[n + 1];
         for (int i = 0; i <= n; i++) {
-            arr[i] = runtime.popFromOperandStack();
+            arr[i] = context.popFromOperandStack();
         }
         PSObject dupObj = new PSObject(arr[n].getDirectValue(), arr[n].getType(), arr[n].getAttribute());
         for (int i = n; i >= 0; i--) {
-            runtime.pushToOperandStack(arr[i]);
+            context.pushToOperandStack(arr[i]);
         }
-        runtime.pushToOperandStack(dupObj);
+        context.pushToOperandStack(dupObj);
     }
 
     @Override

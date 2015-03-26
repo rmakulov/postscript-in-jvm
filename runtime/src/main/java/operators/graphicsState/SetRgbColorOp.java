@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 
 import java.awt.*;
 
@@ -18,15 +19,15 @@ public class SetRgbColorOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {// red green blue setrgbcolor -
-        PSObject oBlue = runtime.popFromOperandStack();
-        PSObject oGreen = runtime.popFromOperandStack();
-        PSObject oRed = runtime.popFromOperandStack();
+    public void interpret(Context context) {// red green blue setrgbcolor -
+        PSObject oBlue = context.popFromOperandStack();
+        PSObject oGreen = context.popFromOperandStack();
+        PSObject oRed = context.popFromOperandStack();
         if (oBlue == null || oGreen == null || oRed == null ||
                 !(oBlue.isNumber() && oGreen.isNumber() && oRed.isNumber())) {
-            runtime.pushToOperandStack(oRed);
-            runtime.pushToOperandStack(oGreen);
-            runtime.pushToOperandStack(oBlue);
+            context.pushToOperandStack(oRed);
+            context.pushToOperandStack(oGreen);
+            context.pushToOperandStack(oBlue);
             return;
         }
         double nBlue = ((PSNumber) oBlue.getValue()).getRealValue();
@@ -35,7 +36,7 @@ public class SetRgbColorOp extends AbstractGraphicOperator {
         if (!(nBlue >= 0 && nBlue <= 1 && nGreen >= 0 && nGreen <= 1 && nRed >= 0 && nRed <= 1)) {
             return;
         }
-        runtime.getGState().graphicsSettings.color = new Color((int) (255 * nRed), (int) (255 * nGreen), (int) (255 * nBlue));
+        context.getGState().graphicsSettings.color = new Color((int) (255 * nRed), (int) (255 * nGreen), (int) (255 * nBlue));
     }
 
     @Override

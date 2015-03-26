@@ -2,6 +2,7 @@ package operators.graphicsState;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by User on 17/2/2015.
@@ -15,8 +16,8 @@ public class InitGraphicsOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        runtime.getGraphicStack().reset();
+    public void interpret(Context context) {
+        context.getGraphicStack().reset();
     }
 
     @Override

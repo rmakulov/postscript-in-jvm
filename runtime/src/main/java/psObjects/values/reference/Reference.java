@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSString;
+import runtime.Context;
 
 
 public abstract class Reference extends Value {
@@ -44,13 +45,13 @@ public abstract class Reference extends Value {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
-        return getValue().interpret(obj);
+    public boolean interpret(Context context, PSObject obj) {
+        return getValue().interpret(context, obj);
     }
 
     @Override
-    public void compile(PSObject obj) {
-        getValue().compile(obj);
+    public void compile(Context context, PSObject obj) {
+        getValue().compile(context, obj);
     }
 
     @Override

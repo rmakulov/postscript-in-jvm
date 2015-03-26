@@ -8,6 +8,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.compareableInterfaces.ValueComparable;
 import psObjects.values.simple.PSNull;
+import runtime.Context;
 import runtime.Runtime;
 
 public abstract class Value implements ValueComparable<Value>, Opcodes {
@@ -27,12 +28,13 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 
     public abstract Type determineType();
 
-    public boolean interpret(PSObject obj) {
-        runtime.pushToOperandStack(obj);
+
+    public boolean interpret(Context context, PSObject obj) {
+        context.pushToOperandStack(obj);
         return true;
     }
 
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         try {
             throw new Exception("try to call common compile method instead of specific one");
         } catch (Exception e) {

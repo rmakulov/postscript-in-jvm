@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -16,19 +17,19 @@ public class StoreOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject value = runtime.popFromOperandStack();
-        PSObject key = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) return;
+        PSObject value = context.popFromOperandStack();
+        PSObject key = context.popFromOperandStack();
         if (!key.isDictKey()) {
-            runtime.pushToOperandStack(key);
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(key);
+            context.pushToOperandStack(value);
             return;
         }
-        PSObject dictionaryObj = runtime.findDict(key);
+        PSObject dictionaryObj = context.findDict(key);
         if (dictionaryObj == null) {
-            runtime.pushToOperandStack(key);
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(key);
+            context.pushToOperandStack(value);
             return;
         }
         PSDictionary dict = (PSDictionary) dictionaryObj.getValue();

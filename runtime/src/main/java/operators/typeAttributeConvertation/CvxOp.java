@@ -6,6 +6,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 public class CvxOp extends Operator {
 
@@ -16,19 +17,19 @@ public class CvxOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
         if (o.getType() == Type.ARRAY && runtime.isCompiling) {
             runtime.bcGenManager.startCodeGenerator();
             PSArray psArray = ((PSArray) o.getValue());
             for (PSObject psObject : psArray.getArray()) {
-                psObject.compile();
+                psObject.compile(context);
             }
             runtime.bcGenManager.endBytecode();
-            runtime.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur(), Attribute.TreatAs.EXECUTABLE));
+            context.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur(), Attribute.TreatAs.EXECUTABLE));
         } else {
-            runtime.pushToOperandStack(o.cvx());
+            context.pushToOperandStack(o.cvx());
         }
     }
 

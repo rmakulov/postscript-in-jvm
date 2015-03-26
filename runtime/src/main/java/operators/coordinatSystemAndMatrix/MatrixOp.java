@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.matrix.TransformMatrix;
 
 /**
@@ -17,9 +18,9 @@ public class MatrixOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         PSObject matrix = new PSObject(TransformMatrix.getIdentityMatrix(), Attribute.TreatAs.LITERAL);
-        runtime.pushToOperandStack(matrix);
+        context.pushToOperandStack(matrix);
     }
 
     @Override

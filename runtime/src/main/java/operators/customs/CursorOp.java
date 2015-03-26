@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.frame.PSFrame;
 
 import java.awt.*;
@@ -20,11 +21,11 @@ public class CursorOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         //doNothing
-        PSObject oStr = runtime.popFromOperandStack();
+        PSObject oStr = context.popFromOperandStack();
         if (oStr == null || !(oStr.getType() == Type.STRING)) {
-            runtime.pushToOperandStack(oStr);
+            context.pushToOperandStack(oStr);
             fail();
         }
         String str = ((PSString) oStr.getValue()).getString();
@@ -33,7 +34,7 @@ public class CursorOp extends Operator {
         } else if (str.equals("default")) {
             PSFrame.getInstance().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         } else {
-            runtime.pushToOperandStack(oStr);
+            context.pushToOperandStack(oStr);
             fail();
         }
     }

@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -16,8 +17,8 @@ public class CountDictStackOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.pushToOperandStack(new PSObject(new PSInteger(runtime.getDictionaryStackSize())));
+    public void interpret(Context context) {
+        context.pushToOperandStack(new PSObject(new PSInteger(context.getDictionaryStackSize())));
     }
 
     @Override

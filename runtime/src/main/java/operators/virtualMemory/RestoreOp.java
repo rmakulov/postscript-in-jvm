@@ -2,6 +2,7 @@ package operators.virtualMemory;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -15,8 +16,8 @@ public class RestoreOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.restore();
+    public void interpret(Context context) {
+        runtime.restore(context);
     }
 
     @Override

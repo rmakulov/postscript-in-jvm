@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 import runtime.graphics.figures.PSPoint;
 import runtime.graphics.matrix.TransformMatrix;
 
@@ -18,20 +19,20 @@ public class ArcnOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 5) return;
-        PSObject oAngle2 = runtime.popFromOperandStack();
-        PSObject oAngle1 = runtime.popFromOperandStack();
-        PSObject oR = runtime.popFromOperandStack();
-        PSObject oY = runtime.popFromOperandStack();
-        PSObject oX = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 5) return;
+        PSObject oAngle2 = context.popFromOperandStack();
+        PSObject oAngle1 = context.popFromOperandStack();
+        PSObject oR = context.popFromOperandStack();
+        PSObject oY = context.popFromOperandStack();
+        PSObject oX = context.popFromOperandStack();
 
         if (!(oAngle2.isNumber() && oAngle1.isNumber() && oR.isNumber() && oY.isNumber() && oX.isNumber())) {
-            runtime.pushToOperandStack(oX);
-            runtime.pushToOperandStack(oY);
-            runtime.pushToOperandStack(oR);
-            runtime.pushToOperandStack(oAngle1);
-            runtime.pushToOperandStack(oAngle2);
+            context.pushToOperandStack(oX);
+            context.pushToOperandStack(oY);
+            context.pushToOperandStack(oR);
+            context.pushToOperandStack(oAngle1);
+            context.pushToOperandStack(oAngle2);
             return;
         }
         double nAngle2 = ((PSNumber) oAngle2.getValue()).getRealValue();
@@ -40,7 +41,7 @@ public class ArcnOp extends AbstractGraphicOperator {
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
-        TransformMatrix cTM = runtime.getGState().cTM;
+        TransformMatrix cTM = context.getGState().cTM;
         PSPoint absCent = cTM.transform(nX, nY);
         double xScale = cTM.getXScale();
         double yScale = cTM.getYScale();
@@ -62,10 +63,10 @@ public class ArcnOp extends AbstractGraphicOperator {
 
         PSPoint absBegin = new PSPoint(xBegin, yBegin);
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
-        boolean connect = runtime.getGState().currentPoint != null;
-        runtime.getGState().currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
+        boolean connect = context.getGState().currentPoint != null;
+        context.getGState().currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
                 nAngle1, nAngle2, false, connect);
-        runtime.getGState().currentPoint = new PSPoint(absCent.getX() + xR * Math.cos(nAngle2),
+        context.getGState().currentPoint = new PSPoint(absCent.getX() + xR * Math.cos(nAngle2),
                 absCent.getY() + yR * Math.sin(nAngle2));
     }
 

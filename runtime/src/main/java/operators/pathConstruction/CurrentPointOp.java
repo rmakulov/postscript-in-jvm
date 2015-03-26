@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 import runtime.graphics.figures.PSPoint;
 
 /**
@@ -17,13 +18,13 @@ public class CurrentPointOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getGState().currentPoint == null) {
+    public void interpret(Context context) {
+        if (context.getGState().currentPoint == null) {
             return;
         }
-        PSPoint p = runtime.getGState().cTM.iTransform(runtime.getGState().currentPoint);
-        runtime.pushToOperandStack(new PSObject(new PSReal(p.getX())));
-        runtime.pushToOperandStack(new PSObject(new PSReal(p.getY())));
+        PSPoint p = context.getGState().cTM.iTransform(context.getGState().currentPoint);
+        context.pushToOperandStack(new PSObject(new PSReal(p.getX())));
+        context.pushToOperandStack(new PSObject(new PSReal(p.getY())));
 
     }
 

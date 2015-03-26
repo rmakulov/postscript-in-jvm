@@ -2,6 +2,7 @@ package operators.dictionary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -14,8 +15,8 @@ public class CurrentDictOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.pushToOperandStack(runtime.peekFromDictionaryStack());
+    public void interpret(Context context) {
+        context.pushToOperandStack(context.peekFromDictionaryStack());
     }
 
     @Override

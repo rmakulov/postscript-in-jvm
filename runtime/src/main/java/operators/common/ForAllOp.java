@@ -8,6 +8,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.avl.AvlTree;
 import runtime.avl.Pair;
 
@@ -20,11 +21,11 @@ public class ForAllOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
 
-        PSObject proc = runtime.popFromOperandStack();
-        PSObject elems = runtime.popFromOperandStack();
-        if (wrongArgs(proc, elems)) return;
+        PSObject proc = context.popFromOperandStack();
+        PSObject elems = context.popFromOperandStack();
+        if (wrongArgs(context, proc, elems)) return;
 
         PSObject[] beforeArray = getBeforeArray(elems);
         if (beforeArray == null) {
@@ -34,12 +35,12 @@ public class ForAllOp extends Operator {
 
         if (runtime.isCompiling && proc.isBytecode()) {
             for (PSObject psObj : beforeArray) {
-                runtime.pushToOperandStack(psObj);
-                if (!proc.execute(0)) break;
+                context.pushToOperandStack(psObj);
+                if (!proc.execute(context, 0)) break;
 //                ((PSArray) proc.getValue()).get(0).execute(0);
             }
         } else if (!runtime.isCompiling && proc.isProc()) {
-            runtime.pushToCallStack(new ForAllProcedure(beforeArray, proc));
+            context.pushToCallStack(new ForAllProcedure(context, beforeArray, proc));
         } else {
             fail();
         }
@@ -75,10 +76,10 @@ public class ForAllOp extends Operator {
         return beforeArray;
     }
 
-    private boolean wrongArgs(PSObject proc, PSObject elems) {
+    private boolean wrongArgs(Context context, PSObject proc, PSObject elems) {
         if (elems == null || !(proc.isProc() || proc.isBytecode())) {
             fail();
-            runtime.pushToOperandStack(proc);
+            context.pushToOperandStack(proc);
             return true;
         }
         return false;

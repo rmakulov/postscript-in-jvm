@@ -2,6 +2,7 @@ package operators.pathConstruction;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -14,8 +15,8 @@ public class InitClipOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        runtime.getGState().initClip();
+    public void interpret(Context context) {
+        context.getGState().initClip();
     }
 
     @Override

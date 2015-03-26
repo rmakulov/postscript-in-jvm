@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -17,9 +18,9 @@ public class CurrentGlobalOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         boolean b = runtime.currentGlobal();
-        runtime.pushToOperandStack(new PSObject(PSBoolean.get(b)));
+        context.pushToOperandStack(new PSObject(PSBoolean.get(b)));
     }
 
     @Override

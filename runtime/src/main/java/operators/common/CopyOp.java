@@ -8,6 +8,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by user on 02.04.14.
@@ -20,106 +21,106 @@ public class CopyOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) {
             return;
         }
         PSObject result;
         switch (o.getType()) {
             case INTEGER:
-                copyElements(o);
+                copyElements(context, o);
                 break;
             case DICTIONARY:
-                copyDictionary(o);
+                copyDictionary(context, o);
                 break;
             case ARRAY:
-                copyArray(o);
+                copyArray(context, o);
                 break;
             case STRING:
-                copyString(o);
+                copyString(context, o);
                 break;
             default: {
-                runtime.pushToOperandStack(o);
+                context.pushToOperandStack(o);
             }
         }
     }
 
-    private void copyElements(PSObject num) {
+    private void copyElements(Context context, PSObject num) {
         PSInteger psInt = (PSInteger) num.getValue();
         int n = psInt.getIntValue();
-        if (runtime.getOperandStackSize() < n) {
-            runtime.pushToOperandStack(num);
+        if (context.getOperandStackSize() < n) {
+            context.pushToOperandStack(num);
             return;
         }
         PSObject[] objects = new PSObject[n];
         for (int i = n - 1; i >= 0; i--) {
-            objects[i] = runtime.popFromOperandStack();
+            objects[i] = context.popFromOperandStack();
         }
         for (int i = 0; i < n; i++) {
-            runtime.pushToOperandStack(objects[i]);
+            context.pushToOperandStack(objects[i]);
         }
         for (int i = 0; i < n; i++) {
-            runtime.pushToOperandStack(objects[i].copy());
+            context.pushToOperandStack(objects[i].copy());
         }
     }
 
-    private void copyArray(PSObject o1) {
-        if (runtime.getOperandStackSize() < 1) {
-            runtime.pushToOperandStack(o1);
+    private void copyArray(Context context, PSObject o1) {
+        if (context.getOperandStackSize() < 1) {
+            context.pushToOperandStack(o1);
             return;
         }
-        PSObject o2 = runtime.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
         if (o2.getType() != Type.ARRAY) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
             return;
         }
         PSArray dst = (PSArray) o2.getValue();
         PSArray src = (PSArray) o1.getValue();
         if (dst.length() < src.length()) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
             return;
         }
         o2.setValue(src.copy());
-        runtime.pushToOperandStack(o2);
+        context.pushToOperandStack(o2);
     }
 
-    private void copyString(PSObject o1) {
-        if (runtime.getOperandStackSize() < 1) {
-            runtime.pushToOperandStack(o1);
+    private void copyString(Context context, PSObject o1) {
+        if (context.getOperandStackSize() < 1) {
+            context.pushToOperandStack(o1);
             return;
         }
-        PSObject o2 = runtime.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
         if (o2.getType() != Type.STRING) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
             return;
         }
         PSString dst = (PSString) o2.getValue();
         PSString src = (PSString) o1.getValue();
         if (dst.length() < src.length()) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
             return;
         }
         o2.setValue(src.copy());
-        runtime.pushToOperandStack(o2);
+        context.pushToOperandStack(o2);
     }
 
-    private void copyDictionary(PSObject dict2) {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject dict1 = runtime.popFromOperandStack();
+    private void copyDictionary(Context context, PSObject dict2) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject dict1 = context.popFromOperandStack();
         if (dict1.getType() != Type.DICTIONARY) {
-            runtime.pushToOperandStack(dict1);
-            runtime.pushToOperandStack(dict2);
+            context.pushToOperandStack(dict1);
+            context.pushToOperandStack(dict2);
             return;
         }
         PSDictionary psDict1 = (PSDictionary) dict1.getValue();
         PSDictionary psDict2 = (PSDictionary) dict2.getValue();
         dict2.setValue(psDict1.copy(psDict2));
-        runtime.pushToOperandStack(dict2);
+        context.pushToOperandStack(dict2);
     }
 
     @Override

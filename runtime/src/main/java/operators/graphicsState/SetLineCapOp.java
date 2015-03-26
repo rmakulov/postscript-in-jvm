@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by user on 16.03.14.
@@ -16,14 +17,14 @@ public class SetLineCapOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject oLC = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject oLC = context.popFromOperandStack();
         if (oLC == null || !oLC.isNumber()) {
-            runtime.pushToOperandStack(oLC);
+            context.pushToOperandStack(oLC);
             return;
         }
         int nLC = ((PSInteger) oLC.getValue()).getIntValue();
-        runtime.getGState().graphicsSettings.lineCap = nLC;
+        context.getGState().graphicsSettings.lineCap = nLC;
     }
 
     @Override

@@ -2,6 +2,7 @@ package operators.painting;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.frame.PSDrawer;
 
 /**
@@ -15,8 +16,8 @@ public class StrokeOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { //-- setGraphicsSettings --
-        PSDrawer.getInstance().stroke();
+    public void interpret(Context context) { //-- setGraphicsSettings --
+        PSDrawer.getInstance().stroke(context);
     }
 
     @Override

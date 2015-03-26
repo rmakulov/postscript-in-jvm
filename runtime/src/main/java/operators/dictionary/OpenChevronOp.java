@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.Runtime;
 
 /**
@@ -17,8 +18,8 @@ public class OpenChevronOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.pushToOperandStack(new PSObject(PSMark.OPEN_CHEVRON_BRACKET));
+    public void interpret(Context context) {
+        context.pushToOperandStack(new PSObject(PSMark.OPEN_CHEVRON_BRACKET));
     }
 
     @Override

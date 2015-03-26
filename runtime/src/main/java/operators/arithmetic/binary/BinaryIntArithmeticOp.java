@@ -3,20 +3,21 @@ package operators.arithmetic.binary;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 import runtime.Runtime;
 
 /**
  * Created by Дмитрий on 16.03.14.
  */
 public class BinaryIntArithmeticOp {
-    public static void doOperation(char op) {
+    public static void doOperation(Context context, char op) {
         runtime.Runtime runtime = Runtime.getInstance();
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject o1 = runtime.popFromOperandStack();
-        PSObject o2 = runtime.popFromOperandStack();
+        if (context.getOperandStackSize() < 2) return;
+        PSObject o1 = context.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
         if (o1.getType() != Type.INTEGER || o2.getType() != Type.INTEGER) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
             return;
         }
         PSInteger i1 = (PSInteger) o2.getValue();
@@ -30,17 +31,17 @@ public class BinaryIntArithmeticOp {
                 break;
             case '/':
                 if (r2 == 0) {
-                    runtime.pushToOperandStack(o2);
-                    runtime.pushToOperandStack(o1);
+                    context.pushToOperandStack(o2);
+                    context.pushToOperandStack(o1);
                     return;
                 }
                 iRes = r1 / r2;
                 break;
             default:
-                runtime.pushToOperandStack(o2);
-                runtime.pushToOperandStack(o1);
+                context.pushToOperandStack(o2);
+                context.pushToOperandStack(o1);
                 return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSInteger(iRes)));
+        context.pushToOperandStack(new PSObject(new PSInteger(iRes)));
     }
 }

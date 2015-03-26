@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 import runtime.graphics.matrix.TransformMatrix;
 
 /**
@@ -18,26 +19,26 @@ public class TranslateOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {//t_x t_y translate --
-        if (runtime.getOperandStackSize() < 2) {
+    public void interpret(Context context) {//t_x t_y translate --
+        if (context.getOperandStackSize() < 2) {
             fail();
             return;
         }
 
-        PSObject first = runtime.popFromOperandStack();
-        PSObject second = runtime.popFromOperandStack();
+        PSObject first = context.popFromOperandStack();
+        PSObject second = context.popFromOperandStack();
 
-        if (first.getType() == Type.ARRAY && runtime.getOperandStackSize() > 0) {
-            PSObject third = runtime.popFromOperandStack();
+        if (first.getType() == Type.ARRAY && context.getOperandStackSize() > 0) {
+            PSObject third = context.popFromOperandStack();
             double t_y = ((PSNumber) (second.getValue())).getRealValue();
             double t_x = ((PSNumber) (third.getValue())).getRealValue();
             TransformMatrix m = new TransformMatrix(first);
             m.translate(t_x, t_y);
-            runtime.pushToOperandStack(m.getMatrix());
+            context.pushToOperandStack(m.getMatrix());
         } else if (second.isNumber() && first.isNumber()) {
             double t_y = ((PSNumber) (first.getValue())).getRealValue();
             double t_x = ((PSNumber) (second.getValue())).getRealValue();
-            runtime.getGState().cTM.translate(t_x, t_y);
+            context.getGState().cTM.translate(t_x, t_y);
         } else {
             fail();
         }

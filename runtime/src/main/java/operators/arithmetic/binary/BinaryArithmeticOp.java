@@ -6,17 +6,18 @@ import psObjects.Type;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSNumber;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 import runtime.Runtime;
 
 public class BinaryArithmeticOp {
-    public static void doOperation(char op) {
+    public static void doOperation(Context context, char op) {
         runtime.Runtime runtime = Runtime.getInstance();
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject o2 = runtime.popFromOperandStack();
-        PSObject o1 = runtime.popFromOperandStack();
+        if (context.getOperandStackSize() < 2) return;
+        PSObject o2 = context.popFromOperandStack();
+        PSObject o1 = context.popFromOperandStack();
         if (!o2.isNumber() || !o1.isNumber()) {
-            runtime.pushToOperandStack(o1);
-            runtime.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
             return;
         }
         PSNumber i1 = (PSNumber) o1.getValue();
@@ -27,14 +28,14 @@ public class BinaryArithmeticOp {
         switch (op) {
             case '+':
                 if (o1.getType() == Type.INTEGER && o2.getType() == Type.INTEGER) {
-                    runtime.pushToOperandStack(new PSObject(new PSInteger(((int) r1) + ((int) r2))));
+                    context.pushToOperandStack(new PSObject(new PSInteger(((int) r1) + ((int) r2))));
                     return;
                 }
                 dRes = r1 + r2;
                 break;
             case '-':
                 if (o1.getType() == Type.INTEGER && o2.getType() == Type.INTEGER) {
-                    runtime.pushToOperandStack(new PSObject(new PSInteger(((int) r1) - ((int) r2))));
+                    context.pushToOperandStack(new PSObject(new PSInteger(((int) r1) - ((int) r2))));
                     return;
                 }
                 dRes = r1 - r2;
@@ -44,32 +45,32 @@ public class BinaryArithmeticOp {
                 break;
             case '*':
                 if (o1.getType() == Type.INTEGER && o2.getType() == Type.INTEGER) {
-                    runtime.pushToOperandStack(new PSObject(new PSInteger(((int) r1) * ((int) r2))));
+                    context.pushToOperandStack(new PSObject(new PSInteger(((int) r1) * ((int) r2))));
                     return;
                 }
                 dRes = r1 * r2;
                 break;
             case 't':
                 if (r1 == 0 && r2 == 0) {
-                    runtime.pushToOperandStack(o1);
-                    runtime.pushToOperandStack(o2);
+                    context.pushToOperandStack(o1);
+                    context.pushToOperandStack(o2);
                     return;
                 }
                 dRes = Math.atan2(r1, r2) * Math.PI / 180;
                 break;
             case 'e':
                 if (o2.getType() != Type.INTEGER && r1 < 0) {
-                    runtime.pushToOperandStack(o1);
-                    runtime.pushToOperandStack(o2);
+                    context.pushToOperandStack(o1);
+                    context.pushToOperandStack(o2);
                     return;
                 }
                 dRes = Math.pow(r1, r2);
                 break;
             default:
-                runtime.pushToOperandStack(o1);
-                runtime.pushToOperandStack(o2);
+                context.pushToOperandStack(o1);
+                context.pushToOperandStack(o2);
                 return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSReal(dRes)));
+        context.pushToOperandStack(new PSObject(new PSReal(dRes)));
     }
 }

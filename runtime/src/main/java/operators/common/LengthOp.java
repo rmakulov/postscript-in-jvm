@@ -7,6 +7,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 public class LengthOp extends Operator {
 
@@ -17,8 +18,8 @@ public class LengthOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject psObject = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject psObject = context.popFromOperandStack();
         int length;
         switch (psObject.getType()) {
             case DICTIONARY:
@@ -35,11 +36,11 @@ public class LengthOp extends Operator {
                 length = ((PSName) psObject.getValue()).length();
                 break;
             default: {
-                runtime.pushToOperandStack(psObject);
+                context.pushToOperandStack(psObject);
                 return;
             }
         }
-        runtime.pushToOperandStack(new PSObject(new PSInteger(length)));
+        context.pushToOperandStack(new PSObject(new PSInteger(length)));
     }
 
     @Override

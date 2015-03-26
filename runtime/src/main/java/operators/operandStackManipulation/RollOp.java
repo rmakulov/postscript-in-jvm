@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by user on 26.03.14.
@@ -17,13 +18,13 @@ public class RollOp extends Operator {
     }
 
     @Override
-    public void interpret() { //anyn-1 … any0 n j roll any (j-1) mod n … any0 anyn-1 … anyj mod n
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject oJ = runtime.popFromOperandStack();
-        PSObject oN = runtime.popFromOperandStack();
+    public void interpret(Context context) { //anyn-1 … any0 n j roll any (j-1) mod n … any0 anyn-1 … anyj mod n
+        if (context.getOperandStackSize() < 2) return;
+        PSObject oJ = context.popFromOperandStack();
+        PSObject oN = context.popFromOperandStack();
         if (!(oJ.getType() == Type.INTEGER && oN.getType() == Type.INTEGER)) {
-            runtime.pushToOperandStack(oN);
-            runtime.pushToOperandStack(oJ);
+            context.pushToOperandStack(oN);
+            context.pushToOperandStack(oJ);
             fail();
             return;
         }
@@ -31,9 +32,9 @@ public class RollOp extends Operator {
         PSInteger psJ = (PSInteger) oJ.getValue();
         int n = psN.getIntValue();
         int j = psJ.getIntValue();
-        if (runtime.getOperandStackSize() < n) {
-            runtime.pushToOperandStack(oN);
-            runtime.pushToOperandStack(oJ);
+        if (context.getOperandStackSize() < n) {
+            context.pushToOperandStack(oN);
+            context.pushToOperandStack(oJ);
             return;
         }
 
@@ -41,13 +42,13 @@ public class RollOp extends Operator {
 
         PSObject[] arr = new PSObject[n];
         for (int i = 0; i < n; i++) {
-            arr[i] = runtime.popFromOperandStack();
+            arr[i] = context.popFromOperandStack();
         }
         for (int i = (j - 1) % n; i >= 0; i--) {
-            runtime.pushToOperandStack(arr[i]);
+            context.pushToOperandStack(arr[i]);
         }
         for (int i = n - 1; i >= j; i--) {
-            runtime.pushToOperandStack(arr[i]);
+            context.pushToOperandStack(arr[i]);
         }
     }
 

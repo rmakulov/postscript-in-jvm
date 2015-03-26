@@ -2,6 +2,7 @@ package procedures;
 
 import psObjects.PSObject;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by User on 15/9/2014.
@@ -12,8 +13,8 @@ public class IntForProcedure extends ArrayProcedure {
     private double limit;
     private int repeatedTimes = 0;
 
-    public IntForProcedure(int initial, int increment, double limit, PSObject arrayObj) {
-        super("For", arrayObj);
+    public IntForProcedure(Context context, int initial, int increment, double limit, PSObject arrayObj) {
+        super(context, "For", arrayObj);
         this.initial = initial;
         this.increment = increment;
         this.limit = limit;

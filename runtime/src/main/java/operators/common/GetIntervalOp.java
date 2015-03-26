@@ -8,6 +8,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 public class GetIntervalOp extends Operator {
 
@@ -18,19 +19,19 @@ public class GetIntervalOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject count = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject count = context.popFromOperandStack();
         if (count == null)
             return;
-        PSObject index = runtime.popFromOperandStack();
+        PSObject index = context.popFromOperandStack();
         if (index == null) {
-            runtime.pushToOperandStack(count);
+            context.pushToOperandStack(count);
             return;
         }
-        PSObject src = runtime.popFromOperandStack();
+        PSObject src = context.popFromOperandStack();
         if (src == null) {
-            runtime.pushToOperandStack(index);
-            runtime.pushToOperandStack(count);
+            context.pushToOperandStack(index);
+            context.pushToOperandStack(count);
             return;
         }
         if (index.getType() == Type.INTEGER && count.getType() == Type.INTEGER) {
@@ -46,13 +47,13 @@ public class GetIntervalOp extends Operator {
                     result = ((PSString) src.getValue()).getInterval(start, length);
                     break;
                 default: {
-                    runtime.pushToOperandStack(src);
-                    runtime.pushToOperandStack(index);
-                    runtime.pushToOperandStack(count);
+                    context.pushToOperandStack(src);
+                    context.pushToOperandStack(index);
+                    context.pushToOperandStack(count);
                     return;
                 }
             }
-            runtime.pushToOperandStack(new PSObject(result, src.getType(), src.getAttribute()));
+            context.pushToOperandStack(new PSObject(result, src.getType(), src.getAttribute()));
         }
     }
 

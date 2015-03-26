@@ -1,13 +1,14 @@
 package procedures;
 
 import psObjects.PSObject;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
  */
 public class LoopProcedure extends ArrayProcedure {
-    public LoopProcedure(PSObject arrayObj) {
-        super("Loop", arrayObj);
+    public LoopProcedure(Context context, PSObject arrayObj) {
+        super(context, "Loop", arrayObj);
     }
 
     @Override

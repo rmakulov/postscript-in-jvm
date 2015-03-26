@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 
 import java.awt.*;
 
@@ -18,14 +19,14 @@ public class PathBBoxOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // -- pathbbox llx lly urx ury
-        Rectangle bBox = runtime.getGState().currentPath.getBBox();
+    public void interpret(Context context) { // -- pathbbox llx lly urx ury
+        Rectangle bBox = context.getGState().currentPath.getBBox();
         double llx = bBox.getX(), lly = bBox.getY();
         double urx = bBox.getX() + bBox.width, ury = bBox.getY() + bBox.height;
-        runtime.pushToOperandStack(new PSObject(new PSReal(llx)));
-        runtime.pushToOperandStack(new PSObject(new PSReal(lly)));
-        runtime.pushToOperandStack(new PSObject(new PSReal(urx)));
-        runtime.pushToOperandStack(new PSObject(new PSReal(ury)));
+        context.pushToOperandStack(new PSObject(new PSReal(llx)));
+        context.pushToOperandStack(new PSObject(new PSReal(lly)));
+        context.pushToOperandStack(new PSObject(new PSReal(urx)));
+        context.pushToOperandStack(new PSObject(new PSReal(ury)));
     }
 
     @Override

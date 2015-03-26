@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -18,11 +19,11 @@ public class SetGlobalOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
         if (o.getType() != Type.BOOLEAN) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
         PSBoolean b = (PSBoolean) o.getValue();

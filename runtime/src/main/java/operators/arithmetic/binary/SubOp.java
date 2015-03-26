@@ -2,6 +2,7 @@ package operators.arithmetic.binary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 public class SubOp extends Operator {
     public static final SubOp instance = new SubOp();
@@ -11,8 +12,8 @@ public class SubOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        BinaryArithmeticOp.doOperation('-');
+    public void interpret(Context context) {
+        BinaryArithmeticOp.doOperation(context, '-');
     }
 
     @Override

@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.frame.PSDrawer;
 
 /**
@@ -18,16 +19,14 @@ public class ShowOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // string show --
-        PSObject oStr = runtime.popFromOperandStack();
-        if (oStr == null || !(oStr.getType() == Type.STRING) || runtime.getGState().getFont() == null) {
-            runtime.pushToOperandStack(oStr);
+    public void interpret(Context context) { // string show --
+        PSObject oStr = context.popFromOperandStack();
+        if (oStr == null || !(oStr.getType() == Type.STRING) || context.getGState().getFont() == null) {
+            context.pushToOperandStack(oStr);
             return;
         }
         String str = ((PSString) oStr.getValue()).getString();
-        PSDrawer.getInstance().show(str);
-//        PSDrawer.getInstance().showOld(str);
-
+        PSDrawer.getInstance().show(context, str);
     }
 
     @Override

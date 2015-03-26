@@ -3,6 +3,7 @@ package operators.customs;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 27.02.15.
@@ -16,11 +17,11 @@ public class PrintOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) {
             fail();
         }
-        PSObject obj = runtime.popFromOperandStack();
+        PSObject obj = context.popFromOperandStack();
         System.out.println(obj);
     }
 

@@ -1,6 +1,7 @@
 package interpreter;
 
 import procedures.MainProcedure;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.io.File;
@@ -10,21 +11,15 @@ public class Interpreter {
 
 
     public static Interpreter instance = new Interpreter();
-    private runtime.Runtime runtime = Runtime.getInstance();
 
     public long run(File file) throws IOException {
+        runtime.Runtime runtime = Runtime.getInstance();
         long startTime = System.currentTimeMillis();
-        runtime.initDefaultDictionaries();
-        MainProcedure mainProcedure = new MainProcedure(file);
-        if (isCompilingMode()) {
-            while (mainProcedure.hasNext()) {
-                mainProcedure.execNext();
-            }
-        } else {
-            runtime.pushToCallStack(mainProcedure);
-            runtime.executeCallStack();
-        }
-//        System.out.println(runtime.operandStackToString());
+        runtime.initSystemDict();
+        Context context = new Context();
+        MainProcedure mainProcedure = new MainProcedure(context, file);
+        runtime.startMainTask(context, mainProcedure);
+
 //        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
 
 //        System.out.println("DynamicClassLoader size is "+DynamicClassLoader.instance.getSize());
@@ -34,20 +29,20 @@ public class Interpreter {
     }
 
     public void clearRuntime() {
-        instance.runtime.clearAll();
+        Runtime.getInstance().clearAll();
     }
 
     public boolean isCompilingMode() {
-        return runtime.isCompiling;
+        return Runtime.getInstance().isCompiling;
     }
 
     public void setCompilingMode(boolean compilingMode) {
-        runtime.setCompilingMode(compilingMode);
+        Runtime.getInstance().setCompilingMode(compilingMode);
     }
 
     public static void main(String[] args) {
 //        instance.setCompilingMode(true);
-        instance.setCompilingMode(false);
+//        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -109,7 +104,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/FractalByAlunJones2.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/gingerbread.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/julia.ps")));
-//                System.out.println(instance.run(new File("tests/speedTestExamples/colorcir/.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/colorcir.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/tiger.eps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/2_trapezoid.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/FractalByAlunJones.ps")));
@@ -147,6 +142,6 @@ public class Interpreter {
     }
 
     public String operandStackToString() {
-        return runtime.operandStackToString();
+        return Runtime.getInstance().getMainContext().operandStackToString();
     }
 }

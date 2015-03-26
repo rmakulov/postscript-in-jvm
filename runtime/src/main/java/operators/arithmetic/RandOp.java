@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.util.Random;
@@ -20,7 +21,7 @@ public class RandOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
 
         runtime.Runtime runtime = Runtime.getInstance();
         int randomInt = random.nextInt(Integer.MAX_VALUE);
@@ -34,7 +35,7 @@ public class RandOp extends Operator {
 //        } catch (NoSuchMethodException e) {
 //            e.printStackTrace();
 //        }
-        runtime.pushToOperandStack(new PSObject(new PSInteger(randomInt)));
+        context.pushToOperandStack(new PSObject(new PSInteger(randomInt)));
     }
 
     public static void dropRandom() {

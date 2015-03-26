@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 
 /**
  * Created by user on 16.03.14.
@@ -16,18 +17,18 @@ public class SetMiterLimitOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject oNum = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject oNum = context.popFromOperandStack();
         if (oNum == null || !oNum.isNumber()) {
-            runtime.pushToOperandStack(oNum);
+            context.pushToOperandStack(oNum);
             return;
         }
         double nNum = ((PSNumber) oNum.getValue()).getRealValue();
         if (nNum < 1) {
-            runtime.pushToOperandStack(oNum);
+            context.pushToOperandStack(oNum);
             return;
         }
-        runtime.getGState().graphicsSettings.miterLimit = nNum;
+        context.getGState().graphicsSettings.miterLimit = nNum;
     }
 
     @Override

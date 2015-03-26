@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.matrix.TransformMatrix;
 
 /**
@@ -17,20 +18,20 @@ public class ConcatMatrixOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 3) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 3) {
             fail();
         }
-        PSObject third = runtime.popFromOperandStack();
-        PSObject second = runtime.popFromOperandStack();
-        PSObject first = runtime.popFromOperandStack();
+        PSObject third = context.popFromOperandStack();
+        PSObject second = context.popFromOperandStack();
+        PSObject first = context.popFromOperandStack();
 
         if (first.isMatrix() && second.isMatrix() && third.isMatrix()) {
             TransformMatrix m1 = new TransformMatrix(first);
             TransformMatrix m3 = m1.multMatrix(second);
             PSArray newValue = (PSArray) m3.getMatrix().getValue();
             third.setValue(newValue);
-            runtime.pushToOperandStack(third);
+            context.pushToOperandStack(third);
         } else {
             fail();
         }

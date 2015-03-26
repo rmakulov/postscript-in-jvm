@@ -2,6 +2,7 @@ package operators.dictionary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 18.03.14.
@@ -15,8 +16,8 @@ public class EndOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.removeFromDictionaryStack();
+    public void interpret(Context context) {
+        context.removeFromDictionaryStack();
     }
 
     @Override

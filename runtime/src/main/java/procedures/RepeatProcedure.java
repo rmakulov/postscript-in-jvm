@@ -1,6 +1,7 @@
 package procedures;
 
 import psObjects.PSObject;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
@@ -9,8 +10,8 @@ public class RepeatProcedure extends ArrayProcedure {
     private int times;
     private int repeatedTimes = 0;
 
-    public RepeatProcedure(int times, PSObject arrayObj) {
-        super("Repeat", arrayObj);
+    public RepeatProcedure(Context context, int times, PSObject arrayObj) {
+        super(context, "Repeat", arrayObj);
         this.times = times;
     }
 

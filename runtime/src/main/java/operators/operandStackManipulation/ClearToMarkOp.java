@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 27.09.14.
@@ -16,15 +17,15 @@ public class ClearToMarkOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject psObj = runtime.peekFromOperandStack();
+    public void interpret(Context context) {
+        PSObject psObj = context.peekFromOperandStack();
         if (checkNull(psObj)) return;
         while (psObj.getType() != Type.MARK) {
-            runtime.popFromOperandStack();
-            psObj = runtime.peekFromOperandStack();
+            context.popFromOperandStack();
+            psObj = context.peekFromOperandStack();
             if (checkNull(psObj)) return;
         }
-        runtime.popFromOperandStack();
+        context.popFromOperandStack();
     }
 
     private boolean checkNull(PSObject psObj) {

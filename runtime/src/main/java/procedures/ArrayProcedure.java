@@ -2,6 +2,7 @@ package procedures;
 
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
@@ -10,8 +11,8 @@ public class ArrayProcedure extends Procedure {
     protected int nextIndex = 0;
     protected PSObject arrayObj;
 
-    public ArrayProcedure(String name, PSObject arrayObj) {
-        super(name);
+    public ArrayProcedure(Context context, String name, PSObject arrayObj) {
+        super(context, name);
         this.arrayObj = arrayObj;
     }
 

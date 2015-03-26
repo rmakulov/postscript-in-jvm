@@ -3,6 +3,7 @@ package psObjects.values.simple.numbers;
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 import runtime.Runtime;
 
 public class PSReal extends PSNumber {
@@ -30,7 +31,7 @@ public class PSReal extends PSNumber {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;

@@ -2,6 +2,7 @@ package operators.graphicsState;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 16.03.14.
@@ -16,10 +17,10 @@ public class GRestoreOp extends AbstractGraphicOperator {
     /*it's too hard to explain, but we try
     * if last gstate was made by save*/
     @Override
-    public void interpret() {
-        runtime.removeFromGraphicStack();
-        if (!runtime.getGState().isMadeByGSaveOp()) {
-            runtime.gsave(false);
+    public void interpret(Context context) {
+        context.removeFromGraphicStack();
+        if (!context.getGState().isMadeByGSaveOp()) {
+            runtime.gsave(context, false);
         }
     }
 

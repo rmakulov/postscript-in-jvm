@@ -16,15 +16,15 @@ public class OperandStackTests {
     private String resSuffix = "Step.txt";
 
     static {
-        interpreter.setCompilingMode(true);
-//        interpreter.setCompilingMode(false);
+//        interpreter.setCompilingMode(true);
+        interpreter.setCompilingMode(false);
     }
 
     @Test
    /*check exec operator*/
     public void execTest() {
         int i = 0;
-        interpreter.clearRuntime();
+        //interpreter.clearRuntime();
         String expectedString = null;
         try {
             Interpreter.instance.run(new File(path + i + srcSuffix));

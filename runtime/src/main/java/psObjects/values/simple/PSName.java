@@ -9,6 +9,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.PSString;
+import runtime.Context;
 import runtime.Runtime;
 import runtime.compiler.BytecodeGeneratorManager;
 import runtime.compiler.DynamicClassLoader;
@@ -33,42 +34,42 @@ public class PSName extends SimpleValue {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
+    public boolean interpret(Context context, PSObject obj) {
         //operatorIndexes.add(2);
 //        System.out.println("DictStackVersion in PSName " + strValue + ": " + runtime.getDictStackVersion());
-        PSObject value = runtime.findValue(obj);
+        PSObject value = context.findValue(obj);
         String procName = ((PSName) obj.getValue()).getStrValue();
 //        if (procName.equals("search")){
 //            PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
 //            System.out.println(dict);        }
         while (value.getType() == Type.NAME && !(value.isBytecode()) && value.treatAs() == EXECUTABLE) {
             procName = procName + " -> " + ((PSName) value.getValue()).getStrValue();
-            value = runtime.findValue(value);
+            value = context.findValue(value);
         }
         if (value.isProc()) {
-            runtime.pushToCallStack(new ArrayProcedure(procName, value));
+            context.pushToCallStack(new ArrayProcedure(context, procName, value));
         } else if (value.isBytecode()) {
-            return value.execute(0);
+            return value.execute(context, 0);
         } else if (value.getType() == Type.OPERATOR) {
             Operator operator = (Operator) value.getValue();
-            return operator.interpret(null);
+            return operator.interpret(context, null);
         } else if (value.getType() == Type.STRING && value.xcheck()) {
             try {
-                runtime.pushToCallStack(new StringProcedure(((PSString) value.getValue()).getString()));
+                context.pushToCallStack(new StringProcedure(context, ((PSString) value.getValue()).getString()));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         } else {
-            runtime.pushToOperandStack(value);
+            context.pushToOperandStack(value);
         }
         //value cannot be a Mark
 //        todo error handler
         return true;
     }
 
-    public static void executiveCompile(String strValue) {
+    public static void executiveCompile(Context context, String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
-        PSObject object = runtime.search(new PSObject(new PSName(strValue)));
+        PSObject object = context.search(new PSObject(new PSName(strValue)));
         boolean isOperator = (object != null && object.getType() == Type.OPERATOR);
         BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
 
@@ -115,7 +116,7 @@ public class PSName extends SimpleValue {
 
 
             //start then block
-            object.compile();
+            object.compile(context);
             //end then block
             // java :}
             mv.visitLabel(l2);
@@ -187,11 +188,11 @@ public class PSName extends SimpleValue {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         Attribute attribute = obj.getAttribute();
         Attribute.TreatAs treatAs = attribute.treatAs;
         if (treatAs == EXECUTABLE) {
-            executiveCompile(strValue);
+            executiveCompile(context, strValue);
         } else {
             literalCompile(strValue);
         }

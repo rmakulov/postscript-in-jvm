@@ -2,6 +2,7 @@ package operators.pathConstruction;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 15.03.14.
@@ -14,8 +15,8 @@ public class ClosePathOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        runtime.getGState().currentPath.closePath();
+    public void interpret(Context context) {
+        context.getGState().currentPath.closePath();
     }
 
     @Override
