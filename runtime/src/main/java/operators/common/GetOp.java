@@ -21,10 +21,13 @@ public class GetOp extends Operator {
     @Override
     public void interpret() {
         PSObject key = runtime.popFromOperandStack();
-        if (key == null)
+        if (key == null) {
+            fail();
             return;
+        }
         PSObject src = runtime.popFromOperandStack();
         if (src == null) {
+            fail();
             runtime.pushToOperandStack(key);
             return;
         }

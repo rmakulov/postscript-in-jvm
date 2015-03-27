@@ -4,12 +4,15 @@ transform
 /evY exch def
 /evX exch def
 
+gelements /mouseX evX put
+gelements /mouseY evY put
+
 %---
 %params: dict - gelement
 %        name - evType
 %        int  - x
 %        int  - y
-/checkElement {
+/checkElementOld {
 
     /evY exch def
     /evX exch def
@@ -23,6 +26,7 @@ transform
         element evType findAncestorWithEventType
     } if
 } def
+
 
 %---
 %params: dict - gelement
@@ -51,7 +55,42 @@ transform
 } def
 
 
-/search {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
+/searchOld {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
+/search {
+    scene searchAmongChildren
+} def
+
+/searchAmongChildren{
+    /element exch def
+    element /children get length 0 ne
+    {
+    /children element /children get def
+        /elementForCheck element def
+        /isFound false def
+        {
+             children length 0 eq
+             { exit
+             }
+             {
+                children tail
+                evX evY gelements children head get dup dup 5 1 roll /checkBelonging get exec
+                {/elementForCheck exch def
+                  /isFound true def
+                }
+                {pop}
+                ifelse
+                /children  exch def
+             } ifelse
+        } loop
+        isFound
+        {elementForCheck searchAmongChildren}
+        {element evType findAncestorWithEventType}
+        ifelse
+    }
+    {element evType findAncestorWithEventType}
+    ifelse
+} def
+
 
 evType (DRAG) cvn eq
 {         gelements /mouseX evX put

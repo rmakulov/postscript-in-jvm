@@ -32,6 +32,8 @@ public class CursorOp extends Operator {
             PSFrame.getInstance().setCursor(new Cursor(Cursor.MOVE_CURSOR));
         } else if (str.equals("default")) {
             PSFrame.getInstance().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        } else if (str.equals("e_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
         } else {
             runtime.pushToOperandStack(oStr);
             fail();

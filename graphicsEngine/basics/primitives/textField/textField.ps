@@ -17,6 +17,8 @@
                           bd /inFocus get
                           bd /position get
                           (graphicsEngine/basics/primitives/textField/paintTextField.ps) (r) file run
+
+                          bd paintChildren
                   } def
                   %eventProcs - procedures for each type of events
               /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false /position 0
@@ -25,9 +27,9 @@
                                   /eventProcs eventProcDict
                                   /checkBelonging
                                       {
+                                          /element exch def
                                           /evY exch def
                                           /evX exch def
-                                          /element exch def
 
                                           /x element /x get def
                                           /y element /y get def
@@ -81,8 +83,13 @@
                                  repaintAll
                             } addListToDict
 
-              parent /children [textFieldDict parent /children get] put
-              textFieldDict paint
+              parent /children
+                          parent /children get
+                          textFieldDict /number get
+                          addToEndOfList
+              put
+
+              %textFieldDict paint
               textFieldDict
 
 } def

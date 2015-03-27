@@ -21,6 +21,8 @@
                 bd /inFocus get
 
                 (graphicsEngine/basics/primitives/comboBox/paintComboBox.ps) (r) file run
+
+                bd paintChildren
         } def
 
     /comboBoxDict <</x x /y y /h h /w w /labels labels
@@ -28,7 +30,7 @@
                         /oldY y  /extY y h labels length mul sub
 
                         /curLabel curLabel
-                        /parent parent /children null
+                        /parent parent /children []
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isOpened false
@@ -36,9 +38,9 @@
 
                          /checkBelonging
                             {
+                                /element exch def
                                 /evY exch def
                                 /evX exch def
-                                /element exch def
 
                                 /x element /x get def
                                 /w element /w get def
@@ -98,8 +100,13 @@
                 ifelse
                 repaintAll} addListToDict
 
-    parent /children [comboBoxDict parent /children get] put
-    comboBoxDict paint
+    parent /children
+                parent /children get
+                comboBoxDict /number get
+                addToEndOfList
+    put
+
+    %comboBoxDict paint
     comboBoxDict
 } def
 %---

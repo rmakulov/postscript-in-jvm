@@ -1,0 +1,33 @@
+/initScene {
+               /paint {/bd exch def
+                          (graphicsEngine/basics/primitives/scene/paintScene.ps) (r) file run
+                          bd paintChildren
+                     } def
+
+              /scene <</label (scene)
+                            /x 0 /y 0 /h 843 /w 651
+                            /parent null /children []
+                            /inFocus false
+                            /paint /paint load
+                            /eventProcs << /CLICK [{pop repaintAll }[]] /RIGHT_CLICK [{pop evX evY wave}[]] >>
+                            /checkBelonging
+                               {
+                                   /element exch def
+                                   /evY exch def
+                                   /evX exch def
+
+                                   /x element /x get def
+                                   /y element /y get def
+                                   /w element /w get def
+                                   /h element /h get def
+
+                                   evX x ge evY y ge and
+                                   x w add evX ge y h add evY ge and
+                                   and
+                               }
+                           >> def
+
+              scene addElement
+
+              scene
+} def

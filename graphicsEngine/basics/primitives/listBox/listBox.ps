@@ -17,19 +17,21 @@
                 bd /curLabel get
 
                 (graphicsEngine/basics/primitives/listBox/paintListBox.ps) (r) file run
+
+                bd paintChildren
         } def
 
     /listBoxDict <</x x /y y /h h /w w /labels labels
                         /curLabel curLabel
-                        /parent parent /children null
+                        /parent parent /children []
                         /paint /paint load
                         /eventProcs eventProcDict
                         /inFocus false
                         /checkBelonging
                             {
+                                /element exch def
                                 /evY exch def
                                 /evX exch def
-                                /element exch def
 
                                 /x element /x get def
                                 /y element /y get def
@@ -56,8 +58,13 @@
 
                 repaintAll} addListToDict
 
-    parent /children [listBoxDict parent /children get] put
-    listBoxDict paint
+    parent /children
+                parent /children get
+                listBoxDict /number get
+                addToEndOfList
+    put
+
+    %listBoxDict paint
     listBoxDict
 } def
 %---

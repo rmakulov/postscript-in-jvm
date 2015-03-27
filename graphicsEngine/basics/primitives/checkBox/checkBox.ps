@@ -15,18 +15,20 @@
                 {(graphicsEngine/basics/primitives/checkBox/paintPressedCheckBox.ps) (r) file run}
                     {(graphicsEngine/basics/primitives/checkBox/paintUnpressedCheckBox.ps) (r) file run}
                 ifelse
+
+                bd paintChildren
         } def
         %eventProcs - procedures for each type of events
-    /checkboxDict <</label label /x x /y y /w h /h h /parent parent /children null
+    /checkboxDict <</label label /x x /y y /w h /h h /parent parent /children []
                         /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
                         /checkBelonging
                             {
+                                /element exch def
                                 /evY exch def
                                 /evX exch def
-                                /element exch def
 
                                 /x element /x get def
                                 /y element /y get def
@@ -47,9 +49,14 @@
     checkboxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} addListToDict
     %checkboxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} addListToDict
 
-    parent /children [checkboxDict parent /children get] put
+     parent /children
+            parent /children get
+            checkBoxDict /number get
+            addToEndOfList
+     put
+
     %x y h w label paint
-    checkboxDict paint
+    %checkboxDict paint
     checkboxDict
 } def
 %---

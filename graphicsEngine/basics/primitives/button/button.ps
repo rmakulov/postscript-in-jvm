@@ -17,18 +17,20 @@
                 {(graphicsEngine/basics/primitives/button/paintPressedButton.ps) (r) file run}
                     {(graphicsEngine/basics/primitives/button/paintUnpressedButton.ps) (r) file run}
                 ifelse
+                bd paintChildren
+
         } def
         %eventProcs - procedures for each type of events
-    /buttonDict <</label label /x x /y y /h h /w w  /parent parent /children null
+    /buttonDict <</label label /x x /y y /h h /w w  /parent parent /children []
                         /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
                         /checkBelonging
                         {
+                            /element exch def
                             /evY exch def
                             /evX exch def
-                            /element exch def
 
                             /x element /x get def
                             /y element /y get def
@@ -51,7 +53,12 @@
     buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
 
 
-    parent /children [buttonDict parent /children get] put
-    buttonDict paint
+    parent /children
+        parent /children get
+        buttonDict /number get
+        addToEndOfList
+    put
+
+    %buttonDict paint
     buttonDict
 } def

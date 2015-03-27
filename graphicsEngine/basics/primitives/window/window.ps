@@ -14,10 +14,12 @@
                 bd /inFocus get
 
                 (graphicsEngine/basics/primitives/window/paintWindow.ps) (r) file run
+
+                bd paintChildren
         } def
 
     /windowDict <</x x /y y /h h /w w
-                        /parent parent /children null
+                        /parent parent /children []
                         /paint      /paint load
                         /eventProcs eventProcDict
                         /inFocus    false
@@ -26,9 +28,9 @@
                         /lastY      0
                         /checkBelonging
                             {
+                                /element exch def
                                 /evY exch def
                                 /evX exch def
-                                /element exch def
 
                                 /x element /x get def
                                 /y element /y get def
@@ -50,17 +52,26 @@
     windowDict /eventProcs get /PRESS {
                 /cDict exch def
 
-                gelements /mouseX get
-                gelements /mouseY get
-                cDict /x get
-                cDict /y get h add 20 sub
-                cDict /w get
-                20
+                gelements /mouseX get /mouseX exch def
+                gelements /mouseY get /mouseY exch def
+                cDict /x get /x exch def
+                cDict /y get /y exch def
+                cDict /w get /w exch def
+                cDict /h get /h exch def
+
+                mouseX mouseY x
+                y h add 20 sub
+                w 20
                 isInRect
                 {gelements /draggedElement cDict put
+                  cDict moveToFront
                   (move) cursor
                 }
-                if
+                {
+
+                    (e_resize) cursor
+                }
+                ifelse
                 repaintAll} addListToDict
 
 
@@ -91,8 +102,13 @@
                    } addListToDict
 
 
-    parent /children [windowDict parent /children get] put
-    windowDict paint
+    parent /children
+                parent /children get    %(list of children ) print dup print
+                windowDict /number get  %(windowNumber ) print dup print
+                addToEndOfList          %(resultList ) print dup print
+    put
+
+    %windowDict paint
     windowDict
 } def
 %---

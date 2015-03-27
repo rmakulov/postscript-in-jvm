@@ -18,19 +18,21 @@
                 bd /isPressed get
 
                 (graphicsEngine/basics/primitives/toggleButton/paintToggleButton.ps) (r) file run
+
+                bd paintChildren
         } def
 
     /toggleButtonDict <</x x /y y /h h /w w /textOn textOn
-                        /textOff textOff /parent parent /children null
+                        /textOff textOff /parent parent /children []
                         /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
                         /checkBelonging
                             {
+                                /element exch def
                                 /evY exch def
                                 /evX exch def
-                                /element exch def
 
                                 /x element /x get def
                                 /y element /y get def
@@ -48,8 +50,13 @@
    % toggleButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
     toggleButtonDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaintAll} addListToDict
 
-    parent /children [toggleButtonDict parent /children get] put
-    toggleButtonDict paint
+    parent /children
+            parent /children get
+            toggleButtonDict /number get
+            addToEndOfList
+     put
+
+    %toggleButtonDict paint
     toggleButtonDict
 } def
 %---
