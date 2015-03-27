@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 import runtime.graphics.figures.PSPoint;
 
 /**
@@ -17,21 +18,21 @@ public class LineToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {// x y lineto ---
-        PSObject o1 = runtime.popFromOperandStack();
-        PSObject o2 = runtime.popFromOperandStack();
+    public void interpret(Context context) {// x y lineto ---
+        PSObject o1 = context.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
         if ((o1 == null || o2 == null) || !(o1.isNumber() && o2.isNumber())) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
 
             return;
         }
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
 
-        PSPoint newPoint = runtime.getGState().cTM.transform(nX.getRealValue(), nY.getRealValue());
-        runtime.getGState().currentPath.addLine(runtime.getGState().currentPoint, newPoint);
-        runtime.getGState().currentPoint = newPoint;
+        PSPoint newPoint = context.getGState().cTM.transform(nX.getRealValue(), nY.getRealValue());
+        context.getGState().currentPath.addLine(context.getGState().currentPoint, newPoint);
+        context.getGState().currentPoint = newPoint;
     }
 
     @Override

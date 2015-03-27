@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by User on 30/1/2015.
@@ -16,28 +17,28 @@ public class SelectFontOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject fontParam = runtime.popFromOperandStack();
-        PSObject oName = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject fontParam = context.popFromOperandStack();
+        PSObject oName = context.popFromOperandStack();
         if (oName == null || oName.getType() != Type.NAME || fontParam == null ||
                 !(fontParam.isNumber() || fontParam.isMatrix())) {
-            runtime.pushToOperandStack(oName);
-            runtime.pushToOperandStack(fontParam);
+            context.pushToOperandStack(oName);
+            context.pushToOperandStack(fontParam);
             fail();
         }
 
         if (fontParam.isNumber()) {
-            runtime.pushToOperandStack(oName);
-            FindFontOp.instance.interpret();
-            runtime.pushToOperandStack(fontParam);
-            ScaleFontOp.instance.interpret();
-            SetFontOp.instance.interpret();
+            context.pushToOperandStack(oName);
+            FindFontOp.instance.interpret(context);
+            context.pushToOperandStack(fontParam);
+            ScaleFontOp.instance.interpret(context);
+            SetFontOp.instance.interpret(context);
         } else {
-            runtime.pushToOperandStack(oName);
-            FindFontOp.instance.interpret();
-            runtime.pushToOperandStack(fontParam);
-            MakeFontOp.instance.interpret();
-            SetFontOp.instance.interpret();
+            context.pushToOperandStack(oName);
+            FindFontOp.instance.interpret(context);
+            context.pushToOperandStack(fontParam);
+            MakeFontOp.instance.interpret(context);
+            SetFontOp.instance.interpret(context);
         }
 
     }

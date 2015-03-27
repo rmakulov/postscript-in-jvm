@@ -8,6 +8,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 import java.io.UnsupportedEncodingException;
 
@@ -22,23 +23,23 @@ public class StoppedOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject psObject = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject psObject = context.popFromOperandStack();
         if (psObject == null) {
             return;
         }
         if (psObject.isProc()) {
-            runtime.pushToCallStack(new StoppedArrayProcedure(psObject));
+            context.pushToCallStack(new StoppedArrayProcedure(context, psObject));
         } else if (psObject.getType() == Type.STRING && psObject.xcheck()) {
             try {
-                runtime.pushToCallStack(new StoppedStringProcedure(psObject));
+                context.pushToCallStack(new StoppedStringProcedure(context, psObject));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         } else {
             PSObject[] singleArray = new PSObject[]{psObject};
             PSObject psExecArray = new PSObject(new PSArray(singleArray), Attribute.TreatAs.EXECUTABLE);
-            runtime.pushToCallStack(new StoppedArrayProcedure(psExecArray));
+            context.pushToCallStack(new StoppedArrayProcedure(context, psExecArray));
         }
     }
 

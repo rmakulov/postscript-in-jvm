@@ -12,6 +12,7 @@ import psObjects.values.reference.Reference;
 import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 import runtime.Runtime;
 
 //import psObjects.values.simple.BytecodeProc;
@@ -20,32 +21,32 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private Value value;
     private Type type;
     private Attribute attribute;
-    private Runtime runtime = Runtime.getInstance();
+    private runtime.Runtime runtime = Runtime.getInstance();
 
     private static int objExecutionCounter = 0;
     private int executionsBeforeGarbageCleaning = 10000;
     private int maxLocalVMSize = 200;
 
-    public boolean execute(int procDepth) {
+    public boolean execute(Context context, int procDepth) {
         if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
-            return interpret(procDepth);
+            return interpret(context, procDepth);
         } else {
-            compile();
+            compile(context);
             return true;
         }
 
     }
 
-    public boolean interpret(int procDepth) {
+    public boolean interpret(Context context, int procDepth) {
 //        cleanGarbageByExecutionCounter();
 //        cleanGarbageByLocalVMSize();
-        boolean aLoading = runtime.getALoading();
+        boolean aLoading = context.getALoading();
         if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {
-            runtime.pushToOperandStack(this);
+            context.pushToOperandStack(this);
             return true;
         } else {
-            return value.interpret(this);
+            return value.interpret(context, this);
         }
     }
 
@@ -69,8 +70,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         }
     }
 
-    public void compile() {
-        value.compile(this);
+    public void compile(Context context) {
+        value.compile(context, this);
     }
 
     public Value getValue() {
@@ -333,15 +334,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         if (!(o instanceof PSObject)) return false;
 
         PSObject psObject = (PSObject) o;
-        if (type == Type.NAME && xcheck()) {
-            PSObject obj = runtime.findValue(this);
-            return psObject.equals(obj);
-        }
 
-        if (psObject.getType() == Type.NAME && psObject.xcheck()) {
-            PSObject obj = runtime.findValue(psObject);
-            return this.equals(obj);
-        }
 
         if (value != null ? !value.equals(psObject.value) : psObject.value != null) return false;
 

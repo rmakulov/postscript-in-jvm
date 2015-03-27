@@ -2,6 +2,7 @@ package operators.arithmetic.unary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 15.03.14.
@@ -14,8 +15,8 @@ public class LogOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        UnaryArithmeticOp.doOperation(getSymbolicChar);
+    public void interpret(Context context) {
+        UnaryArithmeticOp.doOperation(context, getSymbolicChar);
     }
 
     @Override

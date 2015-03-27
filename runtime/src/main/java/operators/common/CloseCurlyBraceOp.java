@@ -9,6 +9,7 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.util.ArrayList;
@@ -21,30 +22,30 @@ public class CloseCurlyBraceOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
 
         if (runtime.isCompiling && !runtime.bcGenManager.isSleep()) {
             runtime.bcGenManager.endBytecode();
             PSBytecode originBytecode = runtime.bcGenManager.getCur();
 //            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
 
-//            runtime.pushToOperandStack(new PSObject(bytecodeProc));
-            runtime.pushToOperandStack(new PSObject(originBytecode));
+//            context.pushToOperandStack(new PSObject(bytecodeProc));
+            context.pushToOperandStack(new PSObject(originBytecode));
         } else {
-            //runtime.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
-            ArrayList<PSObject> gatherArray = gatherArray();
+            //context.pushToOperandStack(new PSObject(PSMark.CLOSE_CURLY_BRACE));
+            ArrayList<PSObject> gatherArray = gatherArray(context);
             if (gatherArray == null) {
                 return;
             }
             PSArray result = new PSArray(gatherArray);
-            runtime.pushToOperandStack(new PSObject(result, Attribute.TreatAs.EXECUTABLE));
+            context.pushToOperandStack(new PSObject(result, Attribute.TreatAs.EXECUTABLE));
         }
     }
 
 
     public static void compile() {
         runtime.Runtime runtime = Runtime.getInstance();
-//        runtime.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur()));
+//        context.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur()));
         runtime.bcGenManager.endBytecode();
         PSBytecode bytecode = runtime.bcGenManager.getCur();
         String bytecodeName = bytecode.getStrValue();
@@ -64,12 +65,12 @@ public class CloseCurlyBraceOp extends Operator {
     }
 
 
-    private ArrayList<PSObject> gatherArray() {
-        if (runtime.getOperandStackSize() < 1) return null;
+    private ArrayList<PSObject> gatherArray(Context context) {
+        if (context.getOperandStackSize() < 1) return null;
         ArrayList<PSObject> array = new ArrayList<PSObject>();
         int procDepth = 0;
         do {
-            PSObject psObject = runtime.popFromOperandStack();
+            PSObject psObject = context.popFromOperandStack();
             if (psObject == null) {
                 return null;
             }

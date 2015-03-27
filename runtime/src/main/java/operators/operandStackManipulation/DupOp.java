@@ -3,6 +3,7 @@ package operators.operandStackManipulation;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -15,14 +16,14 @@ public class DupOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) {
             return;
         }
         PSObject dupObj = new PSObject(o.getDirectValue(), o.getType(), o.getAttribute());
-        runtime.pushToOperandStack(o);
-        runtime.pushToOperandStack(dupObj);
+        context.pushToOperandStack(o);
+        context.pushToOperandStack(dupObj);
     }
 
     @Override

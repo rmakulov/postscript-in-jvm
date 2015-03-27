@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -16,8 +17,8 @@ public class MarkOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.pushToOperandStack(new PSObject(PSMark.OPEN_SQUARE_BRACKET));
+    public void interpret(Context context) {
+        context.pushToOperandStack(new PSObject(PSMark.OPEN_SQUARE_BRACKET));
     }
 
     @Override

@@ -8,6 +8,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 public class GetOp extends Operator {
 
@@ -19,16 +20,13 @@ public class GetOp extends Operator {
 
     // todo delete from runtime get operator
     @Override
-    public void interpret() {
-        PSObject key = runtime.popFromOperandStack();
-        if (key == null) {
-            fail();
+    public void interpret(Context context) {
+        PSObject key = context.popFromOperandStack();
+        if (key == null)
             return;
-        }
-        PSObject src = runtime.popFromOperandStack();
+        PSObject src = context.popFromOperandStack();
         if (src == null) {
-            fail();
-            runtime.pushToOperandStack(key);
+            context.pushToOperandStack(key);
             return;
         }
         PSObject result;
@@ -42,8 +40,8 @@ public class GetOp extends Operator {
                     int index = ((PSInteger) key.getValue()).getIntValue();
                     result = ((PSArray) src.getValue()).get(index);
                 } else {
-                    runtime.pushToOperandStack(src);
-                    runtime.pushToOperandStack(key);
+                    context.pushToOperandStack(src);
+                    context.pushToOperandStack(key);
                     return;
                 }
                 break;
@@ -53,15 +51,15 @@ public class GetOp extends Operator {
                     PSString psString = (PSString) src.getValue();
                     result = new PSObject(psString.get(index));
                 } else {
-                    runtime.pushToOperandStack(src);
-                    runtime.pushToOperandStack(key);
+                    context.pushToOperandStack(src);
+                    context.pushToOperandStack(key);
                     return;
                 }
                 break;
 
             default: {
-                runtime.pushToOperandStack(src);
-                runtime.pushToOperandStack(key);
+                context.pushToOperandStack(src);
+                context.pushToOperandStack(key);
                 fail();
                 return;
             }

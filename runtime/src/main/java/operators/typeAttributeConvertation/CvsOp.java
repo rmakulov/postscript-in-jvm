@@ -8,6 +8,7 @@ import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 
 public class CvsOp extends Operator {
 
@@ -18,14 +19,14 @@ public class CvsOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject o2 = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) return;
+        PSObject o2 = context.popFromOperandStack();
         if (o2.getType() != Type.STRING) {
-            runtime.pushToOperandStack(o2);
+            context.pushToOperandStack(o2);
             return;
         }
-        PSObject o1 = runtime.popFromOperandStack();
+        PSObject o1 = context.popFromOperandStack();
         String newString;
         switch (o1.getType()) {
             case BOOLEAN:
@@ -45,12 +46,12 @@ public class CvsOp extends Operator {
         }
         PSString psString = (PSString) o2.getValue();
         if (psString.getString().length() < newString.length()) {
-            runtime.pushToOperandStack(o1);
-            runtime.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
             return;
         }
         o2.setValue(psString.setSubstring(0, newString));
-        runtime.pushToOperandStack(new PSObject(new PSString(newString)));
+        context.pushToOperandStack(new PSObject(new PSString(newString)));
     }
 
     @Override

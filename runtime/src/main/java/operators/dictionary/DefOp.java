@@ -5,6 +5,7 @@ import psObjects.Type;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 17.03.14.
@@ -17,16 +18,16 @@ public class DefOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) return;
-        PSObject psValue = runtime.popFromOperandStack();
-        PSObject psKey = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) return;
+        PSObject psValue = context.popFromOperandStack();
+        PSObject psKey = context.popFromOperandStack();
         if (!psKey.isDictKey()) {
-            runtime.pushToOperandStack(psKey);
-            runtime.pushToOperandStack(psValue);
+            context.pushToOperandStack(psKey);
+            context.pushToOperandStack(psValue);
             return;
         }
-        PSObject dictObj = runtime.currentDict();
+        PSObject dictObj = context.currentDict();
         PSDictionary dict = (PSDictionary) dictObj.getValue();
 
         PSDictionary newDict = dict.put(psKey, psValue);

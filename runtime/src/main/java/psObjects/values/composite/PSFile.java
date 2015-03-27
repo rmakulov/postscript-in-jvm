@@ -4,6 +4,7 @@ import procedures.InputStreamProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,24 +66,24 @@ public class PSFile extends CompositeValue {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
+    public boolean interpret(Context context, PSObject obj) {
         Attribute attribute = obj.getAttribute();
         Attribute.TreatAs treatAs = attribute.treatAs;
         if (treatAs == EXECUTABLE) {
             try {
-                InputStreamProcedure fileProcedure = new InputStreamProcedure("fileProcedure", new InputStreamReader(new FileInputStream(file)));
+                InputStreamProcedure fileProcedure = new InputStreamProcedure(context, "fileProcedure", new InputStreamReader(new FileInputStream(file)));
                 if (runtime.isCompiling) {
                     while (fileProcedure.hasNext()) {
                         if (!fileProcedure.execNext()) return false;
                     }
                 } else {
-                    runtime.pushToCallStack(fileProcedure);
+                    context.pushToCallStack(fileProcedure);
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            runtime.pushToOperandStack(obj);
+            context.pushToOperandStack(obj);
         }
         return true;
     }

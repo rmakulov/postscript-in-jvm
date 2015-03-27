@@ -2,6 +2,7 @@ package operators.arithmetic.binary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 15.03.14.
@@ -14,8 +15,8 @@ public class MulOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        BinaryArithmeticOp.doOperation('*');
+    public void interpret(Context context) {
+        BinaryArithmeticOp.doOperation(context, '*');
     }
 
     @Override

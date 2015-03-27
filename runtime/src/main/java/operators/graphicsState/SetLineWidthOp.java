@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 
 /**
  * Created by user on 15.03.14.
@@ -16,18 +17,18 @@ public class SetLineWidthOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {// num setlinewidth -
-        PSObject oNum = runtime.popFromOperandStack();
+    public void interpret(Context context) {// num setlinewidth -
+        PSObject oNum = context.popFromOperandStack();
         if (oNum == null || !(oNum.isNumber())) {
-            runtime.pushToOperandStack(oNum);
+            context.pushToOperandStack(oNum);
             return;
         }
-        double XScale = runtime.getGState().cTM.getXScale();
-        double YScale = runtime.getGState().cTM.getXScale();
+        double XScale = context.getGState().cTM.getXScale();
+        double YScale = context.getGState().cTM.getXScale();
         double scale = Math.sqrt(XScale * YScale);
         double width = ((PSNumber) oNum.getValue()).getRealValue();
 
-        runtime.getGState().graphicsSettings.lineWidth = width * scale;
+        context.getGState().graphicsSettings.lineWidth = width * scale;
     }
 
     @Override

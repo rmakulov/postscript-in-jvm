@@ -3,6 +3,7 @@ package operators.dictionary;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 26.03.14.
@@ -15,14 +16,14 @@ public class LoadOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject key = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject key = context.popFromOperandStack();
         if (!key.isDictKey()) {
-            runtime.pushToOperandStack(key);
+            context.pushToOperandStack(key);
             return;
         }
-        runtime.pushToOperandStack(runtime.findValue(key));
+        context.pushToOperandStack(context.findValue(key));
     }
 
     @Override

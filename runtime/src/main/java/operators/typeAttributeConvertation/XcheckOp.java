@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 public class XcheckOp extends Operator {
 
@@ -14,10 +15,10 @@ public class XcheckOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
-        runtime.pushToOperandStack(new PSObject(PSBoolean.get(o.xcheck())));
+        context.pushToOperandStack(new PSObject(PSBoolean.get(o.xcheck())));
     }
 
     @Override

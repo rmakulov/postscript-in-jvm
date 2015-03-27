@@ -9,6 +9,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.PSArray;
+import runtime.Context;
 
 /**
  * Created by user on 29.10.14.
@@ -41,32 +42,33 @@ public class BytecodeProc extends SimpleValue {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
-        if (bound != null && version == runtime.getDictStackVersion()) {
+    public boolean interpret(Context context, PSObject obj) {
+        if (bound != null && version == context.getDictStackVersion()) {
             System.out.println("interpreting bound");
-            return bound.interpret(null);
+            return bound.interpret(context, null);
         } else {
             if (boundCount < MAX_BOUND_COUNT) {
-                bindIfCan();
-                return bound.interpret(null);
+                bindIfCan(context);
+                return bound.interpret(context, null);
             } else {
-                return origin.interpret(null);
+                return origin.interpret(context, null);
             }
         }
     }
 
-    private void bindIfCan() {
-        bound = deepBind();
-        version = runtime.getDictStackVersion();
+
+    private void bindIfCan(Context context) {
+        bound = deepBind(context);
+        version = context.getDictStackVersion();
     }
 
-    private PSBytecode deepBind() {
-        runtime.pushToOperandStack(new PSObject(PSMark.OPEN_SQUARE_BRACKET));
-        runtime.pushToOperandStack(new PSObject(this));
-        AloadOp.instance.interpret();
-        runtime.popFromOperandStack();
-        CloseSquareBracketOp.instance.interpret();
-        PSObject[] arr = ((PSArray) runtime.popFromOperandStack().getValue()).getArray();
+    private PSBytecode deepBind(Context context) {
+        context.pushToOperandStack(new PSObject(PSMark.OPEN_SQUARE_BRACKET));
+        context.pushToOperandStack(new PSObject(this));
+        AloadOp.instance.interpret(context);
+        context.popFromOperandStack();
+        CloseSquareBracketOp.instance.interpret(context);
+        PSObject[] arr = ((PSArray) context.popFromOperandStack().getValue()).getArray();
         runtime.bcGenManager.startCodeGenerator();
         for (PSObject o : arr) {
 //            if (o.getType() == Type.NAME && !(o.isBytecode()) && o.treatAs() == EXECUTABLE) {
@@ -110,16 +112,16 @@ public class BytecodeProc extends SimpleValue {
     }
 
     @Override
-    public void compile(PSObject obj) {
-        if (bound != null && version == runtime.getDictStackVersion()) {
+    public void compile(Context context, PSObject obj) {
+        if (bound != null && version == context.getDictStackVersion()) {
             System.out.println("compiling bound");
-            bound.compile(null);
+            bound.compile(context, null);
         } else {
             if (boundCount < MAX_BOUND_COUNT) {
-                bindIfCan();
-                bound.compile(null);
+                bindIfCan(context);
+                bound.compile(context, null);
             } else {
-                origin.compile(null);
+                origin.compile(context, null);
             }
             MethodVisitor mv = runtime.bcGenManager.mv;
             String name = runtime.bcGenManager.bytecodeName;

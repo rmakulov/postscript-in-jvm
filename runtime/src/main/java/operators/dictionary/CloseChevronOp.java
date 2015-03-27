@@ -5,6 +5,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.util.ArrayList;
@@ -20,17 +21,17 @@ public class CloseChevronOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
         ArrayList<PSObject> entries = new ArrayList<PSObject>();
         PSObject obj2, obj1;
-        while ((obj2 = runtime.popFromOperandStack()).getValue() != PSMark.OPEN_CHEVRON_BRACKET &&
-                (obj1 = runtime.popFromOperandStack()).getValue() != PSMark.OPEN_CHEVRON_BRACKET) {
+        while ((obj2 = context.popFromOperandStack()).getValue() != PSMark.OPEN_CHEVRON_BRACKET &&
+                (obj1 = context.popFromOperandStack()).getValue() != PSMark.OPEN_CHEVRON_BRACKET) {
             entries.add(obj1);
             entries.add(obj2);
         }
         PSDictionary dict = new PSDictionary(entries);
-        runtime.pushToOperandStack(new PSObject(dict));
+        context.pushToOperandStack(new PSObject(dict));
     }
 
     @Override

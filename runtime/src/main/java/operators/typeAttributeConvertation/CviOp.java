@@ -7,6 +7,7 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -20,16 +21,16 @@ public class CviOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
         if (o.getType() == Type.INTEGER) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         } else if (o.getType() == Type.REAL) {
             double d = ((PSReal) o.getValue()).getRealValue();
             int truncatedInt = (int) d;
-            runtime.pushToOperandStack(new PSObject(new PSInteger(truncatedInt)));
+            context.pushToOperandStack(new PSObject(new PSInteger(truncatedInt)));
             return;
         }
         String s = ((PSString) o.getValue()).getString();
@@ -37,10 +38,10 @@ public class CviOp extends Operator {
         try {
             parseAsInteger(s);
         } catch (NumberFormatException e2) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSInteger(i)));
+        context.pushToOperandStack(new PSObject(new PSInteger(i)));
 
     }
 

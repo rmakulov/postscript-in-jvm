@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 11/1/14.
@@ -17,19 +18,19 @@ public class ScaleFontOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject oNum = runtime.popFromOperandStack();
-        PSObject oDict = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject oNum = context.popFromOperandStack();
+        PSObject oDict = context.popFromOperandStack();
 
         if (oNum == null || oDict == null || oNum.getType() != Type.INTEGER
                 || oDict.getType() != Type.DICTIONARY) {
-            runtime.pushToOperandStack(oDict);
-            runtime.pushToOperandStack(oNum);
+            context.pushToOperandStack(oDict);
+            context.pushToOperandStack(oNum);
             return;
         }
 
         PSObject key = new PSObject(new PSName("scale"));
-        runtime.pushToOperandStack(new PSObject(((PSDictionary) oDict.getValue()).put(key, oNum)));
+        context.pushToOperandStack(new PSObject(((PSDictionary) oDict.getValue()).put(key, oNum)));
     }
 
     @Override

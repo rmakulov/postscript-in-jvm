@@ -6,6 +6,7 @@ import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.Runtime;
 
 import java.util.ArrayList;
@@ -19,13 +20,13 @@ public class CloseSquareBracketOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject psObject = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject psObject = context.popFromOperandStack();
         ArrayList<PSObject> array = new ArrayList<PSObject>();
         while (!PSMark.OPEN_SQUARE_BRACKET.equals(psObject.getValue())) {
             array.add(psObject);
-            psObject = runtime.popFromOperandStack();
+            psObject = context.popFromOperandStack();
             // todo correct check is not null
             if (psObject == null)
                 return;
@@ -34,7 +35,7 @@ public class CloseSquareBracketOp extends Operator {
         for (int i = 0; i < array.size(); i++) {
             result = result.setValue(i, array.get(array.size() - i - 1));
         }
-        runtime.pushToOperandStack(new PSObject(result, Attribute.TreatAs.LITERAL));
+        context.pushToOperandStack(new PSObject(result, Attribute.TreatAs.LITERAL));
     }
 
     @Override

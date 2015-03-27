@@ -8,6 +8,7 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 25.03.14.
@@ -21,10 +22,10 @@ public class ArrayOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null || o.getType() != Type.INTEGER) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
         PSInteger psInteger = (PSInteger) o.getValue();
@@ -34,7 +35,7 @@ public class ArrayOp extends Operator {
             array[i] = new PSObject(PSNull.NULL);
         }
         PSArray psArray = new PSArray(array);
-        runtime.pushToOperandStack(new PSObject(psArray, Attribute.TreatAs.LITERAL));
+        context.pushToOperandStack(new PSObject(psArray, Attribute.TreatAs.LITERAL));
     }
 
     @Override

@@ -6,6 +6,7 @@ import psObjects.values.composite.PSFile;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -22,13 +23,13 @@ public class FileOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) {
             fail();
             return;
         }
-        PSObject access = runtime.popFromOperandStack();
-        PSObject filename = runtime.popFromOperandStack();
+        PSObject access = context.popFromOperandStack();
+        PSObject filename = context.popFromOperandStack();
         if (access.getType() != Type.STRING || filename.getType() != Type.STRING) {
             fail();
             return;
@@ -41,7 +42,7 @@ public class FileOp extends Operator {
         if (!path.isAbsolute()) {
             name = System.getProperty("user.dir").concat(File.separator).concat(name);
         }
-        runtime.pushToOperandStack(new PSObject(new PSFile(name, acc)));
+        context.pushToOperandStack(new PSObject(new PSFile(name, acc)));
     }
 
     @Override

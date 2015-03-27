@@ -1,6 +1,7 @@
 package procedures;
 
 import psObjects.PSObject;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
@@ -10,8 +11,8 @@ public class ForAllProcedure extends ArrayProcedure {
     private int times;
     private int repeatedTimes = 0;
 
-    public ForAllProcedure(PSObject[] beforeArray, PSObject arrayObj) {
-        super("ForAll", arrayObj);
+    public ForAllProcedure(Context context, PSObject[] beforeArray, PSObject arrayObj) {
+        super(context, "ForAll", arrayObj);
         this.beforeArray = beforeArray;
         times = beforeArray.length;
         nextIndex = -1;// for beforeArray elements

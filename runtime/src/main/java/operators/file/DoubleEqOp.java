@@ -2,6 +2,7 @@ package operators.file;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 
 public class DoubleEqOp extends Operator {
@@ -13,8 +14,8 @@ public class DoubleEqOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        System.out.println(runtime.popFromOperandStack().toStringView());
+    public void interpret(Context context) {
+        System.out.println(context.popFromOperandStack().toStringView());
     }
 
     @Override

@@ -5,21 +5,22 @@ import org.objectweb.asm.Opcodes;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 
 public abstract class Operator extends SimpleValue implements Opcodes {
     protected final Attribute.TreatAs LITERAL = Attribute.TreatAs.LITERAL;
     protected final Attribute.TreatAs EXECUTABLE = Attribute.TreatAs.EXECUTABLE;
 
     @Override
-    public boolean interpret(PSObject obj) {
-        interpret();
+    public boolean interpret(Context context, PSObject obj) {
+        interpret(context);
         return true;
     }
 
-    public abstract void interpret();
+    public abstract void interpret(Context context);
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
         //todo make in runtime current bytecode, I think it is ready
         MethodVisitor mv = runtime.bcGenManager.mv;
         String clName = this.getClass().getCanonicalName().replace(".", "/");

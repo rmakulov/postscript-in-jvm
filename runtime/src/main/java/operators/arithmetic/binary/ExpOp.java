@@ -2,6 +2,7 @@ package operators.arithmetic.binary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 15.03.14.
@@ -14,8 +15,8 @@ public class ExpOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        BinaryArithmeticOp.doOperation('e');
+    public void interpret(Context context) {
+        BinaryArithmeticOp.doOperation(context, 'e');
     }
 
     @Override

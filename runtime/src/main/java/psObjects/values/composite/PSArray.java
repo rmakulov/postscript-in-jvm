@@ -4,6 +4,7 @@ import procedures.ArrayProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,7 +130,7 @@ public class PSArray extends CompositeValue implements Cloneable {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
+    public boolean interpret(Context context, PSObject obj) {
         if (runtime.isCompiling) {
             try {
                 throw new Exception("Execution array in compiling mode");
@@ -139,7 +140,7 @@ public class PSArray extends CompositeValue implements Cloneable {
             //return array[0].getElementObject().execute(0);
             return true;
         } else {
-            runtime.pushToCallStack(new ArrayProcedure(obj));
+            context.pushToCallStack(new ArrayProcedure(obj));
             return true;
         }
     }

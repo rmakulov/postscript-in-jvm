@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by User on 16/2/2015.
@@ -17,14 +18,14 @@ public class MouseEventOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 3) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 3) {
             fail();
             return;
         }
-        new PSObject(new PSString("(graphicsEngine/basics/events/mouseEvent.ps) (r) file run")).interpret(0);
+        new PSObject(new PSString("(graphicsEngine/basics/events/mouseEvent.ps) (r) file run")).interpret(context, 0);
         if (!runtime.isCompiling) {
-            runtime.executeCallStack();
+            context.executeCallStack();
         }
     }
 

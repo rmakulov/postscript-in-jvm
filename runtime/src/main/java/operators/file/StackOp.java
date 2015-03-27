@@ -7,6 +7,7 @@ import psObjects.values.simple.PSBoolean;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 
 public class StackOp extends Operator {
     public static final StackOp instance = new StackOp();
@@ -16,9 +17,9 @@ public class StackOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject o1 = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject o1 = context.popFromOperandStack();
         String newString;
         switch (o1.getType()) {
             case BOOLEAN:

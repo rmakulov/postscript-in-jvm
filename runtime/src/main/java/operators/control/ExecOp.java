@@ -5,6 +5,7 @@ import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 import static psObjects.Attribute.TreatAs;
 
@@ -16,36 +17,36 @@ public class ExecOp extends Operator {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
-        PSObject psObject = runtime.popFromOperandStack();
+    public boolean interpret(Context context, PSObject obj) {
+        PSObject psObject = context.popFromOperandStack();
         if (psObject == null) {
             return true;
         }
         if (psObject.isProc()) {
             if (!runtime.isCompiling) {
-                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
+                context.pushToCallStack(new ArrayProcedure(context, "Exec procedure", psObject));
             } else {
                 fail();
             }
         } else if (psObject.isExecutableString()) {
-            return psObject.interpret(0);
+            return psObject.interpret(context, 0);
         } else if (psObject.isFile()) {
             // do nothing
-            runtime.pushToOperandStack(psObject);
+            context.pushToOperandStack(psObject);
         } else {
             if (runtime.isCompiling) {
-                return psObject.execute(0);
+                return psObject.execute(context, 0);
             } else {
                 PSObject[] singleArray = new PSObject[]{psObject};
                 PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);
-                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
+                context.pushToCallStack(new ArrayProcedure(context, "Exec procedure", psExecArray));
             }
         }
         return true;
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
         //nothing to do
         try {
             throw new Exception("Wrong method invocation");
@@ -55,13 +56,13 @@ public class ExecOp extends Operator {
     }
     //    @Override
 //    public void interpret() {
-//        PSObject psObject = runtime.popFromOperandStack();
+//        PSObject psObject = context.popFromOperandStack();
 //        if (psObject == null) {
 //            return;
 //        }
 //        if (psObject.isProc()) {
 //            if (!runtime.isCompiling) {
-//                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
+//                context.pushToCallStack(new ArrayProcedure("Exec procedure", psObject));
 //            } else {
 //                fail();
 //            }
@@ -73,7 +74,7 @@ public class ExecOp extends Operator {
 //            } else {
 //                PSObject[] singleArray = new PSObject[]{psObject};
 //                PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);
-//                runtime.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
+//                context.pushToCallStack(new ArrayProcedure("Exec procedure", psExecArray));
 //            }
 //        }
 //    }

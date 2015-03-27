@@ -8,6 +8,7 @@ import operators.dictionary.CloseChevronOp;
 import operators.dictionary.OpenChevronOp;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 
 import static psObjects.values.simple.PSMark.Bracket.*;
 
@@ -34,9 +35,9 @@ public class PSMark extends SimpleValue {
     }
 
     @Override
-    public boolean interpret(PSObject obj) {
+    public boolean interpret(Context context, PSObject obj) {
         PSMark mark = (PSMark) obj.getValue();
-        mark.getBracketOperator().interpret(obj);
+        mark.getBracketOperator().interpret(context, obj);
 
         return true;
 /*

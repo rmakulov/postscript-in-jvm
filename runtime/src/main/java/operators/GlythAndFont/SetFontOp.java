@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 11/1/14.
@@ -16,12 +17,12 @@ public class SetFontOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject oDict = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject oDict = context.popFromOperandStack();
         if (oDict == null || oDict.getType() != Type.DICTIONARY) {
-            runtime.pushToOperandStack(oDict);
+            context.pushToOperandStack(oDict);
         }
-        runtime.getGState().setFont(oDict);
+        context.getGState().setFont(oDict);
     }
 
     @Override

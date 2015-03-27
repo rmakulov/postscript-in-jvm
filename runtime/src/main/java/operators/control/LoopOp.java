@@ -4,6 +4,7 @@ import procedures.LoopProcedure;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 28.03.14.
@@ -16,18 +17,18 @@ public class LoopOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject proc = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject proc = context.popFromOperandStack();
         if (proc.isProc() && !runtime.isCompiling) {
-            runtime.pushToCallStack(new LoopProcedure(proc));
+            context.pushToCallStack(new LoopProcedure(context, proc));
         } else if (proc.isBytecode() && runtime.isCompiling) {
             while (true) {
-                if (!proc.execute(0)) break;
+                if (!proc.execute(context, 0)) break;
             }
         } else {
             fail();
-            runtime.pushToOperandStack(proc);
+            context.pushToOperandStack(proc);
         }
     }
 

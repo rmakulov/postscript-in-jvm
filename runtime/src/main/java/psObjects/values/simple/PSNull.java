@@ -3,6 +3,7 @@ package psObjects.values.simple;
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.Type;
+import runtime.Context;
 
 public class PSNull extends SimpleValue {
     public final static PSNull NULL = new PSNull();
@@ -24,7 +25,7 @@ public class PSNull extends SimpleValue {
     }
 
     @Override
-    public void compile(PSObject obj) {
+    public void compile(Context context, PSObject obj) {
 //        runtime.pushToOperandStack(new PSObject(PSNull.NULL));
         String name = runtime.bcGenManager.bytecodeName;
         MethodVisitor mv = runtime.bcGenManager.mv;

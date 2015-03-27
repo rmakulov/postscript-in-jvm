@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.matrix.TransformMatrix;
 
 /**
@@ -17,19 +18,19 @@ public class InvertMatrixOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 2) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 2) {
             fail();
         }
-        PSObject second = runtime.popFromOperandStack();
-        PSObject first = runtime.popFromOperandStack();
+        PSObject second = context.popFromOperandStack();
+        PSObject first = context.popFromOperandStack();
 
         if (first.isMatrix() && second.isMatrix()) {
             TransformMatrix m1 = new TransformMatrix(first);
             TransformMatrix m3 = m1.getInverseMatrix();
             PSArray newValue = (PSArray) m3.getMatrix().getValue();
             second.setValue(newValue);
-            runtime.pushToOperandStack(second);
+            context.pushToOperandStack(second);
         } else {
             fail();
         }

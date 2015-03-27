@@ -7,6 +7,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 import java.util.ArrayList;
 
@@ -22,10 +23,10 @@ public class FindFontOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject oName = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject oName = context.popFromOperandStack();
         if (oName == null || !(oName.getType() == Type.NAME) || oName.isExecutable()) {
-            runtime.pushToOperandStack(oName);
+            context.pushToOperandStack(oName);
             return;
         }
         ArrayList<PSObject> arr = new ArrayList<PSObject>();
@@ -38,7 +39,7 @@ public class FindFontOp extends AbstractGraphicOperator {
         arr.add(new PSObject(PSNull.NULL));
 
         PSObject oDict = new PSObject(new PSDictionary(arr));
-        runtime.pushToOperandStack(oDict);
+        context.pushToOperandStack(oDict);
     }
 
     @Override

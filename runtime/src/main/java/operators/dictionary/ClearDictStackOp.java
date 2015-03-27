@@ -2,6 +2,7 @@ package operators.dictionary;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Rustam Makulov on 17.03.14.
@@ -15,8 +16,8 @@ public class ClearDictStackOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.clearDictionaryStack();
+    public void interpret(Context context) {
+        context.clearDictionaryStack();
     }
 
     @Override

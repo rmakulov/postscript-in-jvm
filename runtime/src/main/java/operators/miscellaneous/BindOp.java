@@ -10,6 +10,7 @@ import psObjects.values.composite.PSArray;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.compiler.DynamicClassLoader;
 
 import java.util.ArrayList;
@@ -28,22 +29,22 @@ public class BindOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) return;
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) return;
+        PSObject o = context.popFromOperandStack();
         if (!o.isProc() && !o.isBytecode()) {
             fail();
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
         if (o.isProc()) {
-            procBind(o);
+            procBind(context, o);
         } else {
-            bytecodeBind(o);
+            bytecodeBind(context, o);
         }
     }
 
-    private void bytecodeBind(PSObject o) {
+    private void bytecodeBind(Context context, PSObject o) {
         String className = ((PSBytecode) o.getValue()).getStrValue();
         int classNumber = Integer.parseInt(className);
         DynamicClassLoader l = DynamicClassLoader.instance;
@@ -51,16 +52,16 @@ public class BindOp extends Operator {
         ClassReader cr = new ClassReader(l.getBytecodes().get(className));
         cr.accept(classNode, 0);
 
-        reformMethods(classNumber, l, classNode);
+        reformMethods(context, classNumber, l, classNode);
 
         ClassWriter out = new ClassWriter(0);
         classNode.accept(out);
         l.putClass(className, out.toByteArray());
 
-        runtime.pushToOperandStack(o);
+        context.pushToOperandStack(o);
     }
 
-    private void reformMethods(int classNumber, DynamicClassLoader l, ClassNode classNode) {
+    private void reformMethods(Context context, int classNumber, DynamicClassLoader l, ClassNode classNode) {
         //peek at classNode and modifier
         List<MethodNode> methods = (List<MethodNode>) classNode.methods;
         for (MethodNode method : methods) {
@@ -74,7 +75,7 @@ public class BindOp extends Operator {
                 //operator name without suffix "Op" and in lower case
                 int previousIndex = suspectOperatorName.lastIndexOf("/");
                 String name = suspectOperatorName.substring(previousIndex + 1, length - 2).toLowerCase();
-                if (runtime.checkIsOperator(name)) {
+                if (context.checkIsOperator(name)) {
                     transformMethod(method, suspectOperatorName);
                 }
             }
@@ -118,12 +119,12 @@ public class BindOp extends Operator {
 
     }
 
-    private void procBind(PSObject o) {
+    private void procBind(Context context, PSObject o) {
         PSArray psArr = (PSArray) o.getValue();
         ArrayList<PSObject> resArray = new ArrayList<PSObject>();
         for (PSObject innerObj : psArr.getArray()) {
             if (innerObj.getType() == Type.NAME && innerObj.treatAs() == Attribute.TreatAs.EXECUTABLE) {
-                PSObject value = runtime.search(innerObj);
+                PSObject value = context.search(innerObj);
                 if (value != null && value.getType() == Type.OPERATOR) {
                     resArray.add(value);
                 } else {
@@ -135,7 +136,7 @@ public class BindOp extends Operator {
         }
         PSArray result = new PSArray(resArray);
         o.setValue(result);
-        runtime.pushToOperandStack(o);
+        context.pushToOperandStack(o);
     }
 
     @Override

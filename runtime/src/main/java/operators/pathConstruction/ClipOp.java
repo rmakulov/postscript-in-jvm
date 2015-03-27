@@ -2,6 +2,7 @@ package operators.pathConstruction;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 import runtime.graphics.frame.PSDrawer;
 
 /**
@@ -15,8 +16,8 @@ public class ClipOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSDrawer.getInstance().clip();
+    public void interpret(Context context) {
+        PSDrawer.getInstance().clip(context);
     }
 
     @Override

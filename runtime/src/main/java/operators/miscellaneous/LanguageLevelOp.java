@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 
 /**
  * Created by User on 6/12/2014.
@@ -17,8 +18,8 @@ public class LanguageLevelOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        runtime.pushToOperandStack(new PSObject(new PSInteger(3)));
+    public void interpret(Context context) {
+        context.pushToOperandStack(new PSObject(new PSInteger(3)));
     }
 
     @Override

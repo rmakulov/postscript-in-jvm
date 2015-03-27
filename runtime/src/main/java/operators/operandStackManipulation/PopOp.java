@@ -2,6 +2,7 @@ package operators.operandStackManipulation;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 16.03.14.
@@ -14,12 +15,12 @@ public class PopOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 1) {
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 1) {
             fail();
             return;
         }
-        runtime.popFromOperandStack();
+        context.popFromOperandStack();
     }
 
     @Override

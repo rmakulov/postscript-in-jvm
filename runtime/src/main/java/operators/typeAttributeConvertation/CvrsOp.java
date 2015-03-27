@@ -7,6 +7,7 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 
 public class CvrsOp extends Operator {
 
@@ -17,14 +18,14 @@ public class CvrsOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        if (runtime.getOperandStackSize() < 3) return;
-        PSObject o3 = runtime.popFromOperandStack();
-        PSObject o2 = runtime.popFromOperandStack();
-        PSObject o1 = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        if (context.getOperandStackSize() < 3) return;
+        PSObject o3 = context.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
+        PSObject o1 = context.popFromOperandStack();
 
         if (!o1.isNumber() || o2.getType() != Type.INTEGER || o3.getType() != Type.STRING) {
-            returnPSObjectOnStack(o1, o2, o3);
+            returnPSObjectOnStack(context, o1, o2, o3);
             return;
         }
         PSReal psNum = (PSReal) o1.getValue();
@@ -42,17 +43,17 @@ public class CvrsOp extends Operator {
         }
         if (str.length() < newString.length()) {
             //todo error
-            returnPSObjectOnStack(o1, o2, o3);
+            returnPSObjectOnStack(context, o1, o2, o3);
             return;
         }
         o3.setValue(psString.setSubstring(0, newString));
-        runtime.pushToOperandStack(new PSObject(new PSString(newString)));
+        context.pushToOperandStack(new PSObject(new PSString(newString)));
     }
 
-    private void returnPSObjectOnStack(PSObject o1, PSObject o2, PSObject o3) {
-        runtime.pushToOperandStack(o1);
-        runtime.pushToOperandStack(o2);
-        runtime.pushToOperandStack(o3);
+    private void returnPSObjectOnStack(Context context, PSObject o1, PSObject o2, PSObject o3) {
+        context.pushToOperandStack(o1);
+        context.pushToOperandStack(o2);
+        context.pushToOperandStack(o3);
         return;
     }
 

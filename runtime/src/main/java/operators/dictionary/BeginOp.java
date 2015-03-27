@@ -4,6 +4,7 @@ import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 public class BeginOp extends Operator {
 
@@ -14,11 +15,11 @@ public class BeginOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject psObject = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject psObject = context.popFromOperandStack();
         if (psObject == null || psObject.getType() != Type.DICTIONARY)
             return;
-        runtime.pushToDictionaryStack(psObject);
+        context.pushToDictionaryStack(psObject);
     }
 
     @Override

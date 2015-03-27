@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 
 import java.awt.*;
 
@@ -18,16 +19,16 @@ public class SetHsbColorOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // hue saturation brightness sethsbcolor --
-        PSObject oBright = runtime.popFromOperandStack();
-        PSObject oSatur = runtime.popFromOperandStack();
-        PSObject oHue = runtime.popFromOperandStack();
+    public void interpret(Context context) { // hue saturation brightness sethsbcolor --
+        PSObject oBright = context.popFromOperandStack();
+        PSObject oSatur = context.popFromOperandStack();
+        PSObject oHue = context.popFromOperandStack();
 
         if (oBright == null || oSatur == null || oHue == null ||
                 !(oBright.isNumber() && oSatur.isNumber() && oHue.isNumber())) {
-            runtime.pushToOperandStack(oHue);
-            runtime.pushToOperandStack(oSatur);
-            runtime.pushToOperandStack(oBright);
+            context.pushToOperandStack(oHue);
+            context.pushToOperandStack(oSatur);
+            context.pushToOperandStack(oBright);
             return;
         }
 
@@ -37,7 +38,7 @@ public class SetHsbColorOp extends AbstractGraphicOperator {
         if (!(nBright >= 0 && nBright <= 1 && nSatur >= 0 && nSatur <= 1 && nHue >= 0 && nHue <= 1)) {
             return;
         }
-        runtime.getGState().graphicsSettings.color = Color.getHSBColor((float) nHue, (float) nSatur, (float) nBright);
+        context.getGState().graphicsSettings.color = Color.getHSBColor((float) nHue, (float) nSatur, (float) nBright);
     }
 
     @Override

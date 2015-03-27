@@ -13,6 +13,7 @@ import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 import scanner.Tokens;
 import scanner.Yylex;
 import scanner.Yytoken;
@@ -30,8 +31,8 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
     Yylex scanner;
     Yytoken nextYytoken;
 
-    public InputStreamProcedure(String name, InputStreamReader reader) {
-        super(name);
+    public InputStreamProcedure(Context context, String name, InputStreamReader reader) {
+        super(context, name);
         scanner = new Yylex(reader);
     }
 
@@ -54,7 +55,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
         switch (m_type) {
             case EXEC_NAME:
                 // name without "/". it is executable by default
-                PSName.executiveCompile(text);
+                PSName.executiveCompile(context, text);
                 break;
             case LIT_NAME:
                 // name with "/". it is executable by default
@@ -69,7 +70,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 break;
             case CLOSE_CURLY_BRACE:
                 if (procDepth == 1) {
-                    CloseCurlyBraceOp.instance.interpret();
+                    CloseCurlyBraceOp.instance.interpret(context);
                 } else {
 
                     CloseCurlyBraceOp.compile();
@@ -115,7 +116,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             case OPERATOR:
                 PSDictionary dict = (PSDictionary) runtime.getSystemDict().getValue();
                 PSObject operatorName = new PSObject(new PSName(text));
-                dict.get(operatorName).compile();
+                dict.get(operatorName).compile(context);
             case COMMENTS:
                 break;
             default:

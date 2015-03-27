@@ -4,6 +4,7 @@ import operators.AbstractGraphicOperator;
 import psObjects.PSObject;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSNumber;
+import runtime.Context;
 import runtime.graphics.figures.PSPoint;
 
 /**
@@ -17,21 +18,21 @@ public class RMoveToOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o1 = runtime.popFromOperandStack();
-        PSObject o2 = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o1 = context.popFromOperandStack();
+        PSObject o2 = context.popFromOperandStack();
         if ((o1 == null || o2 == null) || !(o1.isNumber() && o2.isNumber())) {
-            runtime.pushToOperandStack(o2);
-            runtime.pushToOperandStack(o1);
+            context.pushToOperandStack(o2);
+            context.pushToOperandStack(o1);
             return;
         }
         PSNumber nY = (PSNumber) o1.getValue();
         PSNumber nX = (PSNumber) o2.getValue();
-        PSPoint relCurPoint = runtime.getGState().cTM.iTransform(runtime.getGState().currentPoint);
-        PSPoint p = runtime.getGState().cTM.transform(nX.getRealValue() + relCurPoint.getX(), nY.getRealValue() + relCurPoint.getY());
+        PSPoint relCurPoint = context.getGState().cTM.iTransform(context.getGState().currentPoint);
+        PSPoint p = context.getGState().cTM.transform(nX.getRealValue() + relCurPoint.getX(), nY.getRealValue() + relCurPoint.getY());
 
-        runtime.getGState().currentPoint = runtime.getGState().cTM.transform(p);
-        runtime.getGState().currentPath.getGeneralPath().moveTo(p.getX(), p.getY());
+        context.getGState().currentPoint = context.getGState().cTM.transform(p);
+        context.getGState().currentPath.getGeneralPath().moveTo(p.getX(), p.getY());
 
     }
 

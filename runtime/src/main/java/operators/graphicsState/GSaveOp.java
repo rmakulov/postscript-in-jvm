@@ -2,6 +2,7 @@ package operators.graphicsState;
 
 import operators.AbstractGraphicOperator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by user on 16.03.14.
@@ -14,8 +15,8 @@ public class GSaveOp extends AbstractGraphicOperator {
     }
 
     @Override
-    public void interpret() { // -- gsave --
-        runtime.gsave(true);
+    public void interpret(Context context) { // -- gsave --
+        runtime.gsave(context, true);
     }
 
     @Override

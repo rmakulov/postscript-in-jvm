@@ -6,6 +6,7 @@ import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSReal;
+import runtime.Context;
 
 public class CvrOp extends Operator {
 
@@ -16,15 +17,15 @@ public class CvrOp extends Operator {
     }
 
     @Override
-    public void interpret() {
-        PSObject o = runtime.popFromOperandStack();
+    public void interpret(Context context) {
+        PSObject o = context.popFromOperandStack();
         if (o == null) return;
         if (o.getType() == Type.REAL) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         } else if (o.getType() == Type.INTEGER) {
             double d = ((PSReal) o.getValue()).getRealValue();
-            runtime.pushToOperandStack(new PSObject(new PSReal(d)));
+            context.pushToOperandStack(new PSObject(new PSReal(d)));
         }
         String s = ((PSString) o.getValue()).getString();
         double d = 0;
@@ -32,10 +33,10 @@ public class CvrOp extends Operator {
             if (s.charAt(0) == '.') s = "0" + s;
             d = (int) Double.parseDouble(s);
         } catch (NumberFormatException e2) {
-            runtime.pushToOperandStack(o);
+            context.pushToOperandStack(o);
             return;
         }
-        runtime.pushToOperandStack(new PSObject(new PSReal(d)));
+        context.pushToOperandStack(new PSObject(new PSReal(d)));
 
     }
 

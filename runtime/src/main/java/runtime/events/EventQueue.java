@@ -7,6 +7,7 @@ import psObjects.PSObject;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
+import runtime.Context;
 import runtime.Runtime;
 
 /**
@@ -16,13 +17,15 @@ public class EventQueue {
     private EventQueueItem first;
     private EventQueueItem last;
     private boolean isAwake;
+    private Context context;
 
     public EventQueue() {
 
     }
 
     public boolean add(Event event) {
-        if (runtime.Runtime.getInstance().search(new PSObject(new PSName("gelements"))) == null) {
+        Context context = getContext();
+        if (context.search(new PSObject(new PSName("gelements"))) == null) {
             return false;
         }
         if (first == null) {
@@ -71,10 +74,10 @@ public class EventQueue {
     }
 
     public void process() {
+        Context context = getContext();
         isAwake = true;
         while (!isEmpty()) {
             Event event = poll();
-            runtime.Runtime runtime = Runtime.getInstance();
             EventType evType = event.getType();
             String s = evType.toString();
             PSObject type = new PSObject(new PSName(s), Attribute.TreatAs.LITERAL);
@@ -83,25 +86,25 @@ public class EventQueue {
                     PSKeyEvent charKeyEvent = (PSKeyEvent) event;
                     String aChar = charKeyEvent.getChar() + "";
                     PSObject symbol = new PSObject(new PSString(aChar), Attribute.TreatAs.LITERAL);
-                    runtime.pushToOperandStack(symbol);
-                    runtime.pushToOperandStack(type);
-                    KeyEventOp.instance.interpret();
+                    context.pushToOperandStack(symbol);
+                    context.pushToOperandStack(type);
+                    KeyEventOp.instance.interpret(context);
                     break;
                 case KEYBOARD_CONTROL:
                     PSKeyEvent controlKeyEvent = (PSKeyEvent) event;
-                    runtime.pushToOperandStack(new PSObject(new PSInteger(controlKeyEvent.getCode())));
-                    runtime.pushToOperandStack(type);
-                    KeyEventOp.instance.interpret();
+                    context.pushToOperandStack(new PSObject(new PSInteger(controlKeyEvent.getCode())));
+                    context.pushToOperandStack(type);
+                    KeyEventOp.instance.interpret(context);
                     break;
                 default:
                     PSMouseEvent mouseEvent = (PSMouseEvent) event;
                     PSObject x = new PSObject(new PSInteger(mouseEvent.getX()));
                     PSObject y = new PSObject(new PSInteger(mouseEvent.getY()));
 
-                    runtime.pushToOperandStack(x);
-                    runtime.pushToOperandStack(y);
-                    runtime.pushToOperandStack(type);
-                    MouseEventOp.instance.interpret();
+                    context.pushToOperandStack(x);
+                    context.pushToOperandStack(y);
+                    context.pushToOperandStack(type);
+                    MouseEventOp.instance.interpret(context);
                     break;
             }
 
@@ -115,4 +118,10 @@ public class EventQueue {
         isAwake = false;
     }
 
+    private Context getContext() {
+        if (context == null) {
+            context = Runtime.getInstance().getMainContext();
+        }
+        return context;
+    }
 }

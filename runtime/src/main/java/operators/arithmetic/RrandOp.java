@@ -2,6 +2,7 @@ package operators.arithmetic;
 
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
+import runtime.Context;
 
 /**
  * Created by Дмитрий on 15.03.14.
@@ -14,10 +15,10 @@ public class RrandOp extends Operator {
     }
 
     @Override
-    public void interpret() {
+    public void interpret(Context context) {
 
         RandOp.dropRandom();
-        RandOp.instance.interpret();
+        RandOp.instance.interpret(context);
     }
 
     @Override
