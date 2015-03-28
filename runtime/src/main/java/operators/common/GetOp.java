@@ -65,7 +65,7 @@ public class GetOp extends Operator {
             }
 
         }
-        runtime.pushToOperandStack(result);
+        context.pushToOperandStack(result);
 
     }
 

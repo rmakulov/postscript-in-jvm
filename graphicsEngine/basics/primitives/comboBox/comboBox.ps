@@ -66,39 +66,69 @@
     comboBoxDict addElement
 
 
-    comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
-    comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
+   % comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
+  %  comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
 
 
 
-    comboBoxDict /eventProcs get /CLICK {
+ comboBoxDict /eventProcs get /CLICK {
 
-                dup /cDict exch def
-                cDict cDict /isOpened get /isOpened exch not put
+             dup /cDict exch def
+             cDict cDict /isOpened get /isOpened exch not put
 
-                cDict /isOpened get %%%% if( isOpened)
-                {
-                  cDict cDict /newY get /y exch put
-                  cDict cDict /bigH get /h exch put
+             cDict /isOpened get %%%% if( isOpened)
+             {
+               cDict cDict /extY get /y exch put
+               cDict cDict /extH get /h exch put
 
-                }
-                {
-                  gelements /mouseY get /mouseY exch def
-                  cDict /oldY get /oldY exch def
-                  cDict /oldH get /oldH exch def
+             }
+             {
+               gelements /mouseY get /mouseY exch def
+               cDict /oldY get /oldY exch def
+               cDict /oldH get /oldH exch def
 
-                  oldY mouseY ge
-                  {
-                    /shiftY oldY mouseY sub def
-                    cDict /curLabel shiftY oldH div cvi put
+               oldY mouseY ge
+               {
+                 /shiftY oldY mouseY sub def
+                 cDict /curLabel shiftY oldH div cvi put
 
-                  }
-                  if
+               }
+               if
 
-                  dup oldY /y exch put  dup /oldH get /h exch put
-                }
-                ifelse
-                repaintAll} addListToDict
+               dup oldY /y exch put  dup /oldH get /h exch put
+             }
+             ifelse
+             repaintAll} addListToDict
+
+% another Click event not finished
+%    comboBoxDict /eventProcs get /CLICK {
+%
+%                /cDict exch def
+%                cDict cDict /isOpened get not /isOpened exch  put
+%
+%                cDict /isOpened get %%%% if( isOpened)
+%                {
+%                  cDict cDict /newY get /y exch put
+%                  cDict cDict /bigH get /h exch put
+%
+%                }
+%                {
+%                  gelements /mouseY get /mouseY exch def
+%                  cDict /oldY get /oldY exch def
+%                  cDict /oldH get /oldH exch def
+%
+%                  oldY mouseY ge
+%                  {
+%                    /shiftY oldY mouseY sub def
+%                    cDict /curLabel shiftY oldH div cvi put
+%                  }
+%                  if
+%
+%                  cDict /y oldY put
+%                  cDict /h cDict /oldH get put
+%                }
+%                ifelse
+%                repaintAll} addListToDict
 
     parent /children
                 parent /children get

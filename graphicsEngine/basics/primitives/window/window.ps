@@ -24,8 +24,8 @@
                         /eventProcs eventProcDict
                         /inFocus    false
                         %/isPressed  false
-                        /lastX      0
-                        /lastY      0
+ %                       /lastX      0
+ %                       /lastY      0
                         /checkBelonging
                             {
                                 /element exch def
@@ -64,14 +64,16 @@
                 w 20
                 isInRect
                 {gelements /draggedElement cDict put
-                  cDict moveToFront
+
                   (move) cursor
                 }
                 {
 
-                    (e_resize) cursor
+                    %(e_resize) cursor
                 }
                 ifelse
+                cDict moveToFront
+                cDict setFocusedElement
                 repaintAll} addListToDict
 
 

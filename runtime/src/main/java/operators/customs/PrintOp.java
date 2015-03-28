@@ -22,7 +22,8 @@ public class PrintOp extends Operator {
             fail();
         }
         PSObject obj = context.popFromOperandStack();
-        System.out.println(obj);
+//        System.out.println(obj);
+        System.out.println(obj.getValue().toString());
     }
 
     @Override

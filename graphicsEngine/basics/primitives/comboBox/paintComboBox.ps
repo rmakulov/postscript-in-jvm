@@ -1,7 +1,7 @@
 % ------------PROLOG------------%
 
 /fillExtendedRect{
-    /extH labels length sH mul def
+    /extH labels length oH mul def
 
     0 extH neg w extH rect
 
@@ -9,7 +9,7 @@
     fill
     0 0 1 setrgbcolor
 
-    0 sH curLabel 1 add mul neg w sH rect
+    0 oH curLabel 1 add mul neg w oH rect
 
     fill
     0 0 0 setrgbcolor
@@ -23,9 +23,9 @@
     1 1 len
     {
         /incr exch def
-        incr sH mul /curH exch def
+        incr oH mul /curH exch def
 
-        0 curH neg w sH rect stroke
+        0 curH neg w oH rect stroke
         gsave
         curLabel incr 1 sub eq
         {
@@ -40,13 +40,19 @@
 
 } def
 
+%-------------------------
+/drawRectCB{
+    0 0 w oH rect
+    stroke
+} def
+
 % --------------------------------------BEGIN-----------------------------------------%
 gsave
     /inFocus exch def
     /isOpened exch def
     /curLabel exch def
     /labels  exch def
-    /sH exch def
+    /oH exch def
     /oY exch def
     /h exch def
     /w exch def
@@ -56,10 +62,10 @@ gsave
     x oY translate
     /shift 5 def
 
-    /kegel sH shift sub def
+    /kegel oH shift sub def
     /Rekha findfont kegel scalefont setfont
 
-    drawRect
+    drawRectCB
     isOpened inFocus and
     {
         fillExtendedRect

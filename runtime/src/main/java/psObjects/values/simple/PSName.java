@@ -211,9 +211,16 @@ public class PSName extends SimpleValue {
     }
 
     public Integer compareTo(Value o) {
-        return o instanceof PSName ?
-                strValue.compareTo(((PSName) o).getStrValue()) :
-                super.compareTo(o);
+
+        try {
+            return o instanceof PSName ?
+                    strValue.compareTo(((PSName) o).getStrValue()) :
+                    super.compareTo(o);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return 1;
+        }
+
     }
 
     @Override

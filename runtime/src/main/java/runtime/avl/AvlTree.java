@@ -3,6 +3,7 @@ package runtime.avl;
 //import References.Reference;
 
 import psObjects.PSObject;
+import psObjects.values.simple.PSNull;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -107,6 +108,13 @@ public class AvlTree implements Iterable<Pair<PSObject, PSObject>> {
     public AvlTree insert(PSObject key, PSObject value) {
         if (root == null) {
             return new AvlTree(new AvlNode(key, value));
+        }
+        if (key.getValue() instanceof PSNull) {
+            try {
+                throw new Exception("Putting Null as key into avl tree");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         // create new node
         AvlNode newRoot = valueCopyNode(root);
