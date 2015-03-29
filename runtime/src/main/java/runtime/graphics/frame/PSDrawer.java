@@ -45,15 +45,15 @@ public class PSDrawer {
         frame.repaint();
     }
 
-    public void fill(Context context) {
+    public void fill(Context context, PSPath path) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = context.getGState().currentPath;
+//        PSPath path = context.getGState().currentPath;
         setGraphicsSettings(context, g2, context.getGState().graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_NON_ZERO);
         g2.clip(context.getGState().clippingPath.getGeneralPath());
         g2.fill(generalPath);
-        context.getGState().newCurrentPath();
+//        context.getGState().newCurrentPath();
         repaintImage();
     }
 
@@ -66,15 +66,15 @@ public class PSDrawer {
 
     }
 
-    public void eofill(Context context) {
+    public void eofill(Context context, PSPath path) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
-        PSPath path = context.getGState().currentPath;
+//        PSPath path = context.getGState().currentPath;
         setGraphicsSettings(context, g2, context.getGState().graphicsSettings);
         GeneralPath generalPath = path.getGeneralPath();
         generalPath.setWindingRule(Path2D.WIND_EVEN_ODD);
         g2.clip(context.getGState().clippingPath.getGeneralPath());
         g2.fill(generalPath);
-        context.getGState().newCurrentPath();
+//        context.getGState().newCurrentPath();
         repaintImage();
     }
 
@@ -118,14 +118,14 @@ public class PSDrawer {
         }
     }
 
-    public void stroke(Context context) {
+    public void stroke(Context context, PSPath path) {
         Graphics2D g2 = (Graphics2D) PSImage.getGraphics();
         GState gState = context.getGState();
-        PSPath path = gState.currentPath;
+//        PSPath path = gState.currentPath;
         setGraphicsSettings(context, g2, gState.graphicsSettings);
         g2.clip(gState.clippingPath.getGeneralPath());
         g2.draw(path.getGeneralPath());
-        gState.newCurrentPath();
+//        gState.newCurrentPath();
         repaintImage();
     }
 
