@@ -20,6 +20,10 @@ public class Interpreter {
         MainProcedure mainProcedure = new MainProcedure(context, file);
         runtime.startMainTask(context, mainProcedure);
 
+        Context c = new Context();
+        MainProcedure procedure = new MainProcedure(c, new File("tests/speedTestExamples/escher.ps"));
+        runtime.startNewTask(c, procedure);
+
 //        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
 
 //        System.out.println("DynamicClassLoader size is "+DynamicClassLoader.instance.getSize());

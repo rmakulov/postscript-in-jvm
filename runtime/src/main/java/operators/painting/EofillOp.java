@@ -1,14 +1,14 @@
 package operators.painting;
 
-import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import runtime.Context;
+import runtime.graphics.GState;
 import runtime.graphics.frame.PSDrawer;
 
 /**
  * Created by Дмитрий on 26.03.14.
  */
-public class EofillOp extends Operator {
+public class EofillOp extends PSPrimitive {
     public static final EofillOp instance = new EofillOp();
 
     protected EofillOp() {
@@ -18,9 +18,21 @@ public class EofillOp extends Operator {
     @Override
     public void interpret(Context context) { // Fill current path with current color
         //todo
-        PSDrawer.getInstance().eofill(context);
+
+        GState gState = context.getGState();
+
+        setPSPath(context.getGState().currentPath);
+        setContext(context);
+
+        gState.newCurrentPath();
+        super.interpret(context);
     }
 
+
+    @Override
+    public void paint() {
+        PSDrawer.getInstance().eofill(context, psPath);
+    }
 
     @Override
     public PSName getDefaultKeyName() {

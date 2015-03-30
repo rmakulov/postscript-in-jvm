@@ -2,6 +2,7 @@ package runtime;
 
 import operators.DefaultDicts;
 import operators.graphicsState.GRestoreAllOp;
+import operators.painting.PSPrimitive;
 import procedures.ArrayProcedure;
 import procedures.Procedure;
 import psObjects.Attribute;
@@ -20,6 +21,7 @@ import runtime.compiler.BytecodeGeneratorManager;
 import runtime.compiler.DynamicClassLoader;
 import runtime.events.Event;
 import runtime.events.EventQueue;
+import runtime.events.PrimitiveQueue;
 import runtime.graphics.GState;
 
 import java.util.HashMap;
@@ -49,6 +51,7 @@ public class Runtime {
 //    private GraphicStack graphicStack = new GraphicStack();
 //    private CallStack callStack = new CallStack();
     private EventQueue eventQueue = new EventQueue();
+    private PrimitiveQueue primitiveQueue = new PrimitiveQueue();
     private boolean isGlobal = false;
     private PSObject systemDict;
     private Context mainContext;
@@ -65,6 +68,8 @@ public class Runtime {
     }
 
     public void startNewTask(Context context, Procedure procedure) {
+        context.initDictionaries(systemDict);
+
         PSThread thread = new PSThread(context, procedure);
         service.execute(thread);
     }
@@ -346,6 +351,10 @@ public class Runtime {
 
     public void addEvent(Event event) {
         eventQueue.add(event);
+    }
+
+    public void addPrimitive(PSPrimitive psPrimitive) {
+        primitiveQueue.add(psPrimitive);
     }
 
     public PSObject getSystemDict() {

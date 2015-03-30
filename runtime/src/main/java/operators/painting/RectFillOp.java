@@ -1,6 +1,5 @@
 package operators.painting;
 
-import operators.AbstractGraphicOperator;
 import operators.arithmetic.unary.NegOp;
 import operators.graphicsState.GRestoreOp;
 import operators.graphicsState.GSaveOp;
@@ -19,7 +18,7 @@ import runtime.Context;
 /**
  * Created by Дмитрий on 01.04.14.
  */
-public class RectFillOp extends AbstractGraphicOperator {
+public class RectFillOp extends PSPrimitive {
     public static final RectFillOp instance = new RectFillOp();
 
     protected RectFillOp() {
@@ -28,6 +27,7 @@ public class RectFillOp extends AbstractGraphicOperator {
 
     @Override
     public void interpret(Context context) { // Fill current path with current color
+
         if (context.getOperandStackSize() < 1) return;
         PSObject o = context.peekFromOperandStack();
         if (o.isNumber()) {
@@ -54,10 +54,21 @@ public class RectFillOp extends AbstractGraphicOperator {
                     new PSObject(FillOp.instance),
                     new PSObject(GRestoreOp.instance)
             });
-            context.pushToCallStack(new ArrayProcedure(context, "RectFill", new PSObject(procArr, Attribute.TreatAs.EXECUTABLE)));
+            setProcedure(new ArrayProcedure(context, "RectFill", new PSObject(procArr, Attribute.TreatAs.EXECUTABLE)));
         } else {
             //todo maybe another arguments
         }
+
+        setContext(context);
+
+        super.interpret(context);
+
+    }
+
+    @Override
+    public void paint() {
+
+        context.pushToCallStack(procedure);
 
     }
 
