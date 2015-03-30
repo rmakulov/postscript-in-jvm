@@ -56,9 +56,10 @@
 %--- elementDict, void -----
 /moveToFront{
     /element exch def
-    element /parent get
+    /parent element /parent get def
     parent null ne{
-        parent dup /children get element /number get moveToEnd put
+        parent dup /children get  dup print
+         element /number get moveToEnd  dup print (__) print /children exch put
     } if
 } def
 %--- print label of dict

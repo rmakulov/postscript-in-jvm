@@ -71,6 +71,14 @@
 
 
 
+
+ comboBoxDict /eventProcs get /PRESS {
+        /cDict exch def
+        cDict  moveToFront
+        cDict setFocusedElement
+        repaintAll
+ } addListToDict
+
  comboBoxDict /eventProcs get /CLICK {
 
              dup /cDict exch def

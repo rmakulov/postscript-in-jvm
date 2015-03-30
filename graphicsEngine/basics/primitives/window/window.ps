@@ -50,6 +50,7 @@
 
 
     windowDict /eventProcs get /PRESS {
+                %(window) print dup /parent get /children get print (endwindow) print
                 /cDict exch def
 
                 gelements /mouseX get /mouseX exch def
