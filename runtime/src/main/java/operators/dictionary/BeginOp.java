@@ -17,8 +17,10 @@ public class BeginOp extends Operator {
     @Override
     public void interpret(Context context) {
         PSObject psObject = context.popFromOperandStack();
-        if (psObject == null || psObject.getType() != Type.DICTIONARY)
+        if (psObject == null || psObject.getType() != Type.DICTIONARY) {
+            fail();
             return;
+        }
         context.pushToDictionaryStack(psObject);
     }
 

@@ -32,7 +32,6 @@
 %---
 /repaintAll {
       init
-      %0 1 gelements /maxElementNumber get 1 sub {gelements exch get dup /paint get exec} for
       scene dup /paint get exec
     } def
 %---params: elementDict, void -----
@@ -40,6 +39,8 @@
     /element exch def
     element /children get length 0 ne
     {
+
+
     /children element /children get def
         {
          children length 0 eq
@@ -172,14 +173,34 @@
 /addListToDict{
     /value exch def
     /key exch def
-    /dict exch def
-    dict key known
-    {       dict dict key get /value load addToList put }
-    {        dict key [/value load  []] put    }
+    /cDict exch def
+    cDict key known
+    {       cDict cDict key get /value load addToList put }
+    {        cDict key [/value load  []] put    }
     ifelse
 } def
+%-------params------------
+%----children   :   array
+%----flag       :   boolean
+%    return     :   void
+%--------------------------
+/setFixedForChildren{
+    1 dict begin
+    /flag exch def
+    /children exch def
 
-
+    {
+         children length 0 eq
+         {exit}
+         {
+            /elem gelements children head get def
+            elem /isFixed flag put
+            elem /children get flag setFixedForChildren
+            /children children tail def
+         } ifelse
+    } loop
+    end
+} def
 %--- param: gelement
 /setFocusedElement {
 
@@ -211,6 +232,7 @@
 
                        gelements /lastX mouseX put
                        gelements /lastY mouseY put
+
                        repaintAll
 } def
 

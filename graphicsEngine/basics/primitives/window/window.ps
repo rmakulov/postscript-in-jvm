@@ -27,6 +27,7 @@
     /rY exch def
     /rX exch def
     /paint {/bd exch def
+                bd recountCoordinates
                 bd /x get
                 bd /y get
                 bd /w get
@@ -48,24 +49,27 @@
                         /parent parent /children []
                         /paint      /paint load
                         /eventProcs eventProcDict
+                        /isFixed    true
                         /inFocus    false
                         %/isPressed  false
  %                       /lastX      0
  %                       /lastY      0
                         /checkBelonging
                             {
-                                /element exch def
-                                /evY exch def
-                                /evX exch def
-
-                                /x element /x get def
-                                /y element /y get def
-                                /w element /w get def
-                                /h element /h get def
-
-                                evX x ge evY y ge and
-                                x w add evX ge y h add evY ge and
-                                and
+                                1 dict begin
+                                    /element exch def
+                                    /evY exch def
+                                    /evX exch def
+    
+                                    /x element /x get def
+                                    /y element /y get def
+                                    /w element /w get def
+                                    /h element /h get def
+    
+                                    evX x ge evY y ge and
+                                    x w add evX ge y h add evY ge and
+                                    and
+                                end
                             }
                       >> def
     windowDict addElement
@@ -93,6 +97,10 @@
                 {gelements /draggedElement cDict put
 
                   (move) cursor
+
+                    cDict /children get
+                    false
+                  setFixedForChildren
                 }
                 {
 
@@ -107,6 +115,11 @@
     windowDict /eventProcs get /RELEASE {
                     /cDict exch def
                     gelements /draggedElement null put
+
+                        cDict /children get
+                        true
+                    setFixedForChildren
+
                     (default) cursor
                     repaintAll} addListToDict
 

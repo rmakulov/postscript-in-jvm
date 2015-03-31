@@ -32,6 +32,7 @@ public class NotOp extends Operator {
             context.pushToOperandStack(new PSObject(new PSInteger(~i)));
         } else {
             context.pushToOperandStack(o);
+            fail();
         }
     }
 

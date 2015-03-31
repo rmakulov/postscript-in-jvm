@@ -32,6 +32,7 @@
     /rY exch def
     /rX exch def
     /paint {/bd exch def
+                bd recountCoordinatesCB
                 bd /x get
                 bd /y get
                 bd /w get
@@ -71,31 +72,34 @@
                         /eventProcs eventProcDict
                         /isOpened false
                         /inFocus false
+                        /isFixed true
 
                          /checkBelonging
                             {
-                                /element exch def
-                                /evY exch def
-                                /evX exch def
+                                1 dict begin
+                                    /element exch def
+                                    /evY exch def
+                                    /evX exch def
 
-                                /x element /x get def
-                                /w element /w get def
+                                    /x element /x get def
+                                    /w element /w get def
 
-                                element /isOpened get
-                                {
-                                    /y element /extY get def
-                                    /h element /extH get def
-                                }
-                                {
-                                    /y element /oldY get def
-                                    /h element /oldH get def
+                                    element /isOpened get
+                                    {
+                                        /y element /extY get def
+                                        /h element /extH get def
+                                    }
+                                    {
+                                        /y element /oldY get def
+                                        /h element /oldH get def
 
-                                }
-                                ifelse
+                                    }
+                                    ifelse
 
-                                evX x ge evY y ge and
-                                x w add evX ge y h add evY ge and
-                                and
+                                    evX x ge evY y ge and
+                                    x w add evX ge y h add evY ge and
+                                    and
+                                end
                             }
 
                       >> def
@@ -150,3 +154,38 @@
     comboBoxDict
 } def
 %---
+
+%-------------------------------------
+%-------params------------
+%----dict       :   array
+%    return     :   void
+%--------------------------
+/recountCoordinatesCB{
+    1 dict begin
+        /cDict exch def
+
+        cDict /isFixed get not
+        {
+            /parent cDict /parent get def
+            /rX cDict /rX get def
+            /rY cDict /rY get def
+            /rW cDict /rW get def
+            /rH cDict /rH get def
+
+            /y      cDict /y get         def
+            /h      cDict /h get         def
+            /labels cDict /labels get    def
+
+            cDict /x     parent /x get parent /w get rX mul add cvi   put
+            cDict /y     parent /y get parent /h get rY mul add cvi   put
+            cDict /h     parent /h get rH mul cvi                     put
+            cDict /w     parent /w get rW mul cvi                     put
+
+            cDict /oldH  h                                            put
+            cDict /oldY  y                                            put
+            cDict /extH  h labels length 1 add mul cvi                put
+            cDict /extY  y h labels length mul sub cvi                put
+        }
+        if
+    end
+} def

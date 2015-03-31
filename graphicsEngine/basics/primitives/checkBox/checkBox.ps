@@ -25,6 +25,7 @@
     /rX exch def
     /rW parent /h get rH mul parent /w get div def
     /paint {/bd exch def
+                bd recountCoordinates
                 bd /x get
                 bd /y get
                 bd /h get
@@ -48,19 +49,22 @@
                         /paint /paint load
                         /eventProcs eventProcDict
                         /isPressed false
+                        /isFixed true
                         /checkBelonging
                             {
-                                /element exch def
-                                /evY exch def
-                                /evX exch def
+                                1 dict begin
+                                    /element exch def
+                                    /evY exch def
+                                    /evX exch def
 
-                                /x element /x get def
-                                /y element /y get def
-                                /h element /h get def
+                                    /x element /x get def
+                                    /y element /y get def
+                                    /h element /h get def
 
-                                evX x ge evY y ge and
-                                x h add evX ge y h add evY ge and
-                                and
+                                    evX x ge evY y ge and
+                                    x h add evX ge y h add evY ge and
+                                    and
+                                end
                             }
 
     >> def

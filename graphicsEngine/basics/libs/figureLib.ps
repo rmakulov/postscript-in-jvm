@@ -67,3 +67,29 @@
     aH parH div
 
 } def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   array
+%    return     :   void
+%--------------------------
+/recountCoordinates{
+   1 dict  begin
+        /cDict exch  def
+
+        cDict /isFixed get not
+        {
+            /parent cDict /parent get def
+            /rX cDict /rX get def
+            /rY cDict /rY get def
+            /rW cDict /rW get def
+            /rH cDict /rH get def
+
+            cDict /x     parent /x get parent /w get rX mul add cvi   put
+            cDict /y     parent /y get parent /h get rY mul add cvi   put
+            cDict /h     parent /h get rH mul cvi                     put
+            cDict /w     parent /w get rW mul cvi                     put
+        }
+        if
+    end
+} def

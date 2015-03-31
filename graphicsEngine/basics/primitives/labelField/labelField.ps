@@ -33,6 +33,7 @@
               /rY exch def
               /rX exch def
               /paint {/bd exch def
+                          bd recountCoordinates
                           bd /x get
                           bd /y get
                           bd /w get
@@ -51,22 +52,25 @@
                                 /w parent /w get rW mul cvi
 
                                   /inFocus false
+                                  /isFixed true
                                   /paint /paint load
                                   /eventProcs eventProcDict
                                   /checkBelonging
                                       {
-                                          /element exch def
-                                          /evY exch def
-                                          /evX exch def
+                                          1 dict begin
+                                            /element exch def
+                                            /evY exch def
+                                            /evX exch def
 
-                                          /x element /x get def
-                                          /y element /y get def
-                                          /w element /w get def
-                                          /h element /h get def
+                                            /x element /x get def
+                                            /y element /y get def
+                                            /w element /w get def
+                                            /h element /h get def
 
-                                          evX x ge evY y ge and
-                                          x w add evX ge y h add evY ge and
-                                          and
+                                            evX x ge evY y ge and
+                                            x w add evX ge y h add evY ge and
+                                            and
+                                          end
                                       }
                          >> def
 

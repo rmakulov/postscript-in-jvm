@@ -34,7 +34,7 @@ gelements /mouseY evY put
 /findAncestorWithEventType{
 
     /evType exch def
-    /element exch def
+    /element exch  def
     /eventProcs element /eventProcs get def
 
     eventProcs evType known
@@ -61,34 +61,37 @@ gelements /mouseY evY put
 } def
 
 /searchAmongChildren{
-    /element exch def
-    element /children get length 0 ne
-    {
-    /children element /children get def
-        /elementForCheck element def
-        /isFound false def
+    1 dict begin
+        /element exch  def
+        element /children get length 0 ne
         {
-             children length 0 eq
-             { exit
-             }
-             {
-                children tail
-                evX evY gelements children head get dup dup 5 1 roll /checkBelonging get exec
-                {/elementForCheck exch def
-                  /isFound true def
-                }
-                {pop}
-                ifelse
-                /children  exch def
-             } ifelse
-        } loop
-        isFound
-        {elementForCheck searchAmongChildren}
+        /children element /children get def
+            /elementForCheck null def
+            /isFound false def
+            {
+                 children length 0 eq
+                 { exit
+                 }
+                 {
+                    children tail
+                    evX evY gelements children head  get  dup dup 5 1 roll /checkBelonging get  exec
+                    {/elementForCheck exch  def
+                      /isFound true def
+                    }
+                    {pop}
+                    ifelse
+                    /children  exch def
+                 } ifelse
+            } loop
+
+            isFound
+            {elementForCheck  searchAmongChildren}
+            {element evType findAncestorWithEventType}
+            ifelse
+        }
         {element evType findAncestorWithEventType}
         ifelse
-    }
-    {element evType findAncestorWithEventType}
-    ifelse
+    end
 } def
 
 

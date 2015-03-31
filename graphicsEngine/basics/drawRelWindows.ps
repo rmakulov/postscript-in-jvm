@@ -1,7 +1,6 @@
 (graphicsEngine/basics/glib.ps) (r) file run
 
 
-
 50 200 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
 200 200 16      (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
 50 50 200 100   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
@@ -20,7 +19,8 @@
 
 400 125 100 50 (On) (Off)  scene <<  >> toggleButton pop
 
-100 100 100 100 scene << >> window pop
+/mainWindow 100 100 300 300 scene << >> window def
+150 150 100 50 (Hello, World!)  mainWindow << >>    labelField pop
 
 %/mainWindow .153 .118 .353 .236 scene << >> window def
 %0.07 0.059 0.3 0.118   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
