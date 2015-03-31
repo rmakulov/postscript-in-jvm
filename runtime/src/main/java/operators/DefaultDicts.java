@@ -335,6 +335,6 @@ public class DefaultDicts {
         addOperator(DebugOp.instance);
         addOperator(PrintOp.instance);
         addOperator(CursorOp.instance);
-
+        addOperator(NewThreadOp.instance);
     }
 }

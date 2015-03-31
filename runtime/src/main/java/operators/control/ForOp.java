@@ -22,7 +22,10 @@ public class ForOp extends Operator {
 
     @Override
     public void interpret(Context context) {
-        if (context.getOperandStackSize() < 4) return;
+        if (context.getOperandStackSize() < 4) {
+            fail();
+            return;
+        }
         PSObject proc = context.popFromOperandStack();
         PSObject limit = context.popFromOperandStack();
         PSObject increment = context.popFromOperandStack();

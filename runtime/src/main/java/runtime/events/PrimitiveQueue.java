@@ -15,7 +15,7 @@ public class PrimitiveQueue {
 
     }
 
-    public boolean add(PSPrimitive primitive) {
+    public synchronized boolean add(PSPrimitive primitive) {
         if (first == null) {
             first = new PrimitiveQueueItem(primitive);
             last = first;
@@ -33,7 +33,7 @@ public class PrimitiveQueue {
     }
 
 
-    public PSPrimitive poll() {
+    public synchronized PSPrimitive poll() {
         if (first == null) {
             return null;
         }
@@ -51,7 +51,7 @@ public class PrimitiveQueue {
         return isAwake;
     }
 
-    public void process() {
+    public synchronized void process() {
         isAwake = true;
         while (!isEmpty()) {
             PSPrimitive primitive = poll();

@@ -10,14 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aee70ed2-afb3-4573-8bef-da6152f30f6f" name="Procedure|Bytecode" comment="comboBoxes and listBoxes implemented">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/customs/NewThreadOp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/unary/AbsOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/unary/AbsOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/AddOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/AddOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/AndOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/AndOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/AtanOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/AtanOp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/Attribute$Access.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/Attribute$Access.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/Attribute$TreatAs.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/Attribute$TreatAs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/Attribute.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/Attribute.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/runtime/avl/AvlNode.class" afterPath="$PROJECT_DIR$/runtime/target/classes/runtime/avl/AvlNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/runtime/avl/AvlTree.class" afterPath="$PROJECT_DIR$/runtime/target/classes/runtime/avl/AvlTree.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/BinaryArithmeticOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/BinaryArithmeticOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/BinaryIntArithmeticOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/BinaryIntArithmeticOp.class" />
@@ -29,7 +26,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/CvlitOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/CvlitOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/CvnOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/CvnOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/CvxOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/CvxOp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/runtime/stack/DictionaryStack.class" afterPath="$PROJECT_DIR$/runtime/target/classes/runtime/stack/DictionaryStack.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/DivOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/binary/DivOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/EqOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/EqOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/ExecuteonlyOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/ExecuteonlyOp.class" />
@@ -61,11 +57,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/PSMark.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/PSMark.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/PSName.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/PSName.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/PSNull.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/PSNull.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/numbers/PSNumber.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/numbers/PSNumber.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/PSObject$1.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/PSObject$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/PSObject.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/PSObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/numbers/PSReal.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/simple/numbers/PSReal.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/runtime/stack/PSStack.class" afterPath="$PROJECT_DIR$/runtime/target/classes/runtime/stack/PSStack.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/composite/PSString.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/composite/PSString.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/RandOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/RandOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/RcheckOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/RcheckOp.class" />
@@ -84,26 +78,24 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/runtime/Tests.class" afterPath="$PROJECT_DIR$/runtime/target/classes/runtime/Tests.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/TrueOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/TrueOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/unary/TruncateOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/unary/TruncateOp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/Type.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/Type.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/TypeOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/TypeOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/unary/UnaryArithmeticOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/arithmetic/unary/UnaryArithmeticOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/Value.class" afterPath="$PROJECT_DIR$/runtime/target/classes/psObjects/values/Value.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/WcheckOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/WcheckOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/XcheckOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/typeAttributeConvertation/XcheckOp.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/XorOp.class" afterPath="$PROJECT_DIR$/runtime/target/classes/operators/relationBooleanBitwise/XorOp.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parser/target/classes/scanner/Yylex.class" afterPath="$PROJECT_DIR$/parser/target/classes/scanner/Yylex.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/DefaultDicts.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/DefaultDicts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ForOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/control/ForOp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interpreter/src/main/java/interpreter/Interpreter.java" afterPath="$PROJECT_DIR$/interpreter/src/main/java/interpreter/Interpreter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/LocalVM.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/LocalVM.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/stack/OperandStack.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/stack/OperandStack.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSImage.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSImage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java" afterPath="$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/graphicsEngine.iml" afterPath="$PROJECT_DIR$/graphicsEngine/graphicsEngine.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/interpreter/interpreter.iml" afterPath="$PROJECT_DIR$/interpreter/interpreter.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/runtime.iml" afterPath="$PROJECT_DIR$/runtime/runtime.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/tests.iml" afterPath="$PROJECT_DIR$/tests/tests.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/basics/glib.ps" afterPath="$PROJECT_DIR$/graphicsEngine/basics/glib.ps" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphicsEngine/basics/primitives/scene/scene.ps" afterPath="$PROJECT_DIR$/graphicsEngine/basics/primitives/scene/scene.ps" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="postscript-in-jvm.iws" />
@@ -136,6 +128,41 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <ui_properties converted="true" />
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
       <breakpoint url="file://$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcOp.java" line="60" class="operators.pathConstruction.ArcOp" package="operators.pathConstruction">
         <option name="ENABLED" value="true" />
@@ -208,42 +235,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true" />
-        <option name="NOTIFY_UNCAUGHT" value="true" />
-        <option name="ENABLED" value="false" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </breakpoint_any>
     <breakpoint_rules converted="true" />
-    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -252,111 +244,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PSPrimitive.java" pinned="true" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/PSPrimitive.java">
+      <file leaf-file-name="PSArray.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="780">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#436#437#0" expanded="true" />
-                <element signature="e#459#460#0" expanded="true" />
-                <element signature="e#519#520#0" expanded="true" />
-                <element signature="e#561#562#0" expanded="true" />
-                <element signature="e#616#617#0" expanded="true" />
-                <element signature="e#664#665#0" expanded="true" />
-                <element signature="e#742#743#0" expanded="true" />
-                <element signature="e#778#779#0" expanded="true" />
-                <element signature="e#836#837#0" expanded="true" />
-                <element signature="e#878#879#0" expanded="true" />
-                <element signature="e#925#926#0" expanded="true" />
-                <element signature="e#963#964#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrimitiveQueue.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1170">
-              <caret line="65" column="28" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1235#1236#0" expanded="true" />
-                <element signature="e#1271#1272#0" expanded="true" />
-                <element signature="e#1304#1305#0" expanded="true" />
-                <element signature="e#1334#1335#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventQueue.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueue.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
-              <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1346" max-vertical-offset="2700">
+              <caret line="119" column="88" selection-start-line="119" selection-start-column="88" selection-end-line="119" selection-end-column="88" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Runtime.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
+      <file leaf-file-name="GSave.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/save/GSave.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="141" max-vertical-offset="5370">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding>
-                <element signature="e#12153#12154#0" expanded="true" />
-                <element signature="e#12200#12201#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FillOp.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63866514" vertical-offset="0" max-vertical-offset="869">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#695#696#0" expanded="true" />
-                <element signature="e#755#756#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PSDrawer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="326" max-vertical-offset="3180">
-              <caret line="77" column="23" selection-start-line="77" selection-start-column="23" selection-end-line="77" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EofillOp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java">
+      <file leaf-file-name="GSaveOp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GSaveOp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
-                <element signature="e#720#721#0" expanded="true" />
-                <element signature="e#781#782#0" expanded="true" />
+                <element signature="e#460#461#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RectFillOp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java">
+      <file leaf-file-name="NewThreadOp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/NewThreadOp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.785714" vertical-offset="0" max-vertical-offset="1230">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
+              <caret line="38" column="68" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -364,28 +288,62 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UfillOp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java">
+      <file leaf-file-name="glib.ps" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="1845" max-vertical-offset="4065">
+              <caret line="159" column="6" selection-start-line="159" selection-start-column="6" selection-end-line="159" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StrokeOp.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java">
+      <file leaf-file-name="FileOp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/file/FileOp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-              <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#335#336#0" expanded="true" />
-                <element signature="e#358#359#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
+              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Operator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/Operator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RunOp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/file/RunOp.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="53" max-vertical-offset="555">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PSName.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSName.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.16182171" vertical-offset="343" max-vertical-offset="3540">
+              <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PSObject.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="358" max-vertical-offset="5430">
+              <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -414,19 +372,30 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/interpreter/src/main/java/interpreter/Interpreter.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitivesQueue.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueueItem.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/events/Primitive.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java" />
-        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/operators/painting/PSPrimitive.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java" />
-        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java" />
         <option value="$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/LocalVM.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java" />
+        <option value="$PROJECT_DIR$/interpreter/src/main/java/interpreter/Interpreter.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/operators/control/ForOp.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/operators/DefaultDicts.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/stack/OperandStack.java" />
+        <option value="$PROJECT_DIR$/graphicsEngine/basics/primitives/scene/scene.ps" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/runtime/Context.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GSaveOp.java" />
+        <option value="$PROJECT_DIR$/runtime/src/main/java/operators/customs/NewThreadOp.java" />
+        <option value="$PROJECT_DIR$/graphicsEngine/basics/glib.ps" />
       </list>
     </option>
   </component>
@@ -450,10 +419,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
-    <option name="y" value="28" />
-    <option name="width" value="1922" />
-    <option name="height" value="1020" />
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1855" />
+    <option name="height" value="1204" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -512,112 +481,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Procedure|Bytecode">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Problems" />
-        <subPane subId="Tests" />
-        <subPane subId="Production">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="parser">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="parser">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="parser">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="parser">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src/main/java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="scanner">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Changed Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scanner" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -766,11 +629,141 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="painting" />
+              <option name="myItemId" value="customs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graphicsEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graphicsEngine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="basics" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parent" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="parser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scanner" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="Procedure|Bytecode">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Production">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Changed Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="parser">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="parser">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="parser">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="parser">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src/main/java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="scanner">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Tests" />
       </pane>
     </panes>
   </component>
@@ -796,7 +789,7 @@
     <property name="project.structure.side.proportion" value="0.18479307" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="gli&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;gl&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;keyE&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/keyEvent.ps&#10;dra&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;draw&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;tex&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;psdra&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java&#10;string&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/operators/GlythAndFont/StringWidthOp.java&#10;textF&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;glib&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;check&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedCheckbox.ps&#10;li&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;keyev&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/keyEvent.ps&#10;eve&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/runtime/events/EventType.java&#10;text&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;key&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/operators/customs/KeyEventOp.java&#10;concat&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/concat.ps&#10;Con&#9;PSI&#9;JAVA://operators.coordinatSystemAndMatrix.ConcatOp&#10;un&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;drawButto&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;drawbutton&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;press&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps&#10;event&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;lis&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;list&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;glib.&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;drawbut&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;drawing&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawing.ps&#10;even&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;dr&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;IntFor&#9;PSI&#9;JAVA://procedures.IntForProcedure&#10;event.ps&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;unpress&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;pressed&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps&#10;presse&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;unpre&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;unpres&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;UNPRE&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;41&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/operandStackExamples/41Step.txt&#10;invert&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/otherExamples/invertStr.ps&#10;drawin&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/otherExamples/drawing.ps&#10;def&#9;PSI&#9;JAVA://operators.DefaultDicts&#10;findFo&#9;PSI&#9;JAVA://operators.GlythAndFont.FindFontOp&#10;colo&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/colorcir.ps&#10;fra&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/hard/FractalByAlunJones.ps&#10;shi&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/Ship_Demo.ps&#10;.mf&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/interpreter/src/main/java/META-INF/MANIFEST.MF&#10;tiger&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/speedTestExamples/tiger.eps&#10;es&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/speedTestExamples/escher.ps&#10;29&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/operandStackExamples/29Step.ps" />
+    <property name="SearchEverywhereHistoryKey" value="sce&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/graphicsEngine/basics/primitives/scene/scene.ps&#10;glib&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;gli&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;gl&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;keyE&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/keyEvent.ps&#10;dra&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;draw&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;tex&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;psdra&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java&#10;string&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/operators/GlythAndFont/StringWidthOp.java&#10;textF&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;check&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedCheckbox.ps&#10;li&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;keyev&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/keyEvent.ps&#10;eve&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/runtime/events/EventType.java&#10;text&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/textField.ps&#10;key&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/runtime/src/main/java/operators/customs/KeyEventOp.java&#10;concat&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/concat.ps&#10;Con&#9;PSI&#9;JAVA://operators.coordinatSystemAndMatrix.ConcatOp&#10;un&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;drawButto&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;drawbutton&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;press&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps&#10;event&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;lis&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;list&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/listLib.ps&#10;glib.&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/glib.ps&#10;drawbut&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;drawing&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawing.ps&#10;even&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;dr&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/drawButtons.ps&#10;IntFor&#9;PSI&#9;JAVA://procedures.IntForProcedure&#10;event.ps&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/event.ps&#10;unpress&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;pressed&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/PressedButton.ps&#10;presse&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;unpre&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;unpres&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedCheckbox.ps&#10;UNPRE&#9;FILE&#9;file:///home/user/dev/IdeaProjects/postscript-in-jvm/graphicsEngine/basics/UnpressedButton.ps&#10;41&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/operandStackExamples/41Step.txt&#10;invert&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/otherExamples/invertStr.ps&#10;drawin&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/otherExamples/drawing.ps&#10;def&#9;PSI&#9;JAVA://operators.DefaultDicts&#10;findFo&#9;PSI&#9;JAVA://operators.GlythAndFont.FindFontOp&#10;colo&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/colorcir.ps&#10;fra&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/hard/FractalByAlunJones.ps&#10;shi&#9;FILE&#9;file://C:/Users/User/Dropbox/postscript_in_jvm/tests/speedTestExamples/Ship_Demo.ps&#10;.mf&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/interpreter/src/main/java/META-INF/MANIFEST.MF&#10;tiger&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/speedTestExamples/tiger.eps&#10;es&#9;FILE&#9;file:///home/user/dev/postscript-in-jvm/bytecode/postscript-in-jvm/tests/speedTestExamples/escher.ps" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="OverrideImplement.combined" value="true" />
@@ -985,138 +978,12 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <method />
-    </configuration>
-    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list />
-            </option>
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JarApplication" factoryName="JAR Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list />
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -1158,6 +1025,180 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list />
+            </option>
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="uTestRunConfiguration" factoryName="utest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <envs />
       <method />
     </configuration>
     <configuration default="false" name="Tests" type="JUnit" factoryName="JUnit">
@@ -1557,40 +1598,40 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="28" width="1922" height="1020" extended-state="6" />
+    <frame x="65" y="-4" width="1855" height="1204" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4576" sideWeight="0.5229167" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45200893" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24986118" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5004721" sideWeight="0.4997239" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5155807" sideWeight="0.17614578" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947916" sideWeight="0.50095236" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6515581" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28348213" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24860558" sideWeight="0.6432" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14230557" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17571884" sideWeight="0.6448" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47767857" sideWeight="0.8238542" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295562" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16510215" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936078" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Byte Code Viewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="174" y="140" width="1720" height="960" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28328612" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5155807" sideWeight="0.17614578" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14230557" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6515581" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.305949" sideWeight="0.8238542" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1755936" sideWeight="0.6448" order="0" side_tool="false" content_ui="combo" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45136923" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="ASM" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16510215" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24860558" sideWeight="0.6432" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24986118" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24947916" sideWeight="0.50095236" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5004721" sideWeight="0.4997239" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32936078" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Byte Code Viewer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="174" y="140" width="1720" height="960" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1643,12 +1684,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcOp.java</url>
-          <line>60</line>
-          <properties />
-          <option name="timeStamp" value="886" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/paths/PSPath.java</url>
           <line>68</line>
           <properties />
@@ -1672,6 +1707,12 @@
           <properties />
           <option name="timeStamp" value="890" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/Operator.java</url>
+          <line>63</line>
+          <properties />
+          <option name="timeStamp" value="896" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog>
@@ -1680,7 +1721,7 @@
           </selected-grouping-rules>
         </breakpoints-dialog>
       </breakpoints-dialog>
-      <option name="time" value="895" />
+      <option name="time" value="897" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1689,74 +1730,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/DebugOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/drawButtons.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="435">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10725">
-          <caret line="333" column="35" selection-start-line="333" selection-start-column="35" selection-end-line="333" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="615">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/control/IfOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="1185">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/DebugOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="510">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/drawButtons.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="435">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8700">
-          <caret line="563" column="34" selection-start-line="563" selection-start-column="34" selection-end-line="563" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8700">
-          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8685">
@@ -1769,13 +1742,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="25" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="25" column="11" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1793,14 +1759,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0397878" vertical-offset="0" max-vertical-offset="0">
-          <caret line="39" column="40" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/common/GetOp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.63829786" vertical-offset="360" max-vertical-offset="1050">
@@ -1815,14 +1773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/control/IfOp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="43" max-vertical-offset="1050">
@@ -1834,14 +1784,187 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/AbstractGraphicOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37414965" vertical-offset="0" max-vertical-offset="441">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueueItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12082854" vertical-offset="0" max-vertical-offset="869">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/Value.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19396552" vertical-offset="0" max-vertical-offset="1140">
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/PSPrimitive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="780">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#437#438#0" expanded="false" />
+            <element signature="e#460#461#0" expanded="false" />
+            <element signature="e#520#521#0" expanded="false" />
+            <element signature="e#562#563#0" expanded="false" />
+            <element signature="e#617#618#0" expanded="false" />
+            <element signature="e#665#666#0" expanded="false" />
+            <element signature="e#743#744#0" expanded="false" />
+            <element signature="e#779#780#0" expanded="false" />
+            <element signature="e#837#838#0" expanded="false" />
+            <element signature="e#879#880#0" expanded="false" />
+            <element signature="e#926#927#0" expanded="false" />
+            <element signature="e#964#965#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="326" max-vertical-offset="3180">
+          <caret line="77" column="23" selection-start-line="77" selection-start-column="23" selection-end-line="77" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3543#3544#0" expanded="false" />
+            <element signature="e#3584#3585#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1230">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6933868" vertical-offset="2759" max-vertical-offset="10740">
-          <caret line="207" column="25" selection-start-line="207" selection-start-column="20" selection-end-line="207" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueueItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+          <folding>
+            <element signature="e#265#266#0" expanded="true" />
+            <element signature="e#307#308#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="675" max-vertical-offset="1815">
+          <caret line="71" column="22" selection-start-line="71" selection-start-column="22" selection-end-line="71" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/LocalVM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="557" max-vertical-offset="1650">
+          <caret line="79" column="26" selection-start-line="79" selection-start-column="26" selection-end-line="79" selection-end-column="26" />
+          <folding>
+            <element signature="e#2115#2116#0" expanded="true" />
+            <element signature="e#2159#2160#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/libs/listLib.ps">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="708" max-vertical-offset="1740">
+          <caret line="62" column="13" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/GState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="41" max-vertical-offset="1650">
+          <caret line="35" column="14" selection-start-line="35" selection-start-column="14" selection-end-line="35" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/stack/GraphicStack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/pathConstruction/ArcOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1020">
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/matrix/TransformMatrix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20348836" vertical-offset="0" max-vertical-offset="2970">
+          <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/CursorOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1853,175 +1976,187 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/AbstractGraphicOperator.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/control/ForOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37414965" vertical-offset="0" max-vertical-offset="441">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1200">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/InitOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10174418" vertical-offset="0" max-vertical-offset="1032">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/GetColorOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1035">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/DefaultDicts.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3543" max-vertical-offset="4575">
+          <caret line="337" column="40" selection-start-line="337" selection-start-column="40" selection-end-line="337" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/procedures/ArrayProcedure.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2761628" vertical-offset="0" max-vertical-offset="1032">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/MouseEventOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29069766" vertical-offset="0" max-vertical-offset="1032">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/stack/OperandStack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Context.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2553" max-vertical-offset="3585">
+          <caret line="226" column="11" selection-start-line="226" selection-start-column="11" selection-end-line="226" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/primitives/scene/scene.ps">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+          <caret line="11" column="122" selection-start-line="11" selection-start-column="122" selection-end-line="11" selection-end-column="122" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="691" max-vertical-offset="5355">
+          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/KeyEventOp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="26" column="116" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="116" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/interpreter/src/main/java/interpreter/Interpreter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3571428" vertical-offset="22" max-vertical-offset="2235">
-          <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="2310">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/composite/PSArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1346" max-vertical-offset="2700">
+          <caret line="119" column="88" selection-start-line="119" selection-start-column="88" selection-end-line="119" selection-end-column="88" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueueItem.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/save/GSave.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22439586" vertical-offset="0" max-vertical-offset="869">
-          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
-          <folding>
-            <element signature="e#265#266#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueueItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12082854" vertical-offset="0" max-vertical-offset="869">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
-          <folding>
-            <element signature="e#194#195#0" expanded="true" />
-            <element signature="e#228#229#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/GState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43037975" vertical-offset="781" max-vertical-offset="1650">
-          <caret line="93" column="16" selection-start-line="93" selection-start-column="16" selection-end-line="93" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/Value.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/graphicsState/GSaveOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19396552" vertical-offset="0" max-vertical-offset="1140">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#460#461#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphicsEngine/basics/glib.ps">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1845" max-vertical-offset="4065">
+          <caret line="159" column="6" selection-start-line="159" selection-start-column="6" selection-end-line="159" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/PSPrimitive.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/customs/NewThreadOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="780">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
+          <caret line="38" column="68" selection-start-line="38" selection-start-column="68" selection-end-line="38" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#436#437#0" expanded="true" />
-            <element signature="e#459#460#0" expanded="true" />
-            <element signature="e#519#520#0" expanded="true" />
-            <element signature="e#561#562#0" expanded="true" />
-            <element signature="e#616#617#0" expanded="true" />
-            <element signature="e#664#665#0" expanded="true" />
-            <element signature="e#742#743#0" expanded="true" />
-            <element signature="e#778#779#0" expanded="true" />
-            <element signature="e#836#837#0" expanded="true" />
-            <element signature="e#878#879#0" expanded="true" />
-            <element signature="e#925#926#0" expanded="true" />
-            <element signature="e#963#964#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/PrimitiveQueue.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/file/FileOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="1170">
-          <caret line="65" column="28" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1235#1236#0" expanded="true" />
-            <element signature="e#1271#1272#0" expanded="true" />
-            <element signature="e#1304#1305#0" expanded="true" />
-            <element signature="e#1334#1335#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/events/EventQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1815">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="660">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/graphics/frame/PSDrawer.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/Operator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="326" max-vertical-offset="3180">
-          <caret line="77" column="23" selection-start-line="77" selection-start-column="23" selection-end-line="77" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/RectFillOp.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/file/RunOp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.785714" vertical-offset="0" max-vertical-offset="1230">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="53" max-vertical-offset="555">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/runtime/Runtime.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/PSObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="141" max-vertical-offset="5370">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="e#12153#12154#0" expanded="true" />
-            <element signature="e#12200#12201#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="358" max-vertical-offset="5430">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/EofillOp.java">
+    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/psObjects/values/simple/PSName.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="e#720#721#0" expanded="true" />
-            <element signature="e#781#782#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/UfillOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/StrokeOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#335#336#0" expanded="true" />
-            <element signature="e#358#359#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime/src/main/java/operators/painting/FillOp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63866514" vertical-offset="0" max-vertical-offset="869">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#695#696#0" expanded="true" />
-            <element signature="e#755#756#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.16182171" vertical-offset="343" max-vertical-offset="3540">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

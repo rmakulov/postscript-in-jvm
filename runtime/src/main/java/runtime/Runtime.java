@@ -71,15 +71,16 @@ public class Runtime {
         context.initDictionaries(systemDict);
 
         PSThread thread = new PSThread(context, procedure);
-        service.execute(thread);
+        service.submit(thread);
+//        service.execute(thread);
     }
 
     public void startMainTask(Context context, Procedure procedure) {
         mainContext = context;
         context.initDictionaries(systemDict);
         PSThread thread = new PSThread(context, procedure);
-        thread.run();
-//        service.execute(thread);
+//        thread.run();
+        service.submit(thread);
     }
 
     public Context getMainContext() {

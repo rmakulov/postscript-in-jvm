@@ -140,7 +140,7 @@ public class PSArray extends CompositeValue implements Cloneable {
             //return array[0].getElementObject().execute(0);
             return true;
         } else {
-            context.pushToCallStack(new ArrayProcedure(obj));
+            context.pushToCallStack(new ArrayProcedure(context, "array procedure", obj));
             return true;
         }
     }

@@ -16,9 +16,9 @@ public class ArrayProcedure extends Procedure {
         this.arrayObj = arrayObj;
     }
 
-    public ArrayProcedure(PSObject arrayObj) {
-        this.arrayObj = arrayObj;
-    }
+//    public ArrayProcedure(PSObject arrayObj) {
+//        this.arrayObj = arrayObj;
+//    }
 
     public boolean hasNext() {
         return nextIndex < getArray().length;

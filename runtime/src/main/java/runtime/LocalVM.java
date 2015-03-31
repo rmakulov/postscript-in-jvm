@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class LocalVM {
-    private Map<Integer, CompositeValue> map = new HashMap<Integer, CompositeValue>();
+    private Map<Integer, CompositeValue> map = new ConcurrentHashMap<Integer, CompositeValue>();
     private Set<Integer> initSet = new HashSet<Integer>();
     private Set<Integer> stringSet = new HashSet<Integer>();
     private int maxInt = 0;

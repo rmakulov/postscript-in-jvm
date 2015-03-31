@@ -12,6 +12,5 @@ public class OperandStack extends PSStack<PSObject> {
         super(stack);
     }
 
-
 }
 

@@ -14,12 +14,17 @@ public class PSImage {
     private BufferedImage image;
 
     private PSImage() {
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+//        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
         Dimension dimension = PSFrame.getInstance().getContentPane().getSize();
 
         Graphics2D g2 = (Graphics2D) image.getGraphics();
-        g2.setColor(Color.WHITE);
+//        Color c = new Color(1f, 0f, 0f, .5f);
+//        g2.setColor(Color.WHITE);
+        g2.setComposite(AlphaComposite.Clear);
+//        System.out.println(new Color(255,255,255,255));
         g2.fillRect(0, 0, width, height);
+
     }
 
     public static PSImage getInstance() {
@@ -45,6 +50,7 @@ public class PSImage {
     public static Graphics getGraphics() {
         Graphics2D graphics = (Graphics2D) getInstanceImage().getGraphics();
         graphics.setTransform(new AffineTransform(getJavaTransformMatrix()));
+        graphics.setComposite(AlphaComposite.Src);
         return graphics;
     }
 
