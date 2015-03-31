@@ -1,19 +1,19 @@
 % ------------PROLOG------------%
 /fillLeftRect {
-    0 0 w 2 idiv h rect
+    0 0 w 2 div h rect
     fill
 
 } def
 %--------------------------------
 /fillRightRect {
-    w 2 idiv 0 w 2 idiv h rect
+    w 2 div 0 w 2 div h rect
     fill
 
 } def
 
 /printTextOff{
 
-    0 w 2 idiv add shift 3 mul moveto
+    0 w 2 div add shift 3 mul moveto
     0 0 0 setrgbcolor
     textOff show
 
@@ -41,7 +41,6 @@ gsave
     x y translate
     /shift 5 def
 
-
     /kegel h shift 3 mul sub def
     /Rekha findfont kegel scalefont setfont
 
@@ -51,12 +50,11 @@ gsave
     {fillLeftRect
      printTextOff
     }
-        {fillRightRect
+    {
+        fillRightRect
         printTextOn
-        }
+    }
     ifelse
-
-    x neg y neg translate
-
+%
 grestore
 % ------------END------------%

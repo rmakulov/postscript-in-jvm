@@ -1,11 +1,31 @@
-%---
-/window {
+/window{
     /eventProcDict exch def
     /parent exch def
     /h exch def
     /w exch def
     /y exch def
     /x exch def
+
+    %---parameters
+            x y w h
+            parent /x get
+            parent /y get
+            parent /w get
+            parent /h get
+        getRelFromAbs
+        parent
+        eventProcDict
+    relWindow
+} def
+
+%---
+/relWindow {
+    /eventProcDict exch def
+    /parent exch def
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
     /paint {/bd exch def
                 bd /x get
                 bd /y get
@@ -18,7 +38,13 @@
                 bd paintChildren
         } def
 
-    /windowDict <</x x /y y /h h /w w
+    /windowDict <</rX rX /rY rY /rH rH /rW rW
+
+                        /x parent /x get parent /w get rX mul add cvi
+                        /y parent /y get parent /h get rY mul add cvi
+                        /h parent /h get rH mul cvi
+                        /w parent /w get rW mul cvi
+
                         /parent parent /children []
                         /paint      /paint load
                         /eventProcs eventProcDict

@@ -6,6 +6,26 @@
     /w exch def
     /y exch def
     /x exch def
+
+        x parent /x get sub parent /w get div
+        y parent /y get sub parent /h get div
+        w parent /w get div
+        h parent /h get div
+        label
+        parent
+        eventProcDict
+    relButton
+} def
+
+
+/relButton {
+    /eventProcDict exch def
+    /parent exch def
+    /label exch def
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
     /paint {/bd exch def
                 bd /x get
                 bd /y get
@@ -21,7 +41,14 @@
 
         } def
         %eventProcs - procedures for each type of events
-    /buttonDict <</label label /x x /y y /h h /w w  /parent parent /children []
+    /buttonDict <</label label /parent parent /children []
+                        /rX rX /rY rY /rW rW /rH rH
+
+                        /x parent /x get parent /w get rX mul add cvi
+                        /y parent /y get parent /h get rY mul add cvi
+                        /h parent /h get rH mul cvi
+                        /w parent /w get rW mul cvi
+
                         /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict

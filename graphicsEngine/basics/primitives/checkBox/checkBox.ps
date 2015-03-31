@@ -1,11 +1,29 @@
+/checkBox{
+        /eventProcDict exch def
+        /parent exch def
+        /label exch def
+        /h exch def
+        /y exch def
+        /x exch def
+
+            x parent /x get sub parent /w get div
+            y parent /y get sub parent /h get div
+            h parent /h get div
+            label
+            parent
+            eventProcDict
+        relCheckBox
+} def
+
 %---
-/checkBox {
+/relCheckBox {
     /eventProcDict exch def
     /parent exch def
     /label exch def
-    /h exch def
-    /y exch def
-    /x exch def
+    /rH exch def
+    /rY exch def
+    /rX exch def
+    /rW parent /h get rH mul parent /w get div def
     /paint {/bd exch def
                 bd /x get
                 bd /y get
@@ -19,7 +37,13 @@
                 bd paintChildren
         } def
         %eventProcs - procedures for each type of events
-    /checkboxDict <</label label /x x /y y /w h /h h /parent parent /children []
+    /checkBoxDict <</label label /rX rX /rY rY /rW rW /rH rH /parent parent /children []
+
+                        /x parent /x get parent /w get rX mul add cvi
+                        /y parent /y get parent /h get rY mul add cvi
+                        /h parent /h get rH mul cvi
+                        /w parent /w get rW mul cvi
+
                         /inFocus false
                         /paint /paint load
                         /eventProcs eventProcDict
@@ -43,20 +67,19 @@
 
 
 
-    checkboxDict addElement
+    checkBoxDict addElement
+    checkBoxDict /number get print
+%    %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkBoxDict
+    checkBoxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+%    %checkBoxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} addListToDict
 
-    %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
-    checkboxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} addListToDict
-    %checkboxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+   parent /children
+          parent /children get
+          checkBoxDict /number get
+          addToEndOfList
+   put
 
-     parent /children
-            parent /children get
-            checkBoxDict /number get
-            addToEndOfList
-     put
 
-    %x y h w label paint
-    %checkboxDict paint
-    checkboxDict
+    checkBoxDict
 } def
 %---

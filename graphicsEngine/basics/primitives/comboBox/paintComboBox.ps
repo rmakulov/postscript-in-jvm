@@ -3,7 +3,7 @@
 /fillExtendedRect{
     /extH labels length oH mul def
 
-    0 extH neg w extH rect
+    0 extH neg w extH oH add rect
 
     1 1 1 setrgbcolor
     fill
@@ -13,6 +13,16 @@
 
     fill
     0 0 0 setrgbcolor
+} def
+%-----
+/fillSmallRect{
+
+    0 0 w oH rect
+
+    1 1 1 setrgbcolor
+    fill
+    0 0 0 setrgbcolor
+
 } def
 %-----
 /drawOptions{
@@ -72,7 +82,9 @@ gsave
         labels drawOptions
         shift shift labels curLabel get drawString
     }
-    { shift shift labels curLabel get drawString }
+    {
+      fillSmallRect
+      shift shift labels curLabel get drawString }
     ifelse
 
 grestore

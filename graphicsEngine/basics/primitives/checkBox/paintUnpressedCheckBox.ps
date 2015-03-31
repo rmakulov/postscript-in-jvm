@@ -1,4 +1,6 @@
 gsave
+/q { gsave } bind def
+/Q { grestore } bind def
 /cm { 6 array astore concat } bind def
 /w { setlinewidth } bind def
 /J { setlinecap } bind def
@@ -21,12 +23,12 @@ gsave
 %/x 50 def
 %/y 50 def
 %/label (Checkbox) def
+%/h 20 def
 
 x y translate
 
 q q
 
-/h 16 def
 /shift 2 def
 
 1 g

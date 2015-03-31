@@ -1,4 +1,4 @@
-/comboBox {
+/comboBox{
     /eventProcDict exch def
     /parent exch def
     /curLabel exch def
@@ -7,6 +7,30 @@
     /w exch def
     /y exch def
     /x exch def
+    %---parameters
+            x y w h
+            parent /x get
+            parent /y get
+            parent /w get
+            parent /h get
+        getRelFromAbs
+        labels
+        curLabel
+        parent
+        eventProcDict
+    relComboBox
+} def
+
+%------------------------
+/relComboBox {
+    /eventProcDict exch def
+    /parent exch def
+    /curLabel exch def
+    /labels  exch def
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
     /paint {/bd exch def
                 bd /x get
                 bd /y get
@@ -25,9 +49,21 @@
                 bd paintChildren
         } def
 
-    /comboBoxDict <</x x /y y /h h /w w /labels labels
-                        /oldH h  /extH h labels length 1 add mul
-                        /oldY y  /extY y h labels length mul sub
+    /y parent /y get parent /h get rY mul add cvi def
+    /h parent /h get rH mul cvi def
+
+    /comboBoxDict <</rX rX /rY rY /rH rH /rW rW /labels labels
+
+                        /x parent /x get parent /w get rX mul add cvi
+                        /y parent /y get parent /h get rY mul add cvi
+                        /h parent /h get rH mul cvi
+                        /w parent /w get rW mul cvi
+
+                        /oldH h
+                        /oldY y
+
+                        /extH h labels length 1 add mul cvi
+                        /extY y h labels length mul sub cvi
 
                         /curLabel curLabel
                         /parent parent /children []
@@ -64,12 +100,7 @@
 
                       >> def
     comboBoxDict addElement
-
-
-   % comboBoxDict /eventProcs get /MOVE { (Move) print repaintAll } addListToDict
-  %  comboBoxDict /eventProcs get /EXIT { (Exit) print repaintAll } addListToDict
-
-
+    
 
 
  comboBoxDict /eventProcs get /PRESS {
@@ -108,35 +139,6 @@
              ifelse
              repaintAll} addListToDict
 
-% another Click event not finished
-%    comboBoxDict /eventProcs get /CLICK {
-%
-%                /cDict exch def
-%                cDict cDict /isOpened get not /isOpened exch  put
-%
-%                cDict /isOpened get %%%% if( isOpened)
-%                {
-%                  cDict cDict /newY get /y exch put
-%                  cDict cDict /bigH get /h exch put
-%
-%                }
-%                {
-%                  gelements /mouseY get /mouseY exch def
-%                  cDict /oldY get /oldY exch def
-%                  cDict /oldH get /oldH exch def
-%
-%                  oldY mouseY ge
-%                  {
-%                    /shiftY oldY mouseY sub def
-%                    cDict /curLabel shiftY oldH div cvi put
-%                  }
-%                  if
-%
-%                  cDict /y oldY put
-%                  cDict /h cDict /oldH get put
-%                }
-%                ifelse
-%                repaintAll} addListToDict
 
     parent /children
                 parent /children get
@@ -144,7 +146,7 @@
                 addToEndOfList
     put
 
-    %comboBoxDict paint
+
     comboBoxDict
 } def
 %---

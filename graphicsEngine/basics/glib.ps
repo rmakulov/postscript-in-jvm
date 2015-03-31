@@ -5,10 +5,10 @@
 
 %--- args: element, void
 
-/addElement {dup /number gelements /maxElementNumber get dup /curnumber exch def  put
-            gelements curnumber 3 2 roll put
-            gelements /maxElementNumber curnumber 1 add put
-            } def
+/addElement {dup /number gelements /maxElementNumber get dup /curnumber exch def put
+                gelements curnumber 3 2 roll put
+                gelements /maxElementNumber curnumber 1 add put
+} def
 %---
 (graphicsEngine/basics/primitives/button/button.ps) (r) file run
 %---
@@ -58,8 +58,8 @@
     /element exch def
     /parent element /parent get def
     parent null ne{
-        parent dup /children get  dup print
-         element /number get moveToEnd  dup print (__) print /children exch put
+        parent dup /children get  
+         element /number get moveToEnd /children exch put
     } if
 } def
 %--- print label of dict

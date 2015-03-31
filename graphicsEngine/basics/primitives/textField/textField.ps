@@ -1,12 +1,34 @@
+/textField{
+    /eventProcDict exch def
+    /parent exch def
+    /label exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+
+    %---parameters
+                x y w h
+                parent /x get
+                parent /y get
+                parent /w get
+                parent /h get
+            getRelFromAbs
+            label
+            parent
+            eventProcDict
+     relTextField
+} def
+
 %---
-/textField {
+/relTextField {
               /eventProcDict exch def
               /parent exch def
               /label exch def
-              /h exch def
-              /w exch def
-              /y exch def
-              /x exch def
+              /rH exch def
+              /rW exch def
+              /rY exch def
+              /rX exch def
               /paint {/bd exch def
                           bd /x get
                           bd /y get
@@ -21,7 +43,13 @@
                           bd paintChildren
                   } def
                   %eventProcs - procedures for each type of events
-              /textFieldDict <</label label /text () /x x /y y /w w /h h /parent parent /children null /inFocus false /position 0
+              /textFieldDict <</label label /text () /rX rX /rY rY /rW rW /rH rH /parent parent /children [] /inFocus false /position 0
+
+                                  /x parent /x get parent /w get rX mul add cvi
+                                  /y parent /y get parent /h get rY mul add cvi
+                                  /h parent /h get rH mul cvi
+                                  /w parent /w get rW mul cvi
+
                                   /inFocus false
                                   /paint /paint load
                                   /eventProcs eventProcDict
@@ -44,7 +72,7 @@
 
 
 
-              textFieldDict addElement
+              textFieldDict  addElement
 
               %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
               textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
@@ -55,6 +83,7 @@
                    textField dup /position  get 1 add /position exch put
                    repaintAll
               } addListToDict
+
               textFieldDict /eventProcs get /KEYBOARD_CONTROL{
                                  /code exch def
                                  /textField exch def
@@ -81,7 +110,7 @@
                                       textField /position tLength put
                                  } if
                                  repaintAll
-                            } addListToDict
+              } addListToDict
 
               parent /children
                           parent /children get

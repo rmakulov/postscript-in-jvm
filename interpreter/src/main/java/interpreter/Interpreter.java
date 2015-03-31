@@ -20,9 +20,9 @@ public class Interpreter {
         MainProcedure mainProcedure = new MainProcedure(context, file);
         runtime.startMainTask(context, mainProcedure);
 
-        Context c = new Context();
-        MainProcedure procedure = new MainProcedure(c, new File("tests/speedTestExamples/escher.ps"));
-        runtime.startNewTask(c, procedure);
+        //Context c = new Context();
+        //MainProcedure procedure = new MainProcedure(c, new File("tests/speedTestExamples/escher.ps"));
+        //runtime.startNewTask(c, procedure);
 
 //        System.out.println("DictStackVersion " + runtime.getDictStackVersion());
 
@@ -70,7 +70,8 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
-                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
+                System.out.println(instance.run(new File("graphicsEngine/basics/drawRelWindows.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/libs/listLib.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawing.ps")));

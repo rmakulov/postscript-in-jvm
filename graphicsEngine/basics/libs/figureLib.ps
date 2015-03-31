@@ -48,3 +48,22 @@
     and
     and
 } def
+
+%------------------------------------
+/getRelFromAbs{
+    /parH exch def
+    /parW exch def
+    /parY exch def
+    /parX exch def
+
+    /aH exch def
+    /aW exch def
+    /aY exch def
+    /aX exch def
+
+    aX parX sub parW div
+    aY parY sub parH div
+    aW parW div
+    aH parH div
+
+} def

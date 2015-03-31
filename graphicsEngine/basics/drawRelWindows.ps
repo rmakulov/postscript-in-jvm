@@ -1,0 +1,49 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+
+
+
+50 200 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
+200 200 16      (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
+50 50 200 100   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
+150 500 400 200 (noth)          scene <</CLICK [{pop}[]] >> button pop
+50 750 100 50   (mirror)        scene <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
+
+400 200 200 30 [ (Table) (Mouse) (Screen) ] 1  scene <<  >> comboBox pop
+400 450 200 30 [ (One) (Two) (Three) (Four) (Five) (Six) (Seven) (Eight) (Nine) (Ten)] 4 scene << >> comboBox pop
+
+350 50 250 50 (Hello, World!)  scene << >>    labelField pop
+
+600 500 30 100 [ (1) (2) (3) (4) (5) ] 2 scene << >> listBox pop
+400 700 200 90 [ (Sekatski) (Martin Gardner) (Evdokimova) ] 1 scene << >> listBox pop
+
+200 250 400 100 (TextField)     scene <<>>    textField pop
+
+400 125 100 50 (On) (Off)  scene <<  >> toggleButton pop
+
+100 100 100 100 scene << >> window pop
+
+%/mainWindow .153 .118 .353 .236 scene << >> window def
+%0.07 0.059 0.3 0.118   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
+%.23 .59 .61 .23 (noth)          scene <</CLICK [{pop}[]] >> button pop
+%.07 .88 .15 .01   (mirror)        scene <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
+%
+%.07 .23 0.24       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
+%0.3 0.23 0.02      (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
+%
+%.30 .295 0.6 .118 (TextField)     scene <<>>    textField pop
+%
+%.153 .354 .153 .236 scene << >> window pop
+%.612 .118 .153 .236 scene << >> window pop
+%.612 .148 .153 .059 (On) (Off)  scene <<  >> toggleButton pop
+%.21  .059 .37 .19 (Hello, World!)  mainWindow << >>    labelField pop
+%%%%
+%.612 .239 .3 .04  [ (Table) (Mouse) (Screen) ] 1  scene <<  >> comboBox pop
+%.612 .4 .3 .04 [ (One) (Two) (Three) (Four) (Five) (Six) (Seven) (Eight) (Nine) (Ten)] 4 scene << >> comboBox pop
+%%%%
+%%%%
+%.9 .59 0.04 .2 [ (1) (2) (3) (4) (5) ] 2 scene << >> listBox pop
+%.651 .83 .3 .1 [ (Sekatski) (Martin Gardner) (Evdokimova) ] 1 scene << >> listBox pop
+
+repaintAll
+
+showpage
