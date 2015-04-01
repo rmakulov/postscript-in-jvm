@@ -72,7 +72,6 @@
 
 
     checkBoxDict addElement
-    checkBoxDict /number get print
 %    %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkBoxDict
     checkBoxDict /eventProcs get /RELEASE {dup /isPressed get /isPressed exch not put repaintAll} addListToDict
 %    %checkBoxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} addListToDict

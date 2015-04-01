@@ -35,6 +35,20 @@ public class CursorOp extends Operator {
             PSFrame.getInstance().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         } else if (str.equals("e_resize")) {
             PSFrame.getInstance().setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
+        } else if (str.equals("w_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
+        } else if (str.equals("n_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.N_RESIZE_CURSOR));
+        } else if (str.equals("s_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.S_RESIZE_CURSOR));
+        } else if (str.equals("ne_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR));
+        } else if (str.equals("nw_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
+        } else if (str.equals("se_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+        } else if (str.equals("sw_resize")) {
+            PSFrame.getInstance().setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
         } else {
             context.pushToOperandStack(oStr);
             fail();

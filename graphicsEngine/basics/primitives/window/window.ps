@@ -50,10 +50,8 @@
                         /paint      /paint load
                         /eventProcs eventProcDict
                         /isFixed    true
+                        /resize 0
                         /inFocus    false
-                        %/isPressed  false
- %                       /lastX      0
- %                       /lastY      0
                         /checkBelonging
                             {
                                 1 dict begin
@@ -80,68 +78,70 @@
 
 
     windowDict /eventProcs get /PRESS {
-                %(window) print dup /parent get /children get print (endwindow) print
-                /cDict exch def
+                    /cDict exch def
 
-                gelements /mouseX get /mouseX exch def
-                gelements /mouseY get /mouseY exch def
-                cDict /x get /x exch def
-                cDict /y get /y exch def
-                cDict /w get /w exch def
-                cDict /h get /h exch def
+                    gelements /mouseX get /mouseX exch def
+                    gelements /mouseY get /mouseY exch def
+                    cDict /x get /x exch def
+                    cDict /y get /y exch def
+                    cDict /w get /w exch def
+                    cDict /h get /h exch def
 
-                mouseX mouseY x
-                y h add 20 sub
-                w 20
-                isInRect
-                {gelements /draggedElement cDict put
+                    mouseX mouseY x y w h checkForResize /result exch def
 
-                  (move) cursor
+                    result 0 gt
+                    {
+                        cDict /resize result put
+                        gelements /resizingElement cDict put
 
-                    cDict /children get
-                    false
-                  setFixedForChildren
-                }
-                {
+                          cDict /children get
+                          false
+                        setFixedForChildren
+                    }
+                    {
+                            mouseX mouseY x
+                            y h add 20 sub
+                            w 20
+                        isInRect
+                        {
+                            gelements /draggedElement cDict put
+                            (move) cursor
+                                cDict /children get
+                                false
+                            setFixedForChildren
+                        }
+                        if
+                    }
+                    ifelse
 
-                    %(e_resize) cursor
-                }
-                ifelse
-                cDict moveToFront
-                cDict setFocusedElement
-                repaintAll} addListToDict
+
+
+                    cDict moveToFront
+                    cDict setFocusedElement
+                    repaintAll
+                } addListToDict
 
 
     windowDict /eventProcs get /RELEASE {
                     /cDict exch def
                     gelements /draggedElement null put
+                    gelements /resizingElement null put
 
                         cDict /children get
                         true
                     setFixedForChildren
 
+                    cDict /resize 0 put
                     (default) cursor
-                    repaintAll} addListToDict
+                    repaintAll
+                } addListToDict
 
 
     windowDict /eventProcs get /DRAG {
+                    /cDict exch def
 
-                   /cDict exch def
-                   %gelements /mouseY get /mouseY exch def
-                   %gelements /mouseX get /mouseX exch def
-%
-                   %cDict /lastY get /lastY exch def
-                   %cDict /lastX get /lastX exch def
-%
-                   %cDict /x cDict /x get mouseX lastX sub add put
-                   %cDict /y cDict /y get mouseY lastY sub add put
-%
-                   %cDict /lastX mouseX put
-                   %cDict /lastY mouseY put
-%
-                   %%lastX print
-                   repaintAll
-                   } addListToDict
+                    repaintAll
+                  } addListToDict
 
 
     parent /children
@@ -150,7 +150,49 @@
                 addToEndOfList          %(resultList ) print dup print
     put
 
-    %windowDict paint
     windowDict
 } def
 %---
+
+%-------------------------------------
+%-------params------------
+%----mouseX     :   real
+%----mouseY     :   real
+%----x          :   integer
+%----y          :   integer
+%----w          :   integer
+%----h          :   integer
+%    return     :   integer number of resize variant [1..8] or 0 for nothing
+%--------------------------
+/checkForResize{
+    1 dict begin
+        /h exch def
+        /w exch def
+        /y exch def
+        /x exch def
+        /mouseY exch def
+        /mouseX exch def
+
+
+        /resize 0 def
+
+
+        /east  { x w add mouseX sub eps lt }    def
+        /south { mouseY y sub eps lt }          def
+        /west  { mouseX x sub eps lt }          def
+        /north { y h add mouseY sub eps lt }    def
+
+
+        /eps 8 def
+        east    { (e_resize) cursor /resize 1 def } if
+        south   { (s_resize) cursor /resize 3 def } if
+        west    { (w_resize) cursor /resize 5 def } if
+        north   { (n_resize) cursor /resize 7 def } if
+
+        east south and { (se_resize) cursor /resize 2 def } if
+        south west and { (sw_resize) cursor /resize 4 def } if
+        west north and { (nw_resize) cursor /resize 6 def } if
+        north east and { (ne_resize) cursor /resize 8 def } if
+        resize
+    end
+} def

@@ -214,6 +214,8 @@
     } loop
     end
 } def
+
+
 %--- param: gelement
 /setFocusedElement {
 
@@ -230,12 +232,61 @@
 } def
 
 /dragElement{
+
+    gelements /mouseY get /mouseY exch def
+    gelements /mouseX get /mouseX exch def
+
+    gelements /resizingElement get /resizingElement exch def
+    resizingElement null eq not
+    {
+        /num resizingElement /resize get def
+        /par resizingElement /parent get def
+
+        /res1{
+            resizingElement /w mouseX resizingElement /x get sub put
+            resizingElement /rW resizingElement /w get resizingElement /parent get /w get div put
+        } def
+        /res3{
+            /yHigh resizingElement /y get resizingElement /h get add def
+
+            resizingElement /y mouseY put
+            resizingElement /h yHigh resizingElement /y get sub put
+
+            resizingElement /rY resizingElement /y get par /y get sub par /h get div put
+            resizingElement /rH resizingElement /h get par /h get div put
+        } def
+        /res5{
+            /xRight resizingElement /x get resizingElement /w get add def
+
+            resizingElement /x mouseX put
+            resizingElement /w xRight resizingElement /x get sub put
+
+            resizingElement /rX resizingElement /x get par /x get sub par /w get div put
+            resizingElement /rW resizingElement /w get par /w get div put
+        } def
+        /res7{
+            resizingElement /h mouseY resizingElement /y get sub put
+            resizingElement /rH resizingElement /h get resizingElement /parent get /h get div put
+        } def
+
+        num 1 eq { res1 } if
+        num 3 eq { res3 } if
+        num 5 eq { res5 } if
+        num 7 eq { res7 } if
+
+        num 2 eq { res1 res3 } if
+        num 4 eq { res3 res5 } if
+        num 6 eq { res5 res7 } if
+        num 8 eq { res7 res1 } if
+        repaintAll
+    }
+    if
+
     gelements /draggedElement get  /draggedElement exch def
     draggedElement null eq
     { exit }
     if
-                       gelements /mouseY get /mouseY exch def
-                       gelements /mouseX get /mouseX exch def
+
 
                        gelements /lastY get /lastY exch def
                        gelements /lastX get /lastX exch def
@@ -259,6 +310,7 @@ gelements /mouseX 0 put
 gelements /mouseY 0 put
 
 gelements /draggedElement null put
+gelements /resizingElement null put
 gelements /lastX 0 put
 gelements /lastY 0 put
 
