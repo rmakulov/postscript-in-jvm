@@ -157,14 +157,23 @@
     0.5 setgray
 
     %debug
-     20 {
+     100 {
         x r add y moveto
         x y r 0 360 arc closepath stroke
-        100 milliSleep
+        repaintMainContext
+        50 milliSleep
         %repaintAll
+
         /r r deltaR add def
         %debug
+
      } repeat
+     %repaintAll
+     %100 milliSleep
+     %repaintMainContext
+
+
+
 
 } def
 

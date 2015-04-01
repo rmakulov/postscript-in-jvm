@@ -5,14 +5,12 @@ import operators.graphicsState.GRestoreAllOp;
 import operators.painting.PSPrimitive;
 import procedures.ArrayProcedure;
 import procedures.Procedure;
+import procedures.StringProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.Type;
 import psObjects.values.Value;
-import psObjects.values.composite.CompositeValue;
-import psObjects.values.composite.PSArray;
-import psObjects.values.composite.PSDictionary;
-import psObjects.values.composite.Snapshot;
+import psObjects.values.composite.*;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
@@ -24,6 +22,7 @@ import runtime.events.EventQueue;
 import runtime.events.PrimitiveQueue;
 import runtime.graphics.GState;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -150,6 +149,15 @@ public class Runtime {
         return true;
     }
 
+    public void repaintMainContext() {
+        try {
+            mainContext.pushToCallStack(new StringProcedure(mainContext, new PSObject(new PSString("repaintAll"))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        mainContext.executeCallStack();
+//        System.out.println(mainContext.getCallStackSize());
+    }
     public int addToLocalVM(CompositeValue value) {
         return localVM.add(value);
     }

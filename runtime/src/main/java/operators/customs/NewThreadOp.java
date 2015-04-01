@@ -35,7 +35,11 @@ public class NewThreadOp extends Operator {
         for (int i = count - 1; i > -1; i--) {
             threadContext.pushToOperandStack(psObjects[i]);
         }
-        //new PSObject(new PSString("(graphicsEngine/basics/glib.ps) (r) file run")).interpret(threadContext, 0);
+//        try {
+//            threadContext.pushToCallStack(new StringProcedure(threadContext,new PSObject(new PSString("(graphicsEngine/basics/glib.ps) (r) file run"))));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
         runtime.startNewTask(threadContext, new ArrayProcedure(threadContext, "thread", proc));
 
     }
