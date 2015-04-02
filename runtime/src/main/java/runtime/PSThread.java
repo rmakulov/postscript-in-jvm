@@ -21,7 +21,10 @@ public class PSThread extends Thread {
 
     @Override
     public void run() {
+
         super.run();
+        Runtime runtime = Runtime.getInstance();
+        runtime.addContext(context);
 //        if (Runtime.getInstance().isCompiling) {
 //            while (initProcedure.hasNext()) {
 //                initProcedure.execNext();
@@ -34,7 +37,10 @@ public class PSThread extends Thread {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        context.executeCallStack();
+        if (!runtime.isCompiling) {
+            context.executeCallStack();
+        }
+        runtime.removeContext(context);
 //        }
 //        Runtime.getInstance().repaintMainContext();
     }

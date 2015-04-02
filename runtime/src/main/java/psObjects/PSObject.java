@@ -25,7 +25,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     private static int objExecutionCounter = 0;
     private int executionsBeforeGarbageCleaning = 10000;
-    private int maxLocalVMSize = 200;
+    private int maxLocalVMSize = 2000;
 
     public boolean execute(Context context, int procDepth) {
         if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
@@ -39,7 +39,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     public boolean interpret(Context context, int procDepth) {
 //        cleanGarbageByExecutionCounter();
-//        cleanGarbageByLocalVMSize();
+        cleanGarbageByLocalVMSize();
         boolean aLoading = context.getALoading();
         if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {

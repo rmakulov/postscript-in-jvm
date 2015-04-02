@@ -87,12 +87,14 @@ public class LocalVM {
     }
 
     public void clearGarbage(Set<Integer> rootSet) {
+       // System.out.println("Before clean: "+map.size());
         Set<Integer> keys = new HashSet<Integer>(map.keySet());
         for (Integer key : keys) {
             if (!rootSet.contains(key) && !initSet.contains(key)) {
                 remove(key);
             }
         }
+        //System.out.println("After clean: "+map.size());
     }
 
     public void updateStringValues(LocalVM newLocalVM) {

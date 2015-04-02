@@ -54,6 +54,7 @@ public class Runtime {
     private boolean isGlobal = false;
     private PSObject systemDict;
     private Context mainContext;
+    private Set<Context> contextSet = new HashSet<Context>();
 
     private ExecutorService service = Executors.newFixedThreadPool(10);
 
@@ -158,6 +159,7 @@ public class Runtime {
         mainContext.executeCallStack();
 //        System.out.println(mainContext.getCallStackSize());
     }
+
     public int addToLocalVM(CompositeValue value) {
         return localVM.add(value);
     }
@@ -170,63 +172,66 @@ public class Runtime {
 
     public void cleanGarbage() {
         //todo run at all contexts
-        System.err.println("clean garbage error. It is not finished");
-        //localVM.clearGarbage(getRootSet(context));
+//        System.err.println("Clean garbage error. It is not finished");
+        localVM.clearGarbage(getRootSet());
     }
 
-    public Set<Integer> getRootSet(Context context) {
+    public Set<Integer> getRootSet() {
         Set<Integer> indexes = new HashSet<Integer>();
-        //todo analyse combining global and local refs together
-        //operandStack
-        for (PSObject o : context.getOperandStack()) {
-            if (!(o.getDirectValue() instanceof LocalRef)) continue;
-            LocalRef ref = (LocalRef) o.getDirectValue();
-            getUsingLocalVMIndexesByRef(indexes, ref);
-        }
-
-        //graphicStack
-        for (GState gState : context.getGraphicStack()) {
-            PSObject oMatrix = gState.cTM.getMatrix();
-            PSObject oFont = gState.getFont();
-            //PSArray arr = (PSArray) oMatrix.getValue();
-            if ((oMatrix.getDirectValue() instanceof LocalRef)) {
-                LocalRef ref = (LocalRef) oMatrix.getDirectValue();
+        for(Context context:contextSet) {
+            //todo analyse combining global and local refs together
+            //operandStack
+            for (PSObject o : context.getOperandStack()) {
+                if (!(o.getDirectValue() instanceof LocalRef)) continue;
+                LocalRef ref = (LocalRef) o.getDirectValue();
                 getUsingLocalVMIndexesByRef(indexes, ref);
             }
 
-            if (oFont != null && (oFont.getDirectValue() instanceof LocalRef)) {
-                LocalRef ref = (LocalRef) oFont.getDirectValue();
+            //graphicStack
+            for (GState gState : context.getGraphicStack()) {
+                PSObject oMatrix = gState.cTM.getMatrix();
+                PSObject oFont = gState.getFont();
+                //PSArray arr = (PSArray) oMatrix.getValue();
+                if ((oMatrix.getDirectValue() instanceof LocalRef)) {
+                    LocalRef ref = (LocalRef) oMatrix.getDirectValue();
+                    getUsingLocalVMIndexesByRef(indexes, ref);
+                }
+
+                if (oFont != null && (oFont.getDirectValue() instanceof LocalRef)) {
+                    LocalRef ref = (LocalRef) oFont.getDirectValue();
+                    getUsingLocalVMIndexesByRef(indexes, ref);
+                }
+            }
+            LocalRef locRefCTM = context.getGState().getLocalRefCTM();
+            //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
+            if (locRefCTM != null) {
+                getUsingLocalVMIndexesByRef(indexes, locRefCTM);
+            }
+            //if(locRefDash != null){
+            //    getUsingLocalVMIndexesByRef(indexes, locRefDash);
+            //}
+
+
+            //dictStack
+            for (PSObject o : context.getDictionaryStack()) {
+
+                if (!(o.getDirectValue() instanceof LocalRef)) continue;
+                LocalRef ref = (LocalRef) o.getDirectValue();
+                if (o == systemDict) {
+                    // in systemdict we don't have any localRefs
+                    indexes.add(ref.getTableIndex());
+                } else {
+                    getUsingLocalVMIndexesByRef(indexes, ref);
+                }
+            }
+            //callStack
+            for (Procedure proc : context.getCallStack()) {
+                if (!(proc instanceof ArrayProcedure)) continue;
+                PSObject array = ((ArrayProcedure) proc).getArrayObject();
+                if (!(array.getDirectValue() instanceof LocalRef)) continue;
+                LocalRef ref = (LocalRef) array.getDirectValue();
                 getUsingLocalVMIndexesByRef(indexes, ref);
             }
-        }
-        LocalRef locRefCTM = context.getGState().getLocalRefCTM();
-        //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
-        if (locRefCTM != null) {
-            getUsingLocalVMIndexesByRef(indexes, locRefCTM);
-        }
-        //if(locRefDash != null){
-        //    getUsingLocalVMIndexesByRef(indexes, locRefDash);
-        //}
-
-        //dictStack
-        for (PSObject o : context.getDictionaryStack()) {
-
-            if (!(o.getDirectValue() instanceof LocalRef)) continue;
-            LocalRef ref = (LocalRef) o.getDirectValue();
-            if (o == systemDict) {
-                // in systemdict we don't have any localRefs
-                indexes.add(ref.getTableIndex());
-            } else {
-                getUsingLocalVMIndexesByRef(indexes, ref);
-            }
-        }
-        //callStack
-        for (Procedure proc : context.getCallStack()) {
-            if (!(proc instanceof ArrayProcedure)) continue;
-            PSObject array = ((ArrayProcedure) proc).getArrayObject();
-            if (!(array.getDirectValue() instanceof LocalRef)) continue;
-            LocalRef ref = (LocalRef) array.getDirectValue();
-            getUsingLocalVMIndexesByRef(indexes, ref);
         }
         return indexes;
         //todo same for graphicstack after making collection psObjects in graphicstack
@@ -371,6 +376,16 @@ public class Runtime {
             initSystemDict();
         }
         return systemDict;
+    }
+
+    public void addContext(Context context) {
+        contextSet.add(context);
+    }
+
+    public void removeContext(Context context) {
+        if (context != mainContext) {
+            contextSet.remove(context);
+        }
     }
 
 

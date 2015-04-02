@@ -1,10 +1,13 @@
 package operators.customs;
 
+import procedures.StringProcedure;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import runtime.Context;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by User on 16/2/2015.
@@ -23,7 +26,11 @@ public class MouseEventOp extends Operator {
             fail();
             return;
         }
-        new PSObject(new PSString("(graphicsEngine/basics/events/mouseEvent.ps) (r) file run")).interpret(context, 0);
+        try {
+            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("(graphicsEngine/basics/events/mouseEvent.ps) (r) file run"))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (!runtime.isCompiling) {
             context.executeCallStack();
         }

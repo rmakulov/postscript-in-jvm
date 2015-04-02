@@ -1,10 +1,13 @@
 package operators.customs;
 
+import procedures.StringProcedure;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import runtime.Context;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by user on 03.03.15.
@@ -23,8 +26,12 @@ public class KeyEventOp extends Operator {
             return;
         }
 //        PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
+        try {
+            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("(graphicsEngine/basics/events/keyEvent.ps) (r) file run"))));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        new PSObject(new PSString("(graphicsEngine/basics/events/keyEvent.ps) (r) file run")).interpret(context, 0);
         if (!runtime.isCompiling) {
             context.executeCallStack();
         }
