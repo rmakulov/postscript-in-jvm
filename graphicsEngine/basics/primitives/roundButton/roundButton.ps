@@ -1,0 +1,110 @@
+/roundButton {
+    /eventProcDict exch def
+    /parent exch def
+    /r exch def
+    /y exch def
+    /x exch def
+
+        x parent /x get sub parent /w get div
+        y parent /y get sub parent /h get div
+        r parent /w get div
+        parent
+        eventProcDict
+    relRoundButton
+} def
+
+
+/relRoundButton {
+    /eventProcDict exch def
+    /parent exch def
+    /rR exch def
+    /rY exch def
+    /rX exch def
+
+    /paint {/bd exch def
+                bd recountCoordinatesEB
+
+                bd /x get
+                bd /y get
+                bd /r get
+                bd /isPressed get
+
+                (graphicsEngine/basics/primitives/roundButton/paintRoundButton.ps) (r) file run
+
+                bd paintChildren
+
+        } def
+        %eventProcs - procedures for each type of events
+    /roundButtonDict <<      /parent         parent
+                        /children       []
+                        /rX             rX
+                        /rY             rY
+                        /rR             rR
+
+                        /x              parent /x get parent /w get rX mul add  cvi
+                        /y              parent /y get parent /h get rY mul add  cvi
+                        /r              parent /w get rR mul                    cvi
+
+                        /inFocus        false
+                        /paint          /paint load
+                        /eventProcs     eventProcDict
+                        /isPressed      false
+                        /isFixed        true
+                        /checkBelonging
+                                        {
+                                            1 dict begin
+                                                /element exch def
+                                                /evY exch def
+                                                /evX exch def
+
+                                                /x element /x get def
+                                                /y element /y get def
+                                                /r element /r get def
+
+                                                evX x sub dup mul
+                                                evY y sub dup mul
+                                                add
+                                                r dup mul
+                                                le
+                                            end
+                                        }
+    >> def
+
+    roundButtonDict addElement
+
+    roundButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
+    roundButtonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
+
+    parent /children
+        parent /children get
+        roundButtonDict /number get
+        addToEndOfList
+    put
+
+    roundButtonDict
+} def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%    return     :   void
+%--------------------------
+/recountCoordinatesEB{
+    1 dict begin
+        /cDict exch def
+
+        cDict /isFixed get not
+        {
+            /parent cDict /parent get def
+            /rX cDict /rX get def
+            /rY cDict /rY get def
+            /rR cDict /rR get def
+
+            cDict /x     parent /x get parent /w get rX mul add cvi   put
+            cDict /y     parent /y get parent /h get rY mul add cvi   put
+            %cDict /r     parent /w get rR mul cvi                     put
+
+        }
+        if
+    end
+} def

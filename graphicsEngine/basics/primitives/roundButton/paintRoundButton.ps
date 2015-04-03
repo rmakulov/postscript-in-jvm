@@ -1,0 +1,19 @@
+
+% --------------------------------------BEGIN-----------------------------------------%
+gsave
+    /isPressed exch def
+    /r exch def
+    /y exch def
+    /x exch def
+
+    x y translate
+
+    isPressed
+    { 0.901 0.37 0.19 setrgbcolor}
+    {  1 0.47 0.29 setrgbcolor}
+    ifelse
+
+    0 0 r 0 360 arc fill
+
+grestore
+% ------------END------------%
