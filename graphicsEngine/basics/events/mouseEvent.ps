@@ -28,31 +28,31 @@ gelements /mouseY evY put
 } def
 
 
-%---
-%params: dict - gelement
-%        name - evType
-/findAncestorWithEventType{
-
-    /evType exch def
-    /element exch  def
-    /eventProcs element /eventProcs get def
-
-    eventProcs evType known
-    
-    {element dup setFocusedElement
-        eventProcs evType get execList  exit
-    }
-    {
-        /parent element /parent get def
-
-        parent null eq
-        {exit}
-        {parent evType findAncestorWithEventType}
-        ifelse
-    }
-    ifelse
-
-} def
+%%---
+%%params: dict - gelement
+%%        name - evType
+%/findAncestorWithEventType{
+%
+%    /evType exch def
+%    /element exch  def
+%    /eventProcs element /eventProcs get def
+%
+%    eventProcs evType known
+%
+%    {element dup setFocusedElement
+%        eventProcs evType get execList  exit
+%    }
+%    {
+%        /parent element /parent get def
+%
+%        parent null eq
+%        {exit}
+%        {parent evType findAncestorWithEventType}
+%        ifelse
+%    }
+%    ifelse
+%
+%} def
 
 
 /searchOld {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def

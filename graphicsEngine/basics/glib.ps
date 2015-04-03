@@ -242,6 +242,70 @@
           gelements /focusedElement nElem put
          } if
 } def
+%--- param: gelement
+%    return: void
+% deleting from gelements
+/deleteWithChildren{
+    1 dict begin
+        /element exch  def
+        element /children get length 0 ne
+         {
+         /children element /children get def
+             {
+                  children length 0 eq
+                  { exit
+                  }
+                  {
+
+                     gelements children head  get deleteWithChildren
+                     /children  children tail def
+                  } ifelse
+             } loop
+         }
+         if
+         gelements element /number get undef
+    end
+} def
+
+%--- param: gelement
+%    return: void
+/deleteFromParent{
+    1 dict begin
+        /element exch  def
+        /number element /number get def
+        /parent element /parent get def
+            parent
+            /children
+            parent /children get number removeElementFromList
+        put
+    end
+} def
+
+%---
+%params: dict - gelement
+%        name - evType
+/findAncestorWithEventType{
+
+    /evType exch def
+    /element exch  def
+    /eventProcs element /eventProcs get def
+
+    eventProcs evType known
+
+    {element dup setFocusedElement
+        eventProcs evType get execList  exit
+    }
+    {
+        /parent element /parent get def
+
+        parent null eq
+        {exit}
+        {parent evType findAncestorWithEventType}
+        ifelse
+    }
+    ifelse
+
+} def
 
 /dragElement{
     1 dict begin

@@ -80,6 +80,8 @@
                       >> def
     windowDict addElement
 
+
+
     windowDict /eventProcs get /CLICK {
                 /cDict exch def
                 repaintAll} addListToDict
@@ -167,11 +169,21 @@
                      repaintAll
                   } addListToDict
 
+    windowDict /eventProcs get /CLOSE{
+                 /cDict exch def
+                 cDict deleteWithChildren
+                 cDict deleteFromParent
+                 repaintAll
+    } addListToDict
+
     parent /children
                 parent /children get    %(list of children ) print dup print
                 windowDict /number get  %(windowNumber ) print dup print
                 addToEndOfList          %(resultList ) print dup print
     put
+
+    %CloseButton
+    -15 -10 7 [true true] [1 0 0] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton pop
 
     windowDict
 } def

@@ -51,6 +51,7 @@ public class PutOp extends Operator {
                 context.pushToOperandStack(src);
                 context.pushToOperandStack(key);
                 context.pushToOperandStack(value);
+                fail();
                 return;
             }
         }

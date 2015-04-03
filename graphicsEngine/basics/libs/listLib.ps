@@ -17,10 +17,10 @@
 %} def
 %--- params: list, element; returns new list
 /addToList{
-    (addtolist) print
+    %(addtolist) print
     /a exch def
     /list exch def
-     [a list]
+     [/a load list]
 } def
 %--- params: list, element; returns new list
 /addToEndOfList{
@@ -83,10 +83,15 @@
     ifelse
 } def
 %--- param: list, execute all list elements
+%----param: argument for execution
+%put for each element
 /execList{
     /list exch def
+    %/argument exch def
     list length 0 ne{
+     %   argument
         list head exec
+        %argument
         list tail execList
         }
         if

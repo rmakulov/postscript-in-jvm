@@ -1,25 +1,14 @@
+
+
+
 /roundButton {
     /eventProcDict exch def
     /parent exch def
+    /color exch def
+    /angle exch def
     /r exch def
-    /y exch def
-    /x exch def
-
-        x parent /x get sub parent /w get div
-        y parent /y get sub parent /h get div
-        r parent /w get div
-        parent
-        eventProcDict
-    relRoundButton
-} def
-
-
-/relRoundButton {
-    /eventProcDict exch def
-    /parent exch def
-    /rR exch def
-    /rY exch def
-    /rX exch def
+    /dY exch def
+    /dX exch def
 
     /paint {/bd exch def
                 bd recountCoordinatesEB
@@ -27,23 +16,23 @@
                 bd /x get
                 bd /y get
                 bd /r get
+                bd /color get
                 bd /isPressed get
 
                 (graphicsEngine/basics/primitives/roundButton/paintRoundButton.ps) (r) file run
 
-                bd paintChildren
+                %bd paintChildren
 
         } def
         %eventProcs - procedures for each type of events
     /roundButtonDict <<      /parent         parent
                         /children       []
-                        /rX             rX
-                        /rY             rY
-                        /rR             rR
+                        /dX             dX
+                        /dY             dY
+                        /r              r
 
-                        /x              parent /x get parent /w get rX mul add  cvi
-                        /y              parent /y get parent /h get rY mul add  cvi
-                        /r              parent /w get rR mul                    cvi
+                        /angle          angle
+                        /color          color
 
                         /inFocus        false
                         /paint          /paint load
@@ -69,6 +58,7 @@
                                             end
                                         }
     >> def
+    roundButtonDict recountXY
 
     roundButtonDict addElement
 
@@ -92,19 +82,41 @@
 /recountCoordinatesEB{
     1 dict begin
         /cDict exch def
-
         cDict /isFixed get not
         {
-            /parent cDict /parent get def
-            /rX cDict /rX get def
-            /rY cDict /rY get def
-            /rR cDict /rR get def
-
-            cDict /x     parent /x get parent /w get rX mul add cvi   put
-            cDict /y     parent /y get parent /h get rY mul add cvi   put
-            %cDict /r     parent /w get rR mul cvi                     put
-
+            cDict recountXY
         }
         if
+    end
+} def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%    return     :   void
+%--------------------------
+/recountXY{
+    1 dict begin
+        /cDict exch def
+        /parent cDict /parent   get def
+        /dX     cDict /dX       get def
+        /dY     cDict /dY       get def
+        /angle  cDict /angle    get def
+
+        /pX parent /x get def
+        /pY parent /y get def
+        /pW parent /w get def
+        /pH parent /h get def
+
+        % true->north, false-> south
+        angle 0 get
+        { cDict /y     pY pH add dY add  put}
+        { cDict /y     pY        dY add  put}
+        ifelse
+        % true->east, false-> west
+        angle 1 get
+        { cDict /x     pX pW add dX add  put }
+        { cDict /x     pX        dX add  put}
+        ifelse
     end
 } def

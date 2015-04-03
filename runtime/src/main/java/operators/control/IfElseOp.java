@@ -24,7 +24,10 @@ public class IfElseOp extends Operator {
         PSObject proc2 = context.popFromOperandStack();
         PSObject proc1 = context.popFromOperandStack();
         PSObject bool = context.popFromOperandStack();
-        if (wrongArgs(context, proc2, proc1, bool)) return true;
+        if (wrongArgs(context, proc2, proc1, bool)) {
+            fail();
+            return true;
+        }
 
         PSBoolean cond = (PSBoolean) bool.getValue();
         if (cond.getFlag()) {

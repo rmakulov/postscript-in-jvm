@@ -64,7 +64,15 @@ public class LocalVM {
     }
 
     public CompositeValue get(int index) {
-        return map.get(index);
+        CompositeValue compositeValue = map.get(index);
+        if (compositeValue==null){
+            try {
+                throw new Exception("Composite value cannot be find by ref in localVM");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return compositeValue;
     }
 
     public String toString() {

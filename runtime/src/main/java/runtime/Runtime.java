@@ -226,11 +226,20 @@ public class Runtime {
             }
             //callStack
             for (Procedure proc : context.getCallStack()) {
-                if (!(proc instanceof ArrayProcedure)) continue;
-                PSObject array = ((ArrayProcedure) proc).getArrayObject();
-                if (!(array.getDirectValue() instanceof LocalRef)) continue;
-                LocalRef ref = (LocalRef) array.getDirectValue();
-                getUsingLocalVMIndexesByRef(indexes, ref);
+                if ((proc instanceof ArrayProcedure)) {
+                    PSObject array = ((ArrayProcedure) proc).getArrayObject();
+                    if ((array.getDirectValue() instanceof LocalRef)) {
+                        LocalRef ref = (LocalRef) array.getDirectValue();
+                        getUsingLocalVMIndexesByRef(indexes, ref);
+                    }
+                }else if (proc instanceof StringProcedure){
+                    PSObject string =((StringProcedure) proc).getStringObject();
+                    if ((string.getDirectValue() instanceof LocalRef)) {
+                        LocalRef ref = (LocalRef) string.getDirectValue();
+                        getUsingLocalVMIndexesByRef(indexes, ref);
+                    }
+                }
+
             }
         }
         return indexes;

@@ -2,6 +2,7 @@ package runtime.events;
 
 import operators.customs.KeyEventOp;
 import operators.customs.MouseEventOp;
+import procedures.StringProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
@@ -9,6 +10,8 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Context;
 import runtime.Runtime;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by User on 16/2/2015.
@@ -104,7 +107,16 @@ public class EventQueue {
                     context.pushToOperandStack(x);
                     context.pushToOperandStack(y);
                     context.pushToOperandStack(type);
-                    MouseEventOp.instance.interpret(context);
+
+                    try {
+                        context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("mouseEvent"))));
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    if (!Runtime.getInstance().isCompiling) {
+                        context.executeCallStack();
+                    }
+                    //MouseEventOp.instance.interpret(context);
                     break;
             }
 
