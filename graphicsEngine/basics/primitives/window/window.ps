@@ -114,8 +114,6 @@
                     }
                     ifelse
 
-
-
                     cDict moveToFront
                     cDict setFocusedElement
                     repaintAll
@@ -143,6 +141,23 @@
                     repaintAll
                   } addListToDict
 
+    windowDict /eventProcs get /MOVE {
+                    /cDict exch def
+
+                        gelements /mouseX get /mouseX exch def
+                        gelements /mouseY get /mouseY exch def
+                        cDict /x get /x exch def
+                        cDict /y get /y exch def
+                        cDict /w get /w exch def
+                        cDict /h get /h exch def
+
+                        mouseX mouseY x y w h checkForResize /result exch def
+                        result 0 eq
+                        { (default) cursor }
+                        if
+
+                     repaintAll
+                  } addListToDict
 
     parent /children
                 parent /children get    %(list of children ) print dup print
@@ -173,15 +188,12 @@
         /mouseY exch def
         /mouseX exch def
 
-
         /resize 0 def
-
 
         /east  { x w add mouseX sub eps lt }    def
         /south { mouseY y sub eps lt }          def
         /west  { mouseX x sub eps lt }          def
         /north { y h add mouseY sub eps lt }    def
-
 
         /eps 8 def
         east    { (e_resize) cursor /resize 1 def } if

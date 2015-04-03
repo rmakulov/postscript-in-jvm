@@ -75,7 +75,8 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
-//                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
+                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/onlyButton.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/libs/listLib.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawing.ps")));
@@ -92,7 +93,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/speedTestExamples/snowflakByPozdin.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/chupcko.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/WireFrame.eps")));
-                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandel.ps")));
+//                System.out.println(instance.run(new File("tests/speedTestExamples/hard/mandel.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/escher.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube1.ps")));
 //                System.out.println(instance.run(new File("tests/speedTestExamples/hard/8_cube2.ps")));

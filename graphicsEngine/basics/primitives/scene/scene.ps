@@ -29,6 +29,24 @@
                                }
                            >> def
 
+              scene /eventProcs get /MOVE {
+              /cDict exch def
+
+                  gelements /mouseX get /mouseX exch def
+                  gelements /mouseY get /mouseY exch def
+                  cDict /x get /x exch def
+                  cDict /y get /y exch def
+                  cDict /w get /w exch def
+                  cDict /h get /h exch def
+
+                  mouseX mouseY x y w h checkForResize /result exch def
+                  result 0 eq
+                  { (default) cursor }
+                  if
+
+               repaintAll
+            } addListToDict
+
               scene addElement
 
               scene

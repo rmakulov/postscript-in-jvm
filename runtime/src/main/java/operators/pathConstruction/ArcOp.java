@@ -42,6 +42,8 @@ public class ArcOp extends AbstractGraphicOperator {
         double nY = ((PSNumber) oY.getValue()).getRealValue();
         double nX = ((PSNumber) oX.getValue()).getRealValue();
 
+
+
         TransformMatrix cTM = context.getGState().cTM;
         PSPoint absCent = cTM.transform(nX, nY);
         double xScale = cTM.getXScale();
@@ -51,16 +53,15 @@ public class ArcOp extends AbstractGraphicOperator {
         double rotateAngle = cTM.getRotateAngle();
         nAngle1 = nAngle1 + rotateAngle;
         nAngle2 = nAngle2 + rotateAngle;
-        double xBegin = absCent.getX() + xR * Math.cos(nAngle1 * Math.PI / 180);
-        double yBegin = absCent.getY() + yR * Math.sin(nAngle1 * Math.PI / 180);
+
         double xEnd = absCent.getX() + xR * Math.cos(nAngle2 * Math.PI / 180);
         double yEnd = absCent.getY() + yR * Math.sin(nAngle2 * Math.PI / 180);
 
-        PSPoint absBegin = new PSPoint(xBegin, yBegin);
+
         PSPoint absEnd = new PSPoint(xEnd, yEnd);
         boolean connect = context.getGState().currentPoint != null;
 
-        context.getGState().currentPath.addArc(absBegin, absEnd, absCent, xR, yR,
+        context.getGState().currentPath.addArc(absCent, xR, yR,
                 nAngle1, nAngle2, false, connect);
         context.getGState().currentPoint = absEnd;
     }

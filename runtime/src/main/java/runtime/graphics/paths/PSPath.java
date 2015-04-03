@@ -43,7 +43,7 @@ public class PSPath {
     }
 
     //absolute coordinates in postscript
-    public void addArc(PSPoint absBegin, PSPoint absEnd, PSPoint absCenter, double absXRadius, double absYRadius,
+    public void addArc(PSPoint absCenter, double absXRadius, double absYRadius,
                        double relAngle1, double RelAngle2, boolean clockwise, boolean connect) {
 //        generalPath.moveTo(100,100);
 

@@ -7,10 +7,7 @@ import runtime.events.PSMouseEvent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 
 /**
@@ -22,6 +19,10 @@ public class PSFrame extends JFrame {
     public int psHeight = 1085;
     //    public int psWidth = 500;
     public int psWidth = 815;
+    private long lastMoveMouseTime=0;
+    private long lastDragMouseTime=0;
+    private int mouseMoveRefreshTime=100;
+    private int mouseDragRefreshTime=10;
 
     public static PSFrame getInstance() {
         if (ourInstance == null) {
@@ -62,11 +63,18 @@ public class PSFrame extends JFrame {
                 Graphics2D g2 = (Graphics2D) g;
 //                g2.scale(1.3,1.3);
                 g2.drawImage(PSImage.getInstanceImage(), null, 0, 0);
-
-
             }
         };
         panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                synchronized (this) {
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
+                    }
+                }
+            }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 synchronized (this) {
@@ -100,24 +108,35 @@ public class PSFrame extends JFrame {
                     }
                 }
             }
-
-
         });
         panel.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                super.mouseWheelMoved(e);
+            }
+
             @Override
             public void mouseDragged(MouseEvent e) {
                 synchronized (this) {
                     if (SwingUtilities.isLeftMouseButton(e)) {
-                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.DRAG));
-                    }
+                        long time=System.currentTimeMillis();
+                        if((time-PSFrame.this.lastDragMouseTime) > mouseDragRefreshTime) {
+                            Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.DRAG));
+                            PSFrame.this.lastDragMouseTime=time;
+                        }
+                     }
                 }
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
                 synchronized (this) {
-                    if (SwingUtilities.isLeftMouseButton(e)) {
+
+
+                    long time=System.currentTimeMillis();
+                    if((time-PSFrame.this.lastMoveMouseTime) > mouseMoveRefreshTime) {
                         Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
+                        PSFrame.this.lastMoveMouseTime=time;
                     }
                 }
             }
@@ -130,5 +149,4 @@ public class PSFrame extends JFrame {
 //        panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         add(new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));
     }
-
 }

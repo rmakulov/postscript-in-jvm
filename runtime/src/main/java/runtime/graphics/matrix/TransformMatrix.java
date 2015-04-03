@@ -184,11 +184,17 @@ public class TransformMatrix implements Cloneable {
     //int degrees
     public double getRotateAngle() {
         double[] doubleMatrix = getDoubleArray();
-        double a = doubleMatrix[0], с = doubleMatrix[2];
+//        double a = doubleMatrix[0], b = doubleMatrix[1], c = doubleMatrix[2];
+//        double d = doubleMatrix[3], tx = doubleMatrix[4], ty = doubleMatrix[5];
+//
+//        double newX = a ;
+//        double newY = b;
 
-        double xScale = getXScale();
-        double y = -с / xScale;
-        double x = a / xScale;
+        double a = doubleMatrix[0], b = doubleMatrix[1];
+
+
+        double y = b;
+        double x = a;
         return Math.atan2(y, x) * 180 / Math.PI;
     }
 
@@ -206,5 +212,14 @@ public class TransformMatrix implements Cloneable {
         PSObject one = new PSObject(new PSInteger(1));
         PSObject zero = new PSObject(new PSInteger(0));
         return new PSArray(new PSObject[]{one, zero, zero, one, zero, zero});
+    }
+
+    public static void main(String[] args) {
+        TransformMatrix tm = new TransformMatrix();
+        tm.scale(-1,1);
+        tm.rotate(3*Math.PI/4);
+        //tm.translate(24,25);
+        System.out.println(tm.getRotateAngle());
+
     }
 }

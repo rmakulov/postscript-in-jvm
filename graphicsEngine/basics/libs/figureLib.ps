@@ -13,6 +13,44 @@
     closepath
 } def
 
+%-------------------------------------
+%-------params------------
+%----x          :   integer
+%----y          :   integer
+%----w          :   integer
+%----h          :   integer
+%    return     :   void
+%--------------------------
+/roundedRect{
+    1 dict begin
+        /h exch         def
+        /w exch         def
+        /y exch         def
+        /x exch         def
+        /coef 0.4       def   % 1/5
+        /r  h coef mul  def
+
+        /xLeft  x r add             def
+        /xRight x w add r sub       def
+        /yHigh  y h add r sub       def
+        /yLow   y r add             def
+        /wShort   w 2 r mul sub     def
+        /hShort   h 2 r mul sub     def
+
+        xLeft y                 moveto
+        wShort 0                rlineto
+        xRight yLow r 270 360   arc
+        0 hShort                rlineto
+        xRight yHigh r 0 90     arc
+        wShort neg 0            rlineto
+        xLeft yHigh r 90 180    arc
+        0 hShort neg            rlineto
+        xLeft yLow r 180 270    arc
+
+        closepath
+
+    end
+} def
 
 % ----- params: x y string
 /drawString{

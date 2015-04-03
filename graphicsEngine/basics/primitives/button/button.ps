@@ -33,13 +33,9 @@
                 bd /w get
                 bd /h get
                 bd /label get
-
                 bd /isPressed get
-                {(graphicsEngine/basics/primitives/button/paintPressedButton.ps) (r) file run}
-                    {(graphicsEngine/basics/primitives/button/paintUnpressedButton.ps) (r) file run}
-                ifelse
+                (graphicsEngine/basics/primitives/button/paintButton.ps) (r) file run
                 bd paintChildren
-
         } def
         %eventProcs - procedures for each type of events
     /buttonDict <<      /label      label
