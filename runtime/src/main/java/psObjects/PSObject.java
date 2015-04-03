@@ -39,7 +39,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
 
     public boolean interpret(Context context, int procDepth) {
 //        cleanGarbageByExecutionCounter();
-      //  cleanGarbageByLocalVMSize();
+//        cleanGarbageByLocalVMSize();
         boolean aLoading = context.getALoading();
         if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)
                 /*&& !(procDepth == 1 && getValue().equals(PSMark.CLOSE_CURLY_BRACE))*/) {

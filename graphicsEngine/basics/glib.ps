@@ -241,7 +241,7 @@
 } def
 
 /dragElement{
-
+    1 dict begin
     gelements /mouseY get /mouseY exch def
     gelements /mouseX get /mouseX exch def
 
@@ -251,30 +251,68 @@
         /num resizingElement /resize get def
         /par resizingElement /parent get def
 
+        /minWidth resizingElement /minW get def
+        /minHigh  resizingElement /minH get def
+
         /res1{
-            resizingElement /w mouseX resizingElement /x get sub put
+            /newWidth mouseX resizingElement /x get sub def
+
+            newWidth minWidth gt
+            { resizingElement /w newWidth put }
+            { resizingElement /w minWidth put }
+            ifelse
+
             resizingElement /rW resizingElement /w get resizingElement /parent get /w get div put
         } def
+
         /res3{
+
+
             /yHigh resizingElement /y get resizingElement /h get add def
+            /newHigh yHigh mouseY sub def
+            newHigh minHigh gt
+            {
+                resizingElement /y mouseY  put
+                resizingElement /h newHigh put
 
-            resizingElement /y mouseY put
-            resizingElement /h yHigh resizingElement /y get sub put
+            }
+            { resizingElement /y yHigh minHigh sub  put
+              resizingElement /h minHigh            put
+            }
+            ifelse
 
-            resizingElement /rY resizingElement /y get par /y get sub par /h get div put
-            resizingElement /rH resizingElement /h get par /h get div put
+            resizingElement /rY resizingElement /y get par /y get sub par /h get div    put
+            resizingElement /rH resizingElement /h get par /h get div                   put
+
         } def
+
         /res5{
             /xRight resizingElement /x get resizingElement /w get add def
+            /newWidth xRight mouseX sub def
 
-            resizingElement /x mouseX put
-            resizingElement /w xRight resizingElement /x get sub put
+            newWidth minWidth gt
+            {
+                resizingElement /x mouseX   put
+                resizingElement /w newWidth put
+            }
+            {
+                resizingElement /x xRight minWidth sub  put
+                resizingElement /w minWidth             put
+            }
+            ifelse
 
-            resizingElement /rX resizingElement /x get par /x get sub par /w get div put
-            resizingElement /rW resizingElement /w get par /w get div put
+            resizingElement /rX resizingElement /x get par /x get sub par /w get div    put
+            resizingElement /rW resizingElement /w get par /w get div                   put
         } def
+
         /res7{
-            resizingElement /h mouseY resizingElement /y get sub put
+            /newHigh mouseY resizingElement /y get sub def
+
+            newHigh minHigh gt
+            { resizingElement /h mouseY resizingElement /y get sub put }
+            { resizingElement /h minHigh                           put }
+            ifelse
+
             resizingElement /rH resizingElement /h get resizingElement /parent get /h get div put
         } def
 
@@ -307,6 +345,7 @@
                        gelements /lastY mouseY put
 
                        repaintAll
+    end
 } def
 
 %END_PROLOG
