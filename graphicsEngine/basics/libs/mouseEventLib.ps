@@ -1,31 +1,22 @@
-%/snapshot save def
-/evType exch def
-transform
-/evY exch def
-/evX exch def
-
-gelements /mouseX evX put
-gelements /mouseY evY put
-
 %---
 %params: dict - gelement
 %        name - evType
 %        int  - x
 %        int  - y
-/checkElementOld {
-
-    /evY exch def
-    /evX exch def
-    /evType exch def
-    /element exch def
-
-    element evX evY element /checkBelonging get exec
-    {
-        gelements /mouseX evX put
-        gelements /mouseY evY put
-        element evType findAncestorWithEventType
-    } if
-} def
+%/checkElementOld {
+%
+%    /evY exch def
+%    /evX exch def
+%    /evType exch def
+%    /element exch def
+%
+%    element evX evY element /checkBelonging get exec
+%    {
+%        gelements /mouseX evX put
+%        gelements /mouseY evY put
+%        element evType findAncestorWithEventType
+%    } if
+%} def
 
 
 %%---
@@ -55,14 +46,16 @@ gelements /mouseY evY put
 %} def
 
 
-/searchOld {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
-/search {
-    scene searchAmongChildren
-} def
+%/searchOld {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
+%/search {
+%    scene searchAmongChildren
+%} def
 
 /searchAmongChildren{
     1 dict begin
-        /element exch  def
+        /evY        exch def
+        /evX        exch def
+        /element    exch def
         element /children get length 0 ne
         {
         /children element /children get def
@@ -85,7 +78,7 @@ gelements /mouseY evY put
             } loop
 
             isFound
-            {elementForCheck  searchAmongChildren}
+            {elementForCheck evX evY searchAmongChildren}
             {element evType findAncestorWithEventType}
             ifelse
         }
@@ -95,22 +88,32 @@ gelements /mouseY evY put
 } def
 
 
-evType (DRAG) cvn eq
-{         gelements /mouseX evX put
-          gelements /mouseY evY put
-          dragElement
+/mouseEvent{
+    1 dict begin
+        /evType exch def
+        transform
+        /evY exch def
+        /evX exch def
 
-}
-{
-    evType (PRESS) cvn eq
-    {
-        gelements /lastX evX put
-        gelements /lastY evY put
+        gelements /mouseX evX put
+        gelements /mouseY evY put
+
+        evType (DRAG) cvn eq
+        {         gelements /mouseX evX put
+                  gelements /mouseY evY put
+                  dragElement
+
         }
-    if
+        {
+            evType (PRESS) cvn eq
+            {
+                gelements /lastX evX put
+                gelements /lastY evY put
+                }
+            if
 
-    search }
-ifelse
-
-
+            scene evX evY searchAmongChildren }
+        ifelse
+    end
+} def
 %snapshot restore

@@ -1,0 +1,13 @@
+/keyEvent{
+    1 dict begin
+        /evType exch def
+        /value exch def
+
+        /element gelements /focusedElement get def
+        /eventProcs element /eventProcs get def
+         eventProcs evType known
+        {
+            element value eventProcs evType get  execList
+        }if
+    end
+}def

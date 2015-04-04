@@ -11,7 +11,7 @@
     /dX exch def
 
     /paint {/bd exch def
-                bd recountCoordinatesEB
+                bd recountCoordinatesRB
 
                 bd /x get
                 bd /y get
@@ -79,7 +79,7 @@
 %----dict       :   dictionary
 %    return     :   void
 %--------------------------
-/recountCoordinatesEB{
+/recountCoordinatesRB{
     1 dict begin
         /cDict exch def
         cDict /isFixed get not
