@@ -66,14 +66,7 @@ public class PSFrame extends JFrame {
             }
         };
         panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                synchronized (this) {
-                    if (SwingUtilities.isLeftMouseButton(e)) {
-                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
-                    }
-                }
-            }
+
 
             @Override
             public void mouseClicked(MouseEvent e) {

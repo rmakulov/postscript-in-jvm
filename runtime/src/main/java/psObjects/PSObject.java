@@ -24,8 +24,8 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private runtime.Runtime runtime = Runtime.getInstance();
 
     private static int objExecutionCounter = 0;
-    private int executionsBeforeGarbageCleaning = 10000;
-    private int maxLocalVMSize = 2000;
+    private static int executionsBeforeGarbageCleaning = 10000;
+    private static int maxLocalVMSize = 2000;
 
     public boolean execute(Context context, int procDepth) {
         if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
@@ -50,7 +50,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         }
     }
 
-    private void cleanGarbageByExecutionCounter() {
+    private synchronized void cleanGarbageByExecutionCounter() {
         objExecutionCounter++;
         if (objExecutionCounter % executionsBeforeGarbageCleaning == 0) {
 //            System.out.println("Local vm argsCount before gc " + runtime.getLocalVMSize());

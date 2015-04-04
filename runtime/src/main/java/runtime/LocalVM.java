@@ -4,6 +4,7 @@ import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.CompositeValue;
 import psObjects.values.composite.PSArray;
+import psObjects.values.composite.PSString;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -98,7 +99,7 @@ public class LocalVM {
        // System.out.println("Before clean: "+map.size());
         Set<Integer> keys = new HashSet<Integer>(map.keySet());
         for (Integer key : keys) {
-            if (!rootSet.contains(key) && !initSet.contains(key)) {
+            if (!rootSet.contains(key) && !initSet.contains(key) &&!(stringSet.contains(key))) {
                 remove(key);
             }
         }

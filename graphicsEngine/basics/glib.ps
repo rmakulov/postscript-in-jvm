@@ -37,9 +37,14 @@
 
 %---
 /repaintAll {
-      init
-      scene dup /paint get exec
-    } def
+      usertime gelements /lastRepaintTime get sub 100 gt{
+        init
+        scene dup /paint get exec
+        gelements /lastRepaintTime usertime put
+        showpage
+      }
+      if
+} def
 %---params: elementDict, void -----
 /paintChildren{
     /element exch def
@@ -142,20 +147,20 @@
 %---
 % params: x y set center of circles
 /wave {
-    /milliSleep
-    {
-            % Single arg off stack - milliseconds to sleep
-            /sleepInterval exch def
-            % Get our starting time
-            usertime /starttime exch def
-            {
-                    % Seconds since start
-                    usertime  starttime sub
-                    % Exit if interval is exceeded
-                    sleepInterval ge { exit } if
-            } loop
-    } def
-    %   transform
+    %/milliSleep
+    %{
+    %        % Single arg off stack - milliseconds to sleep
+    %        /sleepInterval exch def
+    %        % Get our starting time
+    %        usertime /starttime exch def
+    %        {
+    %                % Seconds since start
+    %                usertime  starttime sub
+    %                % Exit if interval is exceeded
+    %                sleepInterval ge { exit } if
+    %        } loop
+    %} def
+    %transform
     /y exch def
     /x exch def
     /r 20 def
@@ -163,12 +168,15 @@
     0.5 setgray
 
     %debug
-     100 {
+     %100 {
+     44 {
         x r add y moveto
         x y r 0 360 arc closepath stroke
+        %init
         repaintMainContext
         50 milliSleep
         %repaintAll
+        50 milliSleep
 
         /r r deltaR add def
         %debug
@@ -176,7 +184,7 @@
      } repeat
      %repaintAll
      %100 milliSleep
-     %repaintMainContext
+     repaintMainContext
 
 
 
@@ -300,7 +308,7 @@
         (MOVE) cvn evType eq not
         {dup setFocusedElement }
         if
-        eventProcs evType get execList exit
+        eventProcs evType get execList %exit
     }
     {
         /parent element /parent get def
@@ -426,6 +434,7 @@
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
+gelements /lastRepaintTime 0 put
 /scene initScene def
 gelements /focusedElement scene put
 gelements /mouseX 0 put

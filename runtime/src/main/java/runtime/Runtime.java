@@ -326,7 +326,7 @@ public class Runtime {
         return isGlobal;
     }
 
-    public Reference createReference(CompositeValue object) {
+    public synchronized Reference createReference(CompositeValue object) {
         if (isGlobal) return new GlobalRef(object);
         else return createLocalRef(object);
     }

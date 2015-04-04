@@ -40,7 +40,7 @@ public class GState extends CompositeValue {
         initClip();
         graphicsSettings = new GraphicsSettings();
         PSDrawer.reset();
-        PSImage.reset();
+//        PSImage.reset();
         //PSFrame.reset();
     }
 
