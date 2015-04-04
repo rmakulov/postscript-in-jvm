@@ -102,7 +102,6 @@
         {         gelements /mouseX evX put
                   gelements /mouseY evY put
                   dragElement
-
         }
         {
             evType (PRESS) cvn eq
@@ -112,7 +111,8 @@
                 }
             if
 
-            scene evX evY searchAmongChildren }
+            scene evX evY searchAmongChildren
+        }
         ifelse
     end
 } def

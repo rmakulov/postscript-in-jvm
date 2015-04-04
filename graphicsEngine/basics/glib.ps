@@ -295,8 +295,12 @@
 
     eventProcs evType known
 
-    {element dup setFocusedElement
-        eventProcs evType get execList  exit
+    {
+        element
+        (MOVE) cvn evType eq not
+        {dup setFocusedElement }
+        if
+        eventProcs evType get execList exit
     }
     {
         /parent element /parent get def
