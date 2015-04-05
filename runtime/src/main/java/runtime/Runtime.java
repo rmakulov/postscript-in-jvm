@@ -284,7 +284,7 @@ public class Runtime {
     /*
     * Find array in Local VM by LocalRef and change value by index = valueIndex
      */
-    public LocalRef createLocalRef(CompositeValue value) {
+    public synchronized LocalRef createLocalRef(CompositeValue value) {
         return new LocalRef(addToLocalVM(value));
     }
 
@@ -326,7 +326,7 @@ public class Runtime {
         return isGlobal;
     }
 
-    public synchronized Reference createReference(CompositeValue object) {
+    public Reference createReference(CompositeValue object) {
         if (isGlobal) return new GlobalRef(object);
         else return createLocalRef(object);
     }
