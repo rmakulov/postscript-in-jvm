@@ -16,6 +16,8 @@ gsave
 /rg { setrgbcolor } bind def
 %%EndProlog
 
+
+
 /position exch def
 /inFocus exch def
 /text exch def
@@ -24,6 +26,7 @@ gsave
 /w exch def
 /y exch def
 /x exch def
+
 
 %/x 50 def
 %/y 50 def
@@ -64,7 +67,9 @@ inFocus {
              0 h shift 2 mul sub rlineto stroke
     } if
 
-
+%------------clip-----------
+0 0  w h rect clip
+%------------clip-----------
 gsave
 0 h shift add translate
 % shift h kegel sub translate

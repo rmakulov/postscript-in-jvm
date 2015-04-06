@@ -40,52 +40,52 @@
         } def
 
     /windowDict <<
-                        /rX             rX
-                        /rY             rY
-                        /rH             rH
-                        /rW             rW
+                        /rX                 rX
+                        /rY                 rY
+                        /rH                 rH
+                        /rW                 rW
 
-                        /x              parent /x get parent /w get rX mul add cvi
-                        /y              parent /y get parent /h get rY mul add cvi
-                        /h              parent /h get rH mul cvi
-                        /w              parent /w get rW mul cvi
+                        /x                  parent /x get parent /w get rX mul add cvi
+                        /y                  parent /y get parent /h get rY mul add cvi
+                        /h                  parent /h get rH mul cvi
+                        /w                  parent /w get rW mul cvi
 
-                        /minW           200
-                        /minH           200
+                        /minW               200
+                        /minH               200
 
-                        /parent         parent
-                        /children       []
-                        /paint          /paint load
-                        /eventProcs     eventProcDict
-                        /isFixed        true
-                        /resize         0
-                        /inFocus        false
+                        /parent             parent
+                        /children           []
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /isFixed            true
+                        /resize             0
+                        /inFocus            false
+
+                        /refreshCoordinates /recountCoordinates load
                         /checkBelonging
-                                        {
-                                            1 dict begin
-                                                /element exch def
-                                                /evY exch def
-                                                /evX exch def
+                                            {
+                                                1 dict begin
+                                                    /element exch def
+                                                    /evY exch def
+                                                    /evX exch def
 
-                                                /x element /x get def
-                                                /y element /y get def
-                                                /w element /w get def
-                                                /h element /h get def
+                                                    /x element /x get def
+                                                    /y element /y get def
+                                                    /w element /w get def
+                                                    /h element /h get def
 
-                                                evX x ge evY y ge and
-                                                x w add evX ge y h add evY ge and
-                                                and
-                                            end
-                                        }
+                                                    evX x ge evY y ge and
+                                                    x w add evX ge y h add evY ge and
+                                                    and
+                                                end
+                                            }
                       >> def
     windowDict addElement
 
-
-
     windowDict /eventProcs get /CLICK {
                 /cDict exch def
-                repaintAll} addListToDict
-
+                repaintAll
+                } addListToDict
 
     windowDict /eventProcs get /PRESS {
                     /cDict exch def
@@ -129,11 +129,12 @@
                     repaintAll
                 } addListToDict
 
-
     windowDict /eventProcs get /RELEASE {
                     /cDict exch def
                     gelements /draggedElement null put
                     gelements /resizingElement null put
+
+                    cDict /children get refreshCoordinatesForChildren
 
                         cDict /children get
                         true
@@ -143,7 +144,6 @@
                     (default) cursor
                     repaintAll
                 } addListToDict
-
 
     windowDict /eventProcs get /DRAG {
                     /cDict exch def
@@ -183,7 +183,18 @@
     put
 
     %CloseButton
-    -15 -10 7 [true true] [1 0 0] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton pop
+    %0.901 0.37 0.19
+    -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton pop
+    %labelField
+    /lF 0 0 windowDict /h get 5 sub 20 (window) windowDict << >> labelField def
+
+    lF /isAttached true put
+    lF /dX 5 put
+    lF /dY -20 put
+    lF /color [1 1 1] put
+    lF /kegel 20 put
+
+
 
     windowDict
 } def
@@ -212,10 +223,11 @@
 
         /east  { x w add mouseX sub eps lt }    def
         /south { mouseY y sub eps lt }          def
-        /west  { mouseX x sub eps lt }          def
-        /north { y h add mouseY sub eps lt }    def
+        /west  { mouseX x sub eps  lt }          def
+        /north { y h add mouseY sub eps1 lt }    def
 
-        /eps 8 def
+        /eps  8 def
+        /eps1 4 def
         east    { (e_resize) cursor /resize 1 def } if
         south   { (s_resize) cursor /resize 3 def } if
         west    { (w_resize) cursor /resize 5 def } if

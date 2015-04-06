@@ -1,6 +1,4 @@
 
-
-
 /roundButton {
     /eventProcDict exch def
     /parent exch def
@@ -26,19 +24,20 @@
         } def
         %eventProcs - procedures for each type of events
     /roundButtonDict <<      /parent         parent
-                        /children       []
-                        /dX             dX
-                        /dY             dY
-                        /r              r
+                        /children           []
+                        /dX                 dX
+                        /dY                 dY
+                        /r                  r
 
-                        /angle          angle
-                        /color          color
+                        /angle              angle
+                        /color              color
 
-                        /inFocus        false
-                        /paint          /paint load
-                        /eventProcs     eventProcDict
-                        /isPressed      false
-                        /isFixed        true
+                        /inFocus            false
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /isPressed          false
+                        /isFixed            true
+                        /refreshCoordinates /recountXY load
                         /checkBelonging
                                         {
                                             1 dict begin
@@ -73,6 +72,7 @@
 
     roundButtonDict
 } def
+
 
 %-------------------------------------
 %-------params------------

@@ -10,8 +10,10 @@ gsave
     x y translate
 
     isPressed
-    { 0.901 0.37 0.19 setrgbcolor}
-    {  1 0.47 0.29 setrgbcolor}
+    %{ 0.901 0.37 0.19 setrgbcolor}
+    %{  1 0.47 0.29 setrgbcolor}
+    { color {.8 mul } forall setrgbcolor }
+    { color aload pop setrgbcolor }
     ifelse
 
     0 0 r 0 360 arc fill

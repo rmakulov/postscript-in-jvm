@@ -4,29 +4,34 @@
                           bd paintChildren
                      } def
 
-              /scene <</label (scene)
-                            /x 0 /y 0 /h 843 /w 651
-                            /parent null /children []
-                            /inFocus false
-                            /paint /paint load
-                            /eventProcs << /CLICK [{pop repaintAll }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread }[]] >>
+              /scene <<     /label (scene)
+                            /x              0
+                            /y              0
+                            /h              843
+                            /w              651
+                            /parent         null
+                            /children       []
+                            /inFocus        false
+                            /paint          /paint load
+                            /eventProcs     << /CLICK [{pop repaintAll }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread }[]] >>
+
                             /checkBelonging
-                               {
-                                   1 dict begin
-                                        /element exch def
-                                        /evY exch def
-                                        /evX exch def
+                                            {
+                                                1 dict begin
+                                                     /element exch def
+                                                     /evY exch def
+                                                     /evX exch def
 
-                                        /x element /x get def
-                                        /y element /y get def
-                                        /w element /w get def
-                                        /h element /h get def
+                                                     /x element /x get def
+                                                     /y element /y get def
+                                                     /w element /w get def
+                                                     /h element /h get def
 
-                                        evX x ge evY y ge and
-                                        x w add evX ge y h add evY ge and
-                                        and
-                                   end
-                               }
+                                                     evX x ge evY y ge and
+                                                     x w add evX ge y h add evY ge and
+                                                     and
+                                                end
+                                            }
                            >> def
 
               scene /eventProcs get /MOVE {

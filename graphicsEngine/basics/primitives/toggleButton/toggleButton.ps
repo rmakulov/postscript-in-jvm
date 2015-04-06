@@ -47,35 +47,44 @@
                 bd paintChildren
         } def
 
-    /toggleButtonDict <</rX rX /rY rY /rH rH /rW rW
-                        /x parent /x get parent /w get rX mul add cvi
-                        /y parent /y get parent /h get rY mul add cvi
-                        /h parent /h get rH mul cvi
-                        /w parent /w get rW mul cvi
+    /toggleButtonDict <<
+                        /rX                 rX
+                        /rY                 rY
+                        /rH                 rH
+                        /rW                 rW
+                        /x                  parent /x get parent /w get rX mul add cvi
+                        /y                  parent /y get parent /h get rY mul add cvi
+                        /h                  parent /h get rH mul cvi
+                        /w                  parent /w get rW mul cvi
 
-                        /textOn textOn /textOff textOff /parent parent /children []
-                        /inFocus false
-                        /isFixed true
-                        /paint /paint load
-                        /eventProcs eventProcDict
-                        /isPressed false
+                        /textOn             textOn
+                        /textOff            textOff
+                        /parent             parent
+                        /children           []
+
+                        /inFocus            false
+                        /isFixed            true
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /isPressed          false
+                        /refreshCoordinates /recountCoordinates load
                         /checkBelonging
-                            {
-                                1 dict begin
-                                    /element exch def
-                                    /evY exch def
-                                    /evX exch def
+                                            {
+                                                1 dict begin
+                                                    /element exch def
+                                                    /evY exch def
+                                                    /evX exch def
 
-                                    /x element /x get def
-                                    /y element /y get def
-                                    /w element /w get def
-                                    /h element /h get def
+                                                    /x element /x get def
+                                                    /y element /y get def
+                                                    /w element /w get def
+                                                    /h element /h get def
 
-                                    evX x ge evY y ge and
-                                    x w add evX ge y h add evY ge and
-                                    and
-                                end
-                            }
+                                                    evX x ge evY y ge and
+                                                    x w add evX ge y h add evY ge and
+                                                    and
+                                                end
+                                            }
                       >> def
 
     toggleButtonDict addElement

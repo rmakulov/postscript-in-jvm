@@ -44,34 +44,45 @@
                           bd paintChildren
                   } def
                   %eventProcs - procedures for each type of events
-              /textFieldDict <</label label /text () /rX rX /rY rY /rW rW /rH rH /parent parent /children [] /inFocus false /position 0
+              /textFieldDict <<
+                                    /label              label
+                                    /text               ()
+                                    /rX                 rX
+                                    /rY                 rY
+                                    /rW                 rW
+                                    /rH                 rH
+                                    /parent             parent
+                                    /children           []
+                                    /inFocus            false
+                                    /position           0
 
-                                  /x parent /x get parent /w get rX mul add cvi
-                                  /y parent /y get parent /h get rY mul add cvi
-                                  /h parent /h get rH mul cvi
-                                  /w parent /w get rW mul cvi
+                                    /x                  parent /x get parent /w get rX mul add cvi
+                                    /y                  parent /y get parent /h get rY mul add cvi
+                                    /h                  parent /h get rH mul cvi
+                                    /w                  parent /w get rW mul cvi
 
-                                  /inFocus false
-                                  /isFixed true
-                                  /paint /paint load
-                                  /eventProcs eventProcDict
+                                  /inFocus              false
+                                  /isFixed              true
+                                  /paint                /paint load
+                                  /eventProcs           eventProcDict
+                                  /refreshCoordinates   /recountCoordinates load
                                   /checkBelonging
-                                      {
-                                          1 dict begin
-                                                /element exch def
-                                                /evY exch def
-                                                /evX exch def
+                                                        {
+                                                            1 dict begin
+                                                                  /element exch def
+                                                                  /evY exch def
+                                                                  /evX exch def
 
-                                                /x element /x get def
-                                                /y element /y get def
-                                                /w element /w get def
-                                                /h element /h get def
+                                                                  /x element /x get def
+                                                                  /y element /y get def
+                                                                  /w element /w get def
+                                                                  /h element /h get def
 
-                                                evX x ge evY y ge and
-                                                x w add evX ge y h add evY ge and
-                                                and
-                                          end
-                                      }
+                                                                  evX x ge evY y ge and
+                                                                  x w add evX ge y h add evY ge and
+                                                                  and
+                                                            end
+                                                        }
               >> def
 
 
