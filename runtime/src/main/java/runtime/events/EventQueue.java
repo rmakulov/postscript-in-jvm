@@ -26,7 +26,7 @@ public class EventQueue {
 
     }
 
-    public boolean add(Event event) {
+    public synchronized boolean add(Event event) {
         Context context = getMainContext();
         if (context.search(new PSObject(new PSName("gelements"))) == null) {
             return false;
@@ -51,7 +51,7 @@ public class EventQueue {
         return null;
     }*/
 
-    public Event poll() {
+    public synchronized Event poll() {
         if (first == null) {
             return null;
         } else if (first == last) {

@@ -53,10 +53,6 @@ public class PrimitiveQueue {
     }
 
 
-    public boolean isAwake() {
-        return isAwake;
-    }
-
     public synchronized void process() {
         isAwake = true;
         while (!isEmpty()) {
