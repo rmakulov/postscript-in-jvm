@@ -18,6 +18,7 @@ public class ExecOp extends Operator {
 
     @Override
     public boolean interpret(Context context, PSObject obj) {
+
         PSObject psObject = context.popFromOperandStack();
         if (psObject == null) {
             return true;

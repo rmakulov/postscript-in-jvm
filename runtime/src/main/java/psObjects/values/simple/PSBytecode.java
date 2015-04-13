@@ -20,6 +20,8 @@ public class PSBytecode extends PSName {
     public boolean interpret(Context context, PSObject obj) {
         try {
             Class c = DynamicClassLoader.instance.loadClass(strValue);
+//            Class c = DynamicClassLoader.instance.findClass(strValue);
+            
             return (Boolean) c.getMethod("run").invoke(null);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -38,8 +40,8 @@ public class PSBytecode extends PSName {
     public void compile(Context context, PSObject obj) {
         //runtime.pushToOperandStack(new PSObject(new PSBytecode(this.strValue)));
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGenManager.bytecodeName;
-        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
 //        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
@@ -48,10 +50,11 @@ public class PSBytecode extends PSName {
         mv.visitLdcInsn(this.strValue);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
 
-        checkExitCompile();
+        checkExitCompile(context);
 //        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
     }

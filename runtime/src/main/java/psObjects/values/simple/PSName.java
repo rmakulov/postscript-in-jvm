@@ -71,7 +71,7 @@ public class PSName extends SimpleValue {
         runtime.Runtime runtime = Runtime.getInstance();
         PSObject object = context.search(new PSObject(new PSName(strValue)));
         boolean isOperator = (object != null && object.getType() == Type.OPERATOR);
-        BytecodeGeneratorManager bcGenManager = runtime.bcGenManager;
+        BytecodeGeneratorManager bcGenManager = context.bcGenManager;
 
         String className = bcGenManager.bytecodeName;
 
@@ -85,18 +85,18 @@ public class PSName extends SimpleValue {
         bcGenManager.incInstrCounter();
         if (object != null) {
             MethodVisitor mv = bcGenManager.mv;
-            int version = runtime.getNameVersion(strValue);
+            int version = context.getNameVersion(strValue);
 //            int version = runtime.getDictStackVersion();
 //       java: if (runtime.getNameVersion(strValue) - version == 0) {
-            mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
+            mv.visitFieldInsn(GETSTATIC, className, "context", "Lruntime/Context;");
             mv.visitLdcInsn(strValue);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getNameVersion", "(Ljava/lang/String;)I", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "getNameVersion", "(Ljava/lang/String;)I", false);
 //            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getDictStackVersion", "()I", false);
             mv.visitLdcInsn(version);
             mv.visitInsn(ISUB);
 
-            mv.visitFieldInsn(GETSTATIC, className, "runtime", "Lruntime/Runtime;");
-            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getALoading", "()Z", false);
+            mv.visitFieldInsn(GETSTATIC, className, "context", "Lruntime/Context;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "getALoading", "()Z", false);
             mv.visitInsn(IADD);
             //Если версии совпадают и aloading==true, то то на стеке останется 1 (=0+1) и происходит вызов имени, и оно просто кладется на стек
 
@@ -104,7 +104,7 @@ public class PSName extends SimpleValue {
             mv.visitJumpInsn(IFEQ, l1);
 
             //start else block
-            writeExecutiveBytecode(strValue);
+            writeExecutiveBytecode(context, strValue);
             //end else block
 
 
@@ -122,7 +122,7 @@ public class PSName extends SimpleValue {
             mv.visitLabel(l2);
             mv.visitFrame(F_SAME, 0, null, 0, null);
         } else {
-            writeExecutiveBytecode(strValue);
+            writeExecutiveBytecode(context, strValue);
         }
         if (isOperator) {
             bcGenManager.endMethod();
@@ -130,8 +130,9 @@ public class PSName extends SimpleValue {
         }
     }
 
-    private static void writeExecutiveBytecode(String strValue) {
-        MethodVisitor mv = Runtime.getInstance().bcGenManager.mv;
+    private static void writeExecutiveBytecode(Context context, String strValue) {
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/PSName");
@@ -139,8 +140,9 @@ public class PSName extends SimpleValue {
         mv.visitLdcInsn(strValue);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
 
         Label l8 = new Label();
         mv.visitJumpInsn(IFNE, l8);
@@ -160,12 +162,12 @@ public class PSName extends SimpleValue {
     }
 
 
-    public static void literalCompile(String strValue) {
+    public static void literalCompile(Context context, String strValue) {
         runtime.Runtime runtime = Runtime.getInstance();
 //        PSObject psObject = new PSObject(new PSName(strValue), LITERAL);
 //        runtime.pushToOperandStack(psObject);
-        String name = runtime.bcGenManager.bytecodeName;
-        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
 //        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
@@ -175,8 +177,9 @@ public class PSName extends SimpleValue {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSName", "<init>", "(Ljava/lang/String;)V", false);
         mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
 
         Label l8 = new Label();
         mv.visitJumpInsn(IFNE, l8);
@@ -194,7 +197,7 @@ public class PSName extends SimpleValue {
         if (treatAs == EXECUTABLE) {
             executiveCompile(context, strValue);
         } else {
-            literalCompile(strValue);
+            literalCompile(context, strValue);
         }
     }
 

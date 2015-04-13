@@ -21,13 +21,13 @@ public class CvxOp extends Operator {
         PSObject o = context.popFromOperandStack();
         if (o == null) return;
         if (o.getType() == Type.ARRAY && runtime.isCompiling) {
-            runtime.bcGenManager.startCodeGenerator();
+            context.bcGenManager.startCodeGenerator(context);
             PSArray psArray = ((PSArray) o.getValue());
             for (PSObject psObject : psArray.getArray()) {
                 psObject.compile(context);
             }
-            runtime.bcGenManager.endBytecode();
-            context.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur(), Attribute.TreatAs.EXECUTABLE));
+            context.bcGenManager.endBytecode();
+            context.pushToOperandStack(new PSObject(context.bcGenManager.getCur(), Attribute.TreatAs.EXECUTABLE));
         } else {
             context.pushToOperandStack(o.cvx());
         }

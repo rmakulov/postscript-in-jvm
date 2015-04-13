@@ -1,5 +1,6 @@
 package psObjects.values.composite;
 
+import org.objectweb.asm.MethodVisitor;
 import procedures.StringProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
@@ -204,18 +205,19 @@ public class PSString extends CompositeValue implements PSComparable<PSString> {
         return "(" + getString() + ")";
     }
 
-    public static void compile(String s) {
+    public static void compile(Context context, String s) {
         runtime.Runtime runtime = Runtime.getInstance();
-        String name = runtime.bcGenManager.bytecodeName;
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/composite/PSString");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitLdcInsn(s);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSString", "<init>", "(Ljava/lang/String;)V", false);
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/composite/PSString");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(s);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/composite/PSString", "<init>", "(Ljava/lang/String;)V", false);
+        mv.visitFieldInsn(GETSTATIC, "psObjects/Attribute$TreatAs", "LITERAL", "LpsObjects/Attribute$TreatAs;");
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute$TreatAs;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

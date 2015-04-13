@@ -15,7 +15,6 @@ import psObjects.values.reference.GlobalRef;
 import psObjects.values.reference.LocalRef;
 import psObjects.values.reference.Reference;
 import runtime.avl.Pair;
-import runtime.compiler.BytecodeGeneratorManager;
 import runtime.compiler.DynamicClassLoader;
 import runtime.events.Event;
 import runtime.events.EventQueue;
@@ -25,7 +24,7 @@ import runtime.graphics.GState;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,8 +37,8 @@ public class Runtime {
     private static Runtime ourInstance = new Runtime();
 
     public boolean isCompiling = false;
-    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
-    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
+//    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
+//    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
 
     private int executionCount = 0;
     private int executionsBeforeGarbageCleaning = 10000;
@@ -54,7 +53,8 @@ public class Runtime {
     private boolean isGlobal = false;
     private PSObject systemDict;
     private Context mainContext;
-    private Set<Context> contextSet = new HashSet<Context>();
+    private int maxContextNumber = 0;
+    private Map<Integer, Context> contextMap = new HashMap<Integer, Context>();
 
     private ExecutorService service = Executors.newFixedThreadPool(10);
 
@@ -69,7 +69,7 @@ public class Runtime {
 
     public void startNewTask(Context context, Procedure procedure) {
         context.initDictionaries(systemDict);
-
+        addContext(context);
         PSThread thread = new PSThread(context, procedure);
         service.submit(thread);
 //        service.execute(thread);
@@ -77,11 +77,13 @@ public class Runtime {
 
     public void startMainTask(Context context, Procedure procedure) {
         mainContext = context;
+        addContext(context);
         context.initDictionaries(systemDict);
         PSThread thread = new PSThread(context, procedure);
-//        thread.run();
-        service.submit(thread);
+        //service.submit(thread);
+        thread.run();
     }
+
 
     public Context getMainContext() {
         return mainContext;
@@ -112,7 +114,7 @@ public class Runtime {
     public void save(Context context) {
         //localVM.clearGarbage(getRootSet());
 
-        Snapshot snapshot = new Snapshot(localVM.clone(), context.getGState(), nameVersions);
+        Snapshot snapshot = new Snapshot(localVM.clone(), context.getGState(), context.getNameVersions());
         gsave(context, false);
         localVM.initDefaultKeys();
         context.pushToOperandStack(new PSObject(snapshot));
@@ -143,7 +145,7 @@ public class Runtime {
         }
         savedLocalVM.updateStringValues(localVM); //string values don't restores
         localVM = savedLocalVM;
-        nameVersions = snapshot.getNameVersions();
+        context.setNameVersions(snapshot.getNameVersions());
 
         GRestoreAllOp.instance.interpret(context);
         context.getGraphicStack().setGState(snapshot);
@@ -178,63 +180,75 @@ public class Runtime {
 
     public Set<Integer> getRootSet() {
         Set<Integer> indexes = new HashSet<Integer>();
-        for(Context context:contextSet) {
-            //todo analyse combining global and local refs together
-            //operandStack
-            for (PSObject o : context.getOperandStack()) {
-                if (!(o.getDirectValue() instanceof LocalRef)) continue;
-                LocalRef ref = (LocalRef) o.getDirectValue();
-                getUsingLocalVMIndexesByRef(indexes, ref);
-            }
-
-            //graphicStack
-            for (GState gState : context.getGraphicStack()) {
-                PSObject oMatrix = gState.cTM.getMatrix();
-                PSObject oFont = gState.getFont();
-                //PSArray arr = (PSArray) oMatrix.getValue();
-                if ((oMatrix.getDirectValue() instanceof LocalRef)) {
-                    LocalRef ref = (LocalRef) oMatrix.getDirectValue();
-                    getUsingLocalVMIndexesByRef(indexes, ref);
-                }
-
-                if (oFont != null && (oFont.getDirectValue() instanceof LocalRef)) {
-                    LocalRef ref = (LocalRef) oFont.getDirectValue();
-                    getUsingLocalVMIndexesByRef(indexes, ref);
-                }
-            }
-            LocalRef locRefCTM = context.getGState().getLocalRefCTM();
-            //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
-            if (locRefCTM != null) {
-                getUsingLocalVMIndexesByRef(indexes, locRefCTM);
-            }
-            //if(locRefDash != null){
-            //    getUsingLocalVMIndexesByRef(indexes, locRefDash);
-            //}
-
-
-            //dictStack
-            for (PSObject o : context.getDictionaryStack()) {
-
-                if (!(o.getDirectValue() instanceof LocalRef)) continue;
-                LocalRef ref = (LocalRef) o.getDirectValue();
-                if (o == systemDict) {
-                    // in systemdict we don't have any localRefs
-                    indexes.add(ref.getTableIndex());
-                } else {
-                    getUsingLocalVMIndexesByRef(indexes, ref);
-                }
-            }
-            //callStack
-            for (Procedure proc : context.getCallStack()) {
-                if (!(proc instanceof ArrayProcedure)) continue;
-                PSObject array = ((ArrayProcedure) proc).getArrayObject();
-                if (!(array.getDirectValue() instanceof LocalRef)) continue;
-                LocalRef ref = (LocalRef) array.getDirectValue();
-                getUsingLocalVMIndexesByRef(indexes, ref);
-            }
+        for (Context context : contextMap.values()) {
+            getRootSetFromOperandStack(indexes, context);
+            getRootSetFromGraphicStack(indexes, context);
+            getRootSetFromDictStack(indexes, context);
+            getRootSetFromCallStack(indexes, context);
         }
         return indexes;
         //todo same for graphicstack after making collection psObjects in graphicstack
+    }
+
+    private void getRootSetFromCallStack(Set<Integer> indexes, Context context) {
+        //callStack
+        for (Procedure proc : context.getCallStack()) {
+            if (!(proc instanceof ArrayProcedure)) continue;
+            PSObject array = ((ArrayProcedure) proc).getArrayObject();
+            if (!(array.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) array.getDirectValue();
+            getUsingLocalVMIndexesByRef(indexes, ref);
+        }
+    }
+
+    private void getRootSetFromDictStack(Set<Integer> indexes, Context context) {
+        //dictStack
+        for (PSObject o : context.getDictionaryStack()) {
+
+            if (!(o.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) o.getDirectValue();
+            if (o == systemDict) {
+                // in systemdict we don't have any localRefs
+                indexes.add(ref.getTableIndex());
+            } else {
+                getUsingLocalVMIndexesByRef(indexes, ref);
+            }
+        }
+    }
+
+    private void getRootSetFromGraphicStack(Set<Integer> indexes, Context context) {
+        //graphicStack
+        for (GState gState : context.getGraphicStack()) {
+            PSObject oMatrix = gState.cTM.getMatrix();
+            PSObject oFont = gState.getFont();
+            //PSArray arr = (PSArray) oMatrix.getValue();
+            if ((oMatrix.getDirectValue() instanceof LocalRef)) {
+                LocalRef ref = (LocalRef) oMatrix.getDirectValue();
+                getUsingLocalVMIndexesByRef(indexes, ref);
+            }
+
+            if (oFont != null && (oFont.getDirectValue() instanceof LocalRef)) {
+                LocalRef ref = (LocalRef) oFont.getDirectValue();
+                getUsingLocalVMIndexesByRef(indexes, ref);
+            }
+        }
+        LocalRef locRefCTM = context.getGState().getLocalRefCTM();
+        //LocalRef locRefDash = GState.getInstance().getLocalRefDash() ;
+        if (locRefCTM != null) {
+            getUsingLocalVMIndexesByRef(indexes, locRefCTM);
+        }
+        //if(locRefDash != null){
+        //    getUsingLocalVMIndexesByRef(indexes, locRefDash);
+        //}
+    }
+
+    private void getRootSetFromOperandStack(Set<Integer> indexes, Context context) {
+        //operandStack
+        for (PSObject o : context.getOperandStack()) {
+            if (!(o.getDirectValue() instanceof LocalRef)) continue;
+            LocalRef ref = (LocalRef) o.getDirectValue();
+            getUsingLocalVMIndexesByRef(indexes, ref);
+        }
     }
 
     private void getUsingLocalVMIndexesByRef(Set<Integer> indexes, LocalRef ref) {
@@ -280,24 +294,25 @@ public class Runtime {
     }
 
     public void clearAll() {
-        List<Runnable> runnables = service.shutdownNow();
-        for (Runnable runnable : runnables) {
-            ((PSThread) runnable).getContext().clearAll();
+//        List<Runnable> runnables = service.shutdownNow();
+//        for (Runnable runnable : runnables) {
+//            ((PSThread) runnable).getContext().clearAll();
+//        }
+        for (Context context : contextMap.values()) {
+            context.clearAll();
         }
+        contextMap.clear();
+        mainContext = null;
         localVM.clear();
         isGlobal = false;
 /*todo remove*/
         systemDict = null;
 /*todo*/
 
-        bcGenManager = new BytecodeGeneratorManager();
         DynamicClassLoader.reset();
 
 
         PSObject.resetExecutionCounts();
-//        executionCount = 0;
-
-        nameVersions.clear();
     }
 
     public CompositeValue getValueByLocalRef(LocalRef ref) {
@@ -345,19 +360,6 @@ public class Runtime {
     }
 
 
-    public int getNameVersion(String name) {
-        Integer version = nameVersions.get(name);
-        if (version == null) {
-            version = -1;
-            nameVersions.put(name, version);
-        }
-        return version;
-    }
-
-    public void updateNameVersions(String name) {
-        int version = getNameVersion(name);
-        nameVersions.put(name, version + 1);
-    }
 
     public int getLocalVMSize() {
         return localVM.size();
@@ -379,13 +381,20 @@ public class Runtime {
     }
 
     public void addContext(Context context) {
-        contextSet.add(context);
+        context.setId(maxContextNumber);
+        contextMap.put(maxContextNumber, context);
+        maxContextNumber++;
     }
 
     public void removeContext(Context context) {
         if (context != mainContext) {
-            contextSet.remove(context);
+            contextMap.remove(context.getId());
         }
+    }
+
+    public Context getContext(int id) {
+        Context context = contextMap.get(id);
+        return context;
     }
 
 

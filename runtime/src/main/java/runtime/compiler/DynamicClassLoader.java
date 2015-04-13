@@ -31,6 +31,18 @@ public class DynamicClassLoader extends ClassLoader {
         //remove here, because the class won't be loaded another time anyway
         byte[] bytecode = bytecodes.remove(name);
         if (bytecode != null) {
+//            FileOutputStream output = null;
+//            try {
+//                output = new FileOutputStream(new File(name+".class"));
+//                output.write(bytecode);
+//                output.close();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+
             return defineClass(name, bytecode, 0, bytecode.length);
         } else {
             return super.findClass(name);

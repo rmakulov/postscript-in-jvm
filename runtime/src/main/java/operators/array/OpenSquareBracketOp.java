@@ -1,11 +1,11 @@
 package operators.array;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import runtime.Context;
-import runtime.Runtime;
 
 public class OpenSquareBracketOp extends Operator {
 
@@ -15,11 +15,14 @@ public class OpenSquareBracketOp extends Operator {
         super();
     }
 
-    public static void compile() {
-        runtime.Runtime runtime = Runtime.getInstance();
+    public void compile(Context context) {
+        //runtime.Runtime runtime = Runtime.getInstance();
 //        OpenSquareBracketOp.instance.interpret();
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/array/OpenSquareBracketOp", "instance", "Loperators/array/OpenSquareBracketOp;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/OpenSquareBracketOp", "interpret", "()V", false);
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        mv.visitFieldInsn(GETSTATIC, "operators/array/OpenSquareBracketOp", "instance", "Loperators/array/OpenSquareBracketOp;");
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/OpenSquareBracketOp", "interpret", "(Lruntime/Context;)V", false);
     }
 
     @Override

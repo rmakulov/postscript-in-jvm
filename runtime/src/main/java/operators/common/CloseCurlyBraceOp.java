@@ -24,9 +24,9 @@ public class CloseCurlyBraceOp extends Operator {
     @Override
     public void interpret(Context context) {
 
-        if (runtime.isCompiling && !runtime.bcGenManager.isSleep()) {
-            runtime.bcGenManager.endBytecode();
-            PSBytecode originBytecode = runtime.bcGenManager.getCur();
+        if (runtime.isCompiling && !context.bcGenManager.isSleep()) {
+            context.bcGenManager.endBytecode();
+            PSBytecode originBytecode = context.bcGenManager.getCur();
 //            BytecodeProc bytecodeProc = new BytecodeProc(originBytecode);
 
 //            context.pushToOperandStack(new PSObject(bytecodeProc));
@@ -43,16 +43,16 @@ public class CloseCurlyBraceOp extends Operator {
     }
 
 
-    public static void compile() {
+    public static void compile(Context context) {
         runtime.Runtime runtime = Runtime.getInstance();
 //        context.pushToOperandStack(new PSObject(runtime.bcGenManager.getCur()));
-        runtime.bcGenManager.endBytecode();
-        PSBytecode bytecode = runtime.bcGenManager.getCur();
+        context.bcGenManager.endBytecode();
+        PSBytecode bytecode = context.bcGenManager.getCur();
         String bytecodeName = bytecode.getStrValue();
 
-        MethodVisitor mv = runtime.bcGenManager.mv;
-        String name = runtime.bcGenManager.bytecodeName;
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/PSBytecode");
@@ -60,7 +60,7 @@ public class CloseCurlyBraceOp extends Operator {
         mv.visitLdcInsn(bytecodeName);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/PSBytecode", "<init>", "(Ljava/lang/String;)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
 
     }
 

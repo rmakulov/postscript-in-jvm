@@ -1,11 +1,11 @@
 package operators.dictionary;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import runtime.Context;
-import runtime.Runtime;
 
 /**
  * Created by Дмитрий on 17.03.14.
@@ -27,10 +27,13 @@ public class OpenChevronOp extends Operator {
         return new PSName("<<");
     }
 
-    public static void compile() {
-        runtime.Runtime runtime = Runtime.getInstance();
+    public void compile(Context context) {
+        // runtime.Runtime runtime = Runtime.getInstance();
 //        OpenChevronOp.instance.interpret();
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/OpenChevronOp", "instance", "Loperators/dictionary/OpenChevronOp;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/OpenChevronOp", "interpret", "()V", false);
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        mv.visitFieldInsn(GETSTATIC, "operators/dictionary/OpenChevronOp", "instance", "Loperators/dictionary/OpenChevronOp;");
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/OpenChevronOp", "interpret", "(Lruntime/Context;)V", false);
     }
 }

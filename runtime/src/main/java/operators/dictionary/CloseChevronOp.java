@@ -1,5 +1,6 @@
 package operators.dictionary;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.values.composite.PSDictionary;
 import psObjects.values.simple.Operator;
@@ -40,10 +41,13 @@ public class CloseChevronOp extends Operator {
     }
 
 
-    public void compile() {
+    public void compile(Context context) {
         runtime.Runtime runtime = Runtime.getInstance();
 //        CloseChevronOp.instance.interpret();
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/dictionary/CloseChevronOp", "instance", "Loperators/dictionary/CloseChevronOp;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/CloseChevronOp", "interpret", "()V", false);
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        mv.visitFieldInsn(GETSTATIC, "operators/dictionary/CloseChevronOp", "instance", "Loperators/dictionary/CloseChevronOp;");
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "operators/dictionary/CloseChevronOp", "interpret", "(Lruntime/Context;)V", false);
     }
 }

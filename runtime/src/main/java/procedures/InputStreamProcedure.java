@@ -38,7 +38,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
 
     @Override
     public boolean execNext() {
-        if (runtime.bcGenManager.isSleep()) {
+        if (context.bcGenManager.isSleep()) {
             return super.execNext();
         } else {
             compileNext();
@@ -59,13 +59,13 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                 break;
             case LIT_NAME:
                 // name with "/". it is executable by default
-                PSName.literalCompile(text);
+                PSName.literalCompile(context, text);
                 break;
             case INTEGER:
-                PSInteger.compile(Integer.parseInt(text));
+                PSInteger.compile(context, Integer.parseInt(text));
                 break;
             case OPEN_CURLY_BRACE:
-                runtime.bcGenManager.startCodeGenerator();
+                context.bcGenManager.startCodeGenerator(context);
                 procDepth++;
                 break;
             case CLOSE_CURLY_BRACE:
@@ -73,45 +73,45 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
                     CloseCurlyBraceOp.instance.interpret(context);
                 } else {
 
-                    CloseCurlyBraceOp.compile();
+                    CloseCurlyBraceOp.compile(context);
                     //it is needed only in inner bytecode but after finishing more inner bytecode
-                    runtime.bcGenManager.incInstrCounter();
+                    context.bcGenManager.incInstrCounter();
                 }
                 procDepth--;
                 break;
             case OPEN_SQUARE_BRACKET:
                 // array
-                OpenSquareBracketOp.instance.compile();
+                OpenSquareBracketOp.instance.compile(context);
 //                return new PSObject(PSMark.OPEN_SQUARE_BRACKET);
                 break;
             case CLOSE_SQUARE_BRACKET:
-                CloseSquareBracketOp.instance.compile();
+                CloseSquareBracketOp.instance.compile(context);
 //                return new PSObject(PSMark.CLOSE_SQUARE_BRACKET);
                 break;
             case STRINGS:
                 // strings
                 String s = text.replaceAll("\\\\([\\r]?\\n|\\r)", "");
-                PSString.compile(s);
+                PSString.compile(context, s);
                 break;
             case OPEN_CHEVRON_BRACKET:
-                OpenChevronOp.instance.compile();
+                OpenChevronOp.instance.compile(context);
                 break;
             case CLOSE_CHEVRON_BRACKET:
-                CloseChevronOp.instance.compile();
+                CloseChevronOp.instance.compile(context);
 //                return new PSObject(PSMark.CLOSE_CHEVRON_BRACKET);
                 break;
             case REAL:
-                PSReal.compile(Double.parseDouble(text));
+                PSReal.compile(context, Double.parseDouble(text));
                 break;
             case HEX:
                 //hex
-                PSInteger.compile(Integer.parseInt(text, 16));
+                PSInteger.compile(context, Integer.parseInt(text, 16));
                 break;
             case RADIX:
                 //radix
                 String[] args = text.split("#");
                 int radix = Integer.parseInt(args[0]);
-                PSInteger.compile(Integer.parseInt(args[1], radix));
+                PSInteger.compile(context, Integer.parseInt(args[1], radix));
                 break;
             case OPERATOR:
                 PSDictionary dict = (PSDictionary) runtime.getSystemDict().getValue();
@@ -136,7 +136,7 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
             case CLOSE_SQUARE_BRACKET:
             case OPEN_CHEVRON_BRACKET:
             case CLOSE_CHEVRON_BRACKET:
-                runtime.bcGenManager.incInstrCounter();
+                context.bcGenManager.incInstrCounter();
             case CLOSE_CURLY_BRACE:
             case OPEN_CURLY_BRACE:
             case COMMENTS:

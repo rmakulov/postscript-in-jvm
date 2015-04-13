@@ -1,11 +1,6 @@
 package runtime;
 
 import procedures.Procedure;
-import procedures.StringProcedure;
-import psObjects.PSObject;
-import psObjects.values.composite.PSString;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by User on 21/3/2015.
@@ -31,14 +26,17 @@ public class PSThread extends Thread {
 //            }
 //        } else {
         //context.clearCallStack();
-        context.pushToCallStack(initProcedure);
-        try {
-            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("(graphicsEngine/basics/glib.ps) (r) file run"))));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         if (!runtime.isCompiling) {
+            context.pushToCallStack(initProcedure);
+//            try {
+//                StringProcedure glibProcedure = new StringProcedure(context, new PSObject(new PSString("(graphicsEngine/basics/glib.ps) (r) file run")));
+//                context.pushToCallStack(glibProcedure);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
             context.executeCallStack();
+        } else {
+            initProcedure.execute();
         }
         runtime.removeContext(context);
 //        }

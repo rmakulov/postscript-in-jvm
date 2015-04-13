@@ -64,4 +64,10 @@ public abstract class Procedure {
     public boolean isExitable() {
         return false;
     }
+
+    public void execute() {
+        while (hasNext()) {
+            execNext();
+        }
+    }
 }

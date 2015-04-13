@@ -4,6 +4,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import psObjects.values.simple.PSBytecode;
+import runtime.Context;
 
 import java.util.Stack;
 
@@ -40,8 +41,8 @@ public class BytecodeGeneratorManager implements Opcodes {
         }
     }
 
-    public void startCodeGenerator() {
-        bcGen = new BytecodeGenerator(lastNumber++);
+    public void startCodeGenerator(Context context) {
+        bcGen = new BytecodeGenerator(context, lastNumber++);
         bytecodeGenerators.push(bcGen);
         initEverything();
 

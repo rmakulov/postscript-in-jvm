@@ -1,5 +1,6 @@
 package operators.array;
 
+import org.objectweb.asm.MethodVisitor;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSArray;
@@ -43,10 +44,13 @@ public class CloseSquareBracketOp extends Operator {
         return new PSName("]");
     }
 
-    public static void compile() {
+    public void compile(Context context) {
         runtime.Runtime runtime = Runtime.getInstance();
 //        CloseSquareBracketOp.instance.interpret();
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, "operators/array/CloseSquareBracketOp", "instance", "Loperators/array/CloseSquareBracketOp;");
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/CloseSquareBracketOp", "interpret", "()V", false);
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        mv.visitFieldInsn(GETSTATIC, "operators/array/CloseSquareBracketOp", "instance", "Loperators/array/CloseSquareBracketOp;");
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+        mv.visitMethodInsn(INVOKEVIRTUAL, "operators/array/CloseSquareBracketOp", "interpret", "(Lruntime/Context;)V", false);
     }
 }

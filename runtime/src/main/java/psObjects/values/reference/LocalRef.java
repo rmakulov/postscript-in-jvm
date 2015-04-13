@@ -71,8 +71,8 @@ public class LocalRef extends Reference {
       /*  PSObject psObject = new PSObject(new LocalRef(tableIndex), Attribute.getAttributeByIndex(attributeIndex));
         runtime.pushToOperandStack(psObject);*/
 
-        String name = runtime.bcGenManager.bytecodeName;
-        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
 
 //        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
@@ -84,9 +84,10 @@ public class LocalRef extends Reference {
         mv.visitLdcInsn(attributeIndex);
         mv.visitMethodInsn(INVOKESTATIC, "psObjects/Attribute", "getAttributeByIndex", "(I)LpsObjects/Attribute;", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;LpsObjects/Attribute;)V", false);
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        checkExitCompile();
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
+        checkExitCompile(context);
 //        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 

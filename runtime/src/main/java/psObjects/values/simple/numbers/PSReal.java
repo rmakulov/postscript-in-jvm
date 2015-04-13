@@ -33,10 +33,11 @@ public class PSReal extends PSNumber {
     @Override
     public void compile(Context context, PSObject obj) {
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGenManager.bytecodeName;
-        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
 
 //        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
@@ -46,8 +47,8 @@ public class PSReal extends PSNumber {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
 //        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        checkExitCompile();
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
+        checkExitCompile(context);
     }
 
     @Override
@@ -55,19 +56,20 @@ public class PSReal extends PSNumber {
         return value + "";
     }
 
-    public static void compile(double value) {
+    public static void compile(Context context, double value) {
         Runtime runtime = Runtime.getInstance();
 //        runtime.pushToOperandStack(new PSObject(new PSReal(value)));
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGenManager.bytecodeName;
-        runtime.bcGenManager.mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/PSObject");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
-        runtime.bcGenManager.mv.visitInsn(DUP);
-        runtime.bcGenManager.mv.visitLdcInsn(value);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(D)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+        mv.visitTypeInsn(NEW, "psObjects/PSObject");
+        mv.visitInsn(DUP);
+        mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSReal");
+        mv.visitInsn(DUP);
+        mv.visitLdcInsn(value);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSReal", "<init>", "(D)V", false);
+        mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

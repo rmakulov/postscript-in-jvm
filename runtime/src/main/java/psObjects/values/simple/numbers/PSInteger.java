@@ -80,9 +80,10 @@ public class PSInteger extends PSNumber {
     public void compile(Context context, PSObject obj) {
 //        runtime.pushToOperandStack(new PSObject(new PSInteger(5)));
         //(new PSObject(new PSInteger(5))).interpret(0);
-        String name = runtime.bcGenManager.bytecodeName;
-        MethodVisitor mv = runtime.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
 //        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
@@ -92,17 +93,17 @@ public class PSInteger extends PSNumber {
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
         //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        checkExitCompile();
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
+        checkExitCompile(context);
 
     }
 
-    public static void compile(int value) {
+    public static void compile(Context context, int value) {
         Runtime runtime = Runtime.getInstance();
         //runtime.bcGenManager.mv.visitVarInsn(ALOAD, 0);
-        String name = runtime.bcGenManager.bytecodeName;
-        MethodVisitor mv = runtime.bcGenManager.mv;
-        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
+        String name = context.bcGenManager.bytecodeName;
+        MethodVisitor mv = context.bcGenManager.mv;
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
@@ -110,6 +111,6 @@ public class PSInteger extends PSNumber {
         mv.visitLdcInsn(value);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+        mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

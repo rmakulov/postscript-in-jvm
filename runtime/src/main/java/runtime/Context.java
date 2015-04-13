@@ -8,6 +8,7 @@ import psObjects.values.composite.PSDictionary;
 import psObjects.values.reference.GlobalRef;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
+import runtime.compiler.BytecodeGeneratorManager;
 import runtime.graphics.GState;
 import runtime.stack.CallStack;
 import runtime.stack.DictionaryStack;
@@ -25,6 +26,9 @@ public class Context {
     private DictionaryStack dictionaryStack = new DictionaryStack();
     private GraphicStack graphicStack = new GraphicStack();
     private CallStack callStack = new CallStack();
+    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
+    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
+
 
     private PSObject userDict, globalDict, systemDict;
 
@@ -33,6 +37,7 @@ public class Context {
     //costyl#1
     private HashMap<Integer, PSObject> cvxGlobalObjectMap = new HashMap<Integer, PSObject>();
     private boolean ALoading = false;
+    private int id;
 
     public void pushToOperandStack(PSObject psObject) {
         //System.out.println("\t\t\t\t\t\t\t\t\t\t\t" + psObject.getValue().toString());
@@ -290,10 +295,48 @@ public class Context {
         userDict = null;
         systemDict = null;
         globalDict = null;
+
+        bcGenManager = new BytecodeGeneratorManager();
+        nameVersions.clear();
+
     }
 
     public void init() {
         initDictionaries(Runtime.getInstance().getSystemDict());
         graphicStack.init();
+    }
+
+    public int getNameVersion(String name) {
+        Integer version = nameVersions.get(name);
+        if (version == null) {
+            version = -1;
+            nameVersions.put(name, version);
+        }
+        return version;
+    }
+
+    public void updateNameVersions(String name) {
+        int version = getNameVersion(name);
+        nameVersions.put(name, version + 1);
+    }
+
+    public BytecodeGeneratorManager getBcGenManager() {
+        return bcGenManager;
+    }
+
+    public HashMap<String, Integer> getNameVersions() {
+        return nameVersions;
+    }
+
+    public void setNameVersions(HashMap<String, Integer> nameVersions) {
+        this.nameVersions = nameVersions;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 }

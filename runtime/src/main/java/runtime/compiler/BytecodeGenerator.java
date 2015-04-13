@@ -2,6 +2,7 @@ package runtime.compiler;
 
 import org.objectweb.asm.*;
 import psObjects.values.simple.PSBytecode;
+import runtime.Context;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,9 +25,11 @@ public class BytecodeGenerator implements Opcodes {
 
     private int instrCounter = 0;
     private boolean consoleOutput = false;
+    private Context context;
 
 
-    public BytecodeGenerator(int classNumber) {
+    public BytecodeGenerator(Context context, int classNumber) {
+        this.context = context;
         operatorIndexesTest.put(1, "one");
         this.classNumber = classNumber;
         name = classNumber + "";
@@ -37,6 +40,8 @@ public class BytecodeGenerator implements Opcodes {
 
         fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, "runtime", "Lruntime/Runtime;", null, null);
         fv.visitEnd();
+        fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, "context", "Lruntime/Context;", null, null);
+        fv.visitEnd();
 
         mainMV.visitCode();
 
@@ -44,12 +49,20 @@ public class BytecodeGenerator implements Opcodes {
         startMethod();
     }
 
-    private void startClinitMethod(int number) {
+    private void startClinitMethod(int classNumber) {
+        String className = Integer.toString(classNumber);
         clinitMV = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
         clinitMV.visitCode();
 
         clinitMV.visitMethodInsn(INVOKESTATIC, "runtime/Runtime", "getInstance", "()Lruntime/Runtime;", false);
-        clinitMV.visitFieldInsn(PUTSTATIC, Integer.toString(number), "runtime", "Lruntime/Runtime;");
+        clinitMV.visitFieldInsn(PUTSTATIC, className, "runtime", "Lruntime/Runtime;");
+
+        //defining context field
+        clinitMV.visitMethodInsn(INVOKESTATIC, "runtime/Runtime", "getInstance", "()Lruntime/Runtime;", false);
+        clinitMV.visitLdcInsn(context.getId());
+        clinitMV.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "getContext", "(I)Lruntime/Context;", false);
+        clinitMV.visitFieldInsn(PUTSTATIC, className, "context", "Lruntime/Context;");
+
     }
 
     private void endClinitMethod() {
@@ -79,8 +92,15 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public PSBytecode endBytecode() {
+        //just debug output
+
+
         endMethod();
         endClinitMethod();
+        //System.out.println("Output bcGen");
+        //mainMV.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        //mainMV.visitLdcInsn("end bytecode");
+        //mainMV.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
         Label[] l = new Label[methodNumber + 1];
         for (int i = 1; i < methodNumber; i++) {
             mainMV.visitMethodInsn(INVOKESTATIC, getBytecodeName(), "run_" + i, "()Z", false);
@@ -145,4 +165,8 @@ public class BytecodeGenerator implements Opcodes {
     public boolean lastMethodIsEmpty() {
         return instrCounter == 0;
     }
+
+
 }
+
+

@@ -22,15 +22,17 @@ public abstract class Operator extends SimpleValue implements Opcodes {
     @Override
     public void compile(Context context, PSObject obj) {
         //todo make in runtime current bytecode, I think it is ready
-        MethodVisitor mv = runtime.bcGenManager.mv;
+        MethodVisitor mv = context.bcGenManager.mv;
+        String name = context.bcGenManager.bytecodeName;
         String clName = this.getClass().getCanonicalName().replace(".", "/");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
-        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false);
-        checkExitCompile();
+        mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
+        checkExitCompile(context);
         //runtime.bcGenManager.mv.visitMethodInsn(INVOKEVIRTUAL, clName, "interpret", "()V", false);
     }
 

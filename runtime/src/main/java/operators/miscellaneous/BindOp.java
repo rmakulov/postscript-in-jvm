@@ -76,13 +76,13 @@ public class BindOp extends Operator {
                 int previousIndex = suspectOperatorName.lastIndexOf("/");
                 String name = suspectOperatorName.substring(previousIndex + 1, length - 2).toLowerCase();
                 if (context.checkIsOperator(name)) {
-                    transformMethod(method, suspectOperatorName);
+                    transformMethod(context, method, suspectOperatorName);
                 }
             }
         }
     }
 
-    private void transformMethod(MethodNode method, String suspectOperatorName) {
+    private void transformMethod(Context context, MethodNode method, String suspectOperatorName) {
         InsnList insnList = method.instructions;
         Iterator ite = insnList.iterator();
         int numberOfMethodEndingInstructions = 3;
@@ -97,8 +97,10 @@ public class BindOp extends Operator {
                 tempList.add(new InsnNode(DUP));
                 tempList.add(new FieldInsnNode(GETSTATIC, suspectOperatorName, "instance", "L" + suspectOperatorName + ";"));
                 tempList.add(new MethodInsnNode(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false));
+                String name = context.bcGenManager.bytecodeName;
+                tempList.add(new FieldInsnNode(GETSTATIC, name, "context", "Lruntime/Context;"));
                 tempList.add(new InsnNode(ICONST_0));
-                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(I)Z", false));
+                tempList.add(new MethodInsnNode(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false));
                 LabelNode l8 = new LabelNode();
                 tempList.add(new JumpInsnNode(IFNE, l8));
 //                mv.visitJumpInsn(IFNE, l8);

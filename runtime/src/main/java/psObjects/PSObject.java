@@ -28,7 +28,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private int maxLocalVMSize = 2000;
 
     public boolean execute(Context context, int procDepth) {
-        if (!runtime.isCompiling || runtime.bcGenManager.isSleep()) {
+        if (!runtime.isCompiling || context.bcGenManager.isSleep()) {
             return interpret(context, procDepth);
         } else {
             compile(context);

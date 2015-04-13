@@ -34,7 +34,7 @@ public class DefOp extends Operator {
         dictObj.setValue(newDict);
         if (psKey.getType() == Type.NAME) {
             String name = ((PSName) psKey.getValue()).getStrValue();
-            runtime.updateNameVersions(name);
+            context.updateNameVersions(name);
         }
     }
 

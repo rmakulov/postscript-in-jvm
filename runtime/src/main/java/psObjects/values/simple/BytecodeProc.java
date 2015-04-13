@@ -69,25 +69,25 @@ public class BytecodeProc extends SimpleValue {
         context.popFromOperandStack();
         CloseSquareBracketOp.instance.interpret(context);
         PSObject[] arr = ((PSArray) context.popFromOperandStack().getValue()).getArray();
-        runtime.bcGenManager.startCodeGenerator();
-        for (PSObject o : arr) {
+        context.bcGenManager.startCodeGenerator(context);
+//        for (PSObject o : arr) {
 //            if (o.getType() == Type.NAME && !(o.isBytecode()) && o.treatAs() == EXECUTABLE) {
-//                PSObject realValue = runtime.findValue(o);
+//                PSObject realValue = context.findValue(o);
 //                while (realValue.getType() == Type.NAME && !(realValue.isBytecode()) && realValue.treatAs() == EXECUTABLE) {
-//                    realValue = runtime.findValue(realValue);
+//                    realValue = context.findValue(realValue);
 //                }
-//                String name = runtime.bcGenManager.bytecodeName;
-//                MethodVisitor mv = runtime.bcGenManager.mv;
+//                String name = context.bcGenManager.bytecodeName;
+//                MethodVisitor mv = context.bcGenManager.mv;
 //                mv.visitInsn(ICONST_0);
 //                mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "execute", "(I)Z", false);
 //            } else {
 //                o.deepCompile();
 //            }
 //            o.deepCompile();
-        }
-        runtime.bcGenManager.endBytecode();
+// }
+        context.bcGenManager.endBytecode();
         boundCount++;
-        return runtime.bcGenManager.getCur();
+        return context.bcGenManager.getCur();
     }
 
     @Override
@@ -123,13 +123,15 @@ public class BytecodeProc extends SimpleValue {
             } else {
                 origin.compile(context, null);
             }
-            MethodVisitor mv = runtime.bcGenManager.mv;
-            String name = runtime.bcGenManager.bytecodeName;
-            mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "popFromOperandStack", "()LpsObjects/PSObject;", false);
+            MethodVisitor mv = context.bcGenManager.mv;
+            String name = context.bcGenManager.bytecodeName;
+            mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "popFromOperandStack", "()LpsObjects/PSObject;", false);
+            mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
             mv.visitInsn(ACONST_NULL);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(LpsObjects/PSObject;)V", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(Lruntime/ContextLpsObjects/PSObject;)V", false);
 
+            //todo maybe checkExitCompile
             Label l8 = new Label();
             mv.visitJumpInsn(IFNE, l8);
             mv.visitInsn(ICONST_0);
