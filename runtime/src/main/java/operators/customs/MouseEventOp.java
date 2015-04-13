@@ -27,7 +27,7 @@ public class MouseEventOp extends Operator {
             return;
         }
         try {
-            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("(graphicsEngine/basics/events/mouseEvent.ps) (r) file run"))));
+            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("mouseEvent"))));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

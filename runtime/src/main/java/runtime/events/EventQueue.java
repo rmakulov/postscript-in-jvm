@@ -2,6 +2,7 @@ package runtime.events;
 
 import operators.customs.KeyEventOp;
 import operators.customs.MouseEventOp;
+import procedures.StringProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
@@ -10,6 +11,8 @@ import psObjects.values.simple.numbers.PSInteger;
 import runtime.Context;
 import runtime.Runtime;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by User on 16/2/2015.
  */
@@ -17,14 +20,14 @@ public class EventQueue {
     private EventQueueItem first;
     private EventQueueItem last;
     private boolean isAwake;
-    private Context context;
+    private Context mainContext;
 
     public EventQueue() {
 
     }
 
-    public boolean add(Event event) {
-        Context context = getContext();
+    public synchronized boolean add(Event event) {
+        Context context = getMainContext();
         if (context.search(new PSObject(new PSName("gelements"))) == null) {
             return false;
         }
@@ -48,13 +51,19 @@ public class EventQueue {
         return null;
     }*/
 
-    public Event poll() {
+    public synchronized Event poll() {
         if (first == null) {
             return null;
+        } else if (first == last) {
+            last = null;
+            Event event = first.event;
+            first = null;
+            return event;
+        } else {
+            Event event = first.event;
+            first = first.next;
+            return event;
         }
-        EventQueueItem ans = first;
-        first = first.next;
-        return ans.event;
     }
 
     public boolean isEmpty() {
@@ -73,8 +82,8 @@ public class EventQueue {
         return isAwake;
     }
 
-    public void process() {
-        Context context = getContext();
+    private void process() {
+        Context context = getMainContext();
         isAwake = true;
         while (!isEmpty()) {
             Event event = poll();
@@ -104,6 +113,15 @@ public class EventQueue {
                     context.pushToOperandStack(x);
                     context.pushToOperandStack(y);
                     context.pushToOperandStack(type);
+
+//                    try {
+//                        context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("mouseEvent"))));
+//                    } catch (UnsupportedEncodingException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (!Runtime.getInstance().isCompiling) {
+//                        context.executeCallStack();
+//                    }
                     MouseEventOp.instance.interpret(context);
                     break;
             }
@@ -118,10 +136,10 @@ public class EventQueue {
         isAwake = false;
     }
 
-    private Context getContext() {
-        if (context == null) {
-            context = Runtime.getInstance().getMainContext();
+    private Context getMainContext() {
+        if (mainContext == null) {
+            mainContext = Runtime.getInstance().getMainContext();
         }
-        return context;
+        return mainContext;
     }
 }

@@ -27,7 +27,7 @@ public class KeyEventOp extends Operator {
         }
 //        PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
         try {
-            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("(graphicsEngine/basics/events/keyEvent.ps) (r) file run"))));
+            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("keyEvent"))));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

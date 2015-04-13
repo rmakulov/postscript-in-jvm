@@ -28,7 +28,7 @@ public class PSDrawer {
     private PSFrame frame = PSFrame.getInstance();
     private Runtime runtime = Runtime.getInstance();
     private long lastDrawTime = 0;
-    private final long repaintTime = 50;
+    private final long repaintTime = 1;
 
     private PSDrawer() {
     }

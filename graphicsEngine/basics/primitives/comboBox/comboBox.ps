@@ -44,7 +44,6 @@
                 bd /curLabel get
                 bd /isOpened get
                 bd /inFocus get
-
                 (graphicsEngine/basics/primitives/comboBox/paintComboBox.ps) (r) file run
 
                 bd paintChildren
@@ -53,54 +52,59 @@
     /y parent /y get parent /h get rY mul add cvi def
     /h parent /h get rH mul cvi def
 
-    /comboBoxDict <</rX rX /rY rY /rH rH /rW rW /labels labels
+    /comboBoxDict <<    /rX                 rX
+                        /rY                 rY
+                        /rH                 rH
+                        /rW                 rW
+                        /labels             labels
 
-                        /x parent /x get parent /w get rX mul add cvi
-                        /y parent /y get parent /h get rY mul add cvi
-                        /h parent /h get rH mul cvi
-                        /w parent /w get rW mul cvi
+                        /x                  parent /x get parent /w get rX mul add cvi
+                        /y                  parent /y get parent /h get rY mul add cvi
+                        /h                  parent /h get rH mul cvi
+                        /w                  parent /w get rW mul cvi
 
-                        /oldH h
-                        /oldY y
+                        /oldH               h
+                        /oldY               y
 
-                        /extH h labels length 1 add mul cvi
-                        /extY y h labels length mul sub cvi
+                        /extH               h labels length 1 add mul cvi
+                        /extY               y h labels length mul sub cvi
 
-                        /curLabel curLabel
-                        /parent parent /children []
-                        /paint /paint load
-                        /eventProcs eventProcDict
-                        /isOpened false
-                        /inFocus false
-                        /isFixed true
+                        /curLabel           curLabel
+                        /parent             parent
+                        /children           []
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /isOpened           false
+                        /inFocus            false
+                        /isFixed            true
+                        /refreshCoordinates /recountCoordinatesCB load
 
                          /checkBelonging
-                            {
-                                1 dict begin
-                                    /element exch def
-                                    /evY exch def
-                                    /evX exch def
+                                            {
+                                                1 dict begin
+                                                    /element exch def
+                                                    /evY exch def
+                                                    /evX exch def
 
-                                    /x element /x get def
-                                    /w element /w get def
+                                                    /x element /x get def
+                                                    /w element /w get def
 
-                                    element /isOpened get
-                                    {
-                                        /y element /extY get def
-                                        /h element /extH get def
-                                    }
-                                    {
-                                        /y element /oldY get def
-                                        /h element /oldH get def
+                                                    element /isOpened get
+                                                    {
+                                                        /y element /extY get def
+                                                        /h element /extH get def
+                                                    }
+                                                    {
+                                                        /y element /oldY get def
+                                                        /h element /oldH get def
+                                                    }
+                                                    ifelse
 
-                                    }
-                                    ifelse
-
-                                    evX x ge evY y ge and
-                                    x w add evX ge y h add evY ge and
-                                    and
-                                end
-                            }
+                                                    evX x ge evY y ge and
+                                                    x w add evX ge y h add evY ge and
+                                                    and
+                                                end
+                                            }
 
                       >> def
     comboBoxDict addElement
@@ -114,34 +118,40 @@
         repaintAll
  } addListToDict
 
- comboBoxDict /eventProcs get /CLICK {
+  comboBoxDict /eventProcs get /CLICK {
+                (click) print
+              /cDict exch def
 
-             dup /cDict exch def
-             cDict cDict /isOpened get /isOpened exch not put
 
-             cDict /isOpened get %%%% if( isOpened)
-             {
-               cDict cDict /extY get /y exch put
-               cDict cDict /extH get /h exch put
+              cDict/isOpened cDict /isOpened get not put
 
-             }
-             {
-               gelements /mouseY get /mouseY exch def
-               cDict /oldY get /oldY exch def
-               cDict /oldH get /oldH exch def
+              cDict /isOpened get %%%% if( isOpened)
+              {
+                cDict cDict /extY get /y exch put
+                cDict cDict /extH get /h exch put
+              }
+              {
+                gelements /mouseY get /mouseY exch def
+                cDict /oldY get /oldY exch def
+                cDict /oldH get /oldH exch def
 
-               oldY mouseY ge
-               {
-                 /shiftY oldY mouseY sub def
-                 cDict /curLabel shiftY oldH div cvi put
+                oldY mouseY ge
+                {
+                  /shiftY oldY mouseY sub def
+                  cDict /curLabel shiftY oldH div cvi put
+                }
+                if
 
-               }
-               if
 
-               dup oldY /y exch put  dup /oldH get /h exch put
-             }
-             ifelse
-             repaintAll} addListToDict
+              }
+              ifelse
+
+              /parent cDict /parent get def
+              cDict /rY          parent /y get cDict /y get sub parent /h get div   put
+              cDict /rH          cDict /h get parent /h get div                     put
+
+              repaintAll} addListToDict
+
 
 
     parent /children
@@ -172,14 +182,14 @@
             /rW cDict /rW get def
             /rH cDict /rH get def
 
-            /y      cDict /y get         def
-            /h      cDict /h get         def
-            /labels cDict /labels get    def
-
             cDict /x     parent /x get parent /w get rX mul add cvi   put
             cDict /y     parent /y get parent /h get rY mul add cvi   put
             cDict /h     parent /h get rH mul cvi                     put
             cDict /w     parent /w get rW mul cvi                     put
+
+            /y          cDict /y get         def
+            /h          cDict /h get         def
+            /labels     cDict /labels get    def
 
             cDict /oldH  h                                            put
             cDict /oldY  y                                            put

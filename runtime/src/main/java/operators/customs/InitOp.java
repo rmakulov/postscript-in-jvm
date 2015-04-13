@@ -3,6 +3,7 @@ package operators.customs;
 import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSName;
 import runtime.Context;
+import runtime.graphics.frame.PSFrame;
 import runtime.graphics.frame.PSImage;
 
 /**
@@ -19,6 +20,7 @@ public class InitOp extends Operator {
     @Override
     public void interpret(Context context) {
         PSImage.reset();
+        PSFrame.getInstance().repaint();
     }
 
     @Override

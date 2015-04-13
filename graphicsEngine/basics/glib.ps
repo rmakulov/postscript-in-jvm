@@ -1,6 +1,9 @@
 (graphicsEngine/basics/libs/listLib.ps) (r) file run
 (graphicsEngine/basics/libs/stringLib.ps) (r) file run
 (graphicsEngine/basics/libs/figureLib.ps) (r) file run
+(graphicsEngine/basics/libs/mouseEventLib.ps) (r) file run
+(graphicsEngine/basics/libs/keyEventLib.ps) (r) file run
+(graphicsEngine/basics/events/keyCodes.ps) (r) file run
 %PROLOG
 
 %--- args: element, void
@@ -9,6 +12,9 @@
                 gelements curnumber 3 2 roll put
                 gelements /maxElementNumber curnumber 1 add put
 } def
+
+%---
+(graphicsEngine/basics/primitives/roundButton/roundButton.ps) (r) file run
 %---
 (graphicsEngine/basics/primitives/button/button.ps) (r) file run
 %---
@@ -31,9 +37,14 @@
 
 %---
 /repaintAll {
-      init
-      scene dup /paint get exec
-    } def
+      usertime gelements /lastRepaintTime get sub 100 gt{
+        init
+        scene dup /paint get exec
+        gelements /lastRepaintTime usertime put
+        showpage
+      }
+      if
+} def
 %---params: elementDict, void -----
 /paintChildren{
     /element exch def
@@ -54,6 +65,8 @@
     }
     if
 } def
+
+
 %--- elementDict, void -----
 /moveToFront{
     /element exch def
@@ -136,20 +149,20 @@
 %---
 % params: x y set center of circles
 /wave {
-    /milliSleep
-    {
-            % Single arg off stack - milliseconds to sleep
-            /sleepInterval exch def
-            % Get our starting time
-            usertime /starttime exch def
-            {
-                    % Seconds since start
-                    usertime  starttime sub
-                    % Exit if interval is exceeded
-                    sleepInterval ge { exit } if
-            } loop
-    } def
-    %   transform
+    %/milliSleep
+    %{
+    %        % Single arg off stack - milliseconds to sleep
+    %        /sleepInterval exch def
+    %        % Get our starting time
+    %        usertime /starttime exch def
+    %        {
+    %                % Seconds since start
+    %                usertime  starttime sub
+    %                % Exit if interval is exceeded
+    %                sleepInterval ge { exit } if
+    %        } loop
+    %} def
+    %transform
     /y exch def
     /x exch def
     /r 20 def
@@ -157,10 +170,12 @@
     0.5 setgray
 
     %debug
-     100 {
+     %100 {
+     44 {
         x r add y moveto
         x y r 0 360 arc closepath stroke
-        repaintMainContext
+        %init
+        %repaintMainContext
         50 milliSleep
         %repaintAll
 
@@ -170,7 +185,7 @@
      } repeat
      %repaintAll
      %100 milliSleep
-     %repaintMainContext
+     repaintMainContext
 
 
 
@@ -224,6 +239,25 @@
     end
 } def
 
+%-------params------------
+%----children   :   array
+%    return     :   void
+%--------------------------
+/refreshCoordinatesForChildren{
+    1 dict begin
+    /children exch def
+    {
+         children length 0 eq
+         {exit}
+         {
+            /elem gelements children head get def
+            elem elem /refreshCoordinates get exec
+            elem /children get refreshCoordinatesForChildren
+            /children children tail def
+         } ifelse
+    } loop
+    end
+} def
 
 %--- param: gelement
 /setFocusedElement {
@@ -239,95 +273,167 @@
           gelements /focusedElement nElem put
          } if
 } def
+%--- param: gelement
+%    return: void
+% deleting from gelements
+/deleteWithChildren{
+    1 dict begin
+        /element exch  def
+        element /children get length 0 ne
+         {
+         /children element /children get def
+             {
+                  children length 0 eq
+                  { exit
+                  }
+                  {
+
+                     gelements children head  get deleteWithChildren
+                     /children  children tail def
+                  } ifelse
+             } loop
+         }
+         if
+         gelements element /number get undef
+    end
+} def
+
+%--- param: gelement
+%    return: void
+/deleteFromParent{
+    1 dict begin
+        /element exch  def
+        /number element /number get def
+        /parent element /parent get def
+            parent
+            /children
+            parent /children get number removeElementFromList
+        put
+    end
+} def
+
+%---
+%params: dict - gelement
+%        name - evType
+/findAncestorWithEventType{
+
+    /evType exch def
+    /element exch  def
+    /eventProcs element /eventProcs get def
+
+    eventProcs evType known
+
+    {
+        element
+        (MOVE) cvn evType eq not
+        {dup setFocusedElement }
+        if
+        eventProcs evType get execList %exit
+    }
+    {
+        /parent element /parent get def
+
+        parent null eq
+        {exit}
+        {parent evType findAncestorWithEventType}
+        ifelse
+    }
+    ifelse
+
+} def
+
+/resizeElement{
+     gelements /resizingElement get /resizingElement exch def
+        resizingElement null eq not
+        {
+            /num resizingElement /resize get def
+            /par resizingElement /parent get def
+
+            /minWidth resizingElement /minW get def
+            /minHigh  resizingElement /minH get def
+
+            /res1{
+                /newWidth mouseX resizingElement /x get sub def
+
+                newWidth minWidth gt
+                { resizingElement /w newWidth put }
+                { resizingElement /w minWidth put }
+                ifelse
+
+                resizingElement /rW resizingElement /w get resizingElement /parent get /w get div put
+            } def
+
+            /res3{
+
+
+                /yHigh resizingElement /y get resizingElement /h get add def
+                /newHigh yHigh mouseY sub def
+                newHigh minHigh gt
+                {
+                    resizingElement /y mouseY  put
+                    resizingElement /h newHigh put
+
+                }
+                { resizingElement /y yHigh minHigh sub  put
+                  resizingElement /h minHigh            put
+                }
+                ifelse
+
+                resizingElement /rY resizingElement /y get par /y get sub par /h get div    put
+                resizingElement /rH resizingElement /h get par /h get div                   put
+
+            } def
+
+            /res5{
+                /xRight resizingElement /x get resizingElement /w get add def
+                /newWidth xRight mouseX sub def
+
+                newWidth minWidth gt
+                {
+                    resizingElement /x mouseX   put
+                    resizingElement /w newWidth put
+                }
+                {
+                    resizingElement /x xRight minWidth sub  put
+                    resizingElement /w minWidth             put
+                }
+                ifelse
+
+                resizingElement /rX resizingElement /x get par /x get sub par /w get div    put
+                resizingElement /rW resizingElement /w get par /w get div                   put
+            } def
+
+            /res7{
+                /newHigh mouseY resizingElement /y get sub def
+
+                newHigh minHigh gt
+                { resizingElement /h mouseY resizingElement /y get sub put }
+                { resizingElement /h minHigh                           put }
+                ifelse
+
+                resizingElement /rH resizingElement /h get resizingElement /parent get /h get div put
+            } def
+
+            num 1 eq { res1 } if
+            num 3 eq { res3 } if
+            num 5 eq { res5 } if
+            num 7 eq { res7 } if
+
+            num 2 eq { res1 res3 } if
+            num 4 eq { res3 res5 } if
+            num 6 eq { res5 res7 } if
+            num 8 eq { res7 res1 } if
+            repaintAll
+        }
+        if
+} def
 
 /dragElement{
     1 dict begin
     gelements /mouseY get /mouseY exch def
     gelements /mouseX get /mouseX exch def
 
-    gelements /resizingElement get /resizingElement exch def
-    resizingElement null eq not
-    {
-        /num resizingElement /resize get def
-        /par resizingElement /parent get def
-
-        /minWidth resizingElement /minW get def
-        /minHigh  resizingElement /minH get def
-
-        /res1{
-            /newWidth mouseX resizingElement /x get sub def
-
-            newWidth minWidth gt
-            { resizingElement /w newWidth put }
-            { resizingElement /w minWidth put }
-            ifelse
-
-            resizingElement /rW resizingElement /w get resizingElement /parent get /w get div put
-        } def
-
-        /res3{
-
-
-            /yHigh resizingElement /y get resizingElement /h get add def
-            /newHigh yHigh mouseY sub def
-            newHigh minHigh gt
-            {
-                resizingElement /y mouseY  put
-                resizingElement /h newHigh put
-
-            }
-            { resizingElement /y yHigh minHigh sub  put
-              resizingElement /h minHigh            put
-            }
-            ifelse
-
-            resizingElement /rY resizingElement /y get par /y get sub par /h get div    put
-            resizingElement /rH resizingElement /h get par /h get div                   put
-
-        } def
-
-        /res5{
-            /xRight resizingElement /x get resizingElement /w get add def
-            /newWidth xRight mouseX sub def
-
-            newWidth minWidth gt
-            {
-                resizingElement /x mouseX   put
-                resizingElement /w newWidth put
-            }
-            {
-                resizingElement /x xRight minWidth sub  put
-                resizingElement /w minWidth             put
-            }
-            ifelse
-
-            resizingElement /rX resizingElement /x get par /x get sub par /w get div    put
-            resizingElement /rW resizingElement /w get par /w get div                   put
-        } def
-
-        /res7{
-            /newHigh mouseY resizingElement /y get sub def
-
-            newHigh minHigh gt
-            { resizingElement /h mouseY resizingElement /y get sub put }
-            { resizingElement /h minHigh                           put }
-            ifelse
-
-            resizingElement /rH resizingElement /h get resizingElement /parent get /h get div put
-        } def
-
-        num 1 eq { res1 } if
-        num 3 eq { res3 } if
-        num 5 eq { res5 } if
-        num 7 eq { res7 } if
-
-        num 2 eq { res1 res3 } if
-        num 4 eq { res3 res5 } if
-        num 6 eq { res5 res7 } if
-        num 8 eq { res7 res1 } if
-        repaintAll
-    }
-    if
+    resizeElement
 
     gelements /draggedElement get  /draggedElement exch def
     draggedElement null eq
@@ -352,6 +458,7 @@
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put
+gelements /lastRepaintTime 0 put
 /scene initScene def
 gelements /focusedElement scene put
 gelements /mouseX 0 put

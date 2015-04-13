@@ -34,44 +34,69 @@
               /rX exch def
               /paint {/bd exch def
                           bd recountCoordinates
-                          bd /x get
-                          bd /y get
-                          bd /w get
-                          bd /h get
-                          bd /label get
-                          bd /inFocus get
+
+                          bd /isAttached get
+                          {
+                                bd /parent get /x get bd /dX get add
+                                bd /parent get /y get bd /parent get /h get add bd /dY get add
+                          }
+                          { bd /x get bd /y get }
+                          ifelse
+
+                              bd /w get
+                              bd /h get
+                              bd /label get
+                              bd
                           (graphicsEngine/basics/primitives/labelField/paintLabelField.ps) (r) file run
                           bd paintChildren
                   } def
 
-              /labelFieldDict <</label label /label (Hello, World!) /rX rX /rY rY /rW rW /rH rH /parent parent /children []
+              /labelFieldDict <</label                  label
+                                /rX                     rX
+                                /rY                     rY
+                                /rW                     rW
+                                /rH                     rH
+                                /parent                 parent
+                                /children               []
 
-                                /x parent /x get parent /w get rX mul add cvi
-                                /y parent /y get parent /h get rY mul add cvi
-                                /h parent /h get rH mul cvi
-                                /w parent /w get rW mul cvi
 
-                                  /inFocus false
-                                  /isFixed true
-                                  /paint /paint load
-                                  /eventProcs eventProcDict
-                                  /checkBelonging
-                                      {
-                                          1 dict begin
-                                            /element exch def
-                                            /evY exch def
-                                            /evX exch def
+                                /x                      parent /x get parent /w get rX mul add cvi
+                                /y                      parent /y get parent /h get rY mul add cvi
+                                /h                      parent /h get rH mul cvi
+                                /w                      parent /w get rW mul cvi
 
-                                            /x element /x get def
-                                            /y element /y get def
-                                            /w element /w get def
-                                            /h element /h get def
+                                /inFocus                false
+                                /isFixed                true
 
-                                            evX x ge evY y ge and
-                                            x w add evX ge y h add evY ge and
-                                            and
-                                          end
-                                      }
+                                /isAttached             false
+                                /dX                     0
+                                /dY                     0
+                                /angle                  [true false]
+
+                                /paint                  /paint load
+                                /eventProcs             eventProcDict
+
+
+                                /color                  [0 0 0]
+                                /kegel                  12
+                                /refreshCoordinates     /recountCoordinates load
+                                /checkBelonging
+                                                        {
+                                                            1 dict begin
+                                                              /element exch def
+                                                              /evY exch def
+                                                              /evX exch def
+
+                                                              /x element /x get def
+                                                              /y element /y get def
+                                                              /w element /w get def
+                                                              /h element /h get def
+
+                                                              evX x ge evY y ge and
+                                                              x w add evX ge y h add evY ge and
+                                                              and
+                                                            end
+                                                        }
                          >> def
 
               labelFieldDict addElement

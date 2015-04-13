@@ -1,8 +1,7 @@
 %----------PROLOG----------%
 gsave
 
-
-/inFocus exch def
+/bd     exch def
 /label exch def
 /h exch def
 /w exch def
@@ -12,17 +11,24 @@ gsave
 x y translate
 /shift 5 def
 
+bd /color get aload pop setrgbcolor
+
 shift shift rmoveto
+
 /kegel h cvi shift 2 mul sub def
+bd /isAttached get
+{
+    /kegel bd /kegel get def
+} if
 /Rekha findfont kegel scalefont setfont
 
 gsave
     label show
 grestore
 
-    inFocus
-        { drawRect }
-    if
+    %inFocus
+    %    { drawRect }
+    %if
 x neg y neg translate
 grestore
 

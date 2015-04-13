@@ -14,7 +14,7 @@ statusdict /pagecount get /pagecountroutine exch def
                 % Seconds since start 
                 usertime 1000 idiv starttime sub 
                 % Exit if interval is exceeded 
-                sleepInterval ge { exit } if 
+                sleepInterval ge { (sleepInterval ge ) print exit } if
         } loop 
 } def 
 
@@ -41,7 +41,7 @@ statusdict /pagecount get /pagecountroutine exch def
                 % If pagecount has been stable for waitInterval seconds, 
                 % exit. 
                 curPg protoPg eq 
-                        { exit } 
+                        { exit }
                         { /curPg protoPg def } 
                 ifelse 
         } loop 

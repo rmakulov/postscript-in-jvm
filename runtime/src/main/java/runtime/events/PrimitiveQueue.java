@@ -36,20 +36,22 @@ public class PrimitiveQueue {
     public synchronized PSPrimitive poll() {
         if (first == null) {
             return null;
+        } else if (first == last) {
+            last = null;
+            PSPrimitive primitive = first.primitive;
+            first = null;
+            return primitive;
+        } else {
+            PSPrimitive primitive = first.primitive;
+            first = first.next;
+            return primitive;
         }
-        PrimitiveQueueItem ans = first;
-        first = first.next;
-        return ans.primitive;
     }
 
     public boolean isEmpty() {
         return first == null;
     }
 
-
-    public boolean isAwake() {
-        return isAwake;
-    }
 
     public synchronized void process() {
         isAwake = true;

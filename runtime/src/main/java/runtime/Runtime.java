@@ -193,11 +193,19 @@ public class Runtime {
     private void getRootSetFromCallStack(Set<Integer> indexes, Context context) {
         //callStack
         for (Procedure proc : context.getCallStack()) {
-            if (!(proc instanceof ArrayProcedure)) continue;
-            PSObject array = ((ArrayProcedure) proc).getArrayObject();
-            if (!(array.getDirectValue() instanceof LocalRef)) continue;
-            LocalRef ref = (LocalRef) array.getDirectValue();
-            getUsingLocalVMIndexesByRef(indexes, ref);
+            if ((proc instanceof ArrayProcedure)) {
+                PSObject array = ((ArrayProcedure) proc).getArrayObject();
+                if ((array.getDirectValue() instanceof LocalRef)) {
+                    LocalRef ref = (LocalRef) array.getDirectValue();
+                    getUsingLocalVMIndexesByRef(indexes, ref);
+                }
+            }else if (proc instanceof StringProcedure){
+                PSObject string =((StringProcedure) proc).getStringObject();
+                if ((string.getDirectValue() instanceof LocalRef)) {
+                    LocalRef ref = (LocalRef) string.getDirectValue();
+                    getUsingLocalVMIndexesByRef(indexes, ref);
+                }
+            }
         }
     }
 
@@ -289,7 +297,7 @@ public class Runtime {
     /*
     * Find array in Local VM by LocalRef and change value by index = valueIndex
      */
-    public LocalRef createLocalRef(CompositeValue value) {
+    public synchronized LocalRef createLocalRef(CompositeValue value) {
         return new LocalRef(addToLocalVM(value));
     }
 

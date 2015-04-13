@@ -66,14 +66,7 @@ public class PSFrame extends JFrame {
             }
         };
         panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                synchronized (this) {
-                    if (SwingUtilities.isLeftMouseButton(e)) {
-                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
-                    }
-                }
-            }
+
 
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -128,18 +121,18 @@ public class PSFrame extends JFrame {
                 }
             }
 
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                synchronized (this) {
-
-
-                    long time=System.currentTimeMillis();
-                    if((time-PSFrame.this.lastMoveMouseTime) > mouseMoveRefreshTime) {
-                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
-                        PSFrame.this.lastMoveMouseTime=time;
-                    }
-                }
-            }
+//            @Override
+//            public void mouseMoved(MouseEvent e) {
+//                synchronized (this) {
+//
+//
+//                    long time=System.currentTimeMillis();
+//                    if((time-PSFrame.this.lastMoveMouseTime) > mouseMoveRefreshTime) {
+//                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
+//                        PSFrame.this.lastMoveMouseTime=time;
+//                    }
+//                }
+//            }
         });
         setSize(psWidth, psHeight);
         setLocation(0, 0);

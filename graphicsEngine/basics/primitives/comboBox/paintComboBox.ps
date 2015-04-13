@@ -1,5 +1,4 @@
 % ------------PROLOG------------%
-
 /fillExtendedRect{
     /extH labels length oH mul def
 
@@ -58,34 +57,38 @@
 
 % --------------------------------------BEGIN-----------------------------------------%
 gsave
-    /inFocus exch def
-    /isOpened exch def
-    /curLabel exch def
-    /labels  exch def
-    /oH exch def
-    /oY exch def
-    /h exch def
-    /w exch def
-    /y exch def
-    /x exch def
+    1 dict begin
+        %/rect {roundedRect} def
+        /inFocus exch def
+        /isOpened exch def
+        /curLabel exch def
+        /labels  exch def
+        /oH exch def
+        /oY exch def
+        /h exch def
+        /w exch def
+        /y exch def
+        /x exch def
 
-    x oY translate
-    /shift 5 def
+        x oY translate
+        /shift 5 def
 
-    /kegel oH shift sub def
-    /Rekha findfont kegel scalefont setfont
+        /kegel oH shift sub def
+        /Rekha findfont kegel scalefont setfont
 
-    drawRectCB
-    isOpened inFocus and
-    {
-        fillExtendedRect
-        labels drawOptions
-        shift shift labels curLabel get drawString
-    }
-    {
-      fillSmallRect
-      shift shift labels curLabel get drawString }
-    ifelse
+        drawRectCB
+        isOpened inFocus and
+        {
+            fillExtendedRect
+            labels drawOptions
+            shift shift labels curLabel get drawString
+        }
+        {
+          fillSmallRect
+          shift shift labels curLabel get drawString
+        }
+        ifelse
+    end
 
 grestore
 % ------------END------------%

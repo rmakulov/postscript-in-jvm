@@ -26,7 +26,7 @@ public class ShowOp extends AbstractGraphicOperator {
             return;
         }
         String str = ((PSString) oStr.getValue()).getString();
-        PSDrawer.getInstance().show(context, str);
+        PSDrawer.getInstance().showOld(context, str);
     }
 
     @Override

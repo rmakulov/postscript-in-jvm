@@ -7,7 +7,10 @@
 
 450 600 100 70   (close)         window1 <</CLICK [{pop quit}[]] >>  button pop
 /mainWindow 100 100 400 400 scene << >> window def
-150 150 100 50 (Hello, World!)  mainWindow << >>    labelField pop
+
+/window2    100 400 400  400  scene << >> window def
+
+%150 150 100 50 (Hello, World!)  mainWindow << >>    labelField pop
 %150 500 400 200 (noth)          scene <</CLICK [{pop}[]] >> button pop
 150 200 100 50   (mirror)        mainWindow <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
 %
