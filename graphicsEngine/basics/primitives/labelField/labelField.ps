@@ -80,6 +80,7 @@
                                 /color                  [0 0 0]
                                 /kegel                  12
                                 /refreshCoordinates     /recountCoordinates load
+                                /objName                   (labelField)
                                 /checkBelonging
                                                         {
                                                             1 dict begin
@@ -101,7 +102,10 @@
 
               labelFieldDict addElement
 
-              labelFieldDict /eventProcs get /CLICK {  pop repaintAll} addListToDict
+              labelFieldDict /eventProcs get /CLICK {  } addListToDict
+              labelFieldDict /eventProcs get /PRESS {  } addListToDict
+              labelFieldDict /eventProcs get /RELEASE {} addListToDict
+
 
               parent /children
                           parent /children get

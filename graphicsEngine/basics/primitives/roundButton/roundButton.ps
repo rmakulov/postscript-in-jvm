@@ -37,6 +37,7 @@
                         /eventProcs         eventProcDict
                         /isPressed          false
                         /isFixed            true
+                        /objName               (roundButton)
                         /refreshCoordinates /recountXY load
                         /checkBelonging
                                         {
@@ -63,6 +64,8 @@
 
     roundButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
     roundButtonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
+
+    %roundButtonDict /eventProcs get /CLICK { } addListToDict
 
     parent /children
         parent /children get

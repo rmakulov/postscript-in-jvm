@@ -2,8 +2,16 @@
 
 
 
+%450 500 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
+%500 550 16       (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale (a) print repaintAll}[]] >> checkBox pop
+%500 550 16       (vertical)      scene <</CLICK [{pop (a) print}[]] >> checkBox pop
+
 /w1 0 0 400 400 scene << >> window def
 %-15 -10 7 [ true true] [1 0 0] w1 << >> roundButton pop
+
+10 200 200 30 [ (Table) (Mouse) (Screen) ] 1  w1 <<  >> comboBox pop
+10 200 200 30 [ (Table) (Mouse) (Screen) ] 1  scene <<  >> comboBox pop
+
 
 repaintAll
 

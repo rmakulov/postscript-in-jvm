@@ -58,7 +58,7 @@
         /element    exch def
         element /children get length 0 ne
         {
-        /children element /children get def
+            /children element /children get def
             /elementForCheck null def
             /isFound false def
             {
@@ -68,12 +68,12 @@
                  {
                     children tail
                     evX evY gelements children head  get  dup dup 5 1 roll /checkBelonging get  exec
-                    {/elementForCheck exch  def
+                    {/elementForCheck exch def
                       /isFound true def
                     }
                     {pop}
                     ifelse
-                    /children  exch def
+                    /children exch def
                  } ifelse
             } loop
 

@@ -69,6 +69,12 @@
                         /extH               h labels length 1 add mul cvi
                         /extY               y h labels length mul sub cvi
 
+                        /rOldH              rH
+                        /rOldY              rY
+
+                        /rExtH              h labels length 1 add mul cvi parent /h get div cvi
+                        /rExtY              y h labels length mul sub cvi parent /y get sub parent /h get div cvi
+
                         /curLabel           curLabel
                         /parent             parent
                         /children           []
@@ -77,7 +83,9 @@
                         /isOpened           false
                         /inFocus            false
                         /isFixed            true
+                        /objName            (comboBox)
                         /refreshCoordinates /recountCoordinatesCB load
+                        /closeElement       /closeComboBox load
 
                          /checkBelonging
                                             {
@@ -108,33 +116,31 @@
 
                       >> def
     comboBoxDict addElement
-    
 
-
- comboBoxDict /eventProcs get /PRESS {
-        /cDict exch def
-        cDict  moveToFront
-        cDict setFocusedElement
-        repaintAll
- } addListToDict
-
-  comboBoxDict /eventProcs get /CLICK {
-                (click) print
+ comboBoxDict /eventProcs get /CLICK {
               /cDict exch def
 
-
-              cDict/isOpened cDict /isOpened get not put
-
-              cDict /isOpened get %%%% if( isOpened)
+              cDict /isOpened cDict /isOpened get not put
+              cDict /isOpened get
               {
                 cDict cDict /extY get /y exch put
                 cDict cDict /extH get /h exch put
+
+                cDict /rY cDict /rExtY get put
+                cDict /rH cDict /rExtH get put
               }
               {
                 gelements /mouseY get /mouseY exch def
                 cDict /oldY get /oldY exch def
                 cDict /oldH get /oldH exch def
 
+                cDict /y oldY put
+                cDict /h oldH put
+
+                cDict /rY cDict /rOldY get put
+                cDict /rH cDict /rOldH get put
+
+                cDict
                 oldY mouseY ge
                 {
                   /shiftY oldY mouseY sub def
@@ -142,17 +148,27 @@
                 }
                 if
 
-
               }
               ifelse
 
               /parent cDict /parent get def
-              cDict /rY          parent /y get cDict /y get sub parent /h get div   put
-              cDict /rH          cDict /h get parent /h get div                     put
+
+              cDict /rY          cDict /y get parent /y get sub parent /h get div  put
+              cDict /rH          cDict /h get parent /h get div                    put
 
               repaintAll} addListToDict
 
 
+ comboBoxDict /eventProcs get /PRESS {
+        /cDict exch def
+        cDict  moveToFront
+
+        repaintAll
+ } addListToDict
+
+ comboBoxDict /eventProcs get /RELEASE {
+
+ } addListToDict
 
     parent /children
                 parent /children get
@@ -190,12 +206,47 @@
             /y          cDict /y get         def
             /h          cDict /h get         def
             /labels     cDict /labels get    def
+            /rOldH      cDict /rOldH get     def
+            /rOldY      cDict /rOldY get     def
+            /parH       parent /h get        def
+            /parY       parent /y get        def
 
-            cDict /oldH  h                                            put
-            cDict /oldY  y                                            put
-            cDict /extH  h labels length 1 add mul cvi                put
-            cDict /extY  y h labels length mul sub cvi                put
+            cDict /oldH  parH rOldH mul cvi                           put
+            cDict /oldY  parY parH rY mul add cvi                     put
+
+            /oldH       cDict /oldH get     def
+            /oldY       cDict /oldY get     def
+
+            cDict /extH  oldH labels length 1 add mul cvi                put
+            cDict /extY  oldY oldH labels length mul sub cvi             put
+
         }
         if
     end
 } def
+
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%    return     :   void
+%--------------------------
+/closeComboBox{
+    1 dict begin
+        /cDict exch def
+
+       cDict /isOpened false put
+
+       /oldY cDict /oldY get def
+       /oldH cDict /oldH get def
+%%
+%%
+       cDict /y oldY put
+       cDict /h oldH put
+
+       cDict /rY cDict /rOldY get put
+       cDict /rH cDict /rOldH get put
+%
+    end
+} def
+

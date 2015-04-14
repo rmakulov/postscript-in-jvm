@@ -91,6 +91,11 @@
 
               %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
               textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
+
+              textFieldDict /eventProcs get /PRESS {  } addListToDict
+              textFieldDict /eventProcs get /RELEASE {  } addListToDict
+
+
               textFieldDict /eventProcs get /KEYBOARD_CHAR {
                    /char exch def
                    /textField exch def

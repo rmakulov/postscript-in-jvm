@@ -85,6 +85,8 @@
     buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
     buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
 
+    buttonDict /eventProcs get /CLICK { } addListToDict
+
 
     parent /children
         parent /children get

@@ -131,3 +131,21 @@
         if
     end
 } def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%    return     :   void
+%--------------------------
+/printRect{
+   1 dict
+   begin
+        /cDict exch  def
+
+        cDict /x get print
+        cDict /y get print
+        cDict /w get print
+        cDict /h get print
+
+    end
+} def

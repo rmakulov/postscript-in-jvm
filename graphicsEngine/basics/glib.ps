@@ -37,13 +37,13 @@
 
 %---
 /repaintAll {
-      usertime gelements /lastRepaintTime get sub 100 gt{
+      %usertime gelements /lastRepaintTime get sub 100 gt{
         init
         scene dup /paint get exec
-        gelements /lastRepaintTime usertime put
+      % gelements /lastRepaintTime usertime put
         showpage
-      }
-      if
+      %}
+      %if
 } def
 %---params: elementDict, void -----
 /paintChildren{
@@ -261,16 +261,20 @@
 
 %--- param: gelement
 /setFocusedElement {
-
-    /nElem exch def
+   /nElem exch def
     nElem /inFocus get not
          {
           /oElem gelements /focusedElement get def
           oElem /inFocus false put
           oElem /isOpened known
-          {oElem /isOpened false put} if
+          {
+           %oElem /isOpened false put
+           oElem oElem /closeElement get exec
+           }
+          if
           nElem /inFocus true put
-          gelements /focusedElement nElem put
+
+           gelements /focusedElement nElem put
          } if
 } def
 %--- param: gelement
@@ -326,7 +330,7 @@
     {
         element
         (MOVE) cvn evType eq not
-        {dup setFocusedElement }
+        { dup setFocusedElement }
         if
         eventProcs evType get execList %exit
     }
@@ -430,27 +434,26 @@
 
 /dragElement{
     1 dict begin
-    gelements /mouseY get /mouseY exch def
-    gelements /mouseX get /mouseX exch def
+        gelements /mouseY get /mouseY exch def
+        gelements /mouseX get /mouseX exch def
 
-    resizeElement
+        resizeElement
 
-    gelements /draggedElement get  /draggedElement exch def
-    draggedElement null eq
-    { exit }
-    if
+        gelements /draggedElement get /draggedElement exch def
+        draggedElement null eq
+        { exit }
+        if
 
+        gelements /lastY get /lastY exch def
+        gelements /lastX get /lastX exch def
 
-                       gelements /lastY get /lastY exch def
-                       gelements /lastX get /lastX exch def
+        draggedElement /x draggedElement /x get mouseX lastX sub add put
+        draggedElement /y draggedElement /y get mouseY lastY sub add put
 
-                       draggedElement /x draggedElement /x get mouseX lastX sub add put
-                       draggedElement /y draggedElement /y get mouseY lastY sub add put
+        gelements /lastX mouseX put
+        gelements /lastY mouseY put
 
-                       gelements /lastX mouseX put
-                       gelements /lastY mouseY put
-
-                       repaintAll
+       repaintAll
     end
 } def
 
