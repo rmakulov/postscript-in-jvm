@@ -338,7 +338,6 @@ public class OperandStackTests {
     }
 
     @Test
-
    /*check  exit in executable  string */
     public void compile38Test() {
         int i = 38;

@@ -3,7 +3,6 @@ package psObjects.values.simple;
 import com.sun.istack.internal.NotNull;
 import operators.array.CloseSquareBracketOp;
 import operators.common.AloadOp;
-import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import psObjects.PSObject;
 import psObjects.Type;
@@ -129,14 +128,15 @@ public class BytecodeProc extends SimpleValue {
             mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "popFromOperandStack", "()LpsObjects/PSObject;", false);
             mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
             mv.visitInsn(ACONST_NULL);
-            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(Lruntime/ContextLpsObjects/PSObject;)V", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/values/simple/PSBytecode", "interpret", "(Lruntime/Context;LpsObjects/PSObject;)V", false);
 
-            //todo maybe checkExitCompile
-            Label l8 = new Label();
-            mv.visitJumpInsn(IFNE, l8);
-            mv.visitInsn(ICONST_0);
-            mv.visitInsn(IRETURN);
-            mv.visitLabel(l8);
+            checkExitCompile(context);
+            // done todo maybe checkExitCompile
+//            Label l8 = new Label();
+//            mv.visitJumpInsn(IFNE, l8);
+//            mv.visitInsn(ICONST_0);
+//            mv.visitInsn(IRETURN);
+//            mv.visitLabel(l8);
         }
 //        //runtime.pushToOperandStack(new PSObject(new BytecodeProc("a","b",2,3)));
 //        String name = runtime.bcGenManager.bytecodeName;

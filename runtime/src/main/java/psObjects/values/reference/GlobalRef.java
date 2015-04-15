@@ -76,6 +76,7 @@ public class GlobalRef extends Reference {
         mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitLdcInsn(id);
         mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "getCVXGlobalObject", "(I)LpsObjects/PSObject;", false);
+
         mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);

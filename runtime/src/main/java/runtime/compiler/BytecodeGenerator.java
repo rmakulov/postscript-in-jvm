@@ -142,7 +142,6 @@ public class BytecodeGenerator implements Opcodes {
     }
 
     public String getBytecodeName() {
-
         return name;
     }
 

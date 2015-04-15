@@ -10,7 +10,6 @@ import psObjects.Type;
 import psObjects.values.Value;
 import psObjects.values.composite.PSString;
 import runtime.Context;
-import runtime.Runtime;
 import runtime.compiler.BytecodeGeneratorManager;
 import runtime.compiler.DynamicClassLoader;
 
@@ -68,7 +67,7 @@ public class PSName extends SimpleValue {
     }
 
     public static void executiveCompile(Context context, String strValue) {
-        runtime.Runtime runtime = Runtime.getInstance();
+        //runtime.Runtime runtime = Runtime.getInstance();
         PSObject object = context.search(new PSObject(new PSName(strValue)));
         boolean isOperator = (object != null && object.getType() == Type.OPERATOR);
         BytecodeGeneratorManager bcGenManager = context.bcGenManager;
@@ -101,6 +100,7 @@ public class PSName extends SimpleValue {
             //Если версии совпадают и aloading==true, то то на стеке останется 1 (=0+1) и происходит вызов имени, и оно просто кладется на стек
 
             Label l1 = new Label();
+            //mv.visitInsn(POP);
             mv.visitJumpInsn(IFEQ, l1);
 
             //start else block
@@ -143,29 +143,21 @@ public class PSName extends SimpleValue {
         mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
-
-        Label l8 = new Label();
-        mv.visitJumpInsn(IFNE, l8);
-        mv.visitInsn(ICONST_0);
-        mv.visitInsn(IRETURN);
-        mv.visitLabel(l8);
-        mv.visitFrame(F_SAME, 0, null, 0, null);
-
+        checkExitCompile(context);
     }
 
     private static void saveSuspectOperatorIndex(PSObject obj, BytecodeGeneratorManager bcGenManager, String className) {
-        DynamicClassLoader l = DynamicClassLoader.instance;
+        DynamicClassLoader loader = DynamicClassLoader.instance;
         String operatorPath = obj.getValue().getClass().getCanonicalName().replace(".", "/");
         int classNumber = Integer.parseInt(className);
         int methodNumber = bcGenManager.methodNumber;
-        l.putSuspectOperatorIndex(classNumber, methodNumber, operatorPath);
+        loader.putSuspectOperatorIndex(classNumber, methodNumber, operatorPath);
     }
 
 
     public static void literalCompile(Context context, String strValue) {
-        runtime.Runtime runtime = Runtime.getInstance();
 //        PSObject psObject = new PSObject(new PSName(strValue), LITERAL);
-//        runtime.pushToOperandStack(psObject);
+//        context.pushToOperandStack(psObject);
         String name = context.bcGenManager.bytecodeName;
         MethodVisitor mv = context.bcGenManager.mv;
 //        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
@@ -180,14 +172,7 @@ public class PSName extends SimpleValue {
         mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
-
-        Label l8 = new Label();
-        mv.visitJumpInsn(IFNE, l8);
-        mv.visitInsn(ICONST_0);
-        mv.visitInsn(IRETURN);
-        mv.visitLabel(l8);
-        mv.visitFrame(F_SAME, 0, null, 0, null);
-
+        checkExitCompile(context);
     }
 
     @Override

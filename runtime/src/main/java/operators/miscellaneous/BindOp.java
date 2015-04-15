@@ -76,46 +76,42 @@ public class BindOp extends Operator {
                 int previousIndex = suspectOperatorName.lastIndexOf("/");
                 String name = suspectOperatorName.substring(previousIndex + 1, length - 2).toLowerCase();
                 if (context.checkIsOperator(name)) {
-                    transformMethod(context, method, suspectOperatorName);
+                    transformMethod(classNumber, method, suspectOperatorName);
                 }
             }
         }
     }
 
-    private void transformMethod(Context context, MethodNode method, String suspectOperatorName) {
+    private void transformMethod(int classNumber, MethodNode method, String suspectOperatorName) {
         InsnList insnList = method.instructions;
         Iterator ite = insnList.iterator();
-        int numberOfMethodEndingInstructions = 3;
+        int numberOfMethodEndingInstructions = 3; // last instructions in endMethod()
         replacingInstrCount = insnList.size() - numberOfMethodEndingInstructions;
+        //removing all instructions except ending
+        //inserting the right ones
         for (int i = 0; i < replacingInstrCount; i++) {
 
             AbstractInsnNode insn = (AbstractInsnNode) ite.next();
             if (i == (replacingInstrCount - 1)) {
                 InsnList tempList = new InsnList();
-//                (new PSObject(AddOp.instance)).interpret(0);
+                String name = classNumber + "";
+                LabelNode l8 = new LabelNode();
+//                (new PSObject(AddOp.instance)).interpret(context, 0);
                 tempList.add(new TypeInsnNode(NEW, "psObjects/PSObject"));
                 tempList.add(new InsnNode(DUP));
                 tempList.add(new FieldInsnNode(GETSTATIC, suspectOperatorName, "instance", "L" + suspectOperatorName + ";"));
                 tempList.add(new MethodInsnNode(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false));
-                String name = context.bcGenManager.bytecodeName;
                 tempList.add(new FieldInsnNode(GETSTATIC, name, "context", "Lruntime/Context;"));
                 tempList.add(new InsnNode(ICONST_0));
                 tempList.add(new MethodInsnNode(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false));
-                LabelNode l8 = new LabelNode();
                 tempList.add(new JumpInsnNode(IFNE, l8));
-//                mv.visitJumpInsn(IFNE, l8);
                 tempList.add(new InsnNode(ICONST_0));
-//                mv.visitInsn(ICONST_0);
                 tempList.add(new InsnNode(IRETURN));
-//                mv.visitInsn(IRETURN);
                 tempList.add(l8);
-//                mv.visitLabel(l8);
                 insnList.insert(insn, tempList);
                 method.maxStack += 2;
-//                System.out.println("replaced " + method.name);
             }
             insnList.remove(insn);
-            //insn.
         }
 
 

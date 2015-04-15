@@ -29,6 +29,7 @@ public abstract class Operator extends SimpleValue implements Opcodes {
         mv.visitInsn(DUP);
         mv.visitFieldInsn(GETSTATIC, clName, "instance", "L" + clName + ";");
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+
         mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);

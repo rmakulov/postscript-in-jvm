@@ -82,8 +82,6 @@ public class PSInteger extends PSNumber {
         //(new PSObject(new PSInteger(5))).interpret(0);
         String name = context.bcGenManager.bytecodeName;
         MethodVisitor mv = context.bcGenManager.mv;
-//        mv.visitFieldInsn(GETSTATIC, name, "runtime", "Lruntime/Runtime;");
-        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
@@ -91,7 +89,8 @@ public class PSInteger extends PSNumber {
         mv.visitLdcInsn(value);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
-        //mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Runtime", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
+
+        mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
         mv.visitInsn(ICONST_0);
         mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "interpret", "(Lruntime/Context;I)Z", false);
         checkExitCompile(context);
@@ -104,6 +103,7 @@ public class PSInteger extends PSNumber {
         String name = context.bcGenManager.bytecodeName;
         MethodVisitor mv = context.bcGenManager.mv;
         mv.visitFieldInsn(GETSTATIC, name, "context", "Lruntime/Context;");
+
         mv.visitTypeInsn(NEW, "psObjects/PSObject");
         mv.visitInsn(DUP);
         mv.visitTypeInsn(NEW, "psObjects/values/simple/numbers/PSInteger");
@@ -111,6 +111,7 @@ public class PSInteger extends PSNumber {
         mv.visitLdcInsn(value);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/values/simple/numbers/PSInteger", "<init>", "(I)V", false);
         mv.visitMethodInsn(INVOKESPECIAL, "psObjects/PSObject", "<init>", "(LpsObjects/values/Value;)V", false);
+
         mv.visitMethodInsn(INVOKEVIRTUAL, "runtime/Context", "pushToOperandStack", "(LpsObjects/PSObject;)V", false);
     }
 }

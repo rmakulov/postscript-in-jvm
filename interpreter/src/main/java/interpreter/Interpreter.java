@@ -50,7 +50,7 @@ public class Interpreter {
 
     public static void main(String[] args) {
 //        instance.setCompilingMode(true);
-//        instance.setCompilingMode(false);
+        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -75,8 +75,7 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
-                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
-//                System.out.println(instance.run(new File("graphicsEngine/basics/arc.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/onlyButtonGS.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/libs/listLib.ps")));

@@ -70,7 +70,7 @@ public abstract class Value implements ValueComparable<Value>, Opcodes {
 //        compile(psObject); //different for PSName
 //    }
 
-    protected void checkExitCompile(Context context) {
+    protected static void checkExitCompile(Context context) {
         MethodVisitor mv = context.bcGenManager.mv;
         Label l7 = new Label();
         mv.visitJumpInsn(IFNE, l7);

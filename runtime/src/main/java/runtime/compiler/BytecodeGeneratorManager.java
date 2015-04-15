@@ -45,7 +45,6 @@ public class BytecodeGeneratorManager implements Opcodes {
         bcGen = new BytecodeGenerator(context, lastNumber++);
         bytecodeGenerators.push(bcGen);
         initEverything();
-
     }
 
     public void endBytecode() {

@@ -8,7 +8,6 @@ import psObjects.values.simple.Operator;
 import psObjects.values.simple.PSMark;
 import psObjects.values.simple.PSName;
 import runtime.Context;
-import runtime.Runtime;
 
 import java.util.ArrayList;
 
@@ -45,7 +44,7 @@ public class CloseSquareBracketOp extends Operator {
     }
 
     public void compile(Context context) {
-        runtime.Runtime runtime = Runtime.getInstance();
+//        runtime.Runtime runtime = Runtime.getInstance();
 //        CloseSquareBracketOp.instance.interpret();
         MethodVisitor mv = context.bcGenManager.mv;
         String name = context.bcGenManager.bytecodeName;
