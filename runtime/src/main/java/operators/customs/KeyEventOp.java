@@ -25,15 +25,15 @@ public class KeyEventOp extends Operator {
             fail();
             return;
         }
-//        PSDictionary dict = ((PSDictionary) runtime.findValue("gelements").getValue());
-        try {
-            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("keyEvent"))));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
         if (!runtime.isCompiling) {
+            try {
+                context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("keyEvent"))));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             context.executeCallStack();
+        } else {
+            new PSObject(new PSName("keyEvent")).interpret(context, 0);
         }
     }
 

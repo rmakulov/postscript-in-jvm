@@ -38,7 +38,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     }
 
     public boolean interpret(Context context, int procDepth) {
-//        cleanGarbageByExecutionCounter();
+        cleanGarbageByExecutionCounter();
 //        cleanGarbageByLocalVMSize();
         boolean aLoading = context.getALoading();
         if ((attribute.treatAs == Attribute.TreatAs.LITERAL || procDepth > 0 || aLoading)

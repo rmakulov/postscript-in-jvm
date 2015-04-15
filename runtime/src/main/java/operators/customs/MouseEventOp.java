@@ -26,13 +26,15 @@ public class MouseEventOp extends Operator {
             fail();
             return;
         }
-        try {
-            context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("mouseEvent"))));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         if (!runtime.isCompiling) {
+            try {
+                context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("mouseEvent"))));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             context.executeCallStack();
+        } else {
+            new PSObject(new PSName("mouseEvent")).interpret(context, 0);
         }
     }
 
