@@ -77,6 +77,10 @@ public class TransformMatrix implements Cloneable {
         return new TransformMatrix(matrix);
     }
 
+    public boolean isDeterminPositive(){
+        double[] mat = getDoubleArray();
+        return mat[0]*mat[3] - mat[1]*mat[2] > 0;
+    }
 
     public TransformMatrix getInverseMatrix() {
         double[] doubleMatrix = getDoubleArray();

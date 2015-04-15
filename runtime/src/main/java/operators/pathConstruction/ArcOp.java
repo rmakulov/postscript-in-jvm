@@ -51,8 +51,19 @@ public class ArcOp extends AbstractGraphicOperator {
         double xR = nR * xScale;
         double yR = nR * yScale;
         double rotateAngle = cTM.getRotateAngle();
-        nAngle1 = nAngle1 + rotateAngle;
-        nAngle2 = nAngle2 + rotateAngle;
+//        nAngle1 = nAngle1 + rotateAngle;
+//        nAngle2 = nAngle2 + rotateAngle;
+
+        double[] matArr = cTM.getDoubleArray();
+        double shift = 0, direct = 1;
+        if(matArr[0] < 0){
+            shift = 180;
+        }
+        if(!cTM.isDeterminPositive()){
+            direct *= -1;
+        }
+        nAngle1 = rotateAngle + nAngle1 * direct;
+        nAngle2 = rotateAngle + nAngle2 * direct;
 
         double xEnd = absCent.getX() + xR * Math.cos(nAngle2 * Math.PI / 180);
         double yEnd = absCent.getY() + yR * Math.sin(nAngle2 * Math.PI / 180);
