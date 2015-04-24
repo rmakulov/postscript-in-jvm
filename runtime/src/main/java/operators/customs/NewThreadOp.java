@@ -1,8 +1,8 @@
 package operators.customs;
 
-import procedures.ArrayProcedure;
 import psObjects.PSObject;
 import psObjects.values.simple.Operator;
+import psObjects.values.simple.PSBytecode;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Context;
@@ -35,12 +35,15 @@ public class NewThreadOp extends Operator {
         for (int i = count - 1; i > -1; i--) {
             threadContext.pushToOperandStack(psObjects[i]);
         }
+        if (proc.isBytecode()) {
+            ((PSBytecode) proc.getValue()).setContext(context);
+        }
 //        try {
 //            threadContext.pushToCallStack(new StringProcedure(threadContext,new PSObject(new PSString("(graphicsEngine/basics/glib.ps) (r) file run"))));
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-        runtime.startNewTask(threadContext, new ArrayProcedure(threadContext, "thread", proc));
+        runtime.startNewTask(threadContext, proc);
 
     }
 

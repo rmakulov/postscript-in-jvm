@@ -149,19 +149,19 @@
 %---
 % params: x y set center of circles
 /wave {
-    %/milliSleep
-    %{
-    %        % Single arg off stack - milliseconds to sleep
-    %        /sleepInterval exch def
-    %        % Get our starting time
-    %        usertime /starttime exch def
-    %        {
-    %                % Seconds since start
-    %                usertime  starttime sub
-    %                % Exit if interval is exceeded
-    %                sleepInterval ge { exit } if
-    %        } loop
-    %} def
+   /milliSleep
+   {
+           % Single arg off stack - milliseconds to sleep
+           /sleepInterval exch def
+           % Get our starting time
+           usertime /starttime exch def
+           {
+                   % Seconds since start
+                   usertime  starttime sub
+                   % Exit if interval is exceeded
+                   sleepInterval ge { exit } if
+           } loop
+   } def
     %transform
     /y exch def
     /x exch def

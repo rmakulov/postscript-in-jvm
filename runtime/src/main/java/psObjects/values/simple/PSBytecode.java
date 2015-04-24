@@ -20,8 +20,8 @@ public class PSBytecode extends PSName {
     public boolean interpret(Context context, PSObject obj) {
         try {
             Class c = DynamicClassLoader.instance.loadClass(strValue);
-//            Class c = DynamicClassLoader.instance.findClass(strValue);
-            
+
+            c.getField("context").set(null, context);
             return (Boolean) c.getMethod("run").invoke(null);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -31,6 +31,8 @@ public class PSBytecode extends PSName {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
         return true;
@@ -70,4 +72,7 @@ public class PSBytecode extends PSName {
         return "bytecode{#" + strValue + "}";
     }
 
+    public void setContext(Context context) {
+
+    }
 }
