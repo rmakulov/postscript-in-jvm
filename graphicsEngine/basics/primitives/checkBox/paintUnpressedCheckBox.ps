@@ -1,20 +1,4 @@
 gsave
-/q { gsave } bind def
-/Q { grestore } bind def
-/cm { 6 array astore concat } bind def
-/w { setlinewidth } bind def
-/J { setlinecap } bind def
-/j { setlinejoin } bind def
-/M { setmiterlimit } bind def
-/d { setdash } bind def
-/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
-      0 exch rlineto 0 rlineto closepath } bind def
-/S { stroke } bind def
-/f { fill } bind def
-/W { clip } bind def
-/g { setgray } bind def
-/rg { setrgbcolor } bind def
-%%EndProlog
 
 
 /label exch def
@@ -24,27 +8,20 @@ gsave
 
 x y translate
 
-q q
 
 /shift 2 def
 
-1 g
-0 h h h neg re f
-0.501961 0.45098 0.501961 rg
+1 setgray
+0 h h h neg rect fill
+0.501961 0.45098 0.501961 setrgbcolor
 0.8 setlinewidth
-0 J
-0 j
-[] 0.0 d
-0 0 h h re S Q
+0 0 h h rect stroke
 
 /kegel h shift add def
 h 0 translate
 /Times-Roman findfont kegel scalefont setfont
 shift 0 moveto 0 0 0 setrgbcolor label show
 
-Q
-%%Trailer
-%%EOF
 grestore
 
 

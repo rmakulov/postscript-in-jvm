@@ -39,6 +39,8 @@
                           bd /text get
                           bd /inFocus get
                           bd /position get
+                          bd /displayBegin get
+                          bd /displayEnd get
                           (graphicsEngine/basics/primitives/textField/paintTextField.ps) (r) file run
 
                           bd paintChildren
@@ -55,6 +57,8 @@
                                     /children           []
                                     /inFocus            false
                                     /position           0
+                                    /displayEnd         0
+                                    /displayBegin       0
 
                                     /x                  parent /x get parent /w get rX mul add cvi
                                     /y                  parent /y get parent /h get rY mul add cvi
@@ -92,42 +96,136 @@
               %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
               textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
 
-              textFieldDict /eventProcs get /PRESS {  } addListToDict
-              textFieldDict /eventProcs get /RELEASE {  } addListToDict
-
+              textFieldDict /eventProcs get /PRESS { } addListToDict
+              textFieldDict /eventProcs get /RELEASE { } addListToDict
 
               textFieldDict /eventProcs get /KEYBOARD_CHAR {
-                   /char exch def
-                   /textField exch def
-                   textField dup /text get char textField /position get insertChar /text exch put
-                   textField dup /position  get 1 add /position exch put
-                   repaintAll
+                    1 dict begin
+                       /char exch def
+                       /textField exch def
+                       /text textField /text get def
+                       /dB textField /displayBegin get def
+                       /dE textField /displayEnd get def
+                       /w  textField /w get dup 0.005 mul cvi sub def
+
+                       textField dup /text get char textField /position get insertChar /text exch put
+                       textField dup /position  get 1 add /position exch put
+
+                       textField /text get length 1 eq
+                       {
+                            textField /displayBegin  get 0 put
+                            textField /displayEnd    get 0 put
+                       }
+                       if
+
+                       textField /text get length 1 gt
+                       {
+                           textField dup /displayEnd  get 1 add /displayEnd exch put
+
+                           /kegel textField /h get def
+                           /Rekha findfont kegel scalefont setfont
+
+                           textField /displayBegin textField /text get textField /displayEnd get -1 w getIndex put
+                       }
+                       if
+                       repaintAll
+                   end
               } addListToDict
 
               textFieldDict /eventProcs get /KEYBOARD_CONTROL{
-                                 /code exch def
-                                 /textField exch def
-                                 /pos textField /position get def
-                                 /text textField /text get def
-                                 /tLength text length def
+                                 /code      exch                        def
+                                 /textField exch                        def
+                                 /pos       textField /position get     def
+                                 /disEnd    textField /displayEnd get   def
+                                 /disBegin  textField /displayBegin get def
+                                 /text      textField /text get         def
+                                 /tLength   text length                 def
+                                 /w         textField /w get dup 0.005 mul cvi sub     def
+
+                                 /kegel textField /h get def
+                                 /Rekha findfont kegel scalefont setfont
+
+                                 %%% Backspace
                                  code backspaceKey eq pos 0 gt and {
                                      textField /text text pos removeLeftChar put
                                      textField /position pos 1 sub put
+                                     textField /displayEnd disEnd 1 sub put
+
+                                     textField /text get length 0 eq
+                                     {
+                                      textField /displayEnd   0 put
+                                      textField /displayBegin 0 put
+                                     }
+
+                                     {
+                                        /disEnd disEnd 1 sub def
+                                        disBegin 0 gt
+                                        { textField /displayBegin textField /text get disEnd -1 w getIndex put }
+                                        if
+                                     }
+                                     ifelse
+
                                  } if
+                                 %%% Delete
                                  code deleteKey eq pos tLength lt and {
-                                     textField /text text pos removeRightChar put
+                                    textField /text text pos removeRightChar put
+
+                                    textField /text get length 0 eq
+                                    {
+                                        textField /displayEnd   0 put
+                                    }
+                                    {
+                                        textField /displayEnd textField /text get textField /displayBegin get 1 w getIndex put
+                                    }
+                                    ifelse
                                  } if
+                                 %%% <--
                                  code leftKey eq pos 0 gt and {
                                       textField /position pos 1 sub put
+
+                                      pos 1 sub disBegin lt
+                                      { textField /displayBegin disBegin 1 sub put
+                                        /disBegin disBegin 1 sub def
+                                        textField /displayEnd textField /text get disBegin 1 w getIndex put
+                                      }
+                                      if
                                  } if
+                                 %%% -->
                                  code rightKey eq tLength pos gt and {
                                      textField /position pos 1 add put
+
+                                     pos disEnd gt
+                                     {
+                                       textField /displayEnd disEnd 1 add put
+                                       /disEnd disEnd 1 add def
+
+                                      textField /displayBegin textField /text get disEnd -1 w getIndex put
+                                     }
+                                       if
                                  } if
+                                 %%% Home
                                  code homeKey eq pos 0 ne and {
                                       textField /position 0 put
+                                      textField /displayBegin 0 put
+
+                                      textField /displayEnd textField /text get 0 1 w getIndex put
+
+
                                  } if
+                                 %%% End
                                  code endKey eq pos tLength ne and {
                                       textField /position tLength put
+                                      tLength 0 gt
+                                      {
+                                        textField /displayEnd tLength 1 sub put
+                                        textField /displayBegin textField /text get textField /displayEnd get -1 w getIndex put
+                                      }
+                                      {
+                                        textField /displayBegin 0 put
+                                        textField /displayEnd 0 put
+                                      }
+                                      ifelse
+
                                  } if
                                  repaintAll
               } addListToDict

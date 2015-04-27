@@ -149,3 +149,81 @@
 
     end
 } def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%----text       :   string
+%    return     :   void
+%--------------------------
+/getRightIndex{
+   1 dict
+   begin
+        /str exch def
+        /cDict exch def
+        /w cDict /w get def
+        /ans str length def
+        /i str length def
+        {
+
+        }
+        loop
+    end
+} def
+
+%-------------------------------------
+%-------params------------
+%----str        :   string
+%----start      :   integer
+%----step       :   integer
+%----width      :   integer
+%    return     :   integer
+% Let be at least ony symbol in answer
+%--------------------------
+/getIndex{
+   1 dict
+   begin
+       /width  exch    def
+        /step   exch    def
+        /first  exch    def
+        /str    exch    def
+
+        %str print
+        %first print
+        %step print
+        %width print
+        
+        step 0 gt
+            { /last str length 1 sub def }
+            { /last 0 def }
+        ifelse
+
+        /i first def
+        {
+            step 0 gt
+            { /subString str first i first sub 1 add getinterval def }
+            { /subString str i     first i sub 1 add getinterval def }
+            ifelse
+
+            subString stringwidth pop width gt
+            {
+              step 0 gt
+              { i step sub exit }
+              { i step sub exit }
+              ifelse
+            }
+            if
+
+            i last eq
+            {
+                last
+                exit
+            }
+            if
+            /i i step add def
+        }
+        loop
+
+
+    end
+} def

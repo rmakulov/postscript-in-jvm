@@ -31,9 +31,7 @@
                 bd /h get
                 bd /label get
                 bd /isPressed get
-                {(graphicsEngine/basics/primitives/checkBox/paintPressedCheckBox.ps) (r) file run}
-                    {(graphicsEngine/basics/primitives/checkBox/paintUnpressedCheckBox.ps) (r) file run}
-                ifelse
+                (graphicsEngine/basics/primitives/checkBox/paintCheckBox.ps) (r) file run
 
                 bd paintChildren
         } def

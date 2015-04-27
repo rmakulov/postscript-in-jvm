@@ -1,0 +1,43 @@
+gsave
+/isPressed exch def
+/label exch def
+/h exch def
+/y exch def
+/x exch def
+
+%/x 50 def /y 50 def /h 16 def /label (Checkbox) def
+
+x y translate
+/shift 2 def
+
+1 setgray
+
+0 h h h neg rect fill
+
+0.501961 0.45098 0.501961 setrgbcolor
+0.8 setlinewidth
+
+0 0 h h rect stroke
+
+/second h 2 idiv def
+
+    isPressed
+    {
+        0 setgray
+        % start point x y and height and length
+        second 2 div dup second second rect fill
+        0.501961 0.45098 0.501961 setrgbcolor
+    }
+    if
+
+
+/kegel h shift add def
+/Times-Roman findfont kegel scalefont setfont
+
+h 0 translate
+shift 0 moveto
+
+0 0 0 setrgbcolor
+label show
+
+grestore

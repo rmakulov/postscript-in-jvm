@@ -1,23 +1,54 @@
+%-------------------------------------
+%-------params------------
+%----index      :   integer
+%----str        :   string
+%    return     :   void
+%--------------------------
+/getRightSubstring{
+1 dict begin
+    /string exch def
+    /count exch def
+    /len string length def
+
+    string len count sub count getinterval
+end
+} def
+%-------------------------------------
+%-------params------------
+%----str        :   string
+%    return     :   string
+%--------------------------
+/reduceText{
+1 dict begin
+    /str exch def
+    /answer str def
+    /len str length 1 sub def
+    /w w 12 sub def
+    str length 0 eq not
+    {
+        /i 1 def
+        {
+                w i str getRightSubstring stringwidth pop sub 0 lt
+                {
+                  /answer i 1 sub str getRightSubstring def
+                  exit
+                }
+                if
+
+                i str length eq
+                { exit }
+                {/i i 1 add def}
+                ifelse
+        } loop
+    }
+    if
+    answer
+end
+} def
+
 gsave
-/q { gsave } bind def
-/Q { grestore } bind def
-/cm { 6 array astore concat } bind def
-/w { setlinewidth } bind def
-/J { setlinecap } bind def
-/j { setlinejoin } bind def
-/M { setmiterlimit } bind def
-/d { setdash } bind def
-/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
-      0 exch rlineto 0 rlineto closepath } bind def
-/S { stroke } bind def
-/f { fill } bind def
-/W { clip } bind def
-/g { setgray } bind def
-/rg { setrgbcolor } bind def
-%%EndProlog
-
-
-
+/dE       exch def
+/dB       exch def
 /position exch def
 /inFocus exch def
 /text exch def
@@ -28,63 +59,48 @@ gsave
 /x exch def
 
 
-%/x 50 def
-%/y 50 def
-%/h 100 def
-%/w 400 def
-%/label (TextArea) def
+
 
 x y translate
-q q
-/shift 5 def
+/shift h 6 div def
 
-1 g
-%0 w h h neg re f
-0.501961 0.45098 0.501961 rg
+1 1 1 setrgbcolor
+0 0 w h rect fill
+
+0.501961 0.45098 0.501961 setrgbcolor
 0.8 setlinewidth
-0 J
-0 j
-[] 0.0 d
-0 0 w h re S
+0 0 w h rect stroke
 
-%/second h 2 idiv def
-%
-%0 g
-%% start point = (x, y), height and length
-%second 2 div dup second second re f
-%0.501961 0.45098 0.501961 rg
 
-/kegel h 2 idiv def
+/kegel h 2 sub def
 /Rekha findfont kegel scalefont setfont
-%/stringW kegel 2.5 div def
+
+    text length 0 eq
+        { /subText () def }
+        { /subText text dB dE dB sub 1 add getinterval def }
+    ifelse
 
 inFocus {
-    /subText text 0 position getinterval def
-    /stringW subText stringwidth pop def
-    2 setlinewidth
-    shift 2 mul stringW add
-            shift moveto
+     /position position dB sub def
+    /subString subText 0 position getinterval def
+    /stringW subString stringwidth pop def
+    h cvr 25 div setlinewidth
+
+    /newShift h cvr 10 div def
+    newShift 1.5 mul stringW add
+            shift cvr moveto
              0 h shift 2 mul sub rlineto stroke
+    1 setlinewidth
     } if
 
-%------------clip-----------
-0 0  w h rect clip
-%------------clip-----------
-gsave
-0 h shift add translate
-% shift h kegel sub translate
-shift 0 moveto 0 0 0 setrgbcolor
-label show
-grestore
+%-----------------
+%0 0  w h rect clip
+%-----------------
 
-0  shift  translate
-% shift h kegel sub translate
-shift 0 moveto 0 0 0 setrgbcolor
-text show
+0  shift cvr 1.5 mul  translate
+shift cvr 2 div 0 moveto 0 0 0 setrgbcolor
 
-Q Q
-%%Trailer
-%%EOF
+subText show
 grestore
 
 
@@ -92,4 +108,9 @@ grestore
 
 
 
-
+%----------------label show--------------
+%gsave
+%0 h shift add translate
+%shift 0 moveto 0 0 0 setrgbcolor
+%label show
+%grestore

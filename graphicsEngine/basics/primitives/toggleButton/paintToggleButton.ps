@@ -47,12 +47,22 @@ gsave
     drawRect
 
     isPressed
-    {fillLeftRect
+    {
+     1 1 1 setrgbcolor
+     fillRightRect
+     0 0 0 setrgbcolor
+     fillLeftRect
      printTextOff
+
     }
     {
+        1 1 1 setrgbcolor
+        fillLeftRect
+        0 0 0 setrgbcolor
         fillRightRect
         printTextOn
+
+
     }
     ifelse
 %

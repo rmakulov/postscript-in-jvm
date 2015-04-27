@@ -73,10 +73,10 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/invertStr.ps")));
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
-//                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
-                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
-//                System.out.println(instance.run(new File("graphicsEngine/basics/onlyButtonGS.ps")));
+                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/onlyButtonGS.sps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/libs/listLib.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawing.ps")));

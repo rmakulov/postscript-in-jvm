@@ -214,7 +214,8 @@ public class PSDrawer {
         String nameFont = ((PSName) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getStrValue();
         int scaleFont = ((PSInteger) fontDictionary.get(new PSObject(new PSName("scale"))).getValue()).getIntValue();
         PSObject matrix = fontDictionary.get(new PSObject(new PSName("matrix")));
-        Font font = new Font(nameFont, Font.PLAIN, scaleFont);
+//        Font font = new Font(nameFont, Font.PLAIN, scaleFont);
+        Font font = new Font(nameFont, Font.BOLD, scaleFont);
         if (!matrix.getValue().equals(PSNull.NULL)) {
             AffineTransform trans = new TransformMatrix(matrix).toAffineTransform();
             font = new Font(nameFont, Font.PLAIN, 40);
