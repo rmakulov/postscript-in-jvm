@@ -67,7 +67,7 @@ public class Runtime {
 //        isCompiling = true;
     }
 
-    public void startNewTask(Context context, Procedure procedure) {
+    public void startNewTask(Context context, PSObject procedure) {
         context.initDictionaries(systemDict);
         addContext(context);
         PSThread thread = new PSThread(context, procedure);
@@ -319,7 +319,8 @@ public class Runtime {
 /*todo*/
 
         DynamicClassLoader.reset();
-
+        service.shutdownNow();
+        Executors.newFixedThreadPool(10);
 
         PSObject.resetExecutionCounts();
     }

@@ -2,7 +2,6 @@ package runtime.events;
 
 import operators.customs.KeyEventOp;
 import operators.customs.MouseEventOp;
-import procedures.StringProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
@@ -10,8 +9,6 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Context;
 import runtime.Runtime;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by User on 16/2/2015.
@@ -124,12 +121,6 @@ public class EventQueue {
 //                    }
                     MouseEventOp.instance.interpret(context);
                     break;
-            }
-
-            if (event.getType() == EventType.KEYBOARD_CHAR) {
-
-            } else {
-
             }
 
         }

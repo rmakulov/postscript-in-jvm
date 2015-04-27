@@ -22,7 +22,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     public String bytecodeName;
     private BytecodeGenerator bcGen;
 
-    private int lastNumber = 0;
+    private static int lastNumber = 0;
     public int methodNumber = 0;
 
 
@@ -42,7 +42,7 @@ public class BytecodeGeneratorManager implements Opcodes {
     }
 
     public void startCodeGenerator(Context context) {
-        bcGen = new BytecodeGenerator(context, lastNumber++);
+        bcGen = new BytecodeGenerator(context, getLastNumberIncrement());
         bytecodeGenerators.push(bcGen);
         initEverything();
     }
@@ -98,5 +98,9 @@ public class BytecodeGeneratorManager implements Opcodes {
 
     public boolean lastMethodIsEmpty() {
         return bcGen.lastMethodIsEmpty();
+    }
+
+    public synchronized static int getLastNumberIncrement() {
+        return lastNumber++;
     }
 }

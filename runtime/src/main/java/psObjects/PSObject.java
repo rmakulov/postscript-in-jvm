@@ -27,6 +27,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     private static int executionsBeforeGarbageCleaning = 10000;
     private static int maxLocalVMSize = 2000;
 
+
     public boolean execute(Context context, int procDepth) {
         if (!runtime.isCompiling || context.bcGenManager.isSleep()) {
             return interpret(context, procDepth);
@@ -422,4 +423,5 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
     public boolean isName() {
         return type == Type.NAME;
     }
+
 }

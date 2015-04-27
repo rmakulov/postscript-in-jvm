@@ -46,8 +46,26 @@ public class BytecodeGenerator implements Opcodes {
         mainMV.visitCode();
 
         startClinitMethod(classNumber);
+        //todo
+        //addSetContextMethod(classNumber);
         startMethod();
     }
+
+//    private void addSetContextMethod(int classNumber) {
+//        String className = Integer.toString(classNumber);
+//        mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "setContext", "(Lruntime/Context;)V", null, null);
+//        mv.visitCode();
+//        mv.visitIntInsn(ALOAD, 1);
+//
+//        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+//        mv.visitLdcInsn("end bytecode");
+//        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+//
+//        mv.visitFieldInsn(PUTSTATIC, className, "context", "Lruntime/Context;");
+//        mv.visitInsn(RETURN);
+//        mv.visitMaxs(0, 0);
+//        mv.visitEnd();
+//    }
 
     private void startClinitMethod(int classNumber) {
         String className = Integer.toString(classNumber);
