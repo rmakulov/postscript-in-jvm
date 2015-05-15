@@ -337,5 +337,6 @@ public class DefaultDicts {
         addOperator(CursorOp.instance);
         addOperator(NewThreadOp.instance);
         addOperator(RepaintMainContextOp.instance);
+        addOperator(RepaintOp.instance);
     }
 }

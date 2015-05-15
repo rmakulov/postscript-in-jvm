@@ -62,8 +62,8 @@
 
     roundButtonDict addElement
 
-    roundButtonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
-    roundButtonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
+    roundButtonDict /eventProcs get /RELEASE { /isPressed false put repaint} addListToDict
+    roundButtonDict /eventProcs get /PRESS { /isPressed true put repaint} addListToDict
 
     %roundButtonDict /eventProcs get /CLICK { } addListToDict
 

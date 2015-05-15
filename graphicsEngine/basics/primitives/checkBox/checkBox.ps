@@ -83,7 +83,7 @@
     checkBoxDict /eventProcs get /RELEASE {  } addListToDict
     checkBoxDict /eventProcs get /CLICK { } addListToDict
 
-    checkBoxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+    checkBoxDict /eventProcs get /PRESS { dup /isPressed get /isPressed exch not put repaint} addListToDict
 
    parent /children
           parent /children get

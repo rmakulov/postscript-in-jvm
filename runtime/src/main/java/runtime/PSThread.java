@@ -12,7 +12,7 @@ public class PSThread extends Thread {
     private Context context;
     private Procedure initProcedure;
 
-    public PSThread(Context context, Procedure procedure) {
+    public  PSThread(Context context, Procedure procedure) {
         this.context = context;
         this.initProcedure = procedure;
     }

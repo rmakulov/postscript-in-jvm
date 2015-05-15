@@ -20,6 +20,7 @@ import runtime.events.Event;
 import runtime.events.EventQueue;
 import runtime.events.PrimitiveQueue;
 import runtime.graphics.GState;
+import windowmanager.WindowManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -35,28 +36,36 @@ import static psObjects.Type.SAVE;
 public class Runtime {
 
     private static Runtime ourInstance = new Runtime();
-
-    public boolean isCompiling = false;
-//    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
-//    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
-
-    private int executionCount = 0;
-    private int executionsBeforeGarbageCleaning = 10000;
-
+    private WindowManager windowManager = new WindowManager();
     private LocalVM localVM = new LocalVM();
-    //    private OperandStack operandStack = new OperandStack();
-//    private DictionaryStack dictionaryStack = new DictionaryStack();
-//    private GraphicStack graphicStack = new GraphicStack();
-//    private CallStack callStack = new CallStack();
-    private EventQueue eventQueue = new EventQueue();
-    private PrimitiveQueue primitiveQueue = new PrimitiveQueue();
     private boolean isGlobal = false;
     private PSObject systemDict;
     private Context mainContext;
     private int maxContextNumber = 0;
     private Map<Integer, Context> contextMap = new HashMap<Integer, Context>();
-
     private ExecutorService service = Executors.newFixedThreadPool(10);
+
+    public boolean isCompiling = false;
+    //    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
+//    private int executionCount = 0;
+//    private OperandStack operandStack = new OperandStack();
+//    private DictionaryStack dictionaryStack = new DictionaryStack();
+//    private GraphicStack graphicStack = new GraphicStack();
+//    private CallStack callStack = new CallStack();
+//private EventQueue eventQueue = new EventQueue();
+
+    //    private int executionsBeforeGarbageCleaning = 10000;
+
+
+//    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
+
+    //private PrimitiveQueue primitiveQueue = new PrimitiveQueue();
+
+    public WindowManager getWindowManager() {
+        return windowManager;
+    }
+
+
 
     //        private Runtime() {
 //        isCompiling = false;
@@ -376,11 +385,13 @@ public class Runtime {
     }
 
     public void addEvent(Event event) {
-        eventQueue.add(event);
+        //eventQueue.add(event);
+        windowManager.addEvent(event);
     }
 
     public void addPrimitive(PSPrimitive psPrimitive) {
-        primitiveQueue.add(psPrimitive);
+        //primitiveQueue.add(psPrimitive);
+        windowManager.addPrimitive(psPrimitive);
     }
 
     public PSObject getSystemDict() {

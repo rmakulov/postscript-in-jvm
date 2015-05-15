@@ -1,5 +1,6 @@
 gsave
 1 dict begin
+    /bd exch def
     /isPressed exch def
     /label exch def
     /h exch def
@@ -55,7 +56,8 @@ gsave
         w strWidth sub 2 idiv
         h kegel sub 1.5 div cvi
     translate
-    x y moveto 1 0 0 setrgbcolor
+    x y moveto
+    bd /color get aload pop setrgbcolor
     label show
 end
 grestore

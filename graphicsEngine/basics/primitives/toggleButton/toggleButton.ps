@@ -90,7 +90,7 @@
     toggleButtonDict addElement
 
     toggleButtonDict /eventProcs get /RELEASE { } addListToDict
-    toggleButtonDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaintAll} addListToDict
+    toggleButtonDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaint} addListToDict
 
     toggleButtonDict /eventProcs get /PRESS {  } addListToDict
 

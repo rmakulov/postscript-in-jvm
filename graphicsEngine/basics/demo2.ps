@@ -1,0 +1,67 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+
+250 750 250 50 (Hello! )  scene << >>    labelField pop
+15 700 250 50 (Here you can see various effects.)  scene << >>    labelField pop
+
+
+50 50 120 40   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
+
+
+280 610 250 40 (scales)  scene << >>    labelField pop
+265 550 50 40 (+)          scene <</CLICK [{pop 1.1 1.1 scale  repaintAll}[]] >> button        /plus exch def
+340 550 50 40 (-)          scene <</CLICK [{pop 0.909 0.909 scale  repaintAll}[]] >> button      /minus exch def
+
+460 510 250 40 (rotates)  scene << >>    labelField pop
+430 450 220 40 (clockwise)           scene <</CLICK [{pop  -10 rotate  repaintAll}[]] >> button  /clockwise exch def
+430 380 220 40 (anticlockwise)          scene <</CLICK [{pop 10 rotate  repaintAll}[]] >> button /anticlockwise exch def
+
+
+50 510 250 40 (translates)  scene << >>    labelField pop
+30 450 90 40 (left)          scene <</CLICK [{pop -50  0 translate  repaintAll}[]] >> button  /left exch def
+140 450 90 40 (right)         scene <</CLICK [{pop  50  0 translate  repaintAll}[]] >> button  /right exch def
+30 385 90 40 (up)            scene <</CLICK [{pop  0  50 translate  repaintAll}[]] >> button  /up exch def
+140 385 90 40 (down)          scene <</CLICK [{pop  0 -50 translate  repaintAll}[]] >> button  /down exch def
+
+
+50 260 250 40 (reflections)  scene << >>    labelField pop
+65 215 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
+65 175 16       (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
+
+
+460 260 250 40 (invert labels)  scene << >>    labelField pop
+480 185 120 40   (invert)        scene <</CLICK [{pop invertLabels  repaintAll}[]] >> button /invert exch def
+
+/color [0 0 1] def def
+
+plus  /color color put
+minus /color color put
+clockwise /color color put
+anticlockwise /color color put
+
+left /color color put
+right /color color put
+up /color color put
+down /color color put
+
+invert /color color put
+
+
+
+
+%/nameField 150 250 500 50 (TextField)     scene <<>>    textField def
+%
+%350 50 250 50 (Hello, World!)  scene << >>    labelField pop
+%400 125 116 50 (On) (Off)  scene <<  >> toggleButton pop
+%
+%400 200 200 30 [ (Table) (Mouse) (Screen) ] 1  scene <<  >> comboBox pop
+%400 450 200 30 [ (One) (Two) (Three) (Four) (Five) (Six) (Seven) (Eight) (Nine) (Ten)] 4 scene << >> comboBox pop
+%
+%
+%600 500 30 100 [ (1) (2) (3) (4) (5) ] 2 scene << >> listBox pop
+%400 700 200 90 [ (Sekatski) (Martin Gardner) (Evdokimova) ] 1 scene << >> listBox pop
+%50 550 120 40   (mirror)        scene <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
+
+repaintAll
+
+showpage
+

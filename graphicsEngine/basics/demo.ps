@@ -1,0 +1,46 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+
+300 750 250 50 (Welcome! )  scene << >>    labelField pop
+150 700 250 50 (Fill in this form, please. )  scene << >>    labelField pop
+
+
+30 555 250 35 (Your name )  scene << >>    labelField pop
+175 550 300 35  (TextField)    scene <<>>    textField pop
+
+
+30 505 250 35 (Group )  scene << >>    labelField pop
+175 500 100 35  (TextField)    scene <<>>    textField pop
+
+
+30 435 250 35 (Education )  scene << >>    labelField pop
+215 430 100 50 [ (Full-time) (Part-time) ] 1 scene << >> listBox pop
+
+
+30 365 250 35 (Faculty )  scene << >>    labelField pop
+200 365 350 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 0  scene <<  >> comboBox pop
+
+190 300 16       ( I want to get results)   scene << >> checkBox pop
+
+30 105 250 35 (Error checking)  scene << >>    labelField pop
+50 40 116 50 (On) (Off)  scene <<  >> toggleButton pop
+
+
+500 25 120 40   (close) scene <</CLICK [{
+
+                    /messageWindow    370 140 250 150  scene << >> window def
+                    messageWindow dup /wLabel get /label (message) put
+
+                    390 215 250 30 (Do you want to exit? )  messageWindow << >>    labelField pop
+                    430 165 50 25   (yes)        messageWindow <</CLICK [{pop quit}[]] >>  button pop
+                    500 165 50 25   (no)         messageWindow <</CLICK [{ /CLOSE findAncestorWithEventType}[]] >> button pop
+
+         }[]] >>  button pop
+
+
+
+
+repaintAll
+
+showpage
+
+

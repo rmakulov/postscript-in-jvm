@@ -85,7 +85,7 @@
 
     windowDict /eventProcs get /CLICK {
                 /cDict exch def
-                repaintAll
+                repaint
                 } addListToDict
 
     windowDict /eventProcs get /PRESS {
@@ -127,7 +127,7 @@
 
                     cDict moveToFront
                     %cDict setFocusedElement
-                    repaintAll
+                    repaint
                 } addListToDict
 
     windowDict /eventProcs get /RELEASE {
@@ -143,13 +143,13 @@
 
                     cDict /resize 0 put
                     (default) cursor
-                    repaintAll
+                    repaint
                 } addListToDict
 
     windowDict /eventProcs get /DRAG {
                     /cDict exch def
 
-                    repaintAll
+                    repaint
                   } addListToDict
 
     windowDict /eventProcs get /MOVE {
@@ -167,14 +167,14 @@
                         { (default) cursor }
                         if
 
-                     repaintAll
+                     repaint
                   } addListToDict
 
     windowDict /eventProcs get /CLOSE{
                  /cDict exch def
                  cDict deleteWithChildren
                  cDict deleteFromParent
-                 repaintAll
+                 repaint
     } addListToDict
 
     parent /children
@@ -185,7 +185,7 @@
 
     %CloseButton
     %0.901 0.37 0.19
-    -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton pop
+    /rB -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton def
     %labelField
     /lF 0 0 windowDict /h get 5 sub 20 (window) windowDict << >> labelField def
 
@@ -195,8 +195,8 @@
     lF /color [1 1 1] put
     lF /kegel 20 put
 
-
-
+    windowDict /wLabel lF put
+    windowDict /rButton rB put
     windowDict
 } def
 %---

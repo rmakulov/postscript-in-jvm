@@ -34,6 +34,7 @@
                 bd /h get
                 bd /label get
                 bd /isPressed get
+                bd
                 (graphicsEngine/basics/primitives/button/paintButton.ps) (r) file run
                 bd paintChildren
         } def
@@ -56,6 +57,8 @@
                         /eventProcs         eventProcDict
                         /isPressed          false
                         /isFixed            true
+                        /color              [1 0 0]
+
                         /refreshCoordinates /recountCoordinates load
                         /checkBelonging
                                             {
@@ -82,8 +85,8 @@
 
 
     %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем buttonDict
-    buttonDict /eventProcs get /RELEASE { /isPressed false put repaintAll} addListToDict
-    buttonDict /eventProcs get /PRESS { /isPressed true put repaintAll} addListToDict
+    buttonDict /eventProcs get /RELEASE { /isPressed false put repaint} addListToDict
+    buttonDict /eventProcs get /PRESS { /isPressed true put repaint} addListToDict
 
     buttonDict /eventProcs get /CLICK { } addListToDict
 

@@ -1,11 +1,3 @@
-(graphicsEngine/basics/libs/listLib.ps) (r) file run
-(graphicsEngine/basics/libs/stringLib.ps) (r) file run
-(graphicsEngine/basics/libs/figureLib.ps) (r) file run
-(graphicsEngine/basics/libs/mouseEventLib.ps) (r) file run
-(graphicsEngine/basics/libs/keyEventLib.ps) (r) file run
-(graphicsEngine/basics/events/keyCodes.ps) (r) file run
-%(graphicsEngine/basics/windowManager.ps) (r) file run
-
 %---
 (graphicsEngine/basics/primitives/roundButton/roundButton.ps) (r) file run
 %---
@@ -27,9 +19,6 @@
 %---
 (graphicsEngine/basics/primitives/scene/scene.ps) (r) file run
 
-%PROLOG
-
-%-----------------------wm---------------------------------------------------------------------------------------------
 %--- args: element, void
 /addElement {dup /number gelements /maxElementNumber get dup /curnumber exch def put
                 gelements curnumber 3 2 roll put
@@ -341,125 +330,6 @@
     ifelse
 } def
 
-%-----------------------wm---------------------------------------------------------------------------------------------
-
-/invertLabels {
-    0 1 gelements /maxElementNumber get 1 sub
-    {
-        gelements exch get
-        dup /label known
-           {dup /label get
-            invertString
-            /label exch put}
-            {pop}
-            ifelse
-    } for
-} def
-%---
-/getGelement {
-       transform
-       /pointY exch def
-       /pointX exch def
-       gelements /maxElementNumber get 1 sub -1 0 {
-                gelements exch get
-                /element exch def
-                /x element /x get def
-                /y element /y get def
-                /w element /w get def
-                /h element /h get def
-
-                pointX x ge pointY y ge and
-                x w add pointX ge y h add pointY ge and
-                and
-                {element exit}
-                if
-       } for
-} def
-%--- param: sleepInterval set sleep duration
-/sleep
-{
-        /snapshot save def
-        % Single arg off stack - seconds to sleep
-        /sleepInterval exch def
-        % Get our starting time
-        usertime 1000 idiv /starttime exch def
-        {
-                % Seconds since start
-                usertime 1000 idiv starttime sub
-                % Exit if interval is exceeded
-                sleepInterval ge { exit } if
-        } loop
-        snapshot restore
-} def
-%---
-/milliSleep
-{
-        % Single arg off stack - milliseconds to sleep
-        /sleepInterval exch def
-        % Get our starting time
-        usertime /starttime exch def
-        {
-                % Seconds since start
-                usertime  starttime sub
-                % Exit if interval is exceeded
-                sleepInterval ge { exit } if
-        } loop
-} def
-%---
-% params: x y set center of circles
-/wave {
-   /milliSleep
-   {
-           % Single arg off stack - milliseconds to sleep
-           /sleepInterval exch def
-           % Get our starting time
-           usertime /starttime exch def
-           {
-                   % Seconds since start
-                   usertime  starttime sub
-                   % Exit if interval is exceeded
-                   sleepInterval ge { exit } if
-           } loop
-   } def
-    %transform
-    /y exch def
-    /x exch def
-    /r 20 def
-    /deltaR 10 def
-    0.5 setgray
-
-    %debug
-         22 {
-            x r add y moveto
-            x y r 0 360 arc closepath stroke
-            %init
-            %repaintMainContext
-            50 milliSleep
-            %repaintAll
-
-            /r r deltaR add def
-            %debug
-
-         } repeat
-     %repaintAll
-     %100 milliSleep
-     repaintMainContext
-} def
-%---
-% param: [a] - array
-/toList{
-    /arr exch def
-    /len arr length
-    /res null def
-    len 1 sub -1 0 {
-        arr exch get
-        % a /res [      --->     /res [ a
-        /res  [ 3 2 roll res ] def
-    } for
-} def
-
-
-%END_PROLOG
 
 /gelements 1 dict def
 gelements /maxElementNumber 0 put

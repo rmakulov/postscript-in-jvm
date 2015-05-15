@@ -94,7 +94,7 @@
               textFieldDict  addElement
 
               %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
-              textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaintAll} addListToDict
+              textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaint} addListToDict
 
               textFieldDict /eventProcs get /PRESS { } addListToDict
               textFieldDict /eventProcs get /RELEASE { } addListToDict
@@ -128,7 +128,7 @@
                            textField /displayBegin textField /text get textField /displayEnd get -1 w getIndex put
                        }
                        if
-                       repaintAll
+                       repaint
                    end
               } addListToDict
 
@@ -227,7 +227,7 @@
                                       ifelse
 
                                  } if
-                                 repaintAll
+                                 repaint
               } addListToDict
 
               parent /children

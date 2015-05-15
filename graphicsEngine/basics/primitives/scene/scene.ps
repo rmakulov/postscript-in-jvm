@@ -13,7 +13,7 @@
                             /children       []
                             /inFocus        true
                             /paint          /paint load
-                            /eventProcs     << /CLICK [{pop repaintAll }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread }[]] >>
+                            /eventProcs     << /CLICK [{pop repaint }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread  }[]] >>
 
                             /objName        (scene)
                             /checkBelonging
@@ -47,12 +47,14 @@
                   cDict /w get /w exch def
                   cDict /h get /h exch def
 
-                  mouseX mouseY x y w h checkForResize /result exch def
-                  result 0 eq
-                  { (default) cursor }
-                  if
 
-               repaintAll
+                  (default) cursor
+                  %mouseX mouseY x y w h checkForResize /result exch def
+                  %result 0 eq
+                  %{ (default) cursor }
+                  %if
+
+               repaint
             } addListToDict
 
               scene addElement

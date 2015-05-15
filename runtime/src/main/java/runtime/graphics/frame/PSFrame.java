@@ -121,23 +121,23 @@ public class PSFrame extends JFrame {
                 }
             }
 
-//            @Override
-//            public void mouseMoved(MouseEvent e) {
-//                synchronized (this) {
-//
-//
-//                    long time=System.currentTimeMillis();
-//                    if((time-PSFrame.this.lastMoveMouseTime) > mouseMoveRefreshTime) {
-//                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
-//                        PSFrame.this.lastMoveMouseTime=time;
-//                    }
-//                }
-//            }
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                synchronized (this) {
+
+
+                    long time=System.currentTimeMillis();
+                    if((time-PSFrame.this.lastMoveMouseTime) > mouseMoveRefreshTime) {
+                        Runtime.getInstance().addEvent(new PSMouseEvent(e.getX(), e.getY(), EventType.MOVE));
+                        PSFrame.this.lastMoveMouseTime=time;
+                    }
+                }
+            }
         });
         setSize(psWidth, psHeight);
         setLocation(1000, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBackground(Color.GRAY);
+        setBackground(Color.GREEN);
 
 //        panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         add(new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));

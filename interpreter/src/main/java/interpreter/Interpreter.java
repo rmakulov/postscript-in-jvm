@@ -49,8 +49,8 @@ public class Interpreter {
     }
 
     public static void main(String[] args) {
-        instance.setCompilingMode(true);
-//        instance.setCompilingMode(false);
+//        instance.setCompilingMode(true);
+        instance.setCompilingMode(false);
         try {
             if (args.length == 0) {
                   /*main examples*/
@@ -74,7 +74,9 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("tests/otherExamples/drawing.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
-                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/demo.ps")));
+                System.out.println(instance.run(new File("graphicsEngine/basics/demo2.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/onlyButtonGS.sps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));

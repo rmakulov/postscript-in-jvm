@@ -109,6 +109,7 @@ public class EventQueue {
 
                     context.pushToOperandStack(x);
                     context.pushToOperandStack(y);
+
                     context.pushToOperandStack(type);
 
 //                    try {

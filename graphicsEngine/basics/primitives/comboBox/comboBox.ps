@@ -156,14 +156,14 @@
               cDict /rY          cDict /y get parent /y get sub parent /h get div  put
               cDict /rH          cDict /h get parent /h get div                    put
 
-              repaintAll} addListToDict
+              repaint} addListToDict
 
 
  comboBoxDict /eventProcs get /PRESS {
         /cDict exch def
         cDict  moveToFront
 
-        repaintAll
+        repaint
  } addListToDict
 
  comboBoxDict /eventProcs get /RELEASE {

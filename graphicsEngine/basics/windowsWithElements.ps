@@ -8,6 +8,12 @@
 /mainWindow 100 100 400 400 scene << >> window def
 
 /window2    100 400 400  400  scene << >> window def
+100 650 100 40 (Type yor message, please!)  window2 << >>    labelField pop
+110 565 350 30 (TextField)     window2 <<>>    textField pop
+235 465 100 40   (send)         window2 <</CLICK [{pop quit}[]] >>  button pop
+
+%window2 /wLabel get /label (window) put
+
 
 %150 150 100 50 (Hello, World!)  mainWindow << >>    labelField pop
 %150 500 400 200 (noth)          scene <</CLICK [{pop}[]] >> button pop
