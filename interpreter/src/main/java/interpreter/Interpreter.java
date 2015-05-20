@@ -75,8 +75,9 @@ public class Interpreter {
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButton.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawWindows.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/drawButtons.ps")));
-//                System.out.println(instance.run(new File("graphicsEngine/basics/demo.ps")));
-                System.out.println(instance.run(new File("graphicsEngine/basics/demo2.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/fileTest.ps")));
+                System.out.println(instance.run(new File("graphicsEngine/basics/demo.ps")));
+//                System.out.println(instance.run(new File("graphicsEngine/basics/demo2.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/windowsWithElements.ps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/onlyButtonGS.sps")));
 //                System.out.println(instance.run(new File("graphicsEngine/basics/textField.ps")));

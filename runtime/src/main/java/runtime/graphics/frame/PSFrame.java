@@ -16,9 +16,11 @@ import java.awt.event.*;
 public class PSFrame extends JFrame {
     private static PSFrame ourInstance;
     //    public int psHeight = 700;
-    public int psHeight = 1085;
+//    public int psHeight = 1085;
+    public int psHeight = 843;
     //    public int psWidth = 500;
-    public int psWidth = 815;
+//    public int psWidth = 815;
+    public int psWidth = 651;
     private long lastMoveMouseTime=0;
     private long lastDragMouseTime=0;
     private int mouseMoveRefreshTime=100;
@@ -34,6 +36,9 @@ public class PSFrame extends JFrame {
 
     private PSFrame() {
         super();
+        getContentPane().setPreferredSize(new Dimension(651, 843));
+        pack();
+        setResizable(false);
         setVisible(true);
         addKeyListener(new KeyListener() {
             @Override
@@ -134,10 +139,10 @@ public class PSFrame extends JFrame {
                 }
             }
         });
-        setSize(psWidth, psHeight);
+        //setSize(psWidth, psHeight);
         setLocation(1000, 0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBackground(Color.GREEN);
+        setBackground(Color.WHITE);
 
 //        panel.setPreferredSize(new Dimension(PSImage.width, PSImage.height));
         add(new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED));

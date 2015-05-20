@@ -23,7 +23,6 @@ gsave
                 w 2 r mul sub
                 1 r mul
             roundedRect fill
-
         }
         {
                 %shadow
@@ -40,12 +39,12 @@ gsave
                     w 2 r mul sub
                     1 r mul
                 roundedRect fill
-
         }
         ifelse
     %frame
     0 setgray
-    x y       w h roundedRect stroke
+    .5 setlinewidth
+    x y w h roundedRect stroke
 
 
 

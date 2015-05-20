@@ -134,6 +134,38 @@
 
 %-------------------------------------
 %-------params------------
+%----red        :   integer
+%----green      :   integer
+%----blue       :   integer
+%    return     :   double double double
+%--------------------------
+/getRealRGB{
+   1 dict  begin
+   /b exch def
+   /g exch def
+   /r exch def
+
+   r 255 div
+   g 255 div
+   b 255 div
+   end
+} def
+
+%-------------------------------------
+%-------params------------
+%----red        :   integer
+%----green      :   integer
+%----blue       :   integer
+%    return     :   double double double
+%--------------------------
+/setrgb{
+   1 dict  begin
+   getRealRGB setrgbcolor
+   end
+} def
+
+%-------------------------------------
+%-------params------------
 %----dict       :   dictionary
 %    return     :   void
 %--------------------------
@@ -170,6 +202,58 @@
         loop
     end
 } def
+
+%-------------------------------------
+%-------params------------
+%----x          :   integer
+%----y          :   integer
+%----h          :   integer
+%    return     :   void
+%--------------------------
+/newRoundedRect
+{
+    1 dict begin
+    /h exch def
+    /y exch def
+    /x exch def
+
+    %x y translate
+    x h .25 mul add y moveto
+    .75 h mul .25 h mul dup 270 360 arc
+    .75 h mul h .75 mul h .25 mul 0 90 arc
+    .25 h mul .75 h mul .25 h mul 90 180 arc
+    .25 h mul dup dup 180 270 arc
+
+   end
+} def
+
+
+%-------------------------------------
+%-------params------------
+%----x          :   integer
+%----y          :   integer
+%----h          :   integer
+%    return     :   void
+%--------------------------
+/newRoundedRect3
+{
+    1 dict begin
+    /h exch def
+    /y exch def
+    /x exch def
+
+    x y translate
+
+    h .33 mul 0 moveto
+    .67 h mul .33 h mul dup 270 360 arc
+    .67 h mul h .67 mul h .33 mul 0 90 arc
+    .33 h mul .67 h mul .33 h mul 90 180 arc
+    .33 h mul dup dup 180 270 arc
+    x neg y neg translate
+
+   end
+} def
+
 
 %-------------------------------------
 %-------params------------

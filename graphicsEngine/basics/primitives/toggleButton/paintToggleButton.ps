@@ -1,30 +1,37 @@
+
+/NavajoWhite    { 255 222 173 } def
+/ForestGreen    { 34 139 34 }   def
+/White          { 255 255 255 }       def
+/Black          {0 0 0 }        def
+/Red            {255 0 0 }        def
+/Green          {0 255 0 }        def
+/Blue           {0 0 255 }        def
+/DarkCyan       {0 139 139 }    def
+/FireBrick      {139 26 26}     def
+
 % ------------PROLOG------------%
 /fillLeftRect {
-    0 0 w 2 div h rect
-    fill
-
+    0 0 w 2 div h roundedRect stroke
+    0 0 w 2 div h roundedRect fill
 } def
 %--------------------------------
 /fillRightRect {
-    w 2 div 0 w 2 div h rect
-    fill
-
+    w 2 div 0 w 2 div h roundedRect fill
+    w 2 div 0 w 2 div h roundedRect stroke
 } def
 
 /printTextOff{
-
-    0 w 2 div add shift 3 mul moveto
+    shift w 2 div add shift 3 mul moveto
     0 0 0 setrgbcolor
     textOff show
-
 } def
 
 /printTextOn{
-
-    0 shift 3 mul moveto
-    1 0 0 setrgbcolor
+    shift 2 mul shift 3 mul moveto
+    %0 126 203 setrgb
+    %FireBrick setrgb
+    White setrgb
     textOn show
-
 } def
 
 
@@ -41,30 +48,38 @@ gsave
     x y translate
     /shift 5 def
 
-    /kegel h shift 3 mul sub def
+    /kegel h 1.6 div cvi def
     /Rekha findfont kegel scalefont setfont
 
-    drawRect
 
+    .5 setlinewidth
     isPressed
     {
      1 1 1 setrgbcolor
      fillRightRect
-     0 0 0 setrgbcolor
+     185 193 193 setrgb
      fillLeftRect
      printTextOff
 
     }
     {
-        1 1 1 setrgbcolor
-        fillLeftRect
+     %ForestGreen setrgb
+     %NavajoWhite setrgb
+     0 126 203  setrgb %blue
+     30 156 233  setrgb %blue
+
+        0 0 w h roundedRect fill
         0 0 0 setrgbcolor
+        185 255 div 193 255 div 193 255 div setrgbcolor
         fillRightRect
         printTextOn
-
-
     }
     ifelse
-%
+
+    %97 255 div 151 255 div 249 255 div setrgbcolor
+    0.501961 0.45098 0.501961 setrgbcolor
+
+    0 0 w h roundedRect stroke
+
 grestore
 % ------------END------------%

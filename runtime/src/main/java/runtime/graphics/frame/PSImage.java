@@ -20,8 +20,8 @@ public class PSImage {
 
         Graphics2D g2 = (Graphics2D) image.getGraphics();
 //        Color c = new Color(1f, 0f, 0f, .5f);
-//        g2.setColor(Color.WHITE);
-        g2.setComposite(AlphaComposite.Clear);
+        g2.setColor(Color.WHITE);
+//        g2.setComposite(AlphaComposite.Clear);
 //        System.out.println(new Color(255,255,255,255));
         g2.fillRect(0, 0, width, height);
 

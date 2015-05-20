@@ -14,10 +14,7 @@ import operators.control.*;
 import operators.coordinatSystemAndMatrix.*;
 import operators.customs.*;
 import operators.dictionary.*;
-import operators.file.DoubleEqOp;
-import operators.file.FileOp;
-import operators.file.RunOp;
-import operators.file.StackOp;
+import operators.file.*;
 import operators.graphicStateDeviceIndependentOperators.CurrentFlatOp;
 import operators.graphicStateDeviceIndependentOperators.SetFlatOp;
 import operators.graphicsState.*;
@@ -279,6 +276,7 @@ public class DefaultDicts {
     private static void addCoordinateSystemAndMatrix() {
         addOperator(ITransformOp.instance);
         addOperator(RotateOp.instance);
+        addOperator(CurrentMatrixOp.instance);
         addOperator(ScaleOp.instance);
         addOperator(TransformOp.instance);
         addOperator(TranslateOp.instance);
@@ -324,6 +322,8 @@ public class DefaultDicts {
         addOperator(DoubleEqOp.instance);
         addOperator(StackOp.instance);
         addOperator(FileOp.instance);
+        addOperator(WriteStringOp.instance);
+        addOperator(CloseFileOp.instance);
         addOperator(RunOp.instance);
     }
 

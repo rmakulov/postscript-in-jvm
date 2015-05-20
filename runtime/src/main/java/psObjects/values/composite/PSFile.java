@@ -28,7 +28,7 @@ public class PSFile extends CompositeValue {
         file = new File(name);
         if (access.equals("w")) {
             file.setWritable(true);
-            file.setReadable(false);
+            file.setReadable(true);
         } else if (access.equals("r")) {
             file.setReadOnly();
         } else if (access.equals("a")) {

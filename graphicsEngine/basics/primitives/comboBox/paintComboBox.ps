@@ -51,8 +51,18 @@
 
 %-------------------------
 /drawRectCB{
-    0 0 w oH rect
-    stroke
+    1 dict begin
+    0 0 w oH rect stroke
+    end
+} def
+
+%----------------------
+/triangle{
+    /height oH 3 div def
+    w height sub oH .65 mul moveto
+    height neg 0 rlineto
+    height 2 div 0.866 height mul neg rlineto
+    closepath
 } def
 
 % --------------------------------------BEGIN-----------------------------------------%
@@ -74,7 +84,7 @@ gsave
         /shift 5 def
 
         /kegel oH shift sub def
-        /Rekha findfont kegel scalefont setfont
+        (Rekha) findfont kegel scalefont setfont
 
 
         %isOpened print inFocus print
@@ -87,10 +97,15 @@ gsave
             shift shift labels curLabel get drawString
         }
         {
-          fillSmallRect
+          %fillSmallRect
           shift shift labels curLabel get drawString
         }
         ifelse
+
+    .3 setlinewidth
+    139 131 134 setrgb
+    triangle stroke
+    triangle fill
     end
 
 grestore

@@ -2,6 +2,7 @@ package runtime.graphics.frame;
 
 import psObjects.PSObject;
 import psObjects.values.composite.PSDictionary;
+import psObjects.values.composite.PSString;
 import psObjects.values.simple.PSName;
 import psObjects.values.simple.PSNull;
 import psObjects.values.simple.numbers.PSInteger;
@@ -211,11 +212,11 @@ public class PSDrawer {
         GState gState = context.getGState();
         PSDictionary fontDictionary = (PSDictionary) gState.getFont().getValue();
 //        System.out.println(fontDictionary);
-        String nameFont = ((PSName) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getStrValue();
+        String nameFont = ((PSString) fontDictionary.get(new PSObject(new PSName("name"))).getValue()).getString();
         int scaleFont = ((PSInteger) fontDictionary.get(new PSObject(new PSName("scale"))).getValue()).getIntValue();
         PSObject matrix = fontDictionary.get(new PSObject(new PSName("matrix")));
-//        Font font = new Font(nameFont, Font.PLAIN, scaleFont);
-        Font font = new Font(nameFont, Font.BOLD, scaleFont);
+        Font font = new Font(nameFont, Font.PLAIN, scaleFont);
+//        Font font = new Font(nameFont, Font.BOLD, scaleFont);
         if (!matrix.getValue().equals(PSNull.NULL)) {
             AffineTransform trans = new TransformMatrix(matrix).toAffineTransform();
             font = new Font(nameFont, Font.PLAIN, 40);
