@@ -11,10 +11,10 @@ import components.PSWindow;
 public class JavaInterface {
     public static void main(String[] args) {
         GraphicInterface graphicInterface = new GraphicInterface();
-        PSComponent window = new PSWindow(100, 100, 300, 300, "mainwindow");
-        PSComponent button = new PSButton(110, 110, 50, 20, "ok", window);
+        PSComponent window = new PSWindow(100, 100, 300, 300);
+        PSComponent button = new PSButton(110, 110, 50, 20, "ok");
         graphicInterface.add(window);
-        graphicInterface.add(button);
+        window.add(button);
         graphicInterface.finishConstruction();
         graphicInterface.run();
     }

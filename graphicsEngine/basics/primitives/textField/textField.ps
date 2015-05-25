@@ -6,8 +6,10 @@
     /w exch def
     /y exch def
     /x exch def
+    /name exch def
 
     %---parameters
+                name
                 x y w h
                 parent /x get
                 parent /y get
@@ -29,6 +31,7 @@
               /rW exch def
               /rY exch def
               /rX exch def
+              /name exch def
               /paint {/bd exch def
                           bd recountCoordinates
                           bd /x get
@@ -46,7 +49,7 @@
                           bd paintChildren
                   } def
                   %eventProcs - procedures for each type of events
-              /textFieldDict <<
+              /textFieldDict <<     /name               name
                                     /label              label
                                     /text               ()
                                     /rX                 rX
@@ -237,7 +240,7 @@
               put
 
               %textFieldDict paint
-              textFieldDict
+              name textFieldDict def
 
 } def
 %---

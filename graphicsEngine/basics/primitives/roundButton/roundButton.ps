@@ -7,7 +7,7 @@
     /r exch def
     /dY exch def
     /dX exch def
-
+    /name exch def
     /paint {/bd exch def
                 bd recountCoordinatesRB
 
@@ -23,7 +23,8 @@
 
         } def
         %eventProcs - procedures for each type of events
-    /roundButtonDict <<      /parent         parent
+    /roundButtonDict << /name               name
+                        /parent             parent
                         /children           []
                         /dX                 dX
                         /dY                 dY
@@ -73,7 +74,7 @@
         addToEndOfList
     put
 
-    roundButtonDict
+    name roundButtonDict def
 } def
 
 

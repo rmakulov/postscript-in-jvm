@@ -7,8 +7,9 @@
     /w exch def
     /y exch def
     /x exch def
-
+    /name exch def
     %---parameters
+                name
                 x y w h
                 parent /x get
                 parent /y get
@@ -33,6 +34,7 @@
     /rW exch def
     /rY exch def
     /rX exch def
+    /name exch def
     /paint {/bd exch def
                 bd recountCoordinates
                 bd /x get
@@ -47,7 +49,8 @@
                 bd paintChildren
         } def
 
-    /listBoxDict <<     /rX                 rX
+    /listBoxDict <<     /name               name
+                        /rX                 rX
                         /rY                 rY
                         /rH                 rH
                         /rW                 rW
@@ -109,6 +112,6 @@
     put
 
     %listBoxDict paint
-    listBoxDict
+    name listBoxDict def
 } def
 %---

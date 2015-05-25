@@ -12,16 +12,20 @@ import java.util.ArrayList;
  */
 public class GraphicInterface {
     StringBuilder psProgramStringBuilder = new StringBuilder();
+    ArrayList<PSComponent> mainComponents=new ArrayList<PSComponent>();
 
     public GraphicInterface() {
         psProgramStringBuilder.append("(graphicsEngine/basics/glib.ps) (r) file run");
     }
 
     public void add(PSComponent component) {
-            psProgramStringBuilder.append("\n").append(component.getGeneratedString());
+        mainComponents.add(component);
     }
 
     public void finishConstruction() {
+            for(PSComponent component:mainComponents){
+                psProgramStringBuilder.append("\n").append(component.getGeneratedString());
+            }
             psProgramStringBuilder.append("\nrepaintAll\nshowpage");
     }
 

@@ -59,9 +59,10 @@ public class IfOp extends Operator {
 
     private boolean wrongArgs(Context context, PSObject proc, PSObject bool) {
         if (!(proc.isProc() || proc.isBytecode()) || bool.getType() != Type.BOOLEAN) {
-            fail();
             context.pushToOperandStack(bool);
             context.pushToOperandStack(proc);
+            fail();
+
             return true;
         }
         return false;
