@@ -424,4 +424,7 @@ public class PSObject implements Comparable<PSObject>, Opcodes {
         return type == Type.NAME;
     }
 
+    public boolean isDict() {
+        return  type == Type.DICTIONARY;
+    }
 }

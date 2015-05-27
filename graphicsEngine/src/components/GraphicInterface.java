@@ -1,6 +1,7 @@
 package components;
 
 import interpreter.Interpreter;
+import operators.SendEventToJavaOp;
 import operators.customs.*;
 import psObjects.PSObject;
 
@@ -22,21 +23,23 @@ public class GraphicInterface {
         mainComponents.add(component);
     }
 
-    public void finishConstruction() {
+    private void finishConstruction() {
             for(PSComponent component:mainComponents){
                 psProgramStringBuilder.append("\n").append(component.getGeneratedString());
             }
             psProgramStringBuilder.append("\nrepaintAll\nshowpage");
     }
 
-    public void run() {
-        try {
-            Interpreter.instance.setCustomOperators(getCustomsOperators());
-            Interpreter.instance.run(psProgramStringBuilder.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void setVisible(boolean b) {
+        if(b) {
+            try {
+                finishConstruction();
+                Interpreter.instance.setCustomOperators(getCustomsOperators());
+                Interpreter.instance.run(psProgramStringBuilder.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     public static ArrayList<PSObject> getCustomsOperators() {
@@ -51,6 +54,7 @@ public class GraphicInterface {
         entries.add(new PSObject(NewThreadOp.instance));
         entries.add(new PSObject(RepaintMainContextOp.instance));
         entries.add(new PSObject(RepaintOp.instance));
+        entries.add(new PSObject(SendEventToJavaOp.instance));
         return entries;
     }
 
