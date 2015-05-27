@@ -38,7 +38,7 @@ public class PSFrame extends JFrame {
         super();
         getContentPane().setPreferredSize(new Dimension(651, 843));
         pack();
-        setResizable(false);
+        //setResizable(false);
         setVisible(true);
         addKeyListener(new KeyListener() {
             @Override

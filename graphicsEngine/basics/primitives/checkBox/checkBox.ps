@@ -5,7 +5,9 @@
         /h exch def
         /y exch def
         /x exch def
+        /name exch def
 
+            name
             x parent /x get sub parent /w get div
             y parent /y get sub parent /h get div
             h parent /h get div
@@ -23,6 +25,7 @@
     /rH exch def
     /rY exch def
     /rX exch def
+    /name exch def
     /rW parent /h get rH mul parent /w get div def
     /paint {/bd exch def
                 bd recountCoordinates
@@ -36,7 +39,8 @@
                 bd paintChildren
         } def
         %eventProcs - procedures for each type of events
-    /checkBoxDict <<    /label              label
+    /checkBoxDict <<    /name               name
+                        /label              label
                         /rX                 rX
                         /rY                 rY
                         /rW                 rW
@@ -94,6 +98,6 @@
    put
 
 
-    checkBoxDict
+    name checkBoxDict def
 } def
 %---

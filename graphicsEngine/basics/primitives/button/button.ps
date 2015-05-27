@@ -6,7 +6,9 @@
     /w exch def
     /y exch def
     /x exch def
+    /name exch def
 
+        name
         x parent /x get sub parent /w get div
         y parent /y get sub parent /h get div
         w parent /w get div
@@ -26,6 +28,7 @@
     /rW exch def
     /rY exch def
     /rX exch def
+    /name exch def
     /paint {/bd exch def
                 bd recountCoordinates
                 bd /x get
@@ -39,7 +42,8 @@
                 bd paintChildren
         } def
         %eventProcs - procedures for each type of events
-    /buttonDict <<      /label              label
+    /buttonDict <<      /name               name
+                        /label              label
                         /parent             parent
                         /children           []
                         /rX                 rX
@@ -104,5 +108,5 @@
     put
 
     %buttonDict paint
-    buttonDict
+    name buttonDict def
 } def

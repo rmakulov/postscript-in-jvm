@@ -17,16 +17,11 @@ import psObjects.values.reference.Reference;
 import runtime.avl.Pair;
 import runtime.compiler.DynamicClassLoader;
 import runtime.events.Event;
-import runtime.events.EventQueue;
-import runtime.events.PrimitiveQueue;
 import runtime.graphics.GState;
 import windowmanager.WindowManager;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -64,7 +59,6 @@ public class Runtime {
     public WindowManager getWindowManager() {
         return windowManager;
     }
-
 
 
     //        private Runtime() {
@@ -209,8 +203,8 @@ public class Runtime {
                     LocalRef ref = (LocalRef) array.getDirectValue();
                     getUsingLocalVMIndexesByRef(indexes, ref);
                 }
-            }else if (proc instanceof StringProcedure){
-                PSObject string =((StringProcedure) proc).getStringObject();
+            } else if (proc instanceof StringProcedure) {
+                PSObject string = ((StringProcedure) proc).getStringObject();
                 if ((string.getDirectValue() instanceof LocalRef)) {
                     LocalRef ref = (LocalRef) string.getDirectValue();
                     getUsingLocalVMIndexesByRef(indexes, ref);
@@ -374,10 +368,17 @@ public class Runtime {
                 new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
     }
 
+    public void initSystemDict(ArrayList<PSObject> customOperators) {
+        if (systemDict != null) return;
+        systemDict = new PSObject(DefaultDicts.getSystemDict(customOperators),
+                Type.DICTIONARY,
+                new Attribute(Attribute.Access.READ_ONLY, Attribute.TreatAs.LITERAL));
+    }
+
+
     public CompositeValue getValueByTableIndex(int tableIndex) {
         return localVM.get(tableIndex);
     }
-
 
 
     public int getLocalVMSize() {

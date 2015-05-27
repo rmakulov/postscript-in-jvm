@@ -52,28 +52,43 @@ public class DefaultDicts {
     public static PSDictionary getSystemDict() {
 
         if (systemDict == null) {
-            addArithmeticOperators();
-            addCommonOperators();
-            addControlOperators();
-            addCoordinateSystemAndMatrix();
-            addDictionaryOperators();
-            addGlythAndFontOperators();
-            addGraphicsStateOperators();
-            addGraphicStateDeviceIndependentOperators();
-            addMiscellaneousOperators();
-            addOperandStackManipulationOperators();
-            addPaintingOperators();
-            addPathConstructionOperators();
-            addRelationBooleanOperators();
-            addStringOperators();
-            addTypeAttributeOperators();
-            addVirtualMemoryOperators();
-            addArrayOperators();
-            addFileOperators();
-            addCustomsOperators();
+            createOperatorArray();
             systemDict = new PSDictionary(entries);
         }
         return systemDict;
+    }
+   public static PSDictionary getSystemDict(ArrayList<PSObject> customOperators) {
+
+        if (systemDict == null) {
+            createOperatorArray();
+            for (PSObject operator : customOperators){
+                entries.add(new PSObject(((Operator)operator.getValue()).getDefaultKeyName()));
+                entries.add(operator);
+            }
+            systemDict = new PSDictionary(entries);
+        }
+        return systemDict;
+    }
+
+    private static void createOperatorArray() {
+        addArithmeticOperators();
+        addCommonOperators();
+        addControlOperators();
+        addCoordinateSystemAndMatrix();
+        addDictionaryOperators();
+        addGlythAndFontOperators();
+        addGraphicsStateOperators();
+        addGraphicStateDeviceIndependentOperators();
+        addMiscellaneousOperators();
+        addOperandStackManipulationOperators();
+        addPaintingOperators();
+        addPathConstructionOperators();
+        addRelationBooleanOperators();
+        addStringOperators();
+        addTypeAttributeOperators();
+        addVirtualMemoryOperators();
+        addArrayOperators();
+        addFileOperators();
     }
 
 

@@ -6,8 +6,9 @@
     /w exch def
     /y exch def
     /x exch def
-
+    /name exch def
     %---parameters
+        name
             x y w h
             parent /x get
             parent /y get
@@ -29,6 +30,7 @@
     /rW exch def
     /rY exch def
     /rX exch def
+    /name exch def
     /paint {/bd exch def
                 bd recountCoordinates
                 bd /x get
@@ -42,7 +44,7 @@
                 bd paintChildren
         } def
 
-    /windowDict <<
+    /windowDict <<      /name               name
                         /rX                 rX
                         /rY                 rY
                         /rH                 rH
@@ -188,9 +190,9 @@
 
     %CloseButton
     %0.901 0.37 0.19
-    /rB -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton def
+    /rB -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton
     %labelField
-    /lF 0 0 windowDict /h get 5 sub 20 label windowDict << >> labelField def
+    /lF 0 0 windowDict /h get 5 sub 20 label (window) windowDict << >> labelField
 
     lF /isAttached true put
     lF /dX 5 put
@@ -200,7 +202,7 @@
 
     windowDict /wLabel lF put
     windowDict /rButton rB put
-    windowDict
+    windowDict /name get windowDict def
 } def
 %---
 

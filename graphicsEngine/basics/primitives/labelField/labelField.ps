@@ -7,8 +7,9 @@
       /w exch def
       /y exch def
       /x exch def
-
+      /name exch def
       %---parameters
+                  name
                   x y w h
                   parent /x get
                   parent /y get
@@ -24,7 +25,6 @@
 
 
 /relLabelField {
-
               /eventProcDipact exch def
               /parent exch def
               /label exch def
@@ -32,6 +32,7 @@
               /rW exch def
               /rY exch def
               /rX exch def
+              /name exch def
               /paint {/bd exch def
                           bd recountCoordinates
 
@@ -51,7 +52,8 @@
                           bd paintChildren
                   } def
 
-              /labelFieldDict <</label                  label
+              /labelFieldDict <</name                   name
+                                /label                  label
                                 /rX                     rX
                                 /rY                     rY
                                 /rW                     rW
@@ -114,5 +116,5 @@
               put
 
               %labelFieldDict paint
-              labelFieldDict
+              name labelFieldDict def
 } def
