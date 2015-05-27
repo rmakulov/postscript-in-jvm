@@ -36,7 +36,7 @@ public class CvrOp extends Operator {
             double d = 0;
             try {
                 if (s.charAt(0) == '.') s = "0" + s;
-                d = (int) Double.parseDouble(s);
+                d = (double) Double.parseDouble(s);
             } catch (NumberFormatException e2) {
                 context.pushToOperandStack(o);
                 return;

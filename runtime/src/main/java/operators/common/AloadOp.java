@@ -39,8 +39,8 @@ public class AloadOp extends Operator {
             context.pushToOperandStack(psObject);
 
         } else {
-            fail();
             context.pushToOperandStack(psObject);
+            fail();
             return;
         }
     }

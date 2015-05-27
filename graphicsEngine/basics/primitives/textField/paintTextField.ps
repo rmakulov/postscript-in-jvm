@@ -47,6 +47,7 @@ end
 } def
 
 gsave
+/isChanged exch def
 /dE       exch def
 /dB       exch def
 /position exch def
@@ -86,10 +87,14 @@ inFocus {
     /stringW subString stringwidth pop def
     h cvr 25 div setlinewidth
 
-    /newShift h cvr 10 div def
-    newShift 1.5 mul stringW add
-            shift cvr moveto
-             0 h shift 2 mul sub rlineto stroke
+    isChanged
+    {
+        /newShift h cvr 10 div def
+        newShift 1.5 mul stringW add
+        shift cvr moveto
+        0 h shift 2 mul sub rlineto stroke
+    } if
+    
     1 setlinewidth
     } if
 

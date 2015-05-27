@@ -58,6 +58,8 @@
                         /isPressed          false
                         /isFixed            true
                         /color              [1 0 0]
+                        /objName            (Button)
+                        /textFont               (Times-Roman)
 
                         /refreshCoordinates /recountCoordinates load
                         /checkBelonging
@@ -85,10 +87,14 @@
 
 
     %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем buttonDict
-    buttonDict /eventProcs get /RELEASE { /isPressed false put repaint} addListToDict
+    buttonDict /eventProcs get /RELEASE {/isPressed false put repaint} addListToDict
     buttonDict /eventProcs get /PRESS { /isPressed true put repaint} addListToDict
 
-    buttonDict /eventProcs get /CLICK { } addListToDict
+    buttonDict /eventProcs get /CLICK {
+
+
+
+    } addListToDict
 
 
     parent /children

@@ -83,7 +83,6 @@
     ifelse
 } def
 %--- param: list, execute all list elements
-%----param: argument for execution
 %put for each element
 /execList{
     /list exch def
@@ -96,6 +95,22 @@
         }
         if
 } def
+%--- param: list, execute all list elements
+%----param: every element argument array for execution
+%put for each element
+/execListWithArg{
+    /list exch def
+    /cArr exch def
+    %/argument exch def
+    list length 0 ne{
+     %   argument
+        cArr aload pop list head exec
+        %argument
+        cArr list tail execListWithArg
+        }
+        if
+} def
+
 %-------param: list, elementNumber:integer, returns new --------
 /moveToEnd{
     /elementNumber exch def

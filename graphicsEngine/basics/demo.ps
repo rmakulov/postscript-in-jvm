@@ -1,7 +1,7 @@
 (graphicsEngine/basics/glib.ps) (r) file run
 
-300 750 250 50 (Welcome! )  scene << >>    labelField pop
-150 700 250 50 (Fill in this form, please. )  scene << >>    labelField pop
+220 750 250 50 (Welcome! )  scene << >>    labelField pop
+100 700 250 50 (Fill in this form, please. )  scene << >>    labelField pop
 
 
 30 555 250 35 (Your name )  scene << >>    labelField pop
@@ -13,16 +13,16 @@
 
 
 30 435 250 35 (Education )  scene << >>    labelField pop
-/education 215 430 100 50 [ (Full-time) (Part-time) ] 1 scene << >> listBox def
+/education 215 430 100 50 [ (Full-time) (Part-time) ] 0 scene << >> listBox def
 
 
 30 365 250 35 (Faculty )  scene << >>    labelField pop
-/faculty 200 365 350 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 0  scene <<  >> comboBox def
+/faculty 200 365 350 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 3  scene <<  >> comboBox def
 
 /results 190 300 20       ( I want to get results)   scene << >> checkBox def
 
-30 105 250 35 (Error checking)  scene << >>    labelField pop
-/errorChecking 50 40 116 50 (On) (Off)  scene <<  >> toggleButton def
+30 150 250 35 (Error checking)  scene << >>    labelField pop
+/errorChecking 50 85 116 50 (On) (Off)  scene <<  >> toggleButton def
 
 /saveData
 {
@@ -38,15 +38,18 @@
     report print
 } def
 
-500 25 120 40   (close) scene <</CLICK [{
+470 80 120 40   (close) scene <</CLICK [{
+                    pop
+                    /messageWindow    170 340 250 150 (message) scene << >> window def
+                    messageWindow /textFont (Comfortaa Bold) put
+                    190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField pop
 
-                    /messageWindow    370 140 250 150  scene << >> window def
-                    messageWindow dup /wLabel get /label (message) put
+                    /yB 230 365 50 25   (yes)        messageWindow <</CLICK [{saveData pop quit}[]] >>  button def
+                    /nB 300 365 50 25   (no)         messageWindow <</CLICK [{ /CLOSE findAncestorWithEventType}[]] >> button def
 
-                    390 215 250 30 (Do you want to exit? )  messageWindow << >>    labelField pop
-                    430 165 50 25   (yes)        messageWindow <</CLICK [{saveData pop quit}[]] >>  button pop
-                    500 165 50 25   (no)         messageWindow <</CLICK [{ /CLOSE findAncestorWithEventType}[]] >> button pop
-
+                    yB /textFont (Comfortaa Bold) put
+                    nB /textFont (Comfortaa Bold) put
+                    repaint
          }[]] >>  button pop
 
 

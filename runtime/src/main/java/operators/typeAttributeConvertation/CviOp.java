@@ -36,7 +36,7 @@ public class CviOp extends Operator {
         String s = ((PSString) o.getValue()).getString();
         int i = 0;
         try {
-            parseAsInteger(s);
+            i = parseAsInteger(s);
         } catch (NumberFormatException e2) {
             context.pushToOperandStack(o);
             return;

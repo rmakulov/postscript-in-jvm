@@ -1,35 +1,32 @@
 (graphicsEngine/basics/glib.ps) (r) file run
 
-/window1    400 400 400  400  scene << >> window def
+/window1    400 400 400 400 (reflections) scene << >> window def
 450 500 16       (horizontal)    window1 <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
 500 550 16       (vertical)      window1 <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
 
-450 600 100 70   (close)         window1 <</CLICK [{pop quit}[]] >>  button pop
-/mainWindow 100 100 400 400 scene << >> window def
+450 600 100 40   (close) window1 <</CLICK [{pop quit}[]] >>  button pop
+/mainWindow 100 100 400 400 (window with label) scene << >> window def
 
-/window2    100 400 400  400  scene << >> window def
+/window2    100 400 400  400 (Input) scene << >> window def
 100 650 100 40 (Type yor message, please!)  window2 << >>    labelField pop
 110 565 350 30 (TextField)     window2 <<>>    textField pop
 235 465 100 40   (send)         window2 <</CLICK [{pop quit}[]] >>  button pop
 
 %window2 /wLabel get /label (window) put
 
-
-%150 150 100 50 (Hello, World!)  mainWindow << >>    labelField pop
-%150 500 400 200 (noth)          scene <</CLICK [{pop}[]] >> button pop
-150 200 100 50   (mirror)        mainWindow <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
-%
+150 200 100 40   (mirror)        mainWindow <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
 420 700 200 30 [ (Table) (Mouse) (Screen) ] 1  window1 <<  >> comboBox pop
-%400 450 200 30 [ (One) (Two) (Three) (Four) (Five) (Six) (Seven) (Eight) (Nine) (Ten)] 4 scene << >> comboBox pop
-%
-%350 50 250 50 (Hello, World!)  scene << >>    labelField pop
-%
 600 500 30 100 [ (1) (2) (3) (4) (5) ] 2 window1 << >> listBox pop
 400 400 200 90 [ (Sekatski) (Martin Gardner) (Evdokimova) ] 1 window1 << >> listBox pop
-%
 200 270 200 30 (TextField)     mainWindow <<>>    textField pop
-%
 280 210 100 50 (On) (Off)  mainWindow <<  >> toggleButton pop
 
 repaintAll
 showpage
+
+
+
+%150 150 100 50 (Hello, World!)  mainWindow << >>    labelField pop
+%150 500 400 200 (noth)          scene <</CLICK [{pop}[]] >> button pop
+%400 450 200 30 [ (One) (Two) (Three) (Four) (Five) (Six) (Seven) (Eight) (Nine) (Ten)] 4 scene << >> comboBox pop
+%350 50 250 50 (Hello, World!)  scene << >>    labelField pop

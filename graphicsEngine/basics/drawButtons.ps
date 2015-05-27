@@ -1,11 +1,10 @@
 (graphicsEngine/basics/glib.ps) (r) file run
-
-
+%
 50 50 120 40   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
 150 500 200 50 (nothing)          scene <</CLICK [{pop}[]] >> button pop
 50 750 120 50   (mirror)        scene <</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> button pop
 50 200 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
-50 150 16       (horizontal)    scene << >> checkBox pop
+50 150 24       (horizontal)    scene << >> checkBox pop
 200 200 16      (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
 50 350 120 50   (invert)        scene <</CLICK [{pop invertLabels  repaintAll}[]] >> button pop
 150 250 500 50 (TextField)     scene <<>>    textField pop
@@ -19,7 +18,7 @@
 %
 600 500 30 100 [ (1) (2) (3) (4) (5) ] 2 scene << >> listBox pop
 400 700 200 90 [ (Sekatski) (Martin Gardner) (Evdokimova) ] 1 scene << >> listBox pop
-
+%
 repaintAll
 
 showpage

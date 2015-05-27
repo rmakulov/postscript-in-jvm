@@ -133,7 +133,7 @@
 %--- param: gelement
 /setFocusedElement {
    /nElem exch def
-    nElem /inFocus get not
+   nElem /inFocus get not
          {
           /oElem gelements /focusedElement get def
           oElem /inFocus false put
@@ -143,9 +143,8 @@
            oElem oElem /closeElement get exec
            }
           if
-          nElem /inFocus true put
-
-           gelements /focusedElement nElem put
+             nElem /inFocus true put
+             gelements /focusedElement nElem put
          } if
 } def
 %--- param: gelement
@@ -159,12 +158,10 @@
          /children element /children get def
              {
                   children length 0 eq
-                  { exit
-                  }
+                  { exit }
                   {
-
                      gelements children head  get deleteWithChildren
-                     /children  children tail def
+                     /children children tail def
                   } ifelse
              } loop
          }
@@ -199,11 +196,13 @@
     eventProcs evType known
 
     {
-        element
         (MOVE) cvn evType eq not
-        { dup setFocusedElement }
+        {
+          element
+          setFocusedElement
+        }
         if
-        eventProcs evType get execList %exit
+        [ element ] eventProcs evType get execListWithArg %exit
     }
     {
         /parent element /parent get def
@@ -310,16 +309,16 @@
 
         resizeElement
 
-        gelements /draggedElement get /draggedElement exch def
-        draggedElement null eq
+        gelements /dragingElement get /dragingElement exch def
+        dragingElement null eq
         { exit }
         if
 
         gelements /lastY get /lastY exch def
         gelements /lastX get /lastX exch def
 
-        draggedElement /x draggedElement /x get mouseX lastX sub add put
-        draggedElement /y draggedElement /y get mouseY lastY sub add put
+        dragingElement /x dragingElement /x get mouseX lastX sub add put
+        dragingElement /y dragingElement /y get mouseY lastY sub add put
 
         gelements /lastX mouseX put
         gelements /lastY mouseY put
@@ -336,7 +335,8 @@
     /key exch def
     /cDict exch def
     cDict key known
-    {       cDict cDict key get /value load addToList put }
+%todo true branch
+    {       cDict key cDict key get /value load addToList put }
     {        cDict key [/value load  []] put    }
     ifelse
 } def
@@ -473,5 +473,5 @@ gelements /mouseY 0 put
 gelements /lastX 0 put
 gelements /lastY 0 put
 
-gelements /draggedElement null put
+gelements /dragingElement null put
 gelements /resizingElement null put

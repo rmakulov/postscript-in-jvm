@@ -50,7 +50,10 @@ gsave
 
     /kegel h 1.5 div cvi def
     %showing
-    /Times-Roman findfont kegel scalefont setfont
+    %/Times-Roman
+    %(Comfortaa Bold)
+    bd /textFont get
+    findfont kegel scalefont setfont
     /strWidth label stringwidth pop def
         w strWidth sub 2 idiv
         h kegel sub 1.5 div cvi

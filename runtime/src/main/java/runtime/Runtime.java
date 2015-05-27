@@ -89,9 +89,9 @@ public class Runtime {
         addContext(context);
         context.initDictionaries(systemDict);
         PSThread thread = new PSThread(context, procedure);
-        service.submit(thread);
+        //service.submit(thread);
 //       tests work only this way
-//        thread.run();
+        thread.run();
     }
 
 

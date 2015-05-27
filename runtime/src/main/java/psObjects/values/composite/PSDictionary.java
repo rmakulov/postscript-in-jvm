@@ -118,6 +118,10 @@ public class PSDictionary extends CompositeValue {
     public String toString() {
         Iterator<Pair<PSObject, PSObject>> iterator = tree.iterator();
         StringBuilder sb = new StringBuilder("PSDictionary{ ");
+        PSObject aName = new PSObject(new PSName("objName"));
+        if (tree.containKey(aName)){
+            sb = new StringBuilder(((PSString) tree.getValue(aName).getValue()).getString());
+        }
         while (iterator.hasNext()) {
             Pair<PSObject, PSObject> next = iterator.next();
             PSObject key = next.getKey();

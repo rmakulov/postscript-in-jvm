@@ -41,6 +41,7 @@
                           bd /position get
                           bd /displayBegin get
                           bd /displayEnd get
+                          bd /isChanged get
                           (graphicsEngine/basics/primitives/textField/paintTextField.ps) (r) file run
 
                           bd paintChildren
@@ -59,6 +60,7 @@
                                     /position           0
                                     /displayEnd         0
                                     /displayBegin       0
+                                    /isChanged          true
 
                                     /x                  parent /x get parent /w get rX mul add cvi
                                     /y                  parent /y get parent /h get rY mul add cvi
@@ -70,6 +72,7 @@
                                   /paint                /paint load
                                   /eventProcs           eventProcDict
                                   /refreshCoordinates   /recountCoordinates load
+                                  /objName              (TextField)
                                   /checkBelonging
                                                         {
                                                             1 dict begin
@@ -97,12 +100,19 @@
               textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaint} addListToDict
 
               textFieldDict /eventProcs get /PRESS { } addListToDict
-              textFieldDict /eventProcs get /RELEASE { } addListToDict
+              textFieldDict /eventProcs get /RELEASE {  } addListToDict
+
+
 
               textFieldDict /eventProcs get /KEYBOARD_CHAR {
                     1 dict begin
                        /char exch def
                        /textField exch def
+%//todo remove exit
+                       textField /isChanged get not
+                       { exit }
+                       if
+
                        /text textField /text get def
                        /dB textField /displayBegin get def
                        /dE textField /displayEnd get def
@@ -135,6 +145,11 @@
               textFieldDict /eventProcs get /KEYBOARD_CONTROL{
                                  /code      exch                        def
                                  /textField exch                        def
+%//todo remove exit
+                                 textField /isChanged get not
+                                { exit }
+                                if
+
                                  /pos       textField /position get     def
                                  /disEnd    textField /displayEnd get   def
                                  /disBegin  textField /displayBegin get def
@@ -228,6 +243,7 @@
 
                                  } if
                                  repaint
+
               } addListToDict
 
               parent /children
@@ -241,3 +257,25 @@
 
 } def
 %---
+%-------------------------------------------
+%-------params------------------------------
+%   tField      :   dictionary
+%   str         :   string
+%    return     :   void
+%-------------------------------------------------
+%-------------------------------------------------
+/setTextToTextField {
+    1 dict begin
+        /str exch def
+        /tField exch def
+
+        tField /position 0 put
+        tField /displayBegin 0 put
+
+        /kegel tField /h get 2 sub def
+        /Rekha findfont kegel scalefont setfont
+
+        tField /text str put
+        tField /displayEnd tField /text get 0 1 tField /w get getIndex put
+    end
+} def

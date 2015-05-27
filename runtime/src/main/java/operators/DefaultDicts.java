@@ -29,6 +29,7 @@ import operators.painting.RectFillOp;
 import operators.painting.StrokeOp;
 import operators.pathConstruction.*;
 import operators.relationBooleanBitwise.*;
+import operators.string.SearchOp;
 import operators.string.StringOp;
 import operators.typeAttributeConvertation.*;
 import operators.virtualMemory.*;
@@ -270,7 +271,9 @@ public class DefaultDicts {
     }
 
     private static void addStringOperators() {
+
         addOperator(StringOp.instance);
+        addOperator(SearchOp.instance);
     }
 
     private static void addCoordinateSystemAndMatrix() {

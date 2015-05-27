@@ -1,6 +1,7 @@
 /window{
     /eventProcDict exch def
     /parent exch def
+    /label exch def
     /h exch def
     /w exch def
     /y exch def
@@ -13,6 +14,7 @@
             parent /w get
             parent /h get
         getRelFromAbs
+        label
         parent
         eventProcDict
     relWindow
@@ -22,6 +24,7 @@
 /relWindow {
     /eventProcDict exch def
     /parent exch def
+    /label exch def
     /rH exch def
     /rW exch def
     /rY exch def
@@ -60,7 +63,7 @@
                         /isFixed            true
                         /resize             0
                         /inFocus            false
-                        /objName            (window)
+                        /objName            (Window)
 
                         /refreshCoordinates /recountCoordinates load
                         /checkBelonging
@@ -115,7 +118,7 @@
                             w 20
                         isInRect
                         {
-                            gelements /draggedElement cDict put
+                            gelements /dragingElement cDict put
                             (move) cursor
                                 cDict /children get
                                 false
@@ -132,7 +135,7 @@
 
     windowDict /eventProcs get /RELEASE {
                     /cDict exch def
-                    gelements /draggedElement null put
+                    gelements /dragingElement null put
                     gelements /resizingElement null put
 
                     cDict /children get refreshCoordinatesForChildren
@@ -187,7 +190,7 @@
     %0.901 0.37 0.19
     /rB -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton def
     %labelField
-    /lF 0 0 windowDict /h get 5 sub 20 (window) windowDict << >> labelField def
+    /lF 0 0 windowDict /h get 5 sub 20 label windowDict << >> labelField def
 
     lF /isAttached true put
     lF /dX 5 put
