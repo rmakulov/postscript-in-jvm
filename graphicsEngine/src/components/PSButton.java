@@ -15,15 +15,15 @@ public class PSButton extends PSComponent {
 //    }
 
     public PSButton(int x, int y, int w, int h, String buttonLabel) {
-        super("Button"+PSComponent.getNewId());
-        generatedString = String.format("/%s %d %d %d %d (%s) scene << >> button",name, x, y, w, h,  buttonLabel);
+        super("Button" + PSComponent.getNewId());
+        generatedString = String.format("/%s %d %d %d %d (%s) scene << >> button", name, x, y, w, h, buttonLabel);
     }
 
     @Override
     protected void updateGeneratedString() {
-       if (owner!=null){
-           generatedString=generatedString.replaceAll("scene",owner.getName());
-       }
+        if (owner != null) {
+            generatedString = generatedString.replaceAll("scene", owner.getName());
+        }
         //todo events block
     }
 }

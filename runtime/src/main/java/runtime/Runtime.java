@@ -205,7 +205,7 @@ public class Runtime {
                 }
             } else if (proc instanceof StringProcedure) {
                 PSObject string = ((StringProcedure) proc).getStringObject();
-                if ((string.getDirectValue() instanceof LocalRef)) {
+                if (string!=null && (string.getDirectValue() instanceof LocalRef)) {
                     LocalRef ref = (LocalRef) string.getDirectValue();
                     getUsingLocalVMIndexesByRef(indexes, ref);
                 }

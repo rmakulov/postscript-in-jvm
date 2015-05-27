@@ -48,20 +48,20 @@ public class SpeedTests {
     private static double performTest(boolean isCompiling, File exampleFile) {
         int i = 0;
         double totalSum = 0;
-        interpreter = new Interpreter();
-        try {
-            interpreter.setCompilingMode(isCompiling);
-            prepareJavaVM(exampleFile);
-            for (i = 0; i < TEST_COUNTS; i++) {
-                interpreter.clearRuntime();
-                totalSum += interpreter.run(exampleFile);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            String executor = isCompiling ? "Compiler" : "Interpreter";
-            System.out.println(executor + " (" + exampleFile.getName() + ") failed at " + i + " step from " + (TEST_COUNTS - 1));
-        }
+//        interpreter = new Interpreter();
+//        try {
+//            interpreter.setCompilingMode(isCompiling);
+//            prepareJavaVM(exampleFile);
+//            for (i = 0; i < TEST_COUNTS; i++) {
+//                interpreter.clearRuntime();
+//                totalSum += interpreter.run(exampleFile);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            String executor = isCompiling ? "Compiler" : "Interpreter";
+//            System.out.println(executor + " (" + exampleFile.getName() + ") failed at " + i + " step from " + (TEST_COUNTS - 1));
+//        }
         return totalSum / TEST_COUNTS;
     }
 

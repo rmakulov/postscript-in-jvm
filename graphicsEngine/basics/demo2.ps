@@ -1,35 +1,35 @@
 (graphicsEngine/basics/glib.ps) (r) file run
 
-250 750 250 50 (Hello! )  scene << >>    labelField pop
-15 700 250 50 (Here you can see various effects.)  scene << >>    labelField pop
+/labelField1 250 750 250 50 (Hello! )  scene << >>    labelField
+/labelField2 15 700 250 50 (Here you can see various effects.)  scene << >>    labelField
 
 
-50 50 120 40   (close)         scene <</CLICK [{pop quit}[]] >>  button pop
+/button1 50 50 120 40   (close)         scene <</CLICK [{pop quit}[]] >>  button
 
 
-280 610 250 40 (scales)  scene << >>    labelField pop
-265 550 50 40 (+)          scene <</CLICK [{pop 1.1 1.1 scale  repaintAll}[]] >> button        /plus exch def
-340 550 50 40 (-)          scene <</CLICK [{pop 0.909 0.909 scale  repaintAll}[]] >> button      /minus exch def
+/labelField3 280 610 250 40 (scales)  scene << >>    labelField
+/plus 265 550 50 40 (+)          scene <</CLICK [{pop 1.1 1.1 scale  repaintAll}[]] >> button
+/minus 340 550 50 40 (-)          scene <</CLICK [{pop 0.909 0.909 scale  repaintAll}[]] >> button
 
-460 510 250 40 (rotates)  scene << >>    labelField pop
-430 450 200 40 (clockwise)           scene <</CLICK [{pop  -10 rotate  repaintAll}[]] >> button  /clockwise exch def
-430 380 200 40 (anticlockwise)          scene <</CLICK [{pop 10 rotate  repaintAll}[]] >> button /anticlockwise exch def
-
-
-50 510 250 40 (translates)  scene << >>    labelField pop
-30 450 90 40 (left)          scene <</CLICK [{pop -50  0 translate  repaintAll}[]] >> button  /left exch def
-140 450 90 40 (right)         scene <</CLICK [{pop  50  0 translate  repaintAll}[]] >> button  /right exch def
-30 385 90 40 (up)            scene <</CLICK [{pop  0  50 translate  repaintAll}[]] >> button  /up exch def
-140 385 90 40 (down)          scene <</CLICK [{pop  0 -50 translate  repaintAll}[]] >> button  /down exch def
+/labelField4 460 510 250 40 (rotates)  scene << >>    labelField
+/clockwise 430 450 200 40 (clockwise)           scene <</CLICK [{pop  -10 rotate  repaintAll}[]] >> button
+/anticlockwise 430 380 200 40 (anticlockwise)          scene <</CLICK [{pop 10 rotate  repaintAll}[]] >> button
 
 
-50 260 250 40 (reflections)  scene << >>    labelField pop
-65 215 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox pop
-65 175 16       (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox pop
+/labelField5 50 510 250 40 (translates)  scene << >>    labelField
+/left 30 450 90 40 (left)          scene <</CLICK [{pop -50  0 translate  repaintAll}[]] >> button
+/right 140 450 90 40 (right)         scene <</CLICK [{pop  50  0 translate  repaintAll}[]] >> button
+/up 30 385 90 40 (up)            scene <</CLICK [{pop  0  50 translate  repaintAll}[]] >> button
+/down 140 385 90 40 (down)          scene <</CLICK [{pop  0 -50 translate  repaintAll}[]] >> button
 
 
-460 260 250 40 (invert labels)  scene << >>    labelField pop
-480 185 120 40   (invert)        scene <</CLICK [{pop invertLabels  repaintAll}[]] >> button /invert exch def
+/labelField6 50 260 250 40 (reflections)  scene << >>    labelField
+/checkBox1 65 215 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox
+/checkBox2 65 175 16       (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox
+
+
+/labelField7 460 260 250 40 (invert labels)  scene << >>    labelField
+/invert 480 185 120 40   (invert)        scene <</CLICK [{pop invertLabels  repaintAll}[]] >> button
 
 /color [0 0 1] def def
 

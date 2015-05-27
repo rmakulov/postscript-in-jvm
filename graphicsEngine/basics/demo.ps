@@ -1,34 +1,34 @@
 (graphicsEngine/basics/glib.ps) (r) file run
 
-220 750 250 50 (Welcome! )  scene << >>    labelField pop
-100 700 250 50 (Fill in this form, please. )  scene << >>    labelField pop
+/labelField1 220 750 250 50 (Welcome! )  scene << >>    labelField
+/labelField2 100 700 250 50 (Fill in this form, please. )  scene << >>    labelField
 
 
-30 555 250 35 (Your name )  scene << >>    labelField pop
-/name 175 550 300 35  (TextField)    scene <<>>    textField def
+/labelField3 30 555 250 35 (Your name )  scene << >>    labelField
+/nameField 175 550 300 35  (TextField)    scene <<>>    textField
 
 
-30 505 250 35 (Group )  scene << >>    labelField pop
-/group 175 500 100 35  (TextField)    scene <<>>    textField def
+/labelField2 30 505 250 35 (Group )  scene << >>    labelField
+/group 175 500 100 35  (TextField)    scene <<>>    textField
 
 
-30 435 250 35 (Education )  scene << >>    labelField pop
-/education 215 430 100 50 [ (Full-time) (Part-time) ] 0 scene << >> listBox def
+/labelField5 30 435 250 35 (Education )  scene << >>    labelField
+/education 215 430 100 50 [ (Full-time) (Part-time) ] 0 scene << >> listBox
 
 
-30 365 250 35 (Faculty )  scene << >>    labelField pop
-/faculty 200 365 350 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 3  scene <<  >> comboBox def
+/labelField6 30 365 250 35 (Faculty )  scene << >>    labelField
+/faculty 200 365 350 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 3  scene <<  >> comboBox
 
-/results 190 300 20       ( I want to get results)   scene << >> checkBox def
+/results 190 300 20       ( I want to get results)   scene << >> checkBox
 
-30 150 250 35 (Error checking)  scene << >>    labelField pop
-/errorChecking 50 85 116 50 (On) (Off)  scene <<  >> toggleButton def
+/labelField7 30 150 250 35 (Error checking)  scene << >>    labelField
+/errorChecking 50 85 116 50 (On) (Off)  scene <<  >> toggleButton
 
 /saveData
 {
     /report 1 dict def
 
-    report /name name /text get put
+    report /name nameField /text get put
     report /group group /text get put
     report /education education /labels get education /curLabel get get put
     report /faculty faculty /labels get faculty /curLabel get get put
@@ -38,19 +38,20 @@
     report print
 } def
 
-470 80 120 40   (close) scene <</CLICK [{
+/close 470 80 120 40   (close) scene <</CLICK [{
                     pop
-                    /messageWindow    170 340 250 150 (message) scene << >> window def
+                    /messageWindow    170 340 250 150 (message) scene << >> window
                     messageWindow /textFont (Comfortaa Bold) put
-                    190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField pop
+                    /labelField8 190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField
 
-                    /yB 230 365 50 25   (yes)        messageWindow <</CLICK [{saveData pop quit}[]] >>  button def
-                    /nB 300 365 50 25   (no)         messageWindow <</CLICK [{ /CLOSE findAncestorWithEventType}[]] >> button def
+                    /yB 230 365 50 25   (yes)        messageWindow <</CLICK [{pop saveData pop quit}[]] >>  button
+                    /nB 300 365 50 25   (no)         messageWindow <</CLICK [{/CLOSE findAncestorWithEventType}[]] >> button
 
                     yB /textFont (Comfortaa Bold) put
                     nB /textFont (Comfortaa Bold) put
                     repaint
-         }[]] >>  button pop
+
+         }[]] >>  button
 
 
 
