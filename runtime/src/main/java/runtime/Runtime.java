@@ -41,20 +41,6 @@ public class Runtime {
     private ExecutorService service = Executors.newFixedThreadPool(10);
 
     public boolean isCompiling = false;
-    //    public BytecodeGeneratorManager bcGenManager = new BytecodeGeneratorManager();
-//    private int executionCount = 0;
-//    private OperandStack operandStack = new OperandStack();
-//    private DictionaryStack dictionaryStack = new DictionaryStack();
-//    private GraphicStack graphicStack = new GraphicStack();
-//    private CallStack callStack = new CallStack();
-//private EventQueue eventQueue = new EventQueue();
-
-    //    private int executionsBeforeGarbageCleaning = 10000;
-
-
-//    private HashMap<String, Integer> nameVersions = new HashMap<String, Integer>();
-
-    //private PrimitiveQueue primitiveQueue = new PrimitiveQueue();
 
     public WindowManager getWindowManager() {
         return windowManager;
@@ -75,7 +61,7 @@ public class Runtime {
         addContext(context);
         PSThread thread = new PSThread(context, procedure);
         service.submit(thread);
-//        service.execute(thread);
+//        service.executeWithoutCallStack(thread);
     }
 
     public void startMainTask(Context context, Procedure procedure) {

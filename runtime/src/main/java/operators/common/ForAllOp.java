@@ -37,7 +37,7 @@ public class ForAllOp extends Operator {
             for (PSObject psObj : beforeArray) {
                 context.pushToOperandStack(psObj);
                 if (!proc.execute(context, 0)) break;
-//                ((PSArray) proc.getValue()).get(0).execute(0);
+//                ((PSArray) proc.getValue()).get(0).executeWithoutCallStack(0);
             }
         } else if (!runtime.isCompiling && proc.isProc()) {
             context.pushToCallStack(new ForAllProcedure(context, beforeArray, proc));

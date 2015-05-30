@@ -78,7 +78,7 @@ public class BytecodeProc extends SimpleValue {
 //                String name = context.bcGenManager.bytecodeName;
 //                MethodVisitor mv = context.bcGenManager.mv;
 //                mv.visitInsn(ICONST_0);
-//                mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "execute", "(I)Z", false);
+//                mv.visitMethodInsn(INVOKEVIRTUAL, "psObjects/PSObject", "executeWithoutCallStack", "(I)Z", false);
 //            } else {
 //                o.deepCompile();
 //            }

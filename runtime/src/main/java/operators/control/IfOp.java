@@ -48,7 +48,7 @@ public class IfOp extends Operator {
 //        PSBoolean cond = (PSBoolean) bool.getValue();
 //        if (cond.getFlag()) {
 //            if (runtime.isCompiling && proc.isBytecode()) {
-//                proc.execute(0);
+//                proc.executeWithoutCallStack(0);
 //            } else if (!runtime.isCompiling && proc.isProc()) {
 //                context.pushToCallStack(new ArrayProcedure("If", proc));
 //            } else {

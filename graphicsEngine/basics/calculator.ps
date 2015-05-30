@@ -35,6 +35,7 @@
     if
 
     %numberField /isChanged true  put
+
     [numberField char] numberField /eventProcs get /KEYBOARD_CHAR get execListWithArg
     %numberField /isChanged false put
 
@@ -80,10 +81,12 @@
 %---make program to go to the first state
 %----------------------------------------
 /clearCalc {
-     numberField /text () put
-     numberField /position 0 put
-     numberField /displayBegin 0 put
-     numberField /displayEnd   0 put
+     %numberField /text () put
+     %numberField /position 0 put
+     %numberField /displayBegin 0 put
+     %numberField /displayEnd   0 put
+
+     numberField () setTextToTextField
 
      calculator /first  0 put
      calculator /second 0 put

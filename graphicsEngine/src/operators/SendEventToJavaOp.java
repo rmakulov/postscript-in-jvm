@@ -1,6 +1,7 @@
 package operators;
 
 import listeners.PSEvent;
+import listeners.PSUpdateValueEvent;
 import listeners.Slots;
 import psObjects.PSObject;
 import psObjects.values.composite.PSDictionary;
@@ -39,7 +40,16 @@ public class SendEventToJavaOp extends Operator {
         PSObject key = new PSObject(new PSName("name"));
         String gObjectName = ((PSName) dict.get(key).getValue()).getStrValue();
 
-        Slots.getInstance().invokeSlot(gObjectName, signalType,new PSEvent(dict,signalType));
+        PSEvent event;
+        switch (signalType){
+            case UPDATE_VALUE:
+                event = new PSUpdateValueEvent(dict, signalType);
+                break;
+            default:
+                event = new PSEvent(dict, signalType);
+                break;
+        }
+        Slots.getInstance().invokeSlot(gObjectName, signalType, event);
         //  <</CLICK [{/CLICK sendEventToJava}[]]>>
     }
 

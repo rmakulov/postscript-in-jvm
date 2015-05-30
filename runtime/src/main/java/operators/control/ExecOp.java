@@ -71,7 +71,7 @@ public class ExecOp extends Operator {
 //            psObject.interpret(0);
 //        } else {
 //            if (runtime.isCompiling) {
-//                psObject.execute(0);
+//                psObject.executeWithoutCallStack(0);
 //            } else {
 //                PSObject[] singleArray = new PSObject[]{psObject};
 //                PSObject psExecArray = new PSObject(new PSArray(singleArray), TreatAs.EXECUTABLE);

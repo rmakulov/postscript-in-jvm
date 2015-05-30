@@ -272,42 +272,39 @@
         /first  exch    def
         /str    exch    def
 
-        %str print
-        %first print
-        %step print
-        %width print
-        
-        step 0 gt
-            { /last str length 1 sub def }
-            { /last 0 def }
-        ifelse
-
-        /i first def
-        {
+        str length 0 ne {
             step 0 gt
-            { /subString str first i first sub 1 add getinterval def }
-            { /subString str i     first i sub 1 add getinterval def }
+                { /last str length 1 sub def }
+                { /last 0 def }
             ifelse
 
-            subString stringwidth pop width gt
+            /i first def
             {
-              step 0 gt
-              { i step sub exit }
-              { i step sub exit }
-              ifelse
+                step 0 gt
+                { /subString str first i first sub 1 add getinterval def }
+                { /subString str i     first i sub 1 add getinterval def }
+                ifelse
+
+                subString stringwidth pop width gt
+                {
+                  step 0 gt
+                  { i step sub exit }
+                  { i step sub exit }
+                  ifelse
+                }
+                if
+
+                i last eq
+                {
+                    last
+                    exit
+                }
+                if
+                /i i step add def
             }
-            if
-
-            i last eq
-            {
-                last
-                exit
-            }
-            if
-            /i i step add def
-        }
-        loop
-
-
+            loop
+        } 
+        {0}
+        ifelse
     end
 } def

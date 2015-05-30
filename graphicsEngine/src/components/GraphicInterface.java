@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class GraphicInterface {
     StringBuilder psProgramStringBuilder = new StringBuilder();
-    ArrayList<PSComponent> mainComponents=new ArrayList<PSComponent>();
+    ArrayList<PSComponent> mainComponents = new ArrayList<PSComponent>();
 
     public GraphicInterface() {
         psProgramStringBuilder.append("(graphicsEngine/basics/glib.ps) (r) file run");
@@ -24,14 +24,14 @@ public class GraphicInterface {
     }
 
     private void finishConstruction() {
-            for(PSComponent component:mainComponents){
-                psProgramStringBuilder.append("\n").append(component.getGeneratedString());
-            }
-            psProgramStringBuilder.append("\nrepaintAll\nshowpage");
+        for (PSComponent component : mainComponents) {
+            psProgramStringBuilder.append("\n").append(component.getGeneratedString());
+        }
+        psProgramStringBuilder.append("\nrepaintAll\nshowpage");
     }
 
     public void setVisible(boolean b) {
-        if(b) {
+        if (b) {
             try {
                 finishConstruction();
                 Interpreter.instance.setCustomOperators(getCustomsOperators());
@@ -41,6 +41,7 @@ public class GraphicInterface {
             }
         }
     }
+
 
     public static ArrayList<PSObject> getCustomsOperators() {
         ArrayList<PSObject> entries = new ArrayList<PSObject>();

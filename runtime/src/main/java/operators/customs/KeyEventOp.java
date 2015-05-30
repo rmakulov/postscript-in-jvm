@@ -25,15 +25,10 @@ public class KeyEventOp extends Operator {
             fail();
             return;
         }
-        if (!runtime.isCompiling) {
-            try {
-                context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("keyEvent"))));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            context.executeCallStack();
-        } else {
-            new PSObject(new PSName("keyEvent")).interpret(context, 0);
+        try {
+            new StringProcedure(context, new PSObject(new PSString("keyEvent"))).execute();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 

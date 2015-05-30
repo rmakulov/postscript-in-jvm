@@ -39,7 +39,7 @@ public class PSThread extends Thread {
 //                context.pushToCallStack(initProcedure);
 //                context.executeCallStack();
 //            } else {
-//                initProcedure.execute();
+//                initProcedure.executeWithoutCallStack();
 //            }
 //
 //        } else if (!runtime.isCompiling) {
@@ -47,7 +47,7 @@ public class PSThread extends Thread {
 //            context.pushToCallStack(initProcedure);
 //            context.executeCallStack();
 //        } else {
-//            procedure.execute(context, 0);
+//            procedure.executeWithoutCallStack(context, 0);
 //        }
 
         if (!runtime.isCompiling) {

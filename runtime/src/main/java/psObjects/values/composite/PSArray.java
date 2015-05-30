@@ -137,7 +137,7 @@ public class PSArray extends CompositeValue implements Cloneable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //return array[0].getElementObject().execute(0);
+            //return array[0].getElementObject().executeWithoutCallStack(0);
             return true;
         } else {
             context.pushToCallStack(new ArrayProcedure(context, "array procedure", obj));
@@ -187,7 +187,7 @@ public class PSArray extends CompositeValue implements Cloneable {
 
 //    @Override
 //    public void compile(PSObject obj) {
-//        // we have only one element - it is bytecode, so just execute it
+//        // we have only one element - it is bytecode, so just executeWithoutCallStack it
 //        array[0].getElementObject().compile();
 //    }
 

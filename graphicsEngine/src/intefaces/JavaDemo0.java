@@ -8,10 +8,8 @@ import runtime.events.EventType;
 /**
  * Created by user on 5/27/15.
  */
-public class JavaDemo {
-    public static void main(String[] args) {
-        GraphicInterface graphicInterface = new GraphicInterface();
-
+public class JavaDemo0 extends GraphicInterface{
+    public JavaDemo0() {
         PSComponent labelField1 = new PSLabelField(220, 750, 250, 50, "Welcome!");
         PSComponent labelField2 = new PSLabelField(100, 700, 250, 50, "Fill in this form, please.");
         PSComponent labelField3 = new PSLabelField(30, 555, 250, 35, "Your name");
@@ -26,20 +24,24 @@ public class JavaDemo {
         PSComponent results = new PSCheckBox(190, 300, 20, "I want to get results");
         PSComponent errorChecking = new PSToggleButton(50, 85, 116, 50, "On", "Off");
 
-        graphicInterface.add(labelField1);
-        graphicInterface.add(labelField2);
-        graphicInterface.add(labelField3);
-        graphicInterface.add(nameField);
-        graphicInterface.add(labelField8);
-        graphicInterface.add(labelField5);
-        graphicInterface.add(labelField6);
-        graphicInterface.add(labelField7);
-        graphicInterface.add(group);
-        graphicInterface.add(education);
-        graphicInterface.add(faculty);
-        graphicInterface.add(results);
-        graphicInterface.add(errorChecking);
+        add(labelField1);
+        add(labelField2);
+        add(labelField3);
+        add(nameField);
+        add(labelField8);
+        add(labelField5);
+        add(labelField6);
+        add(labelField7);
+        add(group);
+        add(education);
+        add(faculty);
+        add(results);
+        add(errorChecking);
 
-        graphicInterface.setVisible(true);
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new JavaDemo0();
     }
 }

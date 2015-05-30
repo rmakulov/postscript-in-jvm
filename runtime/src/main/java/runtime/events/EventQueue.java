@@ -2,6 +2,7 @@ package runtime.events;
 
 import operators.customs.KeyEventOp;
 import operators.customs.MouseEventOp;
+import procedures.StringProcedure;
 import psObjects.Attribute;
 import psObjects.PSObject;
 import psObjects.values.composite.PSString;
@@ -9,6 +10,8 @@ import psObjects.values.simple.PSName;
 import psObjects.values.simple.numbers.PSInteger;
 import runtime.Context;
 import runtime.Runtime;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by User on 16/2/2015.
@@ -80,7 +83,7 @@ public class EventQueue {
     }
 
     private void process() {
-        Context context = getMainContext();
+        final Context context = getMainContext();
         isAwake = true;
         while (!isEmpty()) {
             Event event = poll();
@@ -95,6 +98,19 @@ public class EventQueue {
                     context.pushToOperandStack(symbol);
                     context.pushToOperandStack(type);
                     KeyEventOp.instance.interpret(context);
+                    break;
+                case USER:
+                    UserEvent userEvent = ((UserEvent) event);
+                    String command = userEvent.getCommand();
+                    Runtime runtime = Runtime.getInstance();
+                    Context mainContext = runtime.getMainContext();
+                    StringProcedure procedure = null;
+                    try {
+                        procedure = new StringProcedure(mainContext, command);
+                        procedure.execute();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case KEYBOARD_CONTROL:
                     PSKeyEvent controlKeyEvent = (PSKeyEvent) event;
@@ -112,16 +128,19 @@ public class EventQueue {
 
                     context.pushToOperandStack(type);
 
-//                    try {
-//                        context.pushToCallStack(new StringProcedure(context, new PSObject(new PSString("mouseEvent"))));
-//                    } catch (UnsupportedEncodingException e) {
-//                        e.printStackTrace();
-//                    }
-//                    if (!Runtime.getInstance().isCompiling) {
-//                        context.executeCallStack();
-//                    }
                     MouseEventOp.instance.interpret(context);
+//                    new Thread(){
+//
+//                        @Override
+//                        public void run() {
+//                            super.run();
+//                            MouseEventOp.instance.interpret(context);
+//
+//                        }
+//                    }.start();
                     break;
+
+
             }
 
         }

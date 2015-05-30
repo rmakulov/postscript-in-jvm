@@ -65,9 +65,18 @@ public abstract class Procedure {
         return false;
     }
 
-    public void execute() {
+    public void executeWithoutCallStack() {
         while (hasNext()) {
             execNext();
+        }
+    }
+
+    public void execute(){
+        if (!runtime.isCompiling) {
+            context.pushToCallStack(this);
+            context.executeCallStack();
+        } else {
+            executeWithoutCallStack();
         }
     }
 }
