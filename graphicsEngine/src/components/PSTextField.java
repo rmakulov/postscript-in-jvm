@@ -32,10 +32,8 @@ public class PSTextField extends PSComponent {
             @Override
             public void actionPerformed(PSEvent event) {
                 PSUpdateValueEvent updateValueEvent = ((PSUpdateValueEvent) event);
-//                PSEvent updateValueEvent =  event;
                 PSDictionary dictionary = updateValueEvent.getDictionaryValue();
                 text = ((PSString) dictionary.get(new PSObject(new PSName("text"))).getValue()).getString();
-                System.out.println("Textfield "+ text);
                 synchronized (monitor) {
                     ready = true;
                     monitor.notifyAll();

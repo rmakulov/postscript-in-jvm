@@ -28,7 +28,8 @@ public class EventQueue {
 
     public synchronized boolean add(Event event) {
         Context context = getMainContext();
-        if (context.search(new PSObject(new PSName("gelements"))) == null) {
+        PSObject gelements = new PSObject(new PSName("gelements"));
+        if (context.search(gelements) == null) {
             return false;
         }
         if (first == null) {

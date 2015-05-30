@@ -6,6 +6,8 @@ import listeners.PSListener;
 import runtime.*;
 import runtime.events.EventType;
 
+import java.awt.*;
+
 import static runtime.events.EventType.CLICK;
 
 /**
@@ -27,23 +29,23 @@ public class JavaCalculator {
         PSComponent calc = new PSWindow(100, 100, 300, 300, "calculator");
 
 
-        PSComponent b0 = new PSButton(150, 150, 40, 30, "0");
-        PSComponent point = new PSButton(200, 150, 40, 30, ".");
-        PSComponent equal = new PSButton(250, 150, 40, 30, "=");
-        PSComponent b1 = new PSButton(150, 190, 40, 30, "1");
-        PSComponent b2 = new PSButton(200, 190, 40, 30, "2");
-        PSComponent b3 = new PSButton(250, 190, 40, 30, "3");
-        PSComponent b4 = new PSButton(150, 230, 40, 30, "4");
-        PSComponent b5 = new PSButton(200, 230, 40, 30, "5");
-        PSComponent b6 = new PSButton(250, 230, 40, 30, "6");
-        PSComponent b7 = new PSButton(150, 270, 40, 30, "7");
-        PSComponent b8 = new PSButton(200, 270, 40, 30, "8");
-        PSComponent b9 = new PSButton(250, 270, 40, 30, "9");
-        PSComponent plus = new PSButton(300, 150, 40, 30, "+");
-        PSComponent minus = new PSButton(300, 190, 40, 30, "-");
-        PSComponent mult = new PSButton(300, 230, 40, 30, "*");
-        PSComponent divis = new PSButton(300, 270, 40, 30, "/");
-        PSComponent clear = new PSButton(350, 320, 40, 30, "c");
+        PSButton b0 = new PSButton(150, 150, 40, 30, "0");
+        PSButton point = new PSButton(200, 150, 40, 30, ".");
+        PSButton equal = new PSButton(250, 150, 40, 30, "=");
+        PSButton b1 = new PSButton(150, 190, 40, 30, "1");
+        PSButton b2 = new PSButton(200, 190, 40, 30, "2");
+        PSButton b3 = new PSButton(250, 190, 40, 30, "3");
+        PSButton b4 = new PSButton(150, 230, 40, 30, "4");
+        PSButton b5 = new PSButton(200, 230, 40, 30, "5");
+        PSButton b6 = new PSButton(250, 230, 40, 30, "6");
+        PSButton b7 = new PSButton(150, 270, 40, 30, "7");
+        PSButton b8 = new PSButton(200, 270, 40, 30, "8");
+        PSButton b9 = new PSButton(250, 270, 40, 30, "9");
+        PSButton plus = new PSButton(300, 150, 40, 30, "+");
+        PSButton minus = new PSButton(300, 190, 40, 30, "-");
+        PSButton mult = new PSButton(300, 230, 40, 30, "*");
+        PSButton divis = new PSButton(300, 270, 40, 30, "/");
+        PSButton clear = new PSButton(350, 320, 40, 30, "c");
 
         graphicInterface.add(label1);
         graphicInterface.add(label2);
@@ -142,13 +144,30 @@ public class JavaCalculator {
             @Override
             public void actionPerformed(PSEvent event) {
                 String text = numberField.getText();
-                if(!contains(text, '.')) {
+                if (!contains(text, '.')) {
                     buttonAction(".");
                 }
 
             }
         });
 
+        b0.setColor(Color.DARK_GRAY);
+        b1.setColor(Color.DARK_GRAY);
+        b2.setColor(Color.DARK_GRAY);
+        b3.setColor(Color.DARK_GRAY);
+        b4.setColor(Color.DARK_GRAY);
+        b5.setColor(Color.DARK_GRAY);
+        b6.setColor(Color.DARK_GRAY);
+        b7.setColor(Color.DARK_GRAY);
+        b8.setColor(Color.DARK_GRAY);
+        b9.setColor(Color.DARK_GRAY);
+        equal.setColor(Color.DARK_GRAY);
+        plus.setColor(Color.DARK_GRAY);
+        minus.setColor(Color.DARK_GRAY);
+        mult.setColor(Color.DARK_GRAY);
+        divis.setColor(Color.DARK_GRAY);
+        point.setColor(Color.DARK_GRAY);
+        clear.setColor(Color.RED);
 
 
         clear.addListener(CLICK, new PSListener() {
@@ -165,7 +184,7 @@ public class JavaCalculator {
         plus.addListener(CLICK, new PSListener() {
             @Override
             public void actionPerformed(PSEvent event) {
-                switch(state){
+                switch (state) {
 
                     case FIRST_OPERAND:
                         firstOperand = numberField.getText();
@@ -193,7 +212,7 @@ public class JavaCalculator {
         minus.addListener(CLICK, new PSListener() {
             @Override
             public void actionPerformed(PSEvent event) {
-                switch(state){
+                switch (state) {
                     case FIRST_OPERAND:
                         firstOperand = numberField.getText();
                         state = State.OPERATOR;
@@ -220,7 +239,7 @@ public class JavaCalculator {
         mult.addListener(CLICK, new PSListener() {
             @Override
             public void actionPerformed(PSEvent event) {
-                switch(state){
+                switch (state) {
 
                     case FIRST_OPERAND:
                         firstOperand = numberField.getText();
@@ -248,7 +267,7 @@ public class JavaCalculator {
         divis.addListener(CLICK, new PSListener() {
             @Override
             public void actionPerformed(PSEvent event) {
-                switch(state){
+                switch (state) {
 
                     case FIRST_OPERAND:
                         firstOperand = numberField.getText();
@@ -276,7 +295,7 @@ public class JavaCalculator {
         equal.addListener(CLICK, new PSListener() {
             @Override
             public void actionPerformed(PSEvent event) {
-                switch (state){
+                switch (state) {
 
                     case FIRST_OPERAND:
                         break;
@@ -299,8 +318,8 @@ public class JavaCalculator {
     }
 
     private static boolean contains(String text, char c) {
-        for(int i = 0 ; i < text.length(); i ++){
-            if(text.charAt(i)== c){
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == c) {
                 return true;
             }
         }
@@ -328,10 +347,9 @@ public class JavaCalculator {
                 res = 0;
                 break;
         }
-        if(res - ((int) res) == 0.0){
+        if (res - ((int) res) == 0.0) {
             numberField.setText(Integer.toString((int) res));
-        }
-        else{
+        } else {
             numberField.setText(Double.toString(res));
         }
     }
@@ -353,20 +371,10 @@ public class JavaCalculator {
         }
 
 
-
-
     }
 
-    private static void moveToSecondOperandState() {
-        if(JavaCalculator.state == State.OPERATOR){
-            JavaCalculator.state = State.SECOND_OPERAND;
-            numberField.setText("abs");
-            System.out.println(numberField.getText());
 
-        }
-    }
-
-    private static void  appendNumberField(String str) {
+    private static void appendNumberField(String str) {
         String text = numberField.getText();
         numberField.setText(text + str);
     }

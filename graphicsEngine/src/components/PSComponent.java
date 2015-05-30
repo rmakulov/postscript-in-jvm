@@ -12,7 +12,6 @@ import java.util.HashMap;
  * Created by User on 20/5/2015.
  */
 public class PSComponent {
-    protected int number;
     protected String name;
     protected String generatedString;
     protected ArrayList<PSComponent> children = new ArrayList<PSComponent>();
@@ -34,9 +33,7 @@ public class PSComponent {
         component.setOwner(this);
     }
 
-    public int getNumber() {
-        return number;
-    }
+
 
     public String getName() {
         return name;
