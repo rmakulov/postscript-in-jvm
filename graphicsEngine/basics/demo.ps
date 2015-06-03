@@ -24,31 +24,106 @@
 
 /errorChecking 50 85 116 50 (On) (Off)  scene <<  >> toggleButton
 
+%-------------------------------------------
+%-------params------------------------------
+%    return     :   void
+%-------------------------------------------------
+%---save data to operand stack
+%-------------------------------------------------
 /saveData
 {
+    1 dict begin
     /report 1 dict def
 
-    report /name nameField /text get put
-    report /group group /text get put
-    report /education education /labels get education /curLabel get get put
-    report /faculty faculty /labels get faculty /curLabel get get put
-    report /results results /isPressed get put
-    report /errorChecking errorChecking  /isPressed get put
+        report /name nameField /text get put
+        report /group group /text get put
+        report /education education /labels get education /curLabel get get put
+        report /faculty faculty /labels get faculty /curLabel get get put
+        report /results results /isPressed get put
+        report /errorChecking errorChecking  /isPressed get put
 
-    report print
+        report print
+    end
+} def
+%-------------------------------------------
+%-------params------------------------------
+%   groupsNumb :    integer
+%   return     :    boolean
+%-------------------------------------------------
+%---check if groupNumber is in [541, 542, 543, 544]
+%-------------------------------------------------
+/groupChecking
+{
+    1 dict begin
+        /gnStr exch def
+        gnStr length 0 eq
+        {
+            false
+        }
+        {
+            /groupNumber gnStr cvi def
+
+            groupNumber 544 eq
+            groupNumber 543 eq
+            or
+            groupNumber 542 eq
+            or
+            groupNumber 541 eq
+            or
+            {true}
+            {false}
+            ifelse
+        }
+        ifelse
+    end
+} def
+
+%-------------------------------------------
+%-------params------------------------------
+%   return     :    boolean
+%-------------------------------------------------
+%---check if results is pressed and save data if yes
+%-------------------------------------------------
+/exitFunction
+{
+    1 dict begin
+    results /isPressed get
+    {
+        saveData
+    }
+    if
+    end
 } def
 
 /close 470 80 120 40   (close) scene <</CLICK [{
                     pop
-                    /messageWindow    170 340 250 150 (message) scene << >> window
-                    messageWindow /textFont (Comfortaa Bold) put
-                    /labelField8 190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField
 
-                    /yB 230 365 50 25   (yes)        messageWindow <</CLICK [{pop saveData pop quit}[]] >>  button
-                    /nB 300 365 50 25   (no)         messageWindow <</CLICK [{/CLOSE findAncestorWithEventType}[]] >> button
+                    errorChecking /isPressed get
+                    group /text get groupChecking not
+                    and
+                    {
+                       /errorWindow    170 340 270 150 (error) scene << >> window
+                       errorWindow /textFont (Comfortaa Bold) put
+                       /labelField9 175 415 250 30 (Group number is not correct! )  errorWindow << >>    labelField
 
-                    yB /textFont (Comfortaa Bold) put
-                    nB /textFont (Comfortaa Bold) put
+                       /okB 270 365 50 25   (ok)        errorWindow << /CLICK [{/CLOSE findAncestorWithEventType}[]] >>  button
+
+                       okB /textFont (Comfortaa Bold) put
+
+                    }
+                    {
+                        /messageWindow    170 340 250 150 (message) scene << >> window
+                        messageWindow /textFont (Comfortaa Bold) put
+                        /labelField8 190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField
+
+                        /yB 230 365 50 25   (yes)        messageWindow <</CLICK [{pop exitFunction quit}[]] >>  button
+                        /nB 300 365 50 25   (no)         messageWindow <</CLICK [{/CLOSE findAncestorWithEventType}[]] >> button
+
+                        yB /textFont (Comfortaa Bold) put
+                        nB /textFont (Comfortaa Bold) put
+                    }
+                    ifelse
+
                     repaint
 
          }[]] >>  button

@@ -16,7 +16,7 @@ public class PostScriptInterface {
 //        interpreter.run(new File("graphicsEngine/basics/drawButton.ps"));
 //        interpreter.run(new File("graphicsEngine/basics/drawWindows.ps"));
 //        interpreter.run(new File("graphicsEngine/basics/drawButtons.ps"));
-//        interpreter.run(new File("graphicsEngine/basics/demo.ps"));
+//       interpreter.run(new File("graphicsEngine/basics/demo.ps"));
           interpreter.run(new File("graphicsEngine/basics/calculator.ps"));
 //        interpreter.run(new File("graphicsEngine/basics/demo2.ps"));
 //        interpreter.run(new File("graphicsEngine/basics/simpleExample.ps"));

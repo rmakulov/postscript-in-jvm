@@ -22,15 +22,19 @@
     1 dict begin
     /char exch def
 
-    calculator /state get 2 eq
-    calculator /state get 4 eq
+     /calcState calculator /state get def
+     calcState 2 eq
+     calcState 4 eq
     or
     {
         numberField /text () put
         numberField /position 0 put
         numberField /displayBegin 0 put
         numberField /displayEnd   0 put
-        calculator /state 3 put
+        calcState 2 eq
+        { calculator /state 3 put }
+        { calculator /state 1 put }
+        ifelse
     }
     if
 
@@ -51,14 +55,14 @@
     /char exch def
 
     /calcState calculator /state get def
-    calcState 2 eq
-    calcState 4 eq
+     calcState 2 eq
+     calcState 4 eq
     or
     {
         numberField /text () put
-                numberField /position 0 put
-                numberField /displayBegin 0 put
-                numberField /displayEnd   0 put
+        numberField /position 0 put
+        numberField /displayBegin 0 put
+        numberField /displayEnd   0 put
         calcState 2 eq
         { calculator /state 3 put }
         { calculator /state 1 put }
@@ -104,11 +108,16 @@
 /saveOperation{
     1 dict begin
     /operation exch def
+    calculator /state get 3 eq
+    {
+        makeCalculation
+    }
+    if
     /numStr  numberField /text get def
-    /numStr2 numStr length string numStr copy def
+
 
     calculator /operation operation put
-     numStr2 (.) withPoint
+     numStr (.) withPoint
      {
         calculator /first numStr cvr put
      }
@@ -137,6 +146,28 @@
     ifelse
     end
 } def
+%-------------------------------------------
+%-------params------------------------------
+%   str         :   string
+%    return     :   interger or real
+%-------------------------------------------------
+%---(1.2) -- >> 1.2
+%--- (1)   -- >> 1
+%--- (4.0) -- >> 4
+%-------------------------------------------------
+/stringToNumber{
+    1 dict begin
+        /str exch def
+        str (.) withPoint
+        {
+           str cvr transformResult
+        }
+        {
+           str cvi
+        }
+        ifelse
+    end
+} def
 
 %-------------------------------------------
 %-------params------------------------------
@@ -147,35 +178,69 @@
 %-------------------------------------------------
 /makeCalculation{
     1 dict begin
-    %todo if state < 3
-    /numStr  numberField /text get def
-    /operation calculator /operation get def
-     numStr (.) withPoint
-     {
-        calculator /second numStr cvr put
-     }
-     {
-        calculator /second numStr cvi put
-     }
-     ifelse
+        calculator /state get 3 eq
+        {
+            /numStr  numberField /text get def
+            /operation calculator /operation get def
+             numStr (.) withPoint
+             {
+                calculator /second numStr cvr put
+             }
+             {
+                calculator /second numStr cvi put
+             }
+             ifelse
 
-     /op1 calculator /first get def
-     /op2 calculator /second get def
+             /op1 calculator /first get def
+             /op2 calculator /second get def
 
-     operation (+) eq { /res op1 op2 add def } if
-     operation (-) eq { /res op1 op2 sub def } if
-     operation (*) eq { /res op1 op2 mul def } if
-     operation (/) eq { /res op1 op2 div def } if
+             operation (+) eq { /res op1 op2 add def } if
+             operation (-) eq { /res op1 op2 sub def } if
+             operation (*) eq { /res op1 op2 mul def } if
+             operation (/) eq { /res op1 op2 div def } if
 
-     /res res transformResult def
-     /resStr res 20 string cvs def
-     numberField resStr setTextToTextField
-     %numberField /text resStr put
-     %numberField /position resStr length put
-     %numberField /displayBegin 0 put
-     %numberField /displayEnd   resStr length 1 sub put
+             /res res transformResult def
+             /resStr res 20 string cvs def
+             numberField resStr setTextToTextField
+             %numberField /text resStr put
+             %numberField /position resStr length put
+             %numberField /displayBegin 0 put
+             %numberField /displayEnd   resStr length 1 sub put
 
-     calculator /state 4 put
+
+             calculator /state 4 put
+        }
+        {
+                    calculator /state get 4 eq
+                    {
+                        /numStr  numberField /text get def
+                        /operation calculator /operation get def
+                         numStr (.) withPoint
+                         {
+                            calculator /first numStr cvr put
+                         }
+                         {
+                            calculator /first numStr cvi put
+                         }
+                         ifelse
+
+                         /op1 calculator /first get def
+                         /op2 calculator /second get def
+
+                         operation (+) eq { /res op1 op2 add def } if
+                         operation (-) eq { /res op1 op2 sub def } if
+                         operation (*) eq { /res op1 op2 mul def } if
+                         operation (/) eq { /res op1 op2 div def } if
+
+                         /res res transformResult def
+                         /resStr res 20 string cvs def
+                         numberField resStr setTextToTextField
+
+                         calculator /state 4 put
+                    }
+                    if
+        }
+        ifelse
     end
 } def
 
@@ -186,7 +251,7 @@
 /label2 150 700 250 50 (You can calculate here. )  scene << >>    labelField
 
 
-/calc    100 100 300 400 (calculator) scene << >> window
+/calc    100 100 300 300 (calculator) scene << >> window
 
 
 
@@ -230,20 +295,9 @@ divis /color [0 0 1] put
 
 clear /color [0 0 0] put
 /numberField 155 320 180 30  (TextField)    calc <<>>    textField
+
 %numberField /isChanged false put
-
-
-
-
-
-
-
-
-
-
-
-
-
+%
 %30 555 250 35 (Your name )  scene << >>    labelField pop
 %/name 175 550 300 35  (TextField)    scene <<>>    textField def
 %
@@ -287,10 +341,10 @@ clear /color [0 0 0] put
 %                    300 365 50 25   (no)         messageWindow <</CLICK [{ /CLOSE findAncestorWithEventType}[]] >> button pop
 %
 %         }[]] >>  button pop
-
-
-
-
+%
+%
+%
+%
 repaintAll
 
 showpage

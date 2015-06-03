@@ -309,16 +309,16 @@
 
         resizeElement
 
-        gelements /dragingElement get /dragingElement exch def
-        dragingElement null eq
+        gelements /draggingElement get /draggingElement exch def
+        draggingElement null eq
         { exit }
         if
 
         gelements /lastY get /lastY exch def
         gelements /lastX get /lastX exch def
 
-        dragingElement /x dragingElement /x get mouseX lastX sub add put
-        dragingElement /y dragingElement /y get mouseY lastY sub add put
+        draggingElement /x draggingElement /x get mouseX lastX sub add put
+        draggingElement /y draggingElement /y get mouseY lastY sub add put
 
         gelements /lastX mouseX put
         gelements /lastY mouseY put
@@ -473,5 +473,5 @@ gelements /mouseY 0 put
 gelements /lastX 0 put
 gelements /lastY 0 put
 
-gelements /dragingElement null put
+gelements /draggingElement null put
 gelements /resizingElement null put
