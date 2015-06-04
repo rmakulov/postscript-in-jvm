@@ -26,6 +26,7 @@ public class KnownOp extends Operator {
         if (!key.isDictKey() || dict.getType() != Type.DICTIONARY) {
             context.pushToOperandStack(dict);
             context.pushToOperandStack(key);
+            fail();
             return;
         }
         PSDictionary psDictionary = (PSDictionary) dict.getValue();

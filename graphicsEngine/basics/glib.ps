@@ -405,6 +405,55 @@
                 sleepInterval ge { exit } if
         } loop
 } def
+/sortWindows{
+    1 dict begin
+            /pos 50 def
+            /incrPos { /pos pos 50 add def } def
+
+            0 1 gelements /maxElementNumber get 1 sub
+            {
+                /index exch def
+
+                gelements index known
+                {
+                    /cElem gelements index get def
+
+                    cElem /objName get (Window) eq
+                    {
+                        cElem moveToFront
+                        cElem /x pos put
+                        cElem /y pos put
+                        cElem /children get false setFixedForChildren
+                        incrPos
+                    }
+                    if
+                 }
+                if
+
+
+            } for
+    end
+} def
+
+/setFixedTrueForWindowsChildren{
+    1 dict begin
+        0 1 gelements /maxElementNumber get 1 sub
+        {
+            /index exch def
+            gelements index known
+            {
+                /cElem gelements index get def
+                cElem /objName get (Window) eq
+                {
+                    cElem /children get true setFixedForChildren
+                }
+                if
+             }
+            if
+        } for
+        end
+} def
+
 %---
 % params: x y set center of circles
 /wave {

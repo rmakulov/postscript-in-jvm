@@ -13,8 +13,10 @@
                             /children       []
                             /inFocus        true
                             /paint          /paint load
-                            /eventProcs     << /CLICK [{pop repaint }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread  }[]] >>
 
+
+                           % /eventProcs     << /CLICK [{pop repaint }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread  }[]] >>
+                        /eventProcs     << /CLICK [{pop repaint }[]] /RIGHT_CLICK [{pop sortWindows repaint setFixedTrueForWindowsChildren}[]] >>
                             /objName        (Scene)
                             /checkBelonging
                                             {
