@@ -32,9 +32,11 @@ public class DefOp extends Operator {
 
         PSDictionary newDict = dict.put(psKey, psValue);
         dictObj.setValue(newDict);
-        if (psKey.getType() == Type.NAME) {
-            String name = ((PSName) psKey.getValue()).getStrValue();
-            context.updateNameVersions(name);
+        if(runtime.enableNameCaching) {
+            if (psKey.getType() == Type.NAME) {
+                String name = ((PSName) psKey.getValue()).getStrValue();
+                context.updateNameVersions(name);
+            }
         }
     }
 

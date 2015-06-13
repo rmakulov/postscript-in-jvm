@@ -1,0 +1,11 @@
+Filename            Interpreter(avg)    Interpreter(disp)   Compiler(avg)       Compiler(disp)      Without Caching(avg)Without Caching(disp)
+bubbles.ps                    10929.000           12.8                4396.333            14.4                5401.400            15.5
+chupcko.ps                    2427.400            3.0                 1107.400            6.8                 1328.800            6.2
+FractalByAlunJones.ps         60040.400           0.0                 60041.000           0.0                 60050.000           0.0
+FractalByAlunJones2.ps        60001.333           0.0                 60003.000           0.0                 60003.133           0.0
+henon.ps                      12622.200           0.7                 11977.200           1.7                 12017.200           1.2
+julia.ps                      123845.533          2.0                 80351.400           4.2                 96437.600           0.6
+mandel.ps                     176550.333          0.2                 97100.400           2.3                 119486.667          0.6
+mandelbrotset.ps              26260.200           0.4                 16120.400           1.4                 22025.000           1.3
+psRay.ps                      150695.667          0.5                 1577780.133         2.1                 1760612.533         11.7
+z1dca.ps                      323739.133          0.6                 255973.533          1.3                 271925.000          1.0

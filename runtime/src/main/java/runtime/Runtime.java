@@ -18,6 +18,7 @@ import runtime.avl.Pair;
 import runtime.compiler.DynamicClassLoader;
 import runtime.events.Event;
 import runtime.graphics.GState;
+import runtime.graphics.frame.PSImage;
 import windowmanager.WindowManager;
 
 import java.io.UnsupportedEncodingException;
@@ -41,6 +42,7 @@ public class Runtime {
     private ExecutorService service = Executors.newFixedThreadPool(10);
 
     public boolean isCompiling = false;
+    public boolean enableNameCaching = false;
 
     public WindowManager getWindowManager() {
         return windowManager;
@@ -74,6 +76,18 @@ public class Runtime {
         thread.run();
     }
 
+
+    public void startWithoutThreads(Context context, Procedure procedure) {
+        mainContext = context;
+        addContext(context);
+        context.initDictionaries(systemDict);
+        if (!isCompiling) {
+            context.pushToCallStack(procedure);
+            context.executeCallStack();
+        } else {
+            procedure.execute();
+        }
+    }
 
     public Context getMainContext() {
         return mainContext;
@@ -191,7 +205,7 @@ public class Runtime {
                 }
             } else if (proc instanceof StringProcedure) {
                 PSObject string = ((StringProcedure) proc).getStringObject();
-                if (string!=null && (string.getDirectValue() instanceof LocalRef)) {
+                if (string != null && (string.getDirectValue() instanceof LocalRef)) {
                     LocalRef ref = (LocalRef) string.getDirectValue();
                     getUsingLocalVMIndexesByRef(indexes, ref);
                 }
@@ -299,6 +313,7 @@ public class Runtime {
         for (Context context : contextMap.values()) {
             context.clearAll();
         }
+        PSImage.reset();
         contextMap.clear();
         mainContext = null;
         localVM.clear();
@@ -403,6 +418,10 @@ public class Runtime {
     public Context getContext(int id) {
         Context context = contextMap.get(id);
         return context;
+    }
+
+    public void setNameCaching(boolean nameCaching) {
+        this.enableNameCaching = nameCaching;
     }
 
 

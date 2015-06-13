@@ -39,6 +39,18 @@ public class Interpreter {
         runtime.startMainTask(context, stringProcedure);
     }
 
+    public long runWithTime(File file) throws IOException {
+        long startTime = System.currentTimeMillis();
+        runtime.Runtime runtime = Runtime.getInstance();
+        runtime.initSystemDict(customOperators);
+
+        Context context = new Context();
+        MainProcedure mainProcedure = new MainProcedure(context, file);
+        runtime.startWithoutThreads(context, mainProcedure);
+        long time = System.currentTimeMillis() - startTime;
+        return time;
+    }
+
     public void clearRuntime() {
         Runtime.getInstance().clearAll();
     }
@@ -49,6 +61,10 @@ public class Interpreter {
 
     public void setCompilingMode(boolean compilingMode) {
         Runtime.getInstance().setCompilingMode(compilingMode);
+    }
+
+    public void setNameCaching(boolean enableNameCaching){
+        Runtime.getInstance().setNameCaching(enableNameCaching);
     }
 
     public static void main(String[] args) {

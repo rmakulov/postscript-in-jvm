@@ -130,6 +130,28 @@ public class PSName extends SimpleValue {
         }
     }
 
+
+    public static void executiveCompileWithoutCaching(Context context, String strValue) {
+        //runtime.Runtime runtime = Runtime.getInstance();
+        PSObject object = context.search(new PSObject(new PSName(strValue)));
+        boolean isOperator = (object != null && object.getType() == Type.OPERATOR);
+        BytecodeGeneratorManager bcGenManager = context.bcGenManager;
+        String className = bcGenManager.bytecodeName;
+        if (isOperator) {// && !bcGenManager.lastMethodIsEmpty()) {
+            if (!bcGenManager.lastMethodIsEmpty()) {
+                bcGenManager.endMethod();
+                bcGenManager.startMethod();
+            }
+            saveSuspectOperatorIndex(object, bcGenManager, className);
+        }
+        bcGenManager.incInstrCounter();
+        writeExecutiveBytecode(context, strValue);
+        if (isOperator) {
+            bcGenManager.endMethod();
+            bcGenManager.startMethod();
+        }
+    }
+
     private static void writeExecutiveBytecode(Context context, String strValue) {
         MethodVisitor mv = context.bcGenManager.mv;
         String name = context.bcGenManager.bytecodeName;
@@ -180,7 +202,11 @@ public class PSName extends SimpleValue {
         Attribute attribute = obj.getAttribute();
         Attribute.TreatAs treatAs = attribute.treatAs;
         if (treatAs == EXECUTABLE) {
-            executiveCompile(context, strValue);
+            if(runtime.enableNameCaching) {
+                executiveCompile(context, strValue);
+            }else{
+                executiveCompileWithoutCaching(context,strValue);
+            }
         } else {
             literalCompile(context, strValue);
         }

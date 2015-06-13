@@ -55,7 +55,11 @@ public class InputStreamProcedure extends Procedure implements Opcodes {
         switch (m_type) {
             case EXEC_NAME:
                 // name without "/". it is executable by default
-                PSName.executiveCompile(context, text);
+                if(runtime.enableNameCaching) {
+                    PSName.executiveCompile(context, text);
+                }else{
+                    PSName.executiveCompileWithoutCaching(context, text);
+                }
                 break;
             case LIT_NAME:
                 // name with "/". it is executable by default
