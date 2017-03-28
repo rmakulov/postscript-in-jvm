@@ -1,0 +1,77 @@
+%---
+%params : s1, s2 : strings to concatenate
+% result : s1+s2
+/concatStrings{
+    /s2 exch def
+    /s1 exch def
+    s1 length
+    s2 length
+    add
+    string dup dup 0 s1 putinterval s1 length s2 putinterval
+
+} def
+
+%---
+%params : string, char, position : put char on position in the string
+% result : new string
+/insertChar{
+    /p exch def
+    /c exch def
+    /s exch def
+
+    /s3 s 0 p getinterval def
+    /s4_len s length p sub def
+    /s4 s p s4_len getinterval def
+
+    s3 c concatStrings
+    s4 concatStrings
+} def
+%---
+
+%params : string, position : remove char on the left from the position in the string
+% result : new string
+/removeLeftChar{
+    1 dict begin
+    /p exch def
+    /s exch def
+
+    /s6_len s length p sub def
+    /s6 s p s6_len getinterval def
+
+    p 1 gt
+    {
+        /s5 s 0 p 1 sub getinterval def
+
+        s5  s6 concatStrings
+    }{
+        s6
+    } ifelse
+} def
+%---
+%params : string, position : remove char on the right from the position in the string
+% result : new string
+/removeRightChar{
+
+    /p exch def
+    /s exch def
+
+    /s7 s 0 p getinterval  def
+
+    p s length 1 sub lt
+    {
+        /s8_len s length p sub 1 sub def
+        /s8 s p 1 add s8_len getinterval def
+        s7 s8  concatStrings
+    }{
+        s7
+    } ifelse
+} def
+%---
+/invertString {
+    dup
+    /len exch length def
+    /outStr len string def
+    /i len 1 sub def
+    {outStr i  3 2 roll put /i i 1 sub def} forall
+    outStr
+} def

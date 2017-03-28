@@ -1,0 +1,310 @@
+% ------------PROLOG------------%
+%params : x y w h
+/rect{
+    /hR exch def
+    /wR exch def
+    /yR exch def
+    /xR exch def
+
+    xR yR moveto
+    wR 0 rlineto
+    0 hR rlineto
+    wR neg 0 rlineto
+    closepath
+} def
+
+%-------------------------------------
+%-------params------------
+%----x          :   integer
+%----y          :   integer
+%----w          :   integer
+%----h          :   integer
+%    return     :   void
+%--------------------------
+/roundedRect{
+    1 dict begin
+        /h exch         def
+        /w exch         def
+        /y exch         def
+        /x exch         def
+        /coef 0.4       def   % 1/5
+        /r  h coef mul  def
+
+        /xLeft  x r add             def
+        /xRight x w add r sub       def
+        /yHigh  y h add r sub       def
+        /yLow   y r add             def
+        /wShort   w 2 r mul sub     def
+        /hShort   h 2 r mul sub     def
+
+        xLeft y                 moveto
+        wShort 0                rlineto
+        xRight yLow r 270 360   arc
+        0 hShort                rlineto
+        xRight yHigh r 0 90     arc
+        wShort neg 0            rlineto
+        xLeft yHigh r 90 180    arc
+        0 hShort neg            rlineto
+        xLeft yLow r 180 270    arc
+
+        closepath
+
+    end
+} def
+
+% ----- params: x y string
+/drawString{
+    /str exch def
+    /yS exch def
+    /xS exch def
+
+    xS yS moveto
+    str show
+
+} def
+%-------------------------
+/drawRect{
+    0 0 w h rect
+    stroke
+} def
+%---------params: x y rX rY rW rH----------------
+/isInRect {
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
+
+    /pY exch def
+    /pX exch def
+
+    rX pX le
+    pX rX rW add le
+    and
+
+    rY pY le
+    pY rY rH add le
+    and
+    and
+} def
+
+%------------------------------------
+/getRelFromAbs{
+    /parH exch def
+    /parW exch def
+    /parY exch def
+    /parX exch def
+
+    /aH exch def
+    /aW exch def
+    /aY exch def
+    /aX exch def
+
+    aX parX sub parW div
+    aY parY sub parH div
+    aW parW div
+    aH parH div
+
+} def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%    return     :   void
+%--------------------------
+/recountCoordinates{
+   1 dict  begin
+        /cDict exch  def
+
+        cDict /isFixed get not
+        {
+            /parent cDict /parent get def
+            /rX cDict /rX get def
+            /rY cDict /rY get def
+            /rW cDict /rW get def
+            /rH cDict /rH get def
+
+            cDict /x     parent /x get parent /w get rX mul add cvi   put
+            cDict /y     parent /y get parent /h get rY mul add cvi   put
+            cDict /h     parent /h get rH mul cvi                     put
+            cDict /w     parent /w get rW mul cvi                     put
+        }
+        if
+    end
+} def
+
+%-------------------------------------
+%-------params------------
+%----red        :   integer
+%----green      :   integer
+%----blue       :   integer
+%    return     :   double double double
+%--------------------------
+/getRealRGB{
+   1 dict  begin
+   /b exch def
+   /g exch def
+   /r exch def
+
+   r 255 div
+   g 255 div
+   b 255 div
+   end
+} def
+
+%-------------------------------------
+%-------params------------
+%----red        :   integer
+%----green      :   integer
+%----blue       :   integer
+%    return     :   double double double
+%--------------------------
+/setrgb{
+   1 dict  begin
+   getRealRGB setrgbcolor
+   end
+} def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%    return     :   void
+%--------------------------
+/printRect{
+   1 dict
+   begin
+        /cDict exch  def
+
+        cDict /x get print
+        cDict /y get print
+        cDict /w get print
+        cDict /h get print
+
+    end
+} def
+
+%-------------------------------------
+%-------params------------
+%----dict       :   dictionary
+%----text       :   string
+%    return     :   void
+%--------------------------
+/getRightIndex{
+   1 dict
+   begin
+        /str exch def
+        /cDict exch def
+        /w cDict /w get def
+        /ans str length def
+        /i str length def
+        {
+
+        }
+        loop
+    end
+} def
+
+%-------------------------------------
+%-------params------------
+%----x          :   integer
+%----y          :   integer
+%----h          :   integer
+%    return     :   void
+%--------------------------
+/newRoundedRect
+{
+    1 dict begin
+    /h exch def
+    /y exch def
+    /x exch def
+
+    %x y translate
+    x h .25 mul add y moveto
+    .75 h mul .25 h mul dup 270 360 arc
+    .75 h mul h .75 mul h .25 mul 0 90 arc
+    .25 h mul .75 h mul .25 h mul 90 180 arc
+    .25 h mul dup dup 180 270 arc
+
+   end
+} def
+
+
+%-------------------------------------
+%-------params------------
+%----x          :   integer
+%----y          :   integer
+%----h          :   integer
+%    return     :   void
+%--------------------------
+/newRoundedRect3
+{
+    1 dict begin
+    /h exch def
+    /y exch def
+    /x exch def
+
+    x y translate
+
+    h .33 mul 0 moveto
+    .67 h mul .33 h mul dup 270 360 arc
+    .67 h mul h .67 mul h .33 mul 0 90 arc
+    .33 h mul .67 h mul .33 h mul 90 180 arc
+    .33 h mul dup dup 180 270 arc
+    x neg y neg translate
+
+   end
+} def
+
+
+%-------------------------------------
+%-------params------------
+%----str        :   string
+%----start      :   integer
+%----step       :   integer
+%----width      :   integer
+%    return     :   integer
+% Let be at least ony symbol in answer
+%--------------------------
+/getIndex{
+   1 dict
+   begin
+       /width  exch    def
+        /step   exch    def
+        /first  exch    def
+        /str    exch    def
+
+        str length 0 ne {
+            step 0 gt
+                { /last str length 1 sub def }
+                { /last 0 def }
+            ifelse
+
+            /i first def
+            {
+                step 0 gt
+                { /subString str first i first sub 1 add getinterval def }
+                { /subString str i     first i sub 1 add getinterval def }
+                ifelse
+
+                subString stringwidth pop width gt
+                {
+                  step 0 gt
+                  { i step sub exit }
+                  { i step sub exit }
+                  ifelse
+                }
+                if
+
+                i last eq
+                {
+                    last
+                    exit
+                }
+                if
+                /i i step add def
+            }
+            loop
+        } 
+        {0}
+        ifelse
+    end
+} def

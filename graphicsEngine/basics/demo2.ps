@@ -1,0 +1,54 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+
+/labelField1 250 750 250 50 (Hello! )  scene << >>    labelField
+/labelField2 115 700 250 50 (Try various effects.)  scene << >>    labelField
+
+
+%/button1 50 150 120 40   (close)         scene <</CLICK [{pop quit}[]] >>  button
+
+
+/labelField3 280 610 250 40 (scales)  scene << >>    labelField
+/plus 265 550 50 40 (+)          scene <</CLICK [{pop 1.1 1.1 scale  repaintAll}[]] >> button
+/minus 340 550 50 40 (-)          scene <</CLICK [{pop 0.909 0.909 scale  repaintAll}[]] >> button
+
+/labelField4 460 510 250 40 (rotates)  scene << >>    labelField
+/clockwise 430 450 200 40 (clockwise)           scene <</CLICK [{pop  -10 rotate  repaintAll}[]] >> button
+/anticlockwise 430 380 200 40 (anticlockwise)          scene <</CLICK [{pop 10 rotate  repaintAll}[]] >> button
+
+
+/labelField5 50 510 250 40 (translates)  scene << >>    labelField
+/left 30 450 90 40 (left)          scene <</CLICK [{pop -50  0 translate  repaintAll}[]] >> button
+/right 140 450 90 40 (right)         scene <</CLICK [{pop  50  0 translate  repaintAll}[]] >> button
+/up 30 385 90 40 (up)            scene <</CLICK [{pop  0  50 translate  repaintAll}[]] >> button
+/down 140 385 90 40 (down)          scene <</CLICK [{pop  0 -50 translate  repaintAll}[]] >> button
+
+
+/labelField6 50 260 250 40 (reflections)  scene << >>    labelField
+/checkBox1 65 215 16       (horizontal)    scene <</CLICK [{pop 651 0 translate -1 1 scale repaintAll}[]] >> checkBox
+/checkBox2 65 175 16       (vertical)      scene <</CLICK [{pop 0 843 translate 1 -1 scale repaintAll}[]] >> checkBox
+
+    /labelField7 440 260 250 40 (invert labels)  scene << >>    labelField
+/invert 480 185 120 40   (invert)        scene <</CLICK [{pop invertLabels  repaintAll}[]] >> button
+
+/color [0 0 1] def def
+
+plus  /color color put
+minus /color color put
+clockwise /color color put
+anticlockwise /color color put
+
+left /color color put
+right /color color put
+up /color color put
+down /color color put
+
+invert /color color put
+
+  scene /eventProcs get /RIGHT_CLICK  {
+               pop evX evY itransform 2 /wave load newThread
+             } addListToDict
+
+repaintAll
+showpage
+eventlistener
+

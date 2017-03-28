@@ -1,0 +1,137 @@
+%!
+/postScriptExample save def
+
+
+%% example 1
+gsave
+newpath
+100 200 moveto
+200 200 rlineto
+200 100 lineto
+closepath
+gsave
+0.5 setgray
+fill
+grestore
+4 setlinewidth
+0.75 setgray
+stroke
+grestore
+
+%% example 2
+save
+/Times-Roman findfont
+12 scalefont
+0 setgray
+setfont
+newpath
+400 100 moveto
+closepath
+(Hello world) show
+restore
+
+%% example 3
+save
+%/Times-Roman findfont
+%32 scalefont
+0 setgray
+%setfont
+100 200 translate
+45 rotate
+1 1 scale
+newpath
+0 10 moveto
+%(We are the champions) true charpath
+0.5 setlinewidth
+0.4 setgray
+stroke
+restore
+
+%% example 4
+save
+newpath
+250 100 moveto
+100 0 rlineto
+0 100 rlineto
+-100 0 rlineto
+0 -100 rlineto
+closepath
+0.2 0.3 0.4 setrgbcolor
+gsave
+fill
+grestore
+1 0 0 setrgbcolor
+2 setlinewidth
+stroke
+restore
+
+%% example 5
+save
+/csquare {
+	newpath
+	0 0 moveto
+	1 0 rlineto
+	0 1 rlineto
+	-1 0 rlineto
+	closepath
+	setrgbcolor
+	fill
+} def
+
+20 20 scale
+
+5 5 translate
+1 0 0 csquare
+
+1 0 translate
+0 1 0 csquare
+
+1 0 translate
+0 0 1 csquare
+restore
+
+%%example 6
+save
+/LINE {
+	newpath
+	0 0 moveto
+	100 0 lineto
+	stroke
+} def
+
+100 20 translate
+10 setlinewidth 0 setlinecap 0 setgray LINE
+1 setlinewidth 1 setgray LINE
+
+0 20 translate
+10 setlinewidth 1 setlinecap 0 setgray LINE
+1 setlinewidth 1 setgray LINE
+
+0 20 translate
+10 setlinewidth 2 setlinecap 0 setgray LINE
+1 setlinewidth 1 setgray LINE
+restore
+
+%%example 6
+save
+/ANGLE {
+	newpath
+	100 0 moveto
+	0 0 lineto
+	100 50 lineto
+	stroke
+} def
+
+450 20 translate
+10 setlinewidth 0 setlinejoin ANGLE
+
+0 70 translate
+10 setlinewidth 1 setlinejoin ANGLE
+
+0 70 translate
+10 setlinewidth 2 setlinejoin ANGLE
+restore
+
+showpage
+clear cleardictstack
+postScriptExample restore

@@ -1,0 +1,151 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+
+/labelField1 220 750 250 50 (Welcome! )  scene << >>    labelField
+/labelField2 100 700 250 50 (Fill in this form, please. )  scene << >>    labelField
+
+
+/labelField3 30 555 250 35 (Your name )  scene << >>    labelField
+/nameField 175 550 300 35  (TextField)    scene <<>>    textField
+
+
+/labelField8 30 505 250 35 (Group )  scene << >>    labelField
+/labelField5 30 435 250 35 (Education )  scene << >>    labelField
+/labelField6 30 365 250 35 (Faculty )  scene << >>    labelField
+/labelField7 30 220 250 35 (Error checking)  scene << >>    labelField
+
+/group 175 500 100 35  (TextField)    scene <<>>    textField
+
+/education 215 430 100 50 [ (Full-time) (Part-time) ] 0 scene << >> listBox
+
+
+/faculty 200 365 370 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 3  scene <<  >> comboBox
+
+/results 190 300 20       ( I want to get results)   scene << >> checkBox
+
+/errorChecking 50 155 116 50 (On) (Off)  scene <<  >> toggleButton
+
+%-------------------------------------------
+%-------params------------------------------
+%    return     :   void
+%-------------------------------------------------
+%---save data to operand stack
+%-------------------------------------------------
+
+ /concatstrings % (a) (b) -> (ab)
+   { exch dup length
+     2 index length add string
+     dup dup 4 2 roll copy length
+     4 -1 roll putinterval
+   } def
+
+/saveData
+{
+    1 dict begin
+    /report 1 dict def
+
+        report /name nameField /text get put
+        report /group group /text get put
+        report /education education /labels get education /curLabel get get put
+        report /faculty faculty /labels get faculty /curLabel get get put
+        report /results results /isPressed get put
+        report /errorChecking errorChecking  /isPressed get put
+        %report print
+
+        report /name  get userprint
+        report /group get userprint
+        report /education get userprint
+        report /faculty get userprint
+
+
+    end
+} def
+%-------------------------------------------
+%-------params------------------------------
+%   groupsNumb :    integer
+%   return     :    boolean
+%-------------------------------------------------
+%---check if groupNumber is in [541, 542, 543, 544]
+%-------------------------------------------------
+/groupChecking
+{
+    1 dict begin
+        /gnStr exch def
+        gnStr length 0 eq
+        {
+            false
+        }
+        {
+            /groupNumber gnStr cvi def
+
+            groupNumber 544 eq
+            groupNumber 543 eq
+            or
+            groupNumber 542 eq
+            or
+            groupNumber 541 eq
+            or
+            {true}
+            {false}
+            ifelse
+        }
+        ifelse
+    end
+} def
+
+%-------------------------------------------
+%-------params------------------------------
+%   return     :    boolean
+%-------------------------------------------------
+%---check if results is pressed and save data if yes
+%-------------------------------------------------
+/exitFunction
+{
+    1 dict begin
+    results /isPressed get
+    {
+        saveData
+    }
+    if
+    end
+} def
+
+/close 470 180 120 40   (close) scene <</CLICK [{
+                    pop
+
+                    errorChecking /isPressed get
+                    group /text get groupChecking not
+                    and
+                    {
+                       /errorWindow    170 340 310 150 (error) scene << >> window
+                       errorWindow /textFont (Comfortaa Bold) put
+                       /labelField9 175 415 250 30 (Group number is not correct! )  errorWindow << >>    labelField
+
+                       /okB 290 365 50 30   (ok)        errorWindow << /CLICK [{/CLOSE findAncestorWithEventType}[]] >>  button
+
+                       okB /textFont (Comfortaa Bold) put
+
+                    }
+                    {
+                        /messageWindow    170 340 250 150 (message) scene << >> window
+                        messageWindow /textFont (Comfortaa Bold) put
+                        /labelField8 190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField
+
+                        /yB 230 365 50 25   (yes)        messageWindow <</CLICK [{pop exitFunction quit}[]] >>  button
+                        /nB 300 365 50 25   (no)         messageWindow <</CLICK [{/CLOSE findAncestorWithEventType}[]] >> button
+
+                        yB /textFont (Comfortaa Bold) put
+                        nB /textFont (Comfortaa Bold) put
+                    }
+                    ifelse
+
+                    repaint
+
+         }[]] >>  button
+
+
+
+
+repaintAll
+showpage
+eventlistener
+

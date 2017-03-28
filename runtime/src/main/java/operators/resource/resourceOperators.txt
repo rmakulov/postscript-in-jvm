@@ -1,0 +1,6 @@
+defineresource
+undefineresource
+findresource
+findcolorrendering
+resourcestatus
+resourceforall

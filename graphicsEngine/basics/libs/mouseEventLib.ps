@@ -1,0 +1,119 @@
+%---
+%params: dict - gelement
+%        name - evType
+%        int  - x
+%        int  - y
+%/checkElementOld {
+%
+%    /evY exch def
+%    /evX exch def
+%    /evType exch def
+%    /element exch def
+%
+%    element evX evY element /checkBelonging get exec
+%    {
+%        gelements /mouseX evX put
+%        gelements /mouseY evY put
+%        element evType findAncestorWithEventType
+%    } if
+%} def
+
+
+%%---
+%%params: dict - gelement
+%%        name - evType
+%/findAncestorWithEventType{
+%
+%    /evType exch def
+%    /element exch  def
+%    /eventProcs element /eventProcs get def
+%
+%    eventProcs evType known
+%
+%    {element dup setFocusedElement
+%        eventProcs evType get execList  exit
+%    }
+%    {
+%        /parent element /parent get def
+%
+%        parent null eq
+%        {exit}
+%        {parent evType findAncestorWithEventType}
+%        ifelse
+%    }
+%    ifelse
+%
+%} def
+
+
+%/searchOld {gelements /maxElementNumber get 1 sub -1 0 {gelements exch get evType evX evY checkElement} for} def
+%/search {
+%    scene searchAmongChildren
+%} def
+
+/searchAmongChildren{
+    1 dict begin
+        /evY        exch def
+        /evX        exch def
+        /element    exch def
+        element /children get length 0 ne
+        {
+            /children element /children get def
+            /elementForCheck null def
+            /isFound false def
+            {
+                 children length 0 eq
+                 {  exit
+                 }
+                 {
+                    children tail
+                    evX evY gelements children head  get  dup dup 5 1 roll /checkBelonging get  exec
+                    {/elementForCheck exch def
+                      /isFound true def
+                    }
+                    {pop}
+                    ifelse
+                    /children exch def
+                 } ifelse
+            } loop
+
+            isFound
+            {elementForCheck evX evY searchAmongChildren}
+            {element evType findAncestorWithEventType}
+            ifelse
+        }
+        {element evType findAncestorWithEventType}
+        ifelse
+    end
+} def
+
+
+/mouseEvent{
+    1 dict begin
+        /evType exch def
+        itransform
+        /evY exch def
+        /evX exch def
+
+        gelements /mouseX evX put
+        gelements /mouseY evY put
+
+        evType (DRAG) cvn eq
+        {         gelements /mouseX evX put
+                  gelements /mouseY evY put
+                  dragElement
+        }
+        {
+            evType (PRESS) cvn eq
+            {
+                gelements /lastX evX put
+                gelements /lastY evY put
+            }
+            if
+
+            scene evX evY searchAmongChildren
+        }
+        ifelse
+    end
+} def
+%snapshot restore

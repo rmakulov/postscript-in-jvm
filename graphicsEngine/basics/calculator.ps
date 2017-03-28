@@ -1,0 +1,352 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+%-------------------------------------
+%-------params------------
+%----str        :   string
+%    return     :   void
+%--------------------------
+%---check if the string is with point
+%--------------------------
+/withPoint{
+    /str exch def
+    /ans false def
+    str { (.) eq { /ans true def } if} forall
+    ans
+} def
+
+%-------------------------------------
+%-------params------------
+%----char       :   string
+%    return     :   void
+%--------------------------
+/writeChar {
+    1 dict begin
+    /char exch def
+
+     /calcState calculator /state get def
+     calcState 2 eq
+     calcState 4 eq
+    or
+    {
+        numberField /text () put
+        numberField /position 0 put
+        numberField /displayBegin 0 put
+        numberField /displayEnd   0 put
+        calcState 2 eq
+        { calculator /state 3 put }
+        { calculator /state 1 put }
+        ifelse
+    }
+    if
+
+    %numberField /isChanged true  put
+
+    [numberField char] numberField /eventProcs get /KEYBOARD_CHAR get execListWithArg
+    %numberField /isChanged false put
+
+    end
+} def
+%-------------------------------------
+%-------params------------
+%----char       :   string
+%    return     :   void
+%--------------------------
+/writeOnlyChar {
+    1 dict begin
+    /char exch def
+
+    /calcState calculator /state get def
+     calcState 2 eq
+     calcState 4 eq
+    or
+    {
+        numberField /text () put
+        numberField /position 0 put
+        numberField /displayBegin 0 put
+        numberField /displayEnd   0 put
+        calcState 2 eq
+        { calculator /state 3 put }
+        { calculator /state 1 put }
+        ifelse
+    }
+    if
+    numberField /text get withPoint not
+    {
+        %numberField /isChanged true  put
+        [numberField char] numberField /eventProcs get /KEYBOARD_CHAR get execListWithArg
+        %numberField /isChanged false put
+    }
+    if
+    end
+} def
+%----------------------------------------
+%-------params---------------------------
+%    return     :   void
+%----------------------------------------
+%---make program to go to the first state
+%----------------------------------------
+/clearCalc {
+     %numberField /text () put
+     %numberField /position 0 put
+     %numberField /displayBegin 0 put
+     %numberField /displayEnd   0 put
+
+     numberField () setTextToTextField
+
+     calculator /first  0 put
+     calculator /second 0 put
+     calculator /operation ( ) put
+     calculator /state 1 put
+} def
+%-------------------------------------------
+%-------params------------------------------
+%    operation  :   string
+%    return     :   void
+%--------------------------------------------
+%---get number from numberField and operation
+%---and save them them at dictionary
+%---------------------------------------------
+/saveOperation{
+    1 dict begin
+    /operation exch def
+    calculator /state get 3 eq
+    {
+        makeCalculation
+    }
+    if
+    /numStr  numberField /text get def
+
+
+    calculator /operation operation put
+     numStr (.) withPoint
+     {
+        calculator /first numStr cvr put
+     }
+     {
+        calculator /first numStr cvi put
+     }
+     ifelse
+     calculator /state 2 put
+    end
+} def
+%-------------------------------------------
+%-------params------------------------------
+%   num         :   intereger or real
+%    return     :   interger or real
+%-------------------------------------------------
+%--- 1.2 -- >> 1.2
+%--- 1   -- >> 1
+%--- 4.0 -- >> 4
+%-------------------------------------------------
+/transformResult{
+    1 dict begin
+    /num exch def
+    num num truncate sub 0.0 eq
+    { num cvi }
+    { num }
+    ifelse
+    end
+} def
+%-------------------------------------------
+%-------params------------------------------
+%   str         :   string
+%    return     :   interger or real
+%-------------------------------------------------
+%---(1.2) -- >> 1.2
+%--- (1)   -- >> 1
+%--- (4.0) -- >> 4
+%-------------------------------------------------
+/stringToNumber{
+    1 dict begin
+        /str exch def
+        str (.) withPoint
+        {
+           str cvr transformResult
+        }
+        {
+           str cvi
+        }
+        ifelse
+    end
+} def
+
+%-------------------------------------------
+%-------params------------------------------
+%    return     :   void
+%-------------------------------------------------
+%---get number from numberField and make operation
+%---and save it and show it in NumberField
+%-------------------------------------------------
+/makeCalculation{
+    1 dict begin
+        calculator /state get 3 eq
+        {
+            /numStr  numberField /text get def
+            /operation calculator /operation get def
+             numStr (.) withPoint
+             {
+                calculator /second numStr cvr put
+             }
+             {
+                calculator /second numStr cvi put
+             }
+             ifelse
+
+             /op1 calculator /first get def
+             /op2 calculator /second get def
+
+             operation (+) eq { /res op1 op2 add def } if
+             operation (-) eq { /res op1 op2 sub def } if
+             operation (*) eq { /res op1 op2 mul def } if
+             operation (/) eq { /res op1 op2 div def } if
+
+             /res res transformResult def
+             /resStr res 20 string cvs def
+             numberField resStr setTextToTextField
+             %numberField /text resStr put
+             %numberField /position resStr length put
+             %numberField /displayBegin 0 put
+             %numberField /displayEnd   resStr length 1 sub put
+
+
+             calculator /state 4 put
+        }
+        {
+                    calculator /state get 4 eq
+                    {
+                        /numStr  numberField /text get def
+                        /operation calculator /operation get def
+                         numStr (.) withPoint
+                         {
+                            calculator /first numStr cvr put
+                         }
+                         {
+                            calculator /first numStr cvi put
+                         }
+                         ifelse
+
+                         /op1 calculator /first get def
+                         /op2 calculator /second get def
+
+                         operation (+) eq { /res op1 op2 add def } if
+                         operation (-) eq { /res op1 op2 sub def } if
+                         operation (*) eq { /res op1 op2 mul def } if
+                         operation (/) eq { /res op1 op2 div def } if
+
+                         /res res transformResult def
+                         /resStr res 20 string cvs def
+                         numberField resStr setTextToTextField
+
+                         calculator /state 4 put
+                    }
+                    if
+        }
+        ifelse
+    end
+} def
+
+
+/calculator << /first 0 /second 0 /operation () /state 1 >> def
+
+/label1 250 750 250 50 (Welcome! )  scene << >>    labelField
+/label2 150 700 250 50 (You can calculate here. )  scene << >>    labelField
+
+
+/calc    100 100 300 300 (calculator) scene << >> window
+
+
+
+/b0     150 150 40 30 (0) calc <</CLICK [{pop  (0) writeChar } []] >>  button
+/point  200 150 40 30 (.) calc << /CLICK [{pop (.) writeOnlyChar } []] >> button
+/equal  250 150 40 30 (=) calc << /CLICK [{pop makeCalculation repaint} []] >> button
+/b1     150 190 40 30 (1) calc << /CLICK [{pop (1) writeChar repaint} []]>> button
+/b2     200 190 40 30 (2) calc <</CLICK [{pop (2) writeChar repaint} []]>> button
+/b3     250 190 40 30 (3) calc <</CLICK [{pop (3) writeChar repaint} []]>> button
+/b4     150 230 40 30 (4) calc <</CLICK [{pop (4) writeChar repaint} []]>> button
+/b5     200 230 40 30 (5) calc <</CLICK [{pop (5) writeChar repaint} []]>> button
+/b6     250 230 40 30 (6) calc <</CLICK [{pop (6) writeChar repaint} []]>> button
+/b7     150 270 40 30 (7) calc <</CLICK [{pop (7) writeChar repaint} []]>> button
+/b8     200 270 40 30 (8) calc <</CLICK [{pop (8) writeChar repaint} []]>> button
+/b9     250 270 40 30 (9) calc <</CLICK [{pop (9) writeChar repaint} []]>> button
+
+/plus   300 150 40 30 (+) calc << /CLICK [{pop (+) saveOperation repaint } []] >> button
+/minus  300 190 40 30 (-) calc << /CLICK [{pop (-) saveOperation repaint } []] >> button
+/mult   300 230 40 30 (*) calc << /CLICK [{pop (*) saveOperation repaint } []] >> button
+/divis  300 270 40 30 (/) calc << /CLICK [{pop (/) saveOperation repaint } []] >> button
+
+/clear  350 320 40 30 (cl) calc << /CLICK [{pop clearCalc repaint } []]  >> button
+
+b0 /color [0 0 1] put
+b1 /color [0 0 1] put
+b2 /color [0 0 1] put
+b3 /color [0 0 1] put
+b4 /color [0 0 1] put
+b5 /color [0 0 1] put
+b6 /color [0 0 1] put
+b7 /color [0 0 1] put
+b8 /color [0 0 1] put
+b9 /color [0 0 1] put
+
+point /color [0 0 1] put
+equal /color [0 0 1] put
+plus /color [0 0 1] put
+minus /color [0 0 1] put
+mult /color [0 0 1] put
+divis /color [0 0 1] put
+
+clear /color [0 0 0] put
+/numberField 155 320 180 30  (TextField)    calc <<>>    textField
+
+%numberField /isChanged false put
+%
+%30 555 250 35 (Your name )  scene << >>    labelField pop
+%/name 175 550 300 35  (TextField)    scene <<>>    textField def
+%
+%
+%30 505 250 35 (Group )  scene << >>    labelField pop
+%/group 175 500 100 35  (TextField)    scene <<>>    textField def
+%
+%
+%30 435 250 35 (Education )  scene << >>    labelField pop
+%/education 215 430 100 50 [ (Full-time) (Part-time) ] 1 scene << >> listBox def
+%
+%
+%30 365 250 35 (Faculty )  scene << >>    labelField pop
+%/faculty 200 365 350 30 [(Mathematics and Mechanics) (Physics) (Applied Mathematics) (Chemistry) ] 0  scene <<  >> comboBox def
+%
+%/results 190 300 20       ( I want to get results)   scene << >> checkBox def
+%
+%30 105 250 35 (Error checking)  scene << >>    labelField pop
+%/errorChecking 50 40 116 50 (On) (Off)  scene <<  >> toggleButton def
+%
+%/saveData
+%{
+%    /report 1 dict def
+%
+%    report /name name /text get put
+%    report /group group /text get put
+%    report /education education /labels get education /curLabel get get put
+%    report /faculty faculty /labels get faculty /curLabel get get put
+%    report /results results /isPressed get put
+%    report /errorChecking errorChecking  /isPressed get put
+%
+%    report print
+%} def
+%
+%500 25 120 40   (close) scene <</CLICK [{
+%
+%                    /messageWindow    170 340 250 150 (message) scene << >> window def
+%
+%                    190 415 250 30 (Do you want to exit? )  messageWindow << >>    labelField pop
+%                    230 365 50 25   (yes)        messageWindow <</CLICK [{saveData pop quit}[]] >>  button pop
+%                    300 365 50 25   (no)         messageWindow <</CLICK [{ /CLOSE findAncestorWithEventType}[]] >> button pop
+%
+%         }[]] >>  button pop
+%
+%
+%
+%
+repaintAll
+showpage
+eventlistener
+
+

@@ -1,0 +1,130 @@
+/println {pstack} def
+%--- param: a - array, returns list
+/toList{
+    /array exch def
+    /len array length def
+    /res [] def
+    0 1 len 1 sub {
+        array exch get
+        /res  [ 3 2 roll res ] def
+    } for
+    res
+} def
+%--- param: list,returns a - array
+%/toArray{
+%    /list exch def
+%
+%} def
+%--- params: list, element; returns new list
+/addToList{
+    %(addtolist) print
+    /a exch def
+    /list exch def
+     [/a load list]
+} def
+%--- params: list, element; returns new list
+/addToEndOfList{
+    /a exch def
+    /list exch def
+    /cList list def
+
+    list length 0 eq
+    { [a []] }
+    {
+       {
+           cList tail length 0 eq
+           { cList 1 [a []] put
+              exit
+           }
+           {/cList  cList tail def}
+           ifelse
+       } loop
+       list
+    }
+    ifelse
+
+} def
+%--- param: list, element returns List without element equals k
+/removeElementFromList{
+    /element exch def
+    /list exch def
+    /cList list def
+
+    list head element eq
+    { list tail }
+    {
+       {
+           cList tail head element eq
+           {
+            /cTail cList tail tail def
+            cList 1 cTail put
+             exit
+           }
+           {/cList cList tail def }
+           ifelse
+       } loop
+       list
+    }
+    ifelse
+} def
+
+%--- param: list, returns first elem
+/head{
+    dup length 0 eq
+    {pop null}
+    {0 get}
+    ifelse
+} def
+%--- param: list, returns list without first element
+/tail{
+    dup length 0 eq
+    {pop []}
+    {1 get}
+    ifelse
+} def
+%--- param: list, execute all list elements
+%put for each element
+/execList{
+    /list exch def
+    %/argument exch def
+    list length 0 ne{
+     %   argument
+        list head exec
+        %argument
+        list tail execList
+        }
+        if
+} def
+%--- param: list, execute all list elements
+%----param: every element argument array for execution
+%put for each element
+/execListWithArg{
+    /list exch def
+    /cArr exch def
+    %/argument exch def
+    list length 0 ne{
+     %   argument
+        cArr aload pop list head exec
+        %argument
+        cArr list tail execListWithArg
+        }
+        if
+} def
+
+%-------param: list, elementNumber:integer, returns new --------
+/moveToEnd{
+    /elementNumber exch def
+    /list exch def
+    list elementNumber removeElementFromList elementNumber addToEndOfList
+} def
+%--- test
+%[1 2 3 4 5] toList 6 addToList print
+%[1 2 3 4 5] toList 6 addToEndOfList
+%[1 2 3 4 5] toList 1 moveToEnd
+%[1 2 3 4 5] toList 3 moveToEnd
+%[1 2 3 4 5] toList 5 moveToEnd
+%[{2 3 add} {3 4 mul} {4 5 sub}] toList execList
+%<</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> /CLICK get head
+
+%<</CLICK [{pop 651 0 translate -1 1 scale  repaintAll}[]] >> /RELEASE {/isPressed false put}
+

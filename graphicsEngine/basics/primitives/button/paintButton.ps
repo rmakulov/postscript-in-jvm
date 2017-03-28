@@ -1,0 +1,65 @@
+gsave
+1 dict begin
+    /bd exch def
+    /isPressed exch def
+    /label exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+
+
+    1 setlinewidth
+    /r h 5 idiv def
+
+    isPressed
+        {
+            .7 setgray
+            x y       w h roundedRect fill
+            0.72 setgray
+
+                x r add
+                y 3.5 r mul add
+                w 2 r mul sub
+                1 r mul
+            roundedRect fill
+        }
+        {
+                %shadow
+                /d 3 def
+                .25 setgray
+                x y d sub w h roundedRect fill
+
+
+                .9 setgray
+                x y       w h roundedRect fill
+                0.92 setgray
+                    x r add
+                    y 3.5 r mul add
+                    w 2 r mul sub
+                    1 r mul
+                roundedRect fill
+        }
+        ifelse
+    %frame
+    0 setgray
+    .5 setlinewidth
+    x y w h roundedRect stroke
+
+
+
+    /kegel h 1.5 div cvi def
+    %showing
+    %/Times-Roman
+    %(Comfortaa Bold)
+    bd /textFont get
+    findfont kegel scalefont setfont
+    /strWidth label stringwidth pop def
+        w strWidth sub 2 idiv
+        h kegel sub 1.5 div cvi
+    translate
+    x y moveto
+    bd /color get aload pop setrgbcolor
+    label show
+end
+grestore

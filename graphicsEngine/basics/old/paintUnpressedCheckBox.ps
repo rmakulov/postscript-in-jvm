@@ -1,0 +1,30 @@
+gsave
+
+
+/label exch def
+/h exch def
+/y exch def
+/x exch def
+
+x y translate
+
+
+/shift 2 def
+
+1 setgray
+0 h h h neg rect fill
+0.501961 0.45098 0.501961 setrgbcolor
+0.8 setlinewidth
+0 0 h h rect stroke
+
+/kegel h shift add def
+h 0 translate
+/Times-Roman findfont kegel scalefont setfont
+shift 0 moveto 0 0 0 setrgbcolor label show
+
+grestore
+
+
+
+
+

@@ -1,0 +1,42 @@
+%----------PROLOG----------%
+
+/drawWindow{
+     0 0 moveto
+     w 0 rlineto
+     0 h rlineto
+     w neg 0 rlineto
+     closepath
+     stroke
+} def
+
+gsave
+
+
+/inFocus exch def
+/label exch def
+/h exch def
+/w exch def
+/y exch def
+/x exch def
+
+x y translate
+/shift 5 def
+
+shift shift rmoveto
+/kegel h shift 2 mul sub def
+/Rekha findfont kegel scalefont setfont
+
+gsave
+    label show
+grestore
+
+    inFocus
+        { drawWindow }
+    if
+x neg y neg translate
+grestore
+
+
+
+
+

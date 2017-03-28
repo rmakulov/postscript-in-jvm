@@ -1,0 +1,67 @@
+gsave
+/q { gsave } bind def
+/Q { grestore } bind def
+/cm { 6 array astore concat } bind def
+/w { setlinewidth } bind def
+/J { setlinecap } bind def
+/j { setlinejoin } bind def
+/M { setmiterlimit } bind def
+/d { setdash } bind def
+/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
+      0 exch rlineto 0 rlineto closepath } bind def
+/S { stroke } bind def
+/f { fill } bind def
+/W { clip } bind def
+/g { setgray } bind def
+/rg { setrgbcolor } bind def
+%%EndProlog
+
+
+/label exch def
+/h exch def
+/y exch def
+/x exch def
+%/x 50 def
+%/y 50 def
+%/h 16 def
+%/label (Checkbox) def
+
+x y translate
+q q
+/h 16 def
+/shift 2 def
+
+1 g
+0 h h h neg re f
+0.501961 0.45098 0.501961 rg
+0.8 setlinewidth
+0 J
+0 j
+[] 0.0 d
+0 0 h h re S
+
+/second h 2 idiv def
+
+0 g
+% start point x y and height and length
+second 2 div dup second second re f
+0.501961 0.45098 0.501961 rg
+
+/kegel h shift add def
+
+/Times-Roman findfont kegel scalefont setfont
+h 0 translate
+% shift h kegel sub translate
+shift 0 moveto 0 0 0 setrgbcolor
+label show
+
+Q Q
+%%Trailer
+%%EOF
+grestore
+
+
+
+
+
+

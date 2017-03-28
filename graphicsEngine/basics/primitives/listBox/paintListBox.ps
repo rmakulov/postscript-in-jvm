@@ -1,0 +1,59 @@
+% ------------PROLOG------------%
+/drawOptions{
+    /labels exch def
+    /len labels length def
+
+    1 1 len
+    {
+        /incr exch def
+        /invIncr len incr sub def
+
+        /curH invIncr sH mul def
+
+        1 1 1 setrgbcolor
+        0 curH w sH rect fill
+        0 0 0 setrgbcolor
+        0 curH w sH rect stroke
+
+
+        gsave
+        curLabel incr 1 sub eq
+        {
+            0 0 1 setrgbcolor
+            0 curH w sH rect fill
+            1 1 1 setrgbcolor
+        }
+        if
+
+        shift curH shift add labels invIncr get drawString
+        grestore
+    }
+    for
+
+} def
+
+% --------------------------------------BEGIN-----------------------------------------%
+gsave
+
+    /curLabel exch def
+    /labels  exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+
+    %/curLabel -2 def
+    /sH h labels length idiv def
+
+    x y translate
+    /shift 5 def
+
+    /kegel sH shift sub def
+    /Rekha findfont kegel scalefont setfont
+
+    drawRect
+    labels drawOptions
+    x neg y neg translate
+
+grestore
+% ------------END------------%

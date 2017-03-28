@@ -1,0 +1,9 @@
+/invertString {dup
+/len exch length def 
+/outStr len string def
+/i len 1 sub def
+ {outStr i  3 2 roll put /i i 1 sub def} forall
+outStr
+} def
+
+(a) invertString ==

@@ -1,0 +1,248 @@
+/window{
+    /eventProcDict exch def
+    /parent exch def
+    /label exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /name exch def
+    %---parameters
+        name
+            x y w h
+            parent /x get
+            parent /y get
+            parent /w get
+            parent /h get
+        getRelFromAbs
+        label
+        parent
+        eventProcDict
+    relWindow
+} def
+
+%---
+/relWindow {
+    /eventProcDict exch def
+    /parent exch def
+    /label exch def
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
+    /name exch def
+    /paint {/bd exch def
+                bd recountCoordinates
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /inFocus get
+
+                (graphicsEngine/basics/primitives/window/paintWindow.ps) (r) file run
+
+                bd paintChildren
+        } def
+
+    /windowDict <<      /name               name
+                        /rX                 rX
+                        /rY                 rY
+                        /rH                 rH
+                        /rW                 rW
+
+                        /x                  parent /x get parent /w get rX mul add cvi
+                        /y                  parent /y get parent /h get rY mul add cvi
+                        /h                  parent /h get rH mul cvi
+                        /w                  parent /w get rW mul cvi
+
+                        /minW               200
+                        /minH               200
+
+                        /parent             parent
+                        /children           []
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /isFixed            true
+                        /resize             0
+                        /inFocus            false
+                        /objName            (Window)
+
+                        /refreshCoordinates /recountCoordinates load
+                        /checkBelonging
+                                            {
+                                                1 dict begin
+                                                    /element exch def
+                                                    /evY exch def
+                                                    /evX exch def
+
+                                                    /x element /x get def
+                                                    /y element /y get def
+                                                    /w element /w get def
+                                                    /h element /h get def
+
+                                                    evX x ge evY y ge and
+                                                    x w add evX ge y h add evY ge and
+                                                    and
+                                                end
+                                            }
+                      >> def
+    windowDict addElement
+
+    windowDict /eventProcs get /CLICK {
+                /cDict exch def
+                repaint
+                } addListToDict
+
+    windowDict /eventProcs get /PRESS {
+                    /cDict exch def
+
+                    gelements /mouseX get /mouseX exch def
+                    gelements /mouseY get /mouseY exch def
+                    cDict /x get /x exch def
+                    cDict /y get /y exch def
+                    cDict /w get /w exch def
+                    cDict /h get /h exch def
+
+                    mouseX mouseY x y w h checkForResize /result exch def
+
+                    result 0 gt
+                    {
+                        cDict /resize result put
+                        gelements /resizingElement cDict put
+
+                          cDict /children get
+                          false
+                        setFixedForChildren
+                    }
+                    {
+                            mouseX mouseY x
+                            y h add 20 sub
+                            w 20
+                        isInRect
+                        {
+                            gelements /draggingElement cDict put
+                            (move) cursor
+                                cDict /children get
+                                false
+                            setFixedForChildren
+                        }
+                        if
+                    }
+                    ifelse
+
+                    cDict moveToFront
+                    %cDict setFocusedElement
+                    repaint
+                } addListToDict
+
+    windowDict /eventProcs get /RELEASE {
+                    /cDict exch def
+                    gelements /draggingElement null put
+                    gelements /resizingElement null put
+
+                    cDict /children get refreshCoordinatesForChildren
+
+                        cDict /children get
+                        true
+                    setFixedForChildren
+
+                    cDict /resize 0 put
+                    (default) cursor
+                    repaint
+                } addListToDict
+
+    windowDict /eventProcs get /DRAG {
+                    /cDict exch def
+
+                    repaint
+                  } addListToDict
+
+    windowDict /eventProcs get /MOVE {
+                    /cDict exch def
+
+                        gelements /mouseX get /mouseX exch def
+                        gelements /mouseY get /mouseY exch def
+                        cDict /x get /x exch def
+                        cDict /y get /y exch def
+                        cDict /w get /w exch def
+                        cDict /h get /h exch def
+
+                        mouseX mouseY x y w h checkForResize /result exch def
+                        result 0 eq
+                        { (default) cursor }
+                        if
+
+                     %repaint
+                  } addListToDict
+
+    windowDict /eventProcs get /CLOSE{
+                 /cDict exch def
+                 cDict deleteWithChildren
+                 cDict deleteFromParent
+                 repaint
+    } addListToDict
+
+    parent /children
+                parent /children get    %(list of children ) print dup print
+                windowDict /number get  %(windowNumber ) print dup print
+                addToEndOfList          %(resultList ) print dup print
+    put
+
+    %CloseButton
+    %0.901 0.37 0.19
+    /rB -15 -10 7 [true true] [0.901 0.37 0.19] windowDict << /CLICK [{/CLOSE findAncestorWithEventType}[]]>> roundButton
+    %labelField
+    /lF 0 0 windowDict /h get 5 sub 20 label windowDict << >> labelField
+
+    lF /isAttached true put
+    lF /dX 5 put
+    lF /dY -20 put
+    lF /color [1 1 1] put
+    lF /kegel 20 put
+
+    windowDict /wLabel lF put
+    windowDict /rButton rB put
+    windowDict /name get windowDict def
+} def
+%---
+
+%-------------------------------------
+%-------params------------
+%----mouseX     :   real
+%----mouseY     :   real
+%----x          :   integer
+%----y          :   integer
+%----w          :   integer
+%----h          :   integer
+%    return     :   integer number of resize variant [1..8] or 0 for nothing
+%--------------------------
+/checkForResize{
+    1 dict begin
+        /h exch def
+        /w exch def
+        /y exch def
+        /x exch def
+        /mouseY exch def
+        /mouseX exch def
+
+        /resize 0 def
+
+        /east  { x w add mouseX sub eps lt }    def
+        /south { mouseY y sub eps lt }          def
+        /west  { mouseX x sub eps  lt }          def
+        /north { y h add mouseY sub eps1 lt }    def
+
+        /eps  8 def
+        /eps1 4 def
+        east    { (e_resize) cursor /resize 1 def } if
+        south   { (s_resize) cursor /resize 3 def } if
+        west    { (w_resize) cursor /resize 5 def } if
+        north   { (n_resize) cursor /resize 7 def } if
+
+        east south and { (se_resize) cursor /resize 2 def } if
+        south west and { (sw_resize) cursor /resize 4 def } if
+        west north and { (nw_resize) cursor /resize 6 def } if
+        north east and { (ne_resize) cursor /resize 8 def } if
+        resize
+    end
+} def

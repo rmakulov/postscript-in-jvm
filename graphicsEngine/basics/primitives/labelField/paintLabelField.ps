@@ -1,0 +1,39 @@
+%----------PROLOG----------%
+gsave
+
+/bd     exch def
+/label exch def
+/h exch def
+/w exch def
+/y exch def
+/x exch def
+
+x y translate
+/shift 5 def
+
+bd /color get aload pop setrgbcolor
+
+shift shift rmoveto
+
+/kegel h cvi shift 2 mul sub def
+bd /isAttached get
+{
+    /kegel bd /kegel get def
+} if
+bd /textFont get findfont kegel scalefont setfont
+
+
+gsave
+    label show
+grestore
+
+    %inFocus
+    %    { drawRect }
+    %if
+x neg y neg translate
+grestore
+
+
+
+
+

@@ -1,0 +1,13 @@
+erasepage
+stroke
+fill
+eofill
+rectstroke
+rectfill
+ustroke
+ufill
+ueofill
+shfill
+image
+colorimage
+imagemask

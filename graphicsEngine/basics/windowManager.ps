@@ -1,0 +1,347 @@
+%---
+(graphicsEngine/basics/primitives/roundButton/roundButton.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/button/button.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/labelField/labelField.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/toggleButton/toggleButton.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/comboBox/comboBox.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/listBox/listBox.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/window/window.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/checkBox/checkBox.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/textField/textField.ps) (r) file run
+%---
+(graphicsEngine/basics/primitives/scene/scene.ps) (r) file run
+
+%--- args: element, void
+/addElement {dup /number gelements /maxElementNumber get dup /curnumber exch def put
+                gelements curnumber 3 2 roll put
+                gelements /maxElementNumber curnumber 1 add put
+} def
+
+%---
+/repaintAll {
+      %usertime gelements /lastRepaintTime get sub 100 gt{
+        init
+        scene dup /paint get exec
+      % gelements /lastRepaintTime usertime put
+        showpage
+      %}
+      %if
+} def
+%---params: elementDict, void -----
+/paintChildren{
+    /element exch def
+    element /children get length 0 ne
+    {
+
+
+    /children element /children get def
+        {
+         children length 0 eq
+         {exit}
+         {
+            children tail
+            gelements children  head get dup /paint get exec
+            /children  exch def
+         } ifelse
+        } loop
+    }
+    if
+} def
+
+
+%--- elementDict, void -----
+/moveToFront{
+    /element exch def
+    /parent element /parent get def
+    parent null ne{
+        parent dup /children get
+         element /number get moveToEnd /children exch put
+    } if
+} def
+%--- print label of dict
+/printDictLabel {
+        dup /label known
+        {/label get print}
+        {pop}
+        ifelse
+    } def
+%---
+
+%-------params------------
+%----children   :   array
+%----flag       :   boolean
+%    return     :   void
+%--------------------------
+/setFixedForChildren{
+    1 dict begin
+    /flag exch def
+    /children exch def
+
+    {
+         children length 0 eq
+         {exit}
+         {
+            /elem gelements children head get def
+            elem /isFixed flag put
+            elem /children get flag setFixedForChildren
+            /children children tail def
+         } ifelse
+    } loop
+    end
+} def
+
+%-------params------------
+%----children   :   array
+%    return     :   void
+%--------------------------
+/refreshCoordinatesForChildren{
+    1 dict begin
+    /children exch def
+    {
+         children length 0 eq
+         {exit}
+         {
+            /elem gelements children head get def
+            elem elem /refreshCoordinates get exec
+            elem /children get refreshCoordinatesForChildren
+            /children children tail def
+         } ifelse
+    } loop
+    end
+} def
+
+
+%--- param: gelement
+/setFocusedElement {
+   /nElem exch def
+    nElem /inFocus get not
+         {
+          /oElem gelements /focusedElement get def
+          oElem /inFocus false put
+          oElem /isOpened known
+          {
+           %oElem /isOpened false put
+           oElem oElem /closeElement get exec
+           }
+          if
+          nElem /inFocus true put
+
+           gelements /focusedElement nElem put
+         } if
+} def
+%--- param: gelement
+%    return: void
+% deleting from gelements
+/deleteWithChildren{
+    1 dict begin
+        /element exch  def
+        element /children get length 0 ne
+         {
+         /children element /children get def
+             {
+                  children length 0 eq
+                  { exit
+                  }
+                  {
+
+                     gelements children head  get deleteWithChildren
+                     /children  children tail def
+                  } ifelse
+             } loop
+         }
+         if
+         gelements element /number get undef
+    end
+} def
+
+%--- param: gelement
+%    return: void
+/deleteFromParent{
+    1 dict begin
+        /element exch  def
+        /number element /number get def
+        /parent element /parent get def
+            parent
+            /children
+            parent /children get number removeElementFromList
+        put
+    end
+} def
+
+%---
+%params: dict - gelement
+%        name - evType
+/findAncestorWithEventType{
+
+    /evType exch def
+    /element exch  def
+    /eventProcs element /eventProcs get def
+
+    eventProcs evType known
+
+    {
+        element
+        (MOVE) cvn evType eq not
+        { dup setFocusedElement }
+        if
+        eventProcs evType get execList %exit
+    }
+    {
+        /parent element /parent get def
+
+        parent null eq
+        {exit}
+        {parent evType findAncestorWithEventType}
+        ifelse
+    }
+    ifelse
+
+} def
+
+/resizeElement{
+     gelements /resizingElement get /resizingElement exch def
+        resizingElement null eq not
+        {
+            /num resizingElement /resize get def
+            /par resizingElement /parent get def
+
+            /minWidth resizingElement /minW get def
+            /minHigh  resizingElement /minH get def
+
+            /res1{
+                /newWidth mouseX resizingElement /x get sub def
+
+                newWidth minWidth gt
+                { resizingElement /w newWidth put }
+                { resizingElement /w minWidth put }
+                ifelse
+
+                resizingElement /rW resizingElement /w get resizingElement /parent get /w get div put
+            } def
+
+            /res3{
+
+
+                /yHigh resizingElement /y get resizingElement /h get add def
+                /newHigh yHigh mouseY sub def
+                newHigh minHigh gt
+                {
+                    resizingElement /y mouseY  put
+                    resizingElement /h newHigh put
+
+                }
+                { resizingElement /y yHigh minHigh sub  put
+                  resizingElement /h minHigh            put
+                }
+                ifelse
+
+                resizingElement /rY resizingElement /y get par /y get sub par /h get div    put
+                resizingElement /rH resizingElement /h get par /h get div                   put
+
+            } def
+
+            /res5{
+                /xRight resizingElement /x get resizingElement /w get add def
+                /newWidth xRight mouseX sub def
+
+                newWidth minWidth gt
+                {
+                    resizingElement /x mouseX   put
+                    resizingElement /w newWidth put
+                }
+                {
+                    resizingElement /x xRight minWidth sub  put
+                    resizingElement /w minWidth             put
+                }
+                ifelse
+
+                resizingElement /rX resizingElement /x get par /x get sub par /w get div    put
+                resizingElement /rW resizingElement /w get par /w get div                   put
+            } def
+
+            /res7{
+                /newHigh mouseY resizingElement /y get sub def
+
+                newHigh minHigh gt
+                { resizingElement /h mouseY resizingElement /y get sub put }
+                { resizingElement /h minHigh                           put }
+                ifelse
+
+                resizingElement /rH resizingElement /h get resizingElement /parent get /h get div put
+            } def
+
+            num 1 eq { res1 } if
+            num 3 eq { res3 } if
+            num 5 eq { res5 } if
+            num 7 eq { res7 } if
+
+            num 2 eq { res1 res3 } if
+            num 4 eq { res3 res5 } if
+            num 6 eq { res5 res7 } if
+            num 8 eq { res7 res1 } if
+            repaint
+        }
+        if
+} def
+
+/dragElement{
+    1 dict begin
+        gelements /mouseY get /mouseY exch def
+        gelements /mouseX get /mouseX exch def
+
+        resizeElement
+
+        gelements /draggedElement get /draggedElement exch def
+        draggedElement null eq
+        { exit }
+        if
+
+        gelements /lastY get /lastY exch def
+        gelements /lastX get /lastX exch def
+
+        draggedElement /x draggedElement /x get mouseX lastX sub add put
+        draggedElement /y draggedElement /y get mouseY lastY sub add put
+
+        gelements /lastX mouseX put
+        gelements /lastY mouseY put
+
+       repaint
+    end
+} def
+
+%---
+%params: dict, key, value
+% key associated with list of values
+/addListToDict{
+    /value exch def
+    /key exch def
+    /cDict exch def
+    cDict key known
+    {       cDict cDict key get /value load addToList put }
+    {        cDict key [/value load  []] put    }
+    ifelse
+} def
+
+
+/gelements 1 dict def
+gelements /maxElementNumber 0 put
+gelements /lastRepaintTime 0 put
+
+/scene initScene def
+gelements /focusedElement scene put
+
+gelements /mouseX 0 put
+gelements /mouseY 0 put
+gelements /lastX 0 put
+gelements /lastY 0 put
+
+gelements /draggedElement null put
+gelements /resizingElement null put

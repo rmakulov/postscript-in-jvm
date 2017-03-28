@@ -1,0 +1,55 @@
+gsave
+
+/q { gsave } bind def
+/Q { grestore } bind def
+/cm { 6 array astore concat } bind def
+/w { setlinewidth } bind def
+/J { setlinecap } bind def
+/j { setlinejoin } bind def
+/M { setmiterlimit } bind def
+/d { setdash } bind def
+/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
+      0 exch rlineto 0 rlineto closepath } bind def
+/S { stroke } bind def
+/f { fill } bind def
+/g { setgray } bind def
+%%EndProlog
+
+
+%/proc exch def
+/label exch def
+/h exch def
+/w exch def
+/y exch def
+/x exch def
+%/x 50 def
+%/y 50 def
+%/h 100 def
+%/w 400 def
+%/label (Button) def
+x y translate
+q % 0 0 w 1 add h 1 add rectclip
+q
+
+0.801961 g
+%0.901961 g
+1 h w h neg re f
+0.501961 g
+1 setlinewidth
+0 J
+0 j
+[] 0.0 d
+4 M q 1 0 0 -1 0 h cm
+0 0 w h re S
+Q
+
+/shift 2 def
+/kegel h def
+/Times-Roman findfont kegel scalefont setfont
+shift h kegel sub translate 0 0 moveto 1 0 0 setrgbcolor label show
+Q Q
+%%EOF
+
+grestore
+
+

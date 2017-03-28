@@ -1,0 +1,90 @@
+gsave
+/q { gsave } bind def
+/Q { grestore } bind def
+/cm { 6 array astore concat } bind def
+/w { setlinewidth } bind def
+/J { setlinecap } bind def
+/j { setlinejoin } bind def
+/M { setmiterlimit } bind def
+/d { setdash } bind def
+/re { exch dup neg 3 1 roll 5 3 roll moveto 0 rlineto
+      0 exch rlineto 0 rlineto closepath } bind def
+/S { stroke } bind def
+/f { fill } bind def
+/W { clip } bind def
+/g { setgray } bind def
+/rg { setrgbcolor } bind def
+%%EndProlog
+
+/position exch def
+/inFocus exch def
+/text exch def
+/label exch def
+/h exch def
+/w exch def
+/y exch def
+/x exch def
+
+%/x 50 def
+%/y 50 def
+%/h 100 def
+%/w 400 def
+%/label (TextArea) def
+
+x y translate
+q q
+/shift 5 def
+
+1 g
+%0 w h h neg re f
+0.501961 0.45098 0.501961 rg
+0.8 setlinewidth
+0 J
+0 j
+[] 0.0 d
+0 0 w h re S
+
+%/second h 2 idiv def
+%
+%0 g
+%% start point = (x, y), height and length
+%second 2 div dup second second re f
+%0.501961 0.45098 0.501961 rg
+
+/kegel h 2 idiv def
+/Rekha findfont kegel scalefont setfont
+%/stringW kegel 2.5 div def
+
+inFocus {
+    /subText text 0 position getinterval def
+    /stringW subText stringwidth pop def
+    2 setlinewidth
+    shift 2 mul stringW add
+            shift moveto
+             0 h shift 2 mul sub rlineto stroke
+    } if
+
+
+gsave
+0 h shift add translate
+% shift h kegel sub translate
+shift 0 moveto 0 0 0 setrgbcolor
+label show
+grestore
+
+0  shift  translate
+% shift h kegel sub translate
+shift 0 moveto 0 0 0 setrgbcolor
+text show
+
+Q Q
+%%Trailer
+%%EOF
+grestore
+
+
+
+
+
+
+

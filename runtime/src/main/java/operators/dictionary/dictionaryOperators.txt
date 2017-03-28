@@ -1,0 +1,26 @@
+dict                +
+<<                  +
+>>                  +
+length              +
+maxlength
+begin               +
+end                 +
+def                 +
+load                +
+store               +
+get                 +
+put                 +
+undef               +
+known               +
+copy                +
+forall              +
+currentdict         +
+errordict
+$error
+systemdict          +
+userdict            +
+globaldict          +
+statusdict
+countdictstack      +
+dictstack
+cleardictstack      +

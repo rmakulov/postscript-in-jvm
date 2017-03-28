@@ -1,0 +1,118 @@
+/listBox{
+    /eventProcDict exch def
+    /parent exch def
+    /curLabel exch def
+    /labels  exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /name exch def
+    %---parameters
+                name
+                x y w h
+                parent /x get
+                parent /y get
+                parent /w get
+                parent /h get
+            getRelFromAbs
+            labels
+            curLabel
+            parent
+            eventProcDict
+    relListBox
+} def
+
+
+%---
+/relListBox {
+    /eventProcDict exch def
+    /parent exch def
+    /curLabel exch def
+    /labels  exch def
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
+    /name exch def
+    /paint {/bd exch def
+                bd recountCoordinates
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /labels  get
+                bd /curLabel get
+
+                (graphicsEngine/basics/primitives/listBox/paintListBox.ps) (r) file run
+
+                bd paintChildren
+        } def
+
+    /listBoxDict <<     /name               name
+                        /rX                 rX
+                        /rY                 rY
+                        /rH                 rH
+                        /rW                 rW
+                        /labels             labels
+
+                        /x                  parent /x get parent /w get rX mul add cvi
+                        /y                  parent /y get parent /h get rY mul add cvi
+                        /h                  parent /h get rH mul cvi
+                        /w                  parent /w get rW mul cvi
+
+                        /curLabel           curLabel
+                        /parent             parent
+                        /children           []
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /inFocus            false
+                        /isFixed            true
+                        /refreshCoordinates /recountCoordinates load
+                        /objName            (ListBox)
+                        /checkBelonging
+                                            {
+                                                1 dict begin
+                                                    /element exch def
+                                                    /evY exch def
+                                                    /evX exch def
+
+                                                    /x element /x get def
+                                                    /y element /y get def
+                                                    /w element /w get def
+                                                    /h element /h get def
+
+                                                    evX x ge evY y ge and
+                                                    x w add evX ge y h add evY ge and
+                                                    and
+                                                end
+                                            }
+                      >> def
+    listBoxDict addElement
+
+    listBoxDict /eventProcs get /CLICK {
+
+                /cDict exch def
+                gelements /mouseY get /mouseY exch def
+
+
+                /oldH cDict /h get cDict /labels get length idiv def
+
+                /shiftY cDict /y get cDict /h get add mouseY sub def
+                cDict /curLabel shiftY oldH div cvi put
+
+                repaint} addListToDict
+
+     listBoxDict /eventProcs get /PRESS { } addListToDict
+     listBoxDict /eventProcs get /RELEASE { } addListToDict
+
+    parent /children
+                parent /children get
+                listBoxDict /number get
+                addToEndOfList
+    put
+
+    %listBoxDict paint
+    name listBoxDict def
+} def
+%---

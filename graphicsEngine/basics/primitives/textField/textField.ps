@@ -1,0 +1,284 @@
+/textField{
+    /eventProcDict exch def
+    /parent exch def
+    /label exch def
+    /h exch def
+    /w exch def
+    /y exch def
+    /x exch def
+    /name exch def
+
+    %---parameters
+                name
+                x y w h
+                parent /x get
+                parent /y get
+                parent /w get
+                parent /h get
+            getRelFromAbs
+            label
+            parent
+            eventProcDict
+     relTextField
+} def
+
+%---
+/relTextField {
+              /eventProcDict exch def
+              /parent exch def
+              /label exch def
+              /rH exch def
+              /rW exch def
+              /rY exch def
+              /rX exch def
+              /name exch def
+              /paint {/bd exch def
+                          bd recountCoordinates
+                          bd /x get
+                          bd /y get
+                          bd /w get
+                          bd /h get
+                          bd /label get
+                          bd /text get
+                          bd /inFocus get
+                          bd /position get
+                          bd /displayBegin get
+                          bd /displayEnd get
+                          bd /isChanged get
+                          (graphicsEngine/basics/primitives/textField/paintTextField.ps) (r) file run
+
+                          bd paintChildren
+                  } def
+                  %eventProcs - procedures for each type of events
+              /textFieldDict <<     /name               name
+                                    /label              label
+                                    /text               ()
+                                    /rX                 rX
+                                    /rY                 rY
+                                    /rW                 rW
+                                    /rH                 rH
+                                    /parent             parent
+                                    /children           []
+                                    /inFocus            false
+                                    /position           0
+                                    /displayEnd         0
+                                    /displayBegin       0
+                                    /isChanged          true
+
+                                    /x                  parent /x get parent /w get rX mul add cvi
+                                    /y                  parent /y get parent /h get rY mul add cvi
+                                    /h                  parent /h get rH mul cvi
+                                    /w                  parent /w get rW mul cvi
+
+                                  /inFocus              false
+                                  /isFixed              true
+                                  /paint                /paint load
+                                  /eventProcs           eventProcDict
+                                  /refreshCoordinates   /recountCoordinates load
+                                  /objName              (TextField)
+                                  /checkBelonging
+                                                        {
+                                                            1 dict begin
+                                                                  /element exch def
+                                                                  /evY exch def
+                                                                  /evX exch def
+
+                                                                  /x element /x get def
+                                                                  /y element /y get def
+                                                                  /w element /w get def
+                                                                  /h element /h get def
+
+                                                                  evX x ge evY y ge and
+                                                                  x w add evX ge y h add evY ge and
+                                                                  and
+                                                            end
+                                                        }
+              >> def
+
+
+
+              textFieldDict  addElement
+
+              %element - event, действие забирает один элемент со стека - графический элемент. В момент вызова процедуры в checkElement event.ps кладем checkboxDict
+              textFieldDict /eventProcs get /CLICK { dup /inFocus true put gelements /focusedElement 3 2 roll put repaint} addListToDict
+
+              textFieldDict /eventProcs get /PRESS { } addListToDict
+              textFieldDict /eventProcs get /RELEASE {  } addListToDict
+
+
+
+              textFieldDict /eventProcs get /KEYBOARD_CHAR {
+                    1 dict begin
+                       /char exch def
+                       /textField exch def
+%//todo remove exit
+                       textField /isChanged get not
+                       { exit }
+                       if
+
+                       /text textField /text get def
+                       /dB textField /displayBegin get def
+                       /dE textField /displayEnd get def
+                       /w  textField /w get dup 0.005 mul cvi sub def
+
+                       textField dup /text get char textField /position get insertChar /text exch put
+                       textField dup /position  get 1 add /position exch put
+
+                       textField /text get length 1 eq
+                       {
+                            textField /displayBegin  get 0 put
+                            textField /displayEnd    get 0 put
+                       }
+                       if
+
+                       textField /text get length 1 gt
+                       {
+                           textField dup /displayEnd  get 1 add /displayEnd exch put
+
+                           /kegel textField /h get def
+                           /Rekha findfont kegel scalefont setfont
+
+                           textField /displayBegin textField /text get textField /displayEnd get -1 w getIndex put
+                       }
+                       if
+                       repaint
+                   end
+              } addListToDict
+
+              textFieldDict /eventProcs get /KEYBOARD_CONTROL{
+                                 /code      exch                        def
+                                 /textField exch                        def
+%//todo remove exit
+                                 textField /isChanged get not
+                                { exit }
+                                if
+
+                                 /pos       textField /position get     def
+                                 /disEnd    textField /displayEnd get   def
+                                 /disBegin  textField /displayBegin get def
+                                 /text      textField /text get         def
+                                 /tLength   text length                 def
+                                 /w         textField /w get dup 0.005 mul cvi sub     def
+
+                                 /kegel textField /h get def
+                                 /Rekha findfont kegel scalefont setfont
+
+                                 %%% Backspace
+                                 code backspaceKey eq pos 0 gt and {
+                                     textField /text text pos removeLeftChar put
+                                     textField /position pos 1 sub put
+                                     textField /displayEnd disEnd 1 sub put
+
+                                     textField /text get length 0 eq
+                                     {
+                                      textField /displayEnd   0 put
+                                      textField /displayBegin 0 put
+                                     }
+
+                                     {
+                                        /disEnd disEnd 1 sub def
+                                        disBegin 0 gt
+                                        { textField /displayBegin textField /text get disEnd -1 w getIndex put }
+                                        if
+                                     }
+                                     ifelse
+
+                                 } if
+                                 %%% Delete
+                                 code deleteKey eq pos tLength lt and {
+                                    textField /text text pos removeRightChar put
+
+                                    textField /text get length 0 eq
+                                    {
+                                        textField /displayEnd   0 put
+                                    }
+                                    {
+                                        textField /displayEnd textField /text get textField /displayBegin get 1 w getIndex put
+                                    }
+                                    ifelse
+                                 } if
+                                 %%% <--
+                                 code leftKey eq pos 0 gt and {
+                                      textField /position pos 1 sub put
+
+                                      pos 1 sub disBegin lt
+                                      { textField /displayBegin disBegin 1 sub put
+                                        /disBegin disBegin 1 sub def
+                                        textField /displayEnd textField /text get disBegin 1 w getIndex put
+                                      }
+                                      if
+                                 } if
+                                 %%% -->
+                                 code rightKey eq tLength pos gt and {
+                                     textField /position pos 1 add put
+
+                                     pos disEnd gt
+                                     {
+                                       textField /displayEnd disEnd 1 add put
+                                       /disEnd disEnd 1 add def
+
+                                      textField /displayBegin textField /text get disEnd -1 w getIndex put
+                                     }
+                                       if
+                                 } if
+                                 %%% Home
+                                 code homeKey eq pos 0 ne and {
+                                      textField /position 0 put
+                                      textField /displayBegin 0 put
+
+                                      textField /displayEnd textField /text get 0 1 w getIndex put
+
+
+                                 } if
+                                 %%% End
+                                 code endKey eq pos tLength ne and {
+                                      textField /position tLength put
+                                      tLength 0 gt
+                                      {
+                                        textField /displayEnd tLength 1 sub put
+                                        textField /displayBegin textField /text get textField /displayEnd get -1 w getIndex put
+                                      }
+                                      {
+                                        textField /displayBegin 0 put
+                                        textField /displayEnd 0 put
+                                      }
+                                      ifelse
+
+                                 } if
+                                 repaint
+
+              } addListToDict
+
+              parent /children
+                          parent /children get
+                          textFieldDict /number get
+                          addToEndOfList
+              put
+
+              %textFieldDict paint
+              name textFieldDict def
+
+} def
+%---
+%-------------------------------------------
+%-------params------------------------------
+%   tField      :   dictionary
+%   str         :   string
+%    return     :   void
+%-------------------------------------------------
+%-------------------------------------------------
+/setTextToTextField {
+    1 dict begin
+        /str exch def
+        /tField exch def
+
+        tField /position 0 put
+        tField /displayBegin 0 put
+
+        /kegel tField /h get 2 sub def
+        /Rekha findfont kegel scalefont setfont
+
+        tField /text str put
+        tField /displayEnd tField /text get 0 1 tField /w get getIndex put
+    end
+} def

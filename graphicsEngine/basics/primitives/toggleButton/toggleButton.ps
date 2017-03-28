@@ -1,0 +1,110 @@
+/toggleButton{
+        /eventProcDict exch def
+        /parent exch def
+        /textOff  exch def
+        /textOn exch def
+        /h exch def
+        /w exch def
+        /y exch def
+        /x exch def
+        /name exch def
+        %---parameters
+                    name
+                    x y w h
+                    parent /x get
+                    parent /y get
+                    parent /w get
+                    parent /h get
+                getRelFromAbs
+                textOn
+                textOff
+                parent
+                eventProcDict
+        relToggleButton
+} def
+
+%---
+/relToggleButton {
+    /eventProcDict exch def
+    /parent exch def
+    /textOff  exch def
+    /textOn exch def
+    /rH exch def
+    /rW exch def
+    /rY exch def
+    /rX exch def
+    /name exch def
+    /paint {/bd exch def
+                bd recountCoordinates
+                bd /x get
+                bd /y get
+                bd /w get
+                bd /h get
+                bd /textOn  get
+                bd /textOff get
+                bd /isPressed get
+
+                (graphicsEngine/basics/primitives/toggleButton/paintToggleButton.ps) (r) file run
+
+                bd paintChildren
+        } def
+
+    /toggleButtonDict <</name               name
+                        /rX                 rX
+                        /rY                 rY
+                        /rH                 rH
+                        /rW                 rW
+                        /x                  parent /x get parent /w get rX mul add cvi
+                        /y                  parent /y get parent /h get rY mul add cvi
+                        /h                  parent /h get rH mul cvi
+                        /w                  parent /w get rW mul cvi
+
+                        /textOn             textOn
+                        /textOff            textOff
+                        /parent             parent
+                        /children           []
+
+                        /inFocus            false
+                        /isFixed            true
+                        /paint              /paint load
+                        /eventProcs         eventProcDict
+                        /isPressed          false
+                        /refreshCoordinates /recountCoordinates load
+
+                        /objName            (ToggleButton)
+                        /checkBelonging
+                                            {
+                                                1 dict begin
+                                                    /element exch def
+                                                    /evY exch def
+                                                    /evX exch def
+
+                                                    /x element /x get def
+                                                    /y element /y get def
+                                                    /w element /w get def
+                                                    /h element /h get def
+
+                                                    evX x ge evY y ge and
+                                                    x w add evX ge y h add evY ge and
+                                                    and
+                                                end
+                                            }
+                      >> def
+
+    toggleButtonDict addElement
+
+    toggleButtonDict /eventProcs get /RELEASE { } addListToDict
+    toggleButtonDict /eventProcs get /CLICK {  dup /isPressed get /isPressed exch not put repaint} addListToDict
+
+    toggleButtonDict /eventProcs get /PRESS {  } addListToDict
+
+    parent /children
+            parent /children get
+            toggleButtonDict /number get
+            addToEndOfList
+     put
+
+    %toggleButtonDict paint
+    name toggleButtonDict def
+} def
+%---

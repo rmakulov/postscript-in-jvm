@@ -1,0 +1,69 @@
+    abs
+    add
+    aload
+	arc
+    begin
+    clear
+    cleardictstack
+	clippath
+	closepath
+	cvi
+    def
+	div
+	dict
+    end
+	eq
+	exch
+	false
+    fill
+findfont
+    for
+	forall
+	ge
+	grestore
+	gsave
+	gt
+    if
+    ifelse
+	itransform
+	le
+	length
+    lineto
+    lt
+	mod
+    moveto
+	mul
+	ne
+	neg
+	newpath
+	pathbox
+	pop
+pstack
+	rand
+    repeat
+	restore
+	rmoveto
+	rotate
+	round
+	save
+	scale
+scalefont
+setfont
+	setgray
+	sethsbcolor
+	setlinecap
+	setlinejoin
+	setlinewidth
+	setmiterlimit
+	setrgbcolor
+show
+    showpage
+    srand
+    stack
+stringwidth
+    stroke
+	sub
+	transform
+	translate
+	true
+	truncate

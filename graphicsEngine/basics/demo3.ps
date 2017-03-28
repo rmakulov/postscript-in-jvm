@@ -1,0 +1,28 @@
+(graphicsEngine/basics/glib.ps) (r) file run
+
+
+/window1    400 400 200 180 (numerating) scene << >> window def
+/hor 430 470 16       (second)    window1 << >> checkBox
+/vert 430 510 16       (first)      window1 << >> checkBox
+/mrr  430 430 16        (third) window1 << >> checkBox
+
+/mainWindow 100 100 200 150 (close button) scene << >> window def
+/closeB 150 150 100 40   (close) mainWindow <</CLICK [{pop quit}[]] >>  button
+
+/window4    300 230 270  220 (List box) scene << >> window def
+/x8 320 300 200 90 [ (Sekatski) (Martin Gardner) (Evdokimova) ] 1 window4 << >> listBox
+
+
+/window2    100 430 380  270 (Input) scene << >> window def
+/lF1 125 625 100 35 (Type yor message, please!)  window2 << >>    labelField
+/tF 1 110 545 350 30 (TextField)     window2 <<>>    textField
+/but2 235 465 100 40   (send)         window2 <</CLICK [{pop quit}[]] >>  button
+
+  scene /eventProcs get /RIGHT_CLICK  {
+               pop sortWindows repaint setFixedTrueForWindowsChildren
+             } addListToDict
+repaint
+showpage
+eventlistener
+
+

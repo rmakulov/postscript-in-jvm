@@ -1,0 +1,71 @@
+/initScene {
+               /paint {/bd exch def
+                          (graphicsEngine/basics/primitives/scene/paintScene.ps) (r) file run
+                          bd paintChildren
+                     } def
+
+              /scene <<     /label (scene)
+                            /x              0
+                            /y              0
+                            /h              843
+                            /w              651
+                            /parent         null
+                            /children       []
+                            /inFocus        true
+                            /paint          /paint load
+
+                        /eventProcs     << /CLICK [{pop repaint }[]]  >>
+                        %/eventProcs     << /CLICK [{pop repaint }[]] /RIGHT_CLICK [{pop evX evY itransform 2 /wave load newThread  }[]] >>
+                        %/eventProcs     << /CLICK [{pop repaint }[]] /RIGHT_CLICK [{pop sortWindows repaint setFixedTrueForWindowsChildren}[]] >>
+                            /objName        (Scene)
+                            /checkBelonging
+                                            {
+                                                1 dict begin
+                                                     /element exch def
+                                                     /evY exch def
+                                                     /evX exch def
+
+                                                     /x element /x get def
+                                                     /y element /y get def
+                                                     /w element /w get def
+                                                     /h element /h get def
+
+                                                     evX x ge evY y ge and
+                                                     x w add evX ge y h add evY ge and
+                                                     and
+                                                end
+                                            }
+                           >> def
+
+
+              scene /eventProcs get /MOVE {
+
+                  /cDict exch def
+
+                  gelements /mouseX get /mouseX exch def
+                  gelements /mouseY get /mouseY exch def
+                  cDict /x get /x exch def
+                  cDict /y get /y exch def
+                  cDict /w get /w exch def
+                  cDict /h get /h exch def
+
+
+                  (default) cursor
+                  %mouseX mouseY x y w h checkForResize /result exch def
+                  %result 0 eq
+                  %{ (default) cursor }
+                  %if
+
+
+
+               repaint
+            } addListToDict
+
+            scene /eventProcs get /RELEASE {
+              pop repaint
+            } addListToDict
+
+              scene addElement
+
+              scene
+} def

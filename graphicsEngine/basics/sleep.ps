@@ -1,0 +1,51 @@
+%! 
+% WaitForStablePageCount.ps -- make sure 
+% HP printer is truly idle for a number of seconds 
+% before returning. 
+statusdict /pagecount get /pagecountroutine exch def 
+% Spin-loop for a certain number of seconds. 
+/Sleep 
+{ 
+        % Single arg off stack - seconds to sleep 
+        /sleepInterval exch def 
+        % Get our starting time 
+        usertime 1000 idiv /starttime exch def 
+        { 
+                % Seconds since start 
+                usertime 1000 idiv starttime sub 
+                % Exit if interval is exceeded 
+                sleepInterval ge { (sleepInterval ge ) print exit } if
+        } loop 
+} def 
+
+/WaitForStablePageCount 
+{ 
+        % Single arg - how long we require the 
+        % pagecount to be stable before returning 
+        /waitInterval exch def 
+        pagecountroutine exec 
+        /curPg exch def 
+        %% DEBUG 
+        ( \(psbanner\) WaitForStablePageCount: Start page count: ) 
+                        print curPg = flush 
+        % Now loop 
+        { 
+                %% DEBUG 
+                ( \(psbanner\) WaitForStablePageCount: Sleeping for ) 
+                        print waitInterval = flush 
+                waitInterval Sleep 
+                pagecountroutine exec /protoPg exch def 
+                %% DEBUG 
+                ( \(psbanner\) WaitForStablePageCount: New page count: ) 
+                                print protoPg = flush 
+                % If pagecount has been stable for waitInterval seconds, 
+                % exit. 
+                curPg protoPg eq 
+                        { exit }
+                        { /curPg protoPg def } 
+                ifelse 
+        } loop 
+} def 
+
+%% Wait for printer engine to settle down. 
+5 WaitForStablePageCount 

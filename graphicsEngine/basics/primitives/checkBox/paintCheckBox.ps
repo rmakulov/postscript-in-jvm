@@ -1,0 +1,91 @@
+/RoundedRectPath
+{
+  matrix currentmatrix 6 1 roll % <ctm> <x> <y> <w> <h> <r>
+  5 3 roll translate abs        % <ctm> <w> <h> |r|
+  0 1 index 3 index 0 lt        % <ctm> <w> <h> |r| 0 |r| h<0?
+  {neg} if moveto               % start at LL corner. Tolerates w<0, h<0
+  3 copy 0 2 index 5 2 roll     % <ctm> <w> <h> |r| 0 <h> <w> <h> |r|
+  arct                          % <ctm> <w> <h> |r|
+  3 copy 2 index 0 3 2 roll     % <ctm> <w> <h> |r| <w> <h> <w> 0 |r|
+  arct                          % <ctm> <w> <h> |r|
+  3 2 roll 0 0 0 4 index        % <ctm> <h> <r> <w> 0 0 0 |r|
+  arct                          % <ctm> <h> |r|
+  0 0 0 5 3 roll                % <ctm> 0 0 0 <h> |r|
+  arct                          % <ctm>
+  setmatrix                     % -
+} bind def
+
+
+
+gsave
+/isPressed exch def
+/label exch def
+/h exch def
+/y exch def
+/x exch def
+
+%/x 50 def /y 50 def /h 16 def /label (Checkbox) def
+
+x y translate
+/shift 2 def
+
+1 setgray
+
+0 h h h neg rect fill
+
+0.501961 0.45098 0.501961 setrgbcolor
+0.8 setlinewidth
+
+
+
+/second h 2 idiv def
+
+%        -100 -100 100 newRoundedRect stroke
+%        200 0 translate
+%        0 0  100 newRoundedRect3 stroke
+%200 200 translate
+    isPressed
+    {
+        97 255 div 151 255 div 249 255 div setrgbcolor
+
+        .5 setlinewidth
+        0 0 h newRoundedRect3 stroke
+        0 0 h newRoundedRect3  fill
+
+        2 setlinewidth
+        1 1 1 setrgbcolor
+        h .15 mul h .5 mul moveto
+        h .4 mul h .25 mul lineto
+        h .8 mul h .8 mul lineto
+        stroke
+%
+       % 0 setgray
+       % % start point x y and height and length
+%      %  second 2 div dup second second rect fill
+       % 0.501961 0.45098 0.501961 setrgbcolor
+    }
+    {
+        1 setlinejoin
+        1 setlinejoin
+        .5 setlinewidth
+        0 0 h newRoundedRect3 stroke
+    }
+    ifelse
+
+0.501961 0.45098 0.501961 setrgbcolor
+
+/kegel h shift add def
+%/Norasi
+%/Rekha
+%/Amiri
+(Comfortaa Bold)
+%/Junicode
+findfont kegel scalefont setfont
+
+h 1.5 mul shift translate
+shift 0 moveto
+
+0 0 0 setrgbcolor
+label show
+
+grestore
