@@ -1,6 +1,7 @@
 package components;
 
 import interpreter.Interpreter;
+import operators.EventListenerOffOp;
 import operators.EventListenerOp;
 import operators.SendEventToJavaOp;
 import operators.UserPrintOp;
@@ -72,6 +73,7 @@ public class GraphicInterface {
         entries.add(new PSObject(RepaintOp.instance));
         entries.add(new PSObject(SendEventToJavaOp.instance));
         entries.add(new PSObject(EventListenerOp.instance));
+        entries.add(new PSObject(EventListenerOffOp.instance));
         entries.add(new PSObject(UserPrintOp.instance));
         return entries;
     }

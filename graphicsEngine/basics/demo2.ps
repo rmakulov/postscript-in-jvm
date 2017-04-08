@@ -45,6 +45,7 @@ down /color color put
 invert /color color put
 
   scene /eventProcs get /RIGHT_CLICK  {
+%               pop evX evY itransform 2 /wave load newThread
                pop evX evY itransform 2 /wave load newThread
              } addListToDict
 

@@ -489,6 +489,7 @@
            } loop
    } def
     %transform
+    eventlisteneroff
     /y exch def
     /x exch def
     /r 20 def
@@ -511,7 +512,43 @@
      %repaintAll
      %100 milliSleep
      repaintMainContext
+     eventlistener
 } def
+
+% params: x y set center of circles
+/loadingEffect {
+   /milliSleep
+   {
+           % Single arg off stack - milliseconds to sleep
+           /sleepInterval exch def
+           % Get our starting time
+           usertime /starttime exch def
+           {
+                   % Seconds since start
+                   usertime  starttime sub
+                   % Exit if interval is exceeded
+                   sleepInterval ge { exit } if
+           } loop
+   } def
+   eventlisteneroff
+    /y exch def
+    /x exch 30 sub def
+    /r 10 def
+    0.5 setgray
+    /startAngle 0 def
+        3 {
+            x r add y moveto
+            x y r 0 360 arc fill
+
+            100 milliSleep
+
+            /x x 30 add def
+         } repeat
+     %repaintMainContext
+     %repaint
+     eventlistener
+} def
+%---
 %---
 % param: [a] - array
 /toList{
